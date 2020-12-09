@@ -4,11 +4,6 @@
    * Is this the principal call to action on the page?
    */
   export let primary = false;
-
-  /**
-   * What background color to use
-   */
-  export let backgroundColor;
   /**
    * How large should the button be?
    */
@@ -16,13 +11,14 @@
   /**
    * Button contents
    */
-  export let label = '';
+  export let label = null;
 
   let mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
-  let style = backgroundColor ? `background-color: ${backgroundColor}` : '';
-
+  let style = null
   const dispatch = createEventDispatcher();
+
+  let classes = ['storybook-button', 'something', `storybook-button--${size}`, mode].join(' ')
 
   /**
    * Optional click handler
@@ -32,23 +28,22 @@
   }
 </script>
 
-<button
-  type="button"
-  class={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-  on:click={onClick}>
-  {style}
-  {label} Yargh!
-</button>
+<template lang='pug'>
+  button( 
+    type="button" 
+    class="{classes}" 
+    on:click="{onClick}" 
+    style="{style}"
+    label="{label}") 
+    slot Button
+</template>
 
 <style lang='scss'>
   .storybook-button {
-    font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
+    cursor: pointer;
     border: 0;
     border-radius: 3em;
-    cursor: pointer;
-    display: inline-block;
-    line-height: 1;
+    display: inline-block;    
   }
   .storybook-button--primary {
     color: white;
