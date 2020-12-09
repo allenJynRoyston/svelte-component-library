@@ -1,7 +1,5 @@
 {
-  "include": [
-    "src"
-  ],
+  "include": ["src", "stories"],
   "exclude": [
     "node_modules/**",
     "dist/**",
@@ -10,10 +8,7 @@
   ],
   "compilerOptions": {
     "target": "es2019",
-    "types": [
-      "svelte",
-      "jest"
-    ],
+    "types": ["svelte", "jest"],
     "moduleResolution": "node"
   }
 }
