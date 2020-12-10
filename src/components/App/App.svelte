@@ -1,30 +1,46 @@
-<script lang='ts'>
-  import { HelloWorld, Button, SVInput } from '../index'
-  export let name:string = 'World!'
+<script>
+  import {Form} from '../index'
+
+
+  let formData = [
+    {
+      renderAs: 'input',      
+      label: 'Username',
+      placeholder: 'john smith',
+      key: 'username',
+      value: 'johnsmith', 
+      regex: /^[a-zA-Z]+$/,
+      required: true,
+      minLength: 3,
+      maxLength: 10
+    },
+    {
+      renderAs: 'input', 
+      type: 'password', 
+      label: 'Password',
+      key: 'password',
+      value: 'notapassword',
+      required: true
+    },
+    {
+      renderAs: 'textarea', 
+      type: 'description', 
+      label: 'Description',
+      key: 'description',
+      value: 'blah blah blah blah',
+      required: true
+    }        
+  ]
+
+  const onSubmit = (e) => {
+    console.log(e)
+  }
+
 </script>
 
 <style lang='scss' scoped>
-  .app-container{
-    padding: 10px;
-    border: 1px solid black
-  }
 
-  .app-header{
-    color: pink;    
-  }
-
-  a{
-    color: purple;
-    font-size: 50px;
-  }
 </style>
 
-<template lang='pug'>
-  .app-container
-    header.app-header
-      Button
-      SVInput
-      h1 Hello {name}
-      a.App-link(href='https://svelte.dev' target='_blank' rel='noopener noreferrer')
-        | Learn Svelte
-</template>
+
+<Form {formData} {onSubmit} />
