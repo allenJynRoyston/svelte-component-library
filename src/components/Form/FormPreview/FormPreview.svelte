@@ -22,7 +22,7 @@
   <ul>
     <span>Submit</span>
     {#each previewData as {key, value}}
-      {#if value}
+      {#if value || value === true || value === false}
         <li><strong>{key}:</strong> {value}</li>
       {/if}
     {/each}

@@ -1,7 +1,8 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validate } from '../../js'
+  import { validateDate } from '../../js'
+  import * as dayjs from "dayjs";
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -16,7 +17,7 @@
    * updateForm event
   */  
   export let updateForm = null;    
-
+  
   /**
    * 
   */  
@@ -36,19 +37,15 @@
   /**
    * 
   */  
-  export let regex = null;
+  export let minDate = null;
+  /**
+   * 
+  */  
+  export let maxDate = null;    
   /**
    * 
   */  
   export let required = null;
-  /**
-   * 
-  */  
-  export let minLength = null;
-  /**
-   * 
-  */  
-  export let maxLength = null;
   //---------------------------
 
   //--------------------------- VARS
@@ -58,6 +55,7 @@
     placeholder,    
   }
 
+  value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -81,7 +79,7 @@
 
   //--------------------------- FUNCTIONS
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validate({value, regex, required, minLength, maxLength})
+    const {isValid, validationErrors} = validateDate({value, required, minDate, maxDate})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -90,36 +88,37 @@
 
 </script>
 
-<div class='input-container' test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='inputdate-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
-  <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  
+  <input type='date' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+
 </div>
 
 <style lang="scss">
-  .input-container {
+  .inputdate-container {    
+    margin-bottom: 10px;
     width: 100%;
-    margin-bottom: 10px;    
-
+    
     label{
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;
     }
 
-    textarea{
+    input{
       height: 30px;
       width: calc(100% - 20px);
-      padding: 10px;      
-      min-height: 50px
+      padding: 0 10px;
     }
 
     &.valid{
       label{
         color: black
       }
-      textarea{
+      input{
         color: black;
         border: 1px solid black;
       }
@@ -129,12 +128,10 @@
       label{
         color: red
       }
-      textarea{
+      input{
         color: red;
         border: 1px solid red;
       }
     }
-
-  }
-  
+  }  
 </style>

@@ -1,18 +1,17 @@
 <script>
   import {Form} from '../index'
 
-
   let formData = [
     {
       renderAs: 'input',      
       label: 'Username',
-      placeholder: 'john smith',
+      placeholder: 'example: john smith',
       key: 'username',
-      value: 'johnsmith', 
-      regex: /^[a-zA-Z]+$/,
-      required: true,
+      value: '', 
+      regex: /^[a-zA-Z]+$/,      
       minLength: 3,
-      maxLength: 10
+      maxLength: 10,
+      required: true
     },
     {
       renderAs: 'input', 
@@ -28,8 +27,34 @@
       label: 'Description',
       key: 'description',
       value: 'blah blah blah blah',
+      required: true,
+      minLength: 5
+    },
+    {
+      renderAs: 'date', 
+      label: 'Date',
+      key: 'date',
+      value: '12-01-1982',
+      minDate: '01-01-1950',
+      maxDate: '01-01-2020',      
       required: true
-    }        
+    },  
+    {
+      renderAs: 'time', 
+      label: 'Time',
+      key: 'time',
+      value: '09:00',
+      minTime: '07:00',
+      maxTime: '22:00',      
+      required: true
+    },     
+    {
+      renderAs: 'checkbox', 
+      label: 'Agree',
+      key: 'agree',
+      text: 'Do you agree to the terms and agreements?',
+      value: true
+    },                   
   ]
 
   const onSubmit = (e) => {
@@ -42,5 +67,5 @@
 
 </style>
 
-
 <Form {formData} {onSubmit} />
+

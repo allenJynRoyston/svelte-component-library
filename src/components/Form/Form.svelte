@@ -1,7 +1,7 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
   import { onMount } from 'svelte';
-  import {Button, Input, Textarea, FormErrors, FormPreview} from '../index'
+  import {Button, Input, InputDate, Textarea, FormErrors, FormPreview, InputTime, InputCheckbox} from '../index'
   //---------------------------
 
   //--------------------------- VARS
@@ -38,7 +38,8 @@
 
   //--------------------------- FUNCTIONS
   const onSubmitHandler = () => {
-    onSubmit && onSubmit(completedFormData)
+    let data = Object.entries(completedFormData).map(x => {return {key: x[0], value: x[1].value}})
+    onSubmit && onSubmit(data)
   }
 
   const updateForm = ({key, val, isValid, errors}) => {
@@ -71,7 +72,7 @@
 </script>
 
 {#if isReady}
-  <form class='form-container'>
+  <form class='form-container' data-testid='form-container'>
     {#if formData.length > 0}
       {#each formData as data, i}
         {#if data.renderAs === 'input'}
@@ -79,7 +80,16 @@
         {/if}
         {#if data.renderAs === 'textarea'}
           <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} />
-        {/if}            
+        {/if}      
+        {#if data.renderAs === 'date'}
+          <InputDate {...stripUnusedProperties(data)} updateForm={updateForm} />
+        {/if}    
+        {#if data.renderAs === 'time'}
+          <InputTime {...stripUnusedProperties(data)} updateForm={updateForm} />
+        {/if}       
+        {#if data.renderAs === 'checkbox'}
+          <InputCheckbox {...stripUnusedProperties(data)} updateForm={updateForm} />
+        {/if}                                    
       {/each}
 
 
@@ -93,7 +103,7 @@
 
 
       <div class='button-container'>
-        <Button onClick={onSubmitHandler} disabled={disabled}>Save</Button>
+        <Button onClick={onSubmitHandler} {disabled}>Save</Button>
       </div>
     {:else}
       <p>No form data</p>

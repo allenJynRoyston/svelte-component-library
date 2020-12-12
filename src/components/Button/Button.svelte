@@ -13,7 +13,7 @@
 
 </script>
 
-<button disabled={disabled} type='button' on:click={onClickHandler}>
+<button type='button' disabled={disabled} on:click={onClickHandler}>
   <slot>Button</slot>
 </button>
 

@@ -124,6 +124,10 @@
       height: 30px;
       width: calc(100% - 20px);
       padding: 0 10px;
+
+      &::placeholder{
+        color: lightgrey;
+      }
     }
 
     &.valid{
