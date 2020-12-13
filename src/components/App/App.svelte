@@ -53,7 +53,8 @@
       label: 'Agree',
       key: 'agree',
       text: 'Do you agree to the terms and agreements?',
-      value: true
+      value: true,
+      required: true
     },                   
   ]
 

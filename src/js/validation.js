@@ -116,7 +116,10 @@ export const validateTime = (props) => {
   const parseTime = (time) => {
     const hours = time.split(":")[0];
     const minutes = time.split(":")[1];
-    return dayjs().hour(hours).minute(minutes);
+
+    return hours && minutes && !isNaN(hours) && !isNaN(minutes)
+      ? dayjs().hour(hours).minute(minutes)
+      : null;
   };
 
   const check = () => {
@@ -128,7 +131,15 @@ export const validateTime = (props) => {
     if (value) {
       const inputTime = parseTime(value);
 
-      if (minTime) {
+      if (inputTime === null) {
+        validationErrors.push({
+          type: "regex",
+          message: "Needs to be a valid time.",
+        });
+        isValid = false;
+      }
+
+      if (minTime && inputTime) {
         const min = parseTime(minTime);
         if (min.diff(inputTime, "minutes") > 0) {
           validationErrors.push({
@@ -139,7 +150,7 @@ export const validateTime = (props) => {
         }
       }
 
-      if (maxTime) {
+      if (maxTime && inputTime) {
         const max = parseTime(maxTime);
         if (max.diff(inputTime, "minutes") < 0) {
           validationErrors.push({

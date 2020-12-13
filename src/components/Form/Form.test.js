@@ -18,8 +18,6 @@ const changeInputValue = async ({ label, value }) => {
 };
 
 describe("Form component", () => {
-  const onSubmitHandler = jest.fn();
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -95,107 +93,6 @@ describe("Form component", () => {
     beforeEach(async () => {
       await waitFor(async () => {
         await screen.findByTestId("form-container");
-      });
-    });
-
-    describe("Input", () => {
-      afterAll(async () => {
-        let label = "Username";
-        await changeInputValue({ label, value: "johnsmith" });
-        expect(ele).toHaveClass("valid");
-      });
-
-      test("... label is rendered", () => {
-        expect(getByText("Username")).toBeInTheDocument();
-        expect(getByText("Password")).toBeInTheDocument();
-      });
-      test("... value is correct", () => {
-        expect(getByLabelText("Username").value).toBe("johnsmith");
-        expect(getByLabelText("Password").value).toBe("notapassword");
-      });
-
-      test("... regex is working correctly", async () => {
-        let ele = container.querySelector("#username").parentElement;
-        let label = "Username";
-        await changeInputValue({ label, value: "123" });
-        expect(ele).toHaveClass("invalid");
-        await changeInputValue({ label, value: "johnsmith" });
-        expect(ele).toHaveClass("valid");
-        await changeInputValue({ label, value: "!@#" });
-        expect(ele).toHaveClass("invalid");
-      });
-
-      test("... minLength is working correctly", async () => {
-        let ele = container.querySelector("#username").parentElement;
-        let label = "Username";
-        await changeInputValue({ label, value: "ab" });
-        expect(ele).toHaveClass("invalid");
-        await changeInputValue({ label, value: "johnsmith" });
-        expect(ele).toHaveClass("valid");
-      });
-
-      test("... maxLength is working correctly", async () => {
-        let ele = container.querySelector("#username").parentElement;
-        let label = "Username";
-        await changeInputValue({
-          label,
-          value: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        });
-        expect(ele).toHaveClass("invalid");
-        await changeInputValue({ label, value: "johnsmith" });
-        expect(ele).toHaveClass("valid");
-      });
-
-      test("... required is working correctly", async () => {
-        let ele = container.querySelector("#username").parentElement;
-        let label = "Username";
-        await changeInputValue({ label, value: "johnsmith" });
-        expect(ele).toHaveClass("valid");
-        await changeInputValue({ label, value: "" });
-        expect(ele).toHaveClass("invalid");
-      });
-    });
-
-    describe("Textarea", () => {
-      test("... label is rendered", () => {
-        expect(getByText("Description")).toBeInTheDocument();
-      });
-      test("... value is correct", () => {
-        expect(getByLabelText("Description").value).toBe(
-          "I am a text area text."
-        );
-      });
-    });
-
-    describe("InputDate", () => {
-      test("... label is rendered", () => {
-        expect(getByText("Date")).toBeInTheDocument();
-      });
-      test("... value is correct", () => {
-        expect(getByLabelText("Date").value).toBe("1982-12-01");
-      });
-    });
-
-    describe("InputTime", () => {
-      test("... label is rendered", () => {
-        expect(getByText("Time")).toBeInTheDocument();
-      });
-      test("... value is correct", () => {
-        expect(getByLabelText("Time").value).toBe("09:00");
-      });
-    });
-
-    describe("InputCheckbox", () => {
-      test("... label is rendered", () => {
-        expect(getByText("Checkbox")).toBeInTheDocument();
-      });
-      test("... value is correct", () => {
-        expect(getByLabelText("Checkbox").value).toBe("on");
-      });
-      test("... text is correct", () => {
-        expect(
-          getByText("Do you agree to the terms and agreements?")
-        ).toBeInTheDocument();
       });
     });
 

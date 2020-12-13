@@ -62,7 +62,6 @@
     placeholder,    
   }
 
-
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(value)
@@ -94,19 +93,16 @@
 
 </script>
 
-<div class='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' data-testid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
   
   {#if type === 'password'}
     <input type='password' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {:else if type === 'textarea'}    
-    <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
   {:else}
     <input type='text' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
   {/if}
-
 </div>
 
 <style lang="scss">
