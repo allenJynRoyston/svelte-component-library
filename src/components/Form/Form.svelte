@@ -1,7 +1,7 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
   import { onMount } from 'svelte';
-  import {Button, Input, InputDate, Textarea, FormErrors, FormPreview, InputTime, InputCheckbox} from '../index'
+  import {Button, Input, InputDate, Textarea, FormErrors, FormPreview, InputTime, InputCheckbox, Select, SelectMulti} from '../index'
   //---------------------------
 
   //--------------------------- VARS
@@ -89,7 +89,13 @@
         {/if}       
         {#if data.renderAs === 'checkbox'}
           <InputCheckbox {...stripUnusedProperties(data)} updateForm={updateForm} />
-        {/if}                                    
+        {/if}   
+        {#if data.renderAs === 'select'}
+          <Select {...stripUnusedProperties(data)} updateForm={updateForm} />
+        {/if}   
+        {#if data.renderAs === 'selectmulti'}
+          <SelectMulti {...stripUnusedProperties(data)} updateForm={updateForm} />
+        {/if}                                                    
       {/each}
 
 

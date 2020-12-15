@@ -23,7 +23,7 @@
     <span>Submit</span>
     {#each previewData as {key, value}}
       {#if value || value === true || value === false}
-        <li><strong>{key}:</strong> {value}</li>
+        <li><strong>{key}:</strong> {JSON.stringify(value)}</li>
       {/if}
     {/each}
   </ul>

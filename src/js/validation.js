@@ -191,3 +191,41 @@ export const validateCheckbox = (props) => {
   return { isValid, validationErrors };
 };
 //-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+export const validateSelect = (props) => {
+  const { required, value } = props;
+  let isValid = true;
+  let validationErrors = [];
+
+  if (required && !value) {
+    isValid = false;
+    validationErrors.push({
+      type: "required",
+      message: "Select required",
+    });
+  }
+
+  return { isValid, validationErrors };
+};
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+export const validateSelectMulti = (props) => {
+  const { required, value } = props;
+  let isValid = true;
+  let validationErrors = [];
+
+  if (required) {
+    if (value.length === 0) {
+      isValid = false;
+      validationErrors.push({
+        type: "required",
+        message: "Select required",
+      });
+    }
+  }
+
+  return { isValid, validationErrors };
+};
+//-----------------------------------------------------------------------------

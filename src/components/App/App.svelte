@@ -7,10 +7,10 @@
       label: 'Username',
       placeholder: 'example: john smith',
       key: 'username',
-      value: '', 
-      regex: /^[a-zA-Z]+$/,      
+      value: 'allen.royston', 
+      regex: /^[a-zA-Z.]+$/,      
       minLength: 3,
-      maxLength: 10,
+      maxLength: 25,
       required: true
     },
     {
@@ -55,7 +55,54 @@
       text: 'Do you agree to the terms and agreements?',
       value: true,
       required: true
-    },                   
+    }, 
+    {
+      renderAs: 'select', 
+      label: 'Select',
+      key: 'select',      
+      value: null,
+      defaultOption: 'Select an option',
+      options: [
+        {id: 1, title: 'option 1'},
+        {id: 2, title: 'option 2'},
+        {id: 3, title: 'option 3'},
+        {id: 4, title: 'option 4'}
+      ],
+      onInitFilter: (val, options) => {        
+        return options.find(x => x.id === val)
+      },
+      onChangeFilter: (val) => {
+        return val && val.title
+      },
+      required: true
+    }, 
+    {
+      renderAs: 'selectmulti', 
+      label: 'Select',
+      key: 'select',      
+      value: [1, 3],      
+      options: [
+        {id: 1, title: 'option 1'},
+        {id: 2, title: 'option 2'},
+        {id: 3, title: 'option 3'},
+        {id: 4, title: 'option 4'}
+      ],
+      onInitFilter: (arr, options) => {  
+        return options.map((x) => {
+          arr.forEach(v => {
+            x._selected = !x._selected ? (x.id === v) : x._selected
+          })
+          return x
+        })
+      },
+      onChangeFilter: (arr) => {           
+        return arr.map(x => {
+          delete x.id
+          return x
+        })
+      },
+      required: true
+    },                           
   ]
 
   const onSubmit = (e) => {
