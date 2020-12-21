@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validateSelect } from '../../js'
+  import { validateSelect } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -16,10 +16,6 @@
    * updateForm event
   */  
   export let updateForm = null;    
-  /**
-   * 
-  */  
-  export let type = null  
   /**
    * 
   */  
@@ -93,8 +89,7 @@
 
     if(onChangeFilter){
       val = onChangeFilter(JSON.parse(JSON.stringify(val)))
-    }
-    console.log(val)
+    }    
 
     updateForm && updateForm({key, val, isValid, errors})
   }

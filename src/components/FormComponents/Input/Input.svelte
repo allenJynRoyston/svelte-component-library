@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validate } from '../../js'
+  import { validate } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -17,6 +17,10 @@
   */  
   export let updateForm = null;    
 
+  /**
+   * 
+  */  
+  export let type = null  
   /**
    * 
   */  
@@ -44,6 +48,10 @@
   /**
    * 
   */  
+  export let allowShowToggle = true;  
+  /**
+   * 
+  */  
   export let minLength = null;
   /**
    * 
@@ -58,6 +66,7 @@
     placeholder,    
   }
 
+  let showPassword = false
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -90,36 +99,55 @@
 
 </script>
 
-<div class='input-container' test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' data-testid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
-  <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  
+  {#if type === 'password'}
+    {#if showPassword}
+      <input type='text' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+    {:else}
+      <input type='password' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+    {/if}
+
+    {#if allowShowToggle}
+      <button on:click={(e) => {e.preventDefault(); showPassword = !showPassword}} >{showPassword ? 'Hide' : 'Show'} Password</button>  
+    {/if}
+
+  {:else if type === 'number'}
+    <input type='number' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />
+  {:else}
+    <input type='text' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />
+  {/if}
 </div>
 
 <style lang="scss">
-  .input-container {
+  .input-container {    
+    margin-bottom: 10px;
     width: 100%;
-    margin-bottom: 10px;    
-
+    
     label{
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;
     }
 
-    textarea{
+    input{
       height: 30px;
       width: calc(100% - 20px);
-      padding: 10px;      
-      min-height: 50px
+      padding: 0 10px;
+
+      &::placeholder{
+        color: lightgrey;
+      }
     }
 
     &.valid{
       label{
         color: black
       }
-      textarea{
+      input{
         color: black;
         border: 1px solid black;
       }
@@ -129,7 +157,7 @@
       label{
         color: red
       }
-      textarea{
+      input{
         color: red;
         border: 1px solid red;
       }

@@ -1,7 +1,8 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validateTime } from '../../js'
+  import { validateDate } from '../../../js'
+  import * as dayjs from "dayjs";
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -36,11 +37,11 @@
   /**
    * 
   */  
-  export let minTime = null;
+  export let minDate = null;
   /**
    * 
   */  
-  export let maxTime = null;    
+  export let maxDate = null;    
   /**
    * 
   */  
@@ -54,6 +55,7 @@
     placeholder,    
   }
 
+  value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -77,7 +79,7 @@
 
   //--------------------------- FUNCTIONS
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validateTime({value, required, minTime, maxTime})
+    const {isValid, validationErrors} = validateDate({value, required, minDate, maxDate})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -91,7 +93,7 @@
     <label for={key} >{label}</label>
   {/if}
   
-  <input type='time' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  <input type='date' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
 
 </div>
 

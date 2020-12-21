@@ -81,11 +81,81 @@ describe("Form component", () => {
         maxTime: "22:00",
         required: true,
       },
+      {
+        renderAs: "checkbox",
+        label: "Agree",
+        key: "agree",
+        text: "Do you agree to the terms and agreements?",
+        value: true,
+        required: true,
+      },
+      {
+        renderAs: "select",
+        label: "Select",
+        key: "select",
+        value: 2,
+        defaultOption: "Select an option",
+        options: [
+          { id: 1, title: "option 1" },
+          { id: 2, title: "option 2" },
+          { id: 3, title: "option 3" },
+          { id: 4, title: "option 4" },
+        ],
+        onInitFilter: (val, options) => {
+          return options.find((x) => x.id === val);
+        },
+        onChangeFilter: (val) => {
+          return val && val.title;
+        },
+        required: true,
+      },
+      {
+        renderAs: "selectmulti",
+        type: "checkbox",
+        label: "Select",
+        key: "selectmulti",
+        value: [1, 3],
+        options: [
+          { id: 1, title: "option 1" },
+          { id: 2, title: "option 2" },
+          { id: 3, title: "option 3" },
+          { id: 4, title: "option 4" },
+        ],
+        onInitFilter: (arr, options) => {
+          return options.map((x) => {
+            arr.forEach((v) => {
+              x._selected = !x._selected ? x.id === v : x._selected;
+            });
+            return x;
+          });
+        },
+        onChangeFilter: (arr) => {
+          return arr.map((x) => {
+            delete x.id;
+            return x;
+          });
+        },
+        required: true,
+      },
+      {
+        renderAs: "rating",
+        type: "star",
+        label: "Ratings",
+        key: "rating",
+        value: 2,
+        required: true,
+        maxLength: 10,
+        slots: {
+          selected: "❤",
+          notSelected: "♡",
+        },
+        fixedWidth: "40px",
+      },
     ];
 
     const onSubmit = jest.fn();
 
-    const { container, getByText, getByLabelText } = render(Form, {
+    const ele = render(Form, {
       formData,
       onSubmit,
     });
@@ -101,10 +171,12 @@ describe("Form component", () => {
         await changeInputValue({ label: "Username", value: "123" });
         expect(screen.getByText("Save")).toHaveAttribute("disabled");
       });
+
       test("... if the form has no errors button should be disabled", async () => {
         await changeInputValue({ label: "Username", value: "johnsmith" });
         expect(screen.getByText("Save")).not.toHaveAttribute("disabled");
       });
+
       test("... clicking on the button should send the correct props", async () => {
         await changeInputValue({ label: "Username", value: "johnsmith" });
         fireEvent.click(screen.getByText("Save"));
@@ -116,6 +188,13 @@ describe("Form component", () => {
             { key: "checkbox", value: true },
             { key: "date", value: "1982-12-01" },
             { key: "time", value: "09:00" },
+            { key: "agree", value: true },
+            { key: "select", value: "option 2" },
+            {
+              key: "selectmulti",
+              value: [{ title: "option 1" }, { title: "option 3" }],
+            },
+            { key: "rating", value: 2 },
           ]);
         });
       });

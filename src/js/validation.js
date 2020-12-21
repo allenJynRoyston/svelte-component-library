@@ -8,32 +8,46 @@ export const validate = (props) => {
   let validationErrors = [];
 
   const check = () => {
-    if (required && value.length === 0) {
-      validationErrors.push({ type: "required", message: "Required missing." });
-      isValid = false;
-    }
-    if (regex && !regex.test(value)) {
-      validationErrors.push({
-        type: "regex",
-        message: "Value does not match regex value.",
-      });
-      isValid = false;
-    }
+    if (value) {
+      if (required && value.length === 0) {
+        validationErrors.push({
+          type: "required",
+          message: "Required missing.",
+        });
+        isValid = false;
+      }
 
-    if (minLength && value.length < minLength) {
-      validationErrors.push({
-        type: "minLength",
-        message: "minLength missing.",
-      });
-      isValid = false;
-    }
+      if (regex && !regex.test(value)) {
+        validationErrors.push({
+          type: "regex",
+          message: "Value does not match regex value.",
+        });
+        isValid = false;
+      }
 
-    if (maxLength && value.length > maxLength) {
-      validationErrors.push({
-        type: "maxLength",
-        message: "maxLength missing.",
-      });
-      isValid = false;
+      if (minLength && value.length < minLength) {
+        validationErrors.push({
+          type: "minLength",
+          message: "minLength missing.",
+        });
+        isValid = false;
+      }
+
+      if (maxLength && value.length > maxLength) {
+        validationErrors.push({
+          type: "maxLength",
+          message: "maxLength missing.",
+        });
+        isValid = false;
+      }
+    } else {
+      if (required) {
+        validationErrors.push({
+          type: "required",
+          message: "Required missing.",
+        });
+        isValid = false;
+      }
     }
   };
 
@@ -227,5 +241,28 @@ export const validateSelectMulti = (props) => {
   }
 
   return { isValid, validationErrors };
+};
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+export const validateRating = (props) => {
+  const { ratings, required } = props;
+  let isValid = true;
+  let validationErrors = [];
+
+  let filtered = ratings.filter((x) => x.selected === true) || null;
+  let lastEle = (filtered && filtered[filtered.length - 1]) || null;
+
+  if (required) {
+    if (lastEle === null) {
+      isValid = false;
+      validationErrors.push({
+        type: "required",
+        message: "Ratings required",
+      });
+    }
+  }
+
+  return { isValid, val: lastEle ? lastEle.i : null, validationErrors };
 };
 //-----------------------------------------------------------------------------

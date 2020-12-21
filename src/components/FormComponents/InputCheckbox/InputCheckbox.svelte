@@ -1,8 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validateDate } from '../../js'
-  import * as dayjs from "dayjs";
+  import { validateCheckbox } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -25,23 +24,19 @@
   /**
    * 
   */  
-  export let value = ''
+  export let value = false
   /**
    * 
-  */  
+  */ 
+  export let text = null;
+  /**
+   * 
+  */   
   export let key = null
   /**
    * 
   */
-  export let label = null;
-  /**
-   * 
-  */  
-  export let minDate = null;
-  /**
-   * 
-  */  
-  export let maxDate = null;    
+  export let label = null; 
   /**
    * 
   */  
@@ -55,7 +50,6 @@
     placeholder,    
   }
 
-  value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -65,21 +59,24 @@
 
   //--------------------------- EVENT HANDLERS
   const onChangeEventHandler = () => {   
-    onChange && onChange(value)
-    updateParent(value)
-  }
-
-  const onKeypressHandler = (e) => {
     setTimeout(() => {
-      onKeypress && onKeypress(value)
+      onChange && onChange(value)
       updateParent(value)
     })
   }
   //---------------------------
 
   //--------------------------- FUNCTIONS
+  const toggle = () => {
+    value = !value
+    setTimeout(() => {
+      onChange && onChange(value)
+      updateParent(value)
+    })
+  }
+
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validateDate({value, required, minDate, maxDate})
+    const {isValid, validationErrors} = validateCheckbox({value, required})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -88,18 +85,21 @@
 
 </script>
 
-<div class='inputdate-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='inputcheckbox-container' class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+
   {#if label}
     <label for={key} >{label}</label>
-  {/if}
-  
-  <input type='date' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  {/if}  
+
+  <div class='cb-container'  on:click={toggle}>
+    <input type='checkbox' {...props} on:change={onChangeEventHandler} bind:checked={value} />  
+    <span class='cb-text'>{text}</span>
+  </div>
 
 </div>
 
 <style lang="scss">
-  .inputdate-container {    
-    margin-bottom: 10px;
+  .inputcheckbox-container {        
     width: 100%;
     
     label{
@@ -108,29 +108,34 @@
       display: flex;
     }
 
-    input{
-      height: 30px;
-      width: calc(100% - 20px);
-      padding: 0 10px;
+    .cb-container{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 12px;
+      cursor: pointer;
+      input{        
+        margin-left: 0px;
+        margin-right: 5px;
+        padding: 0 0;
+        cursor: pointer;
+      }
+    }   
+
+    &.hasLabel{
+      margin-bottom: 10px;
     }
+        
 
     &.valid{
-      label{
-        color: black
-      }
-      input{
+      .cb-text{
         color: black;
-        border: 1px solid black;
       }
     }
 
     &.invalid{
-      label{
-        color: red
-      }
-      input{
+      .cb-text{
         color: red;
-        border: 1px solid red;
       }
     }
   }  

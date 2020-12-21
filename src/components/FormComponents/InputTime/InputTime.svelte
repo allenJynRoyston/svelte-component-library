@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validate } from '../../js'
+  import { validateTime } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -16,11 +16,7 @@
    * updateForm event
   */  
   export let updateForm = null;    
-
-  /**
-   * 
-  */  
-  export let type = null  
+  
   /**
    * 
   */  
@@ -40,19 +36,15 @@
   /**
    * 
   */  
-  export let regex = null;
+  export let minTime = null;
+  /**
+   * 
+  */  
+  export let maxTime = null;    
   /**
    * 
   */  
   export let required = null;
-  /**
-   * 
-  */  
-  export let minLength = null;
-  /**
-   * 
-  */  
-  export let maxLength = null;
   //---------------------------
 
   //--------------------------- VARS
@@ -61,6 +53,7 @@
     id:key,
     placeholder,    
   }
+
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -84,7 +77,7 @@
 
   //--------------------------- FUNCTIONS
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validate({value, regex, required, minLength, maxLength})
+    const {isValid, validationErrors} = validateTime({value, required, minTime, maxTime})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -93,20 +86,17 @@
 
 </script>
 
-<div class='input-container' data-testid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='inputdate-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
   
-  {#if type === 'password'}
-    <input type='password' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {:else}
-    <input type='text' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {/if}
+  <input type='time' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+
 </div>
 
 <style lang="scss">
-  .input-container {    
+  .inputdate-container {    
     margin-bottom: 10px;
     width: 100%;
     
@@ -120,10 +110,6 @@
       height: 30px;
       width: calc(100% - 20px);
       padding: 0 10px;
-
-      &::placeholder{
-        color: lightgrey;
-      }
     }
 
     &.valid{
@@ -145,7 +131,5 @@
         border: 1px solid red;
       }
     }
-
-  }
-  
+  }  
 </style>

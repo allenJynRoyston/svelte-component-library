@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validateSelectMulti } from '../../js'
+  import { validateSelectMulti } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -19,7 +19,7 @@
   /**
    * 
   */  
-  export let type = null  
+  export let type = 'checkbox'
   /**
    * 
   */  
@@ -62,10 +62,10 @@
 
   let _options = options.map(x => {
     return {...x, _selected: false}
-  })
+  }) || []
 
 
-  _options = onInitFilter ? onInitFilter(value, _options) : []
+  _options = onInitFilter ? onInitFilter(value, _options) : _options 
   let errors = [];
   const props = {
     id:key,
@@ -113,11 +113,9 @@
 
   <ul class='selectmulti-options'>
     {#each _options as option, i}        
-      <li class='selectmulti-option' data-testid={`option-${i}`} on:click={() => {onClick(i)}} >
-        <span class='cb' >
-          {option._selected ? 'X' : '-'}
-        </span>
-        <span class='text'>{option.title}</span>
+      <li class='selectmulti-option' on:click={() => {onClick(i)}} >
+        <input data-testid={`option-${i}`} type={type} checked={option._selected}>
+        <span class='text'>{option.title}</span>        
       </li>  
     {/each}
   </ul>
@@ -149,6 +147,11 @@
       font-size: 14px;
       cursor: pointer;
       display: flex;
+
+      input{
+        cursor: pointer;
+      }
+
       &:hover{
         color: blue
       }        
