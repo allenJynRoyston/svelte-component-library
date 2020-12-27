@@ -1,184 +1,56 @@
 <script>
-  import {Form} from '../index'
-
-  let formData = [
-    {
-      renderAs: 'input',      
-      label: 'Username',
-      placeholder: 'example: john smith',
-      key: 'username',
-      value: 'allen.royston', 
-      regex: /^[a-zA-Z.]+$/,      
-      minLength: 3,
-      maxLength: 25,
-      required: true,
-      sizing: {
-        desktop: 25,
-        mobile: 50
-      }
-    },
-    {
-      renderAs: 'input', 
-      type: 'password', 
-      label: 'Password',
-      key: 'password',
-      value: 'notapassword',
-      allowShowToggle: true,
-      required: true,
-      sizing: {
-        desktop: 25,
-        mobile: 50
-      }
-    },
-    {
-      renderAs: 'input',      
-      type: 'number',
-      label: 'Age',
-      placeholder: 'example: john smith',
-      key: 'age',
-      value: '25', 
-      regex: /^[0-9]+$/,      
-      minLength: 1,
-      maxLength: 3,
-      required: true,
-      sizing: {
-        desktop: 25,
-        mobile: 50
-      }
-    },
-    {
-      renderAs: 'input',       
-      label: 'City',
-      key: 'city',
-      value: 'Reno',
-      required: true,
-      sizing: {
-        desktop: 25,
-        mobile: 50
-      }
-    },    
-    {
-      renderAs: 'textarea', 
-      type: 'description', 
-      label: 'Description',
-      key: 'description',
-      value: 'blah blah blah blah',
-      required: true,
-      minLength: 5,
-      sizing: {
-        desktop: 100,
-        mobile: 100
-      }      
-    },
-    {
-      renderAs: 'date', 
-      label: 'Date',
-      key: 'date',
-      value: '12-01-1982',
-      minDate: '01-01-1950',
-      maxDate: '01-01-2020',      
-      required: true,
-      sizing: {
-        desktop: 50,
-        mobile: 100
-      } 
-    },  
-    {
-      renderAs: 'time', 
-      label: 'Time',
-      key: 'time',
-      value: '09:00',
-      minTime: '07:00',
-      maxTime: '22:00',      
-      required: true,
-      sizing: {
-        desktop: 50,
-        mobile: 100
-      }       
-    },     
-    {
-      renderAs: 'select', 
-      label: 'Select',
-      key: 'select',      
-      value: 2,
-      defaultOption: 'Select an option',
-      options: [
-        {id: 1, title: 'option 1'},
-        {id: 2, title: 'option 2'},
-        {id: 3, title: 'option 3'},
-        {id: 4, title: 'option 4'}
-      ],
-      onInitFilter: (val, options) => {        
-        return options.find(x => x.id === val)
-      },
-      onChangeFilter: (val) => {
-        return val && val.title
-      },
-      required: true
-    },      
-    {
-      renderAs: 'selectmulti', 
-      type: 'checkbox',
-      label: 'Select',
-      key: 'selectmulti',      
-      value: [1, 3],      
-      options: [
-        {id: 1, title: 'option 1'},
-        {id: 2, title: 'option 2'},
-        {id: 3, title: 'option 3'},
-        {id: 4, title: 'option 4'}
-      ],
-      onInitFilter: (arr, options) => {  
-        return options.map((x) => {
-          arr.forEach(v => {
-            x._selected = !x._selected ? (x.id === v) : x._selected
-          })
-          return x
-        })
-      },
-      onChangeFilter: (arr) => {           
-        return arr.map(x => {
-          delete x.id
-          return x
-        })
-      },
-      required: true        
-    },   
-    {
-      renderAs: 'rating',    
-      type: 'star',
-      label: 'Ratings',
-      key: 'rating',      
-      value: 2,                
-      required: true,
-      maxLength: 10,  
-      slots: {
-        selected: '❤',
-        notSelected: '♡'
-      },
-      fixedWidth: '40px'       
-    },    
-    {
-      renderAs: 'checkbox', 
-      label: 'Agree',
-      key: 'agree',
-      text: 'Do you agree to the terms and agreements?',
-      value: true,
-      required: true     
-    },                                   
-  ]
+  import {onMount} from 'svelte'
+  import {Card, FormExample, FormLogin} from '../index'
+  import {IndexDBStore} from '../../js/index'
 
   const onSubmit = (e) => {
     console.log(e)
   }
 
+  onMount(async() => {
+    const indexdb = new IndexDBStore('snappfireDB', 1);            
+    const indexdbTables = ['users', 'posts', 'images', 'following']
+    await indexdb.createTable(indexdbTables);
+
+
+    // let _id = Math.random().toString(36).substring(7);
+    // indexdb.add('posts', {_id, name: 'allen', age: 32}, true)
+    // indexdb.add('posts', {_id, name: 'royston', age: 45}, true)
+
+    // let data = await indexdb.get('posts', "zs7uk")
+    // console.log(data)
+
+  })
+
+
 </script>
 
 <style lang='scss' scoped>
-
+  #app-wrapper{
+    max-width: calc(800px - 40px);
+    padding: 20px;
+    margin: 0 auto;
+  }
 </style>
 
-<Form {formData} {onSubmit} padding={'20'}>
-  Submit
-</Form>
+<!-- 
+<Card>
+  <FormExample idModifier={'a'} localStorageKey={'form_A'} clearLocalStorage={true} />
+</Card>
+
+
+<Card>
+  <FormLogin idModifier={'b'} localStorageKey={'form_B'} clearLocalStorage={true} />
+</Card> -->
+
+<div id='app-wrapper'>
+
+  <Card>
+    <span slot='header'>Hello World</span>
+    <FormLogin localStorageKey={'form_C'} clearLocalStorage={true} />
+    <span slot='footer'>Hello World</span>
+  </Card>
+
+</div>
+
 

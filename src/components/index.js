@@ -13,8 +13,13 @@ export { default as Select } from "./FormComponents/Select/Select.svelte";
 export { default as SelectMulti } from "./FormComponents/SelectMulti/SelectMulti.svelte";
 export { default as Rating } from "./FormComponents/Rating/Rating.svelte";
 
+/* FORM PREMADES */
+export { default as FormExample } from "./FormPremade/FormExample.svelte";
+export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
+
 /* COMPONENTS */
 export { default as Button } from "./Button/Button.svelte";
+export { default as Card } from "./Card/Card.svelte";
 
 /* APP */
 export { default as App } from "./App/App.svelte";

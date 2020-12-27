@@ -1,13 +1,15 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
-  import { onMount } from 'svelte';  
+  import { onMount, onDestroy } from 'svelte';  
   import {Button, Input, InputDate, Textarea, FormErrors, FormPreview, InputTime, InputCheckbox, Select, SelectMulti, Rating} from '../index'
   //---------------------------
 
   //--------------------------- VARS
-  const completedFormData = {}
+  let completedFormData = {}
   let isReady = false
   let layoutSize = 'desktop'
+  let onBeforeUnload;  
+  let hasError = false 
   //---------------------------
 
   //--------------------------- PROPS
@@ -30,12 +32,31 @@
     desktop: 1920,
     wide: 2440
   }
+  /**         
+  */  
+  export let localStorageKey = null;
+  /**         
+  */    
+  export let clearLocalStorage = true;
+  /**     
+   * If multiple forms are on the page at the same time, adding a unique idModifier to will make sure they have unique ID's    
+  */      
+  export let idModifier = null;
+  /**     
+   * set busy state
+  */        
+  export let isBusy = false
+
   //---------------------------
 
-  //--------------------------- ONMOUNT
+  //--------------------------- ONMOUNT/ONDESTROY
+  onDestroy(() => {
+    window.removeEventListener("beforeunload", onBeforeUnload, true);  
+  })
+
 	onMount(async () => {
     // TODO: might refactor this as some sort of wrapper later
-
+    
     // get breakpoint events
     window.matchMedia(`screen and (min-width: 0px) and (max-width: ${breakpoints.mobile}px)`).onchange = () => {
       layoutSize = 'mobile'
@@ -64,31 +85,75 @@
       layoutSize = 'wide'
     }    
     
+    // map formData
+    formData = formData.map(x => {
+      const {value = null} = x
 
-    formData.map(x => {
-      const {key, value = null} = x
-      if(key){
-        completedFormData[key] = {
+      if(x.key){
+        completedFormData[!!idModifier ? `${x.key}_${idModifier}` : x.key] = {
           value,
           isValid: true,
           errors: []
         }
       }
+
+       x.key = !!idModifier ? `${x.key}_${idModifier}` : x.key
+
+      return x;
     })   
+
+
+
+    // check if localStorage key exists
+    try{
+      if(!!localStorageKey){
+        // set onBeforeUnload to capture formData
+        onBeforeUnload = window.addEventListener('beforeunload', (e) => {
+          if(!hasError){
+            window.localStorage.setItem(localStorageKey, JSON.stringify(completedFormData));
+          }
+        }); 
+
+        // check if data already exists
+        let savedData = window.localStorage.getItem(localStorageKey) || null;
+        if(!!savedData){                      
+          completedFormData = JSON.parse(savedData)                              
+          
+          for (const [key, pair] of Object.entries(completedFormData)) {                   
+            formData.find(x => x.key === key).value = pair.value
+          }
+
+          if(clearLocalStorage){
+            window.localStorage.removeItem(localStorageKey);
+          }
+        }
+      }
+    }
+    catch(e){
+      window.localStorage.removeItem(localStorageKey);      
+      hasError = true
+      location.reload()
+    }
+
+
     isReady = true; 
   }); 
   //--------------------------- 
 
   //--------------------------- FUNCTIONS
   const onSubmitHandler = () => {
-    let data = Object.entries(completedFormData).map(x => {return {key: x[0], value: x[1].value}})
+    let data = Object.entries(completedFormData).map(x => {
+      return !!idModifier ? {key: x[0].split(`_${idModifier}`)[0], value: x[1].value} : {key: x[0], value: x[1].value}
+    })
     onSubmit && onSubmit(data)
   }
 
-  const updateForm = ({key, val, isValid, errors}) => {
-    completedFormData[key].value = val
-    completedFormData[key].isValid = isValid    
-    completedFormData[key].errors = errors    
+  const updateForm = ({key, val, isValid, errors}) => {    
+    if(!hasError){
+      completedFormData[key].value = val
+      completedFormData[key].isValid = isValid    
+      completedFormData[key].errors = errors    
+    }
   }
 
   const stripUnusedProperties = (data) => {
@@ -146,16 +211,15 @@
   
   
   //--------------------------- $
-  $: disabled = Object.entries(completedFormData).filter(x => {return !x[1].isValid}).length > 0
+  $: disabled = Object.entries(completedFormData).filter(x => {return !x[1].isValid}).length > 0 || isBusy
 
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
   //---------------------------
 </script>
 
-{#if isReady}
-<p>{layoutSize}</p>
 
-  <form class='form-container' data-testid='form-container' style={`padding: 20px ${padding}px;`}>
+{#if isReady}
+  <form class='form-container' data-testid='form-container' style={`padding: 20px ${padding}px;`} autocomplete="on">
     {#if formData.length > 0}
       {#each formData as data, i}
 
@@ -188,20 +252,23 @@
       {/each}
 
       
-      <div style='width: 100%'>
+      <div>
+        <!--
         <div class='preview-container'>
           <FormPreview data={completedFormData} />
         </div>
+        -->
 
+        <!-- 
         <div class='error-container'>
           <FormErrors errors={getErrorData} />
-        </div>
-
+        </div> 
+        -->
 
         <div class='button-container'>
           <Button onClick={onSubmitHandler} {disabled}>
             <slot>
-              Save
+              {isBusy ? 'Saving...' : 'Save'}
             </slot>
           </Button>
         </div>
@@ -228,47 +295,3 @@
 
   }
 </style>
-
-
-
-<!-- EXAMPLE USAGE: 
-  <script>
-    import {Form} from '../index'
-
-    let formData = [
-      {
-        renderAs: 'input',      
-        label: 'Username',
-        placeholder: 'example: john smith',
-        key: 'username',
-        value: 'allen.royston', 
-        regex: /^[a-zA-Z.]+$/,      
-        minLength: 3,
-        maxLength: 25,
-        required: true
-      },
-      {
-        renderAs: 'input', 
-        type: 'password', 
-        label: 'Password',
-        key: 'password',
-        value: 'notapassword',
-        allowShowToggle: true,
-        required: true
-      }                           
-    ]
-
-    const onSubmit = (e) => {
-      console.log(e)
-    }
-
-  </script>
-  
-
-  <Form {formData} {onSubmit} />
-  
-  
-  <Form {formData} {onSubmit} >  
-    Submit
-  </Form  
--->

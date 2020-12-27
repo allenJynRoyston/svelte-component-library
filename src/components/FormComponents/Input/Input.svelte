@@ -2,6 +2,7 @@
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
   import { validate } from '../../../js'
+  import InputCheckbox from '../InputCheckbox/InputCheckbox.svelte'
 
   //--------------------------- COMPONENT PROPS
   /**

@@ -49,6 +49,10 @@
    * 
   */  
   export let maxLength = null;
+  /*
+  *
+  */
+  export let contentEdit = false
   //---------------------------
 
   //--------------------------- VARS
@@ -94,7 +98,13 @@
   {#if label}
     <label for={key} >{label}</label>
   {/if}
-  <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  
+  {#if contentEdit}
+    <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} />  
+  {:else}
+    <textarea class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />
+  {/if}
+
 </div>
 
 <style lang="scss">
@@ -108,18 +118,19 @@
       display: flex;
     }
 
-    textarea{
+    .textarea{
       height: 30px;
       width: calc(100% - 20px);
       padding: 10px;      
-      min-height: 50px
+      min-height: 50px;
+      border: 1px solid black;
     }
 
     &.valid{
       label{
         color: black
       }
-      textarea{
+      .textarea{
         color: black;
         border: 1px solid black;
       }
@@ -129,7 +140,7 @@
       label{
         color: red
       }
-      textarea{
+      .textarea{
         color: red;
         border: 1px solid red;
       }
