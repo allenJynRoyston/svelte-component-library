@@ -19,12 +19,16 @@
   //--------------------------- ONMOUNT
 	onMount(async() => {
     // @ts-ignore
-    const post = await findPostById(id) 
-    // @ts-ignore
-    // const portrait = await findImageById(user.imageId);
-    onComplete({
-      ...post    
-    })
+    const post = await findPostById(id) || null
+
+    if(!!post){
+      onComplete({
+        ...post    
+      })
+    }
+    else{
+      console.warn(`The post with id: ${id} cannot be found.  Are you sure this is correct?`)
+    }
   }); 
   //---------------------------   
 

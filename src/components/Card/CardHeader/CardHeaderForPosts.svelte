@@ -3,15 +3,17 @@
   import { SVG, Button } from '../../index'
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime"
+
   dayjs.extend(relativeTime)
   //---------------------------
 
   //--------------------------- COMPONENT PROPS
-  export let author;;
+  export let author;
   export let post;
   export let isMine;
   export let props;
   export let cardFunctions;
+
   //---------------------------
 
   //--------------------------- VARS
@@ -32,6 +34,8 @@
     <div class='cardheader-container__portrait'>   
       {#if author.portrait}   
         <img src={author.portrait.imageSrc} alt={author.portrait.imageSrc} />
+      {:else}
+        <img src="https://via.placeholder.com/150/b2fe8" alt="https://via.placeholder.com/150/b2fe8" />
       {/if}
     </div>
     <div class='cardheader-container__bio'>

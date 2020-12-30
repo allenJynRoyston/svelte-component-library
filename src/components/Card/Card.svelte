@@ -1,18 +1,19 @@
 <script lang='ts'>
-import { tick } from 'svelte';
+import { tick, getContext } from 'svelte';
 
   //--------------------------- IMPORTS  
   import { UserFetcher, PostFetcher, CardHeaderForPosts, CardBodyForPosts, Button, SVG } from '../index'
 
   //--------------------------- COMPONENT PROPS
-  export let data = null;  
-  export let viewAs = null;
-  export let index = null;
-  
-  export let feedFunctions = null;
+  export let data = null;    
+  export let index = null;  
+  export let feedFunctions = null;  
   //---------------------------
 
   //--------------------------- VARS
+  const loggedIn = getContext('loggedIn')
+  const myDetails = getContext('myDetails')  
+
   let cardState = {
     render: true,
     showDots: false,
@@ -60,11 +61,9 @@ import { tick } from 'svelte';
       // fetch post
       appendPostData(post)
       cardState.isSaving = false
-
       cardState.render = false;
       await tick()
       cardState.render = true
-      // cardState.isEditing = false      
     }
   }
 
@@ -77,17 +76,20 @@ import { tick } from 'svelte';
   //--------------------------- FUNCTIONS  
   const appendPostData = (post) => {
     cardData.post = post
-    cardState.postFetchComplete = true
+    cardState.postFetchComplete = true    
   }   
 
   const appendUserData = (user) => {  
     cardData.author = user
-    cardData.isMine = cardData.author._id === viewAs._id    
+    // @ts-ignore
+    cardData.isMine = loggedIn ? (cardData.post.authorId === myDetails._id) : false
     cardState.userFetchComplete = true
   }   
   //---------------------------
 
+  //--------------------------- $ 
   $: mergedStates = {...cardState, ...data}
+  //---------------------------
 
 </script>
 

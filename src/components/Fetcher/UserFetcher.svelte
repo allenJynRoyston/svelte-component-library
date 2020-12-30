@@ -18,13 +18,19 @@
   //--------------------------- ONMOUNT
 	onMount(async() => {
     // @ts-ignore
-    const user= await findUserById(id) 
-    // @ts-ignore    
-    const portrait = await findImageById(user.imageId);    
-    onComplete({
-      ...user,
-      portrait      
-    })
+    const user = await findUserById(id) || null
+    
+    if(!!user){
+      // @ts-ignore    
+      const portrait = await findImageById(user.imageId);    
+      onComplete({
+        ...user,
+        portrait      
+      })
+    }
+    else{
+      console.warn(`The user with id: ${id} cannot be found.  Are you sure this is correct?`)
+    }
   }); 
   //---------------------------   
 

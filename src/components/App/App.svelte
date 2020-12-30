@@ -9,6 +9,9 @@
   let myDetails = window.localStorage.getItem('me')  
       myDetails = JSON.parse(myDetails) || null
 
+  let viewing = window.localStorage.getItem('viewing')  
+      viewing = JSON.parse(viewing) || null      
+
   setContext('myDetails', myDetails)  
   setContext('loggedIn', myDetails !== null )
 
@@ -39,9 +42,8 @@
 
   //--------------------------- VARS  
   const indexdb = new IndexDBStore('snappfireDB', 1);            
-  let isReady = false
-  let loggedIn = getContext('loggedIn')
-  let feedData = []
+  const loggedIn = getContext('loggedIn')  
+  let isReady = false  
 
   setContext('indexdb', indexdb)  
   //---------------------------  
@@ -50,12 +52,6 @@
   onMount(async() => {
     // setup required indexDB stuff
     await setupIndexDB();
-
-    feedData = loggedIn ? await indexdb.getAll('posts') : []
-    feedData = feedData.filter(x => x.authorId ===  myDetails._id).map(x => {
-      x.postId = x._id
-      return x
-    })
     isReady = true;
   })
   //---------------------------
@@ -88,37 +84,13 @@
   }
 </style>
 
-<!-- 
-<Card>
-  <FormExample idModifier={'a'} localStorageKey={'form_A'} clearLocalStorage={true} />
-</Card>
 
-
-<Card>
-  <FormLogin idModifier={'b'} localStorageKey={'form_B'} clearLocalStorage={true} />
-</Card> -->
 
 <div id='app-wrapper'>
-  {#if isReady}
+  {#if isReady}    
     <!-- <FormExample />     -->
-    <TestUtility />    
-
-    <br><br>
-    <Feed 
-      owner={loggedIn ? myDetails._id : null} 
-      viewAs={loggedIn ? myDetails._id : null} 
-      data={feedData} 
-      />
-
-
-    <br><br>
-
-
-    <!-- <Card>
-      <span slot='header'>Header</span>
-      <FormLogin localStorageKey={'form_C'} clearLocalStorage={true} />
-      <span slot='footer'>Footer</span>
-    </Card> -->
+    <TestUtility viewerId={viewing && viewing._id} />    
+    <Feed feedOwnerId={viewing && viewing._id} />  
   {:else}
     <p>Loading...</p>
   {/if}
