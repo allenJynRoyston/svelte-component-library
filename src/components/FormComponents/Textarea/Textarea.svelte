@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { validate } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -61,12 +61,34 @@
     id:key,
     placeholder,    
   }
+  let element;
+
+  const autoExpand = (e, el) => {
+    var el = el || e.target
+    el.style.height = 'inherit'
+    el.style.height = `${el.scrollHeight}px`    
+    setTimeout(() => { updateParent(value) })
+  }
+
 
 
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(value)
+    element.addEventListener('paste', autoExpand)
+    element.addEventListener('input', autoExpand)
+    element.addEventListener('keyup', autoExpand)        
+    autoExpand(null, element)    
   }); 
+
+
+  onDestroy(async () => {
+    if(element){
+      element.removeEventListener('paste',autoExpand)
+      element.removeEventListener('input',autoExpand)
+      element.removeEventListener('keyup',autoExpand)    
+    }
+  })  
   //---------------------------   
 
   //--------------------------- EVENT HANDLERS
@@ -100,9 +122,9 @@
   {/if}
   
   {#if contentEdit}
-    <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} />  
+    <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} bind:this={element}/>  
   {:else}
-    <textarea class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />
+    <textarea class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value bind:this={element} />
   {/if}
 
 </div>
@@ -111,6 +133,7 @@
   .input-container {
     width: 100%;
     margin-bottom: 10px;    
+
 
     label{
       font-size: 10px;
@@ -132,7 +155,6 @@
       }
       .textarea{
         color: black;
-        border: 1px solid black;
       }
     }
 

@@ -1,7 +1,11 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
-  import { onMount, onDestroy } from 'svelte';  
-  import {Button, Input, InputDate, Textarea, FormErrors, FormPreview, InputTime, InputCheckbox, Select, SelectMulti, Rating} from '../index'
+  import { onMount, onDestroy, tick } from 'svelte';  
+  import {
+    Button, Input, InputDate, Textarea, FileInput,
+    InputTime, InputCheckbox, Select, SelectMulti, Rating,
+    FormErrors, FormPreview,     
+  } from '../index'
   //---------------------------
 
   //--------------------------- VARS
@@ -10,6 +14,7 @@
   let layoutSize = 'desktop'
   let onBeforeUnload;  
   let hasError = false 
+  let hasSubmitted = false
   //---------------------------
 
   //--------------------------- PROPS
@@ -46,7 +51,15 @@
    * set busy state
   */        
   export let isBusy = false
-
+  /*
+  */
+  export let showPreview = false
+  /*
+  */
+  export let style = null
+  /*
+  */
+  export let showButton = true
   //---------------------------
 
   //--------------------------- ONMOUNT/ONDESTROY
@@ -86,17 +99,16 @@
     }    
     
     // map formData
-    formData = formData.map(x => {
+    formData = await formData.map(x => {
       const {value = null} = x
 
-      if(x.key){
+      if(x.key){        
         completedFormData[!!idModifier ? `${x.key}_${idModifier}` : x.key] = {
           value,
           isValid: true,
           errors: []
-        }
+        }        
       }
-
        x.key = !!idModifier ? `${x.key}_${idModifier}` : x.key
 
       return x;
@@ -109,7 +121,7 @@
       if(!!localStorageKey){
         // set onBeforeUnload to capture formData
         onBeforeUnload = window.addEventListener('beforeunload', (e) => {
-          if(!hasError){
+          if(!hasError && !hasSubmitted){
             window.localStorage.setItem(localStorageKey, JSON.stringify(completedFormData));
           }
         }); 
@@ -135,7 +147,6 @@
       location.reload()
     }
 
-
     isReady = true; 
   }); 
   //--------------------------- 
@@ -143,12 +154,20 @@
   //--------------------------- FUNCTIONS
   const onSubmitHandler = () => {
     let data = Object.entries(completedFormData).map(x => {
-      return !!idModifier ? {key: x[0].split(`_${idModifier}`)[0], value: x[1].value} : {key: x[0], value: x[1].value}
+      return !!idModifier ? 
+        {key: x[0].split(`_${idModifier}`)[0], value: x[1].value} : 
+        {key: x[0], value: x[1].value}
     })
     onSubmit && onSubmit(data)
+
+    hasSubmitted = true
+    if(!!localStorageKey){
+      window.localStorage.removeItem(localStorageKey);
+    }
+
   }
 
-  const updateForm = ({key, val, isValid, errors}) => {    
+  const updateForm = ({key, val, isValid, errors}) => {        
     if(!hasError){
       completedFormData[key].value = val
       completedFormData[key].isValid = isValid    
@@ -208,18 +227,20 @@
     return style
   }
   //---------------------------  
-  
-  
+
+
   //--------------------------- $
   $: disabled = Object.entries(completedFormData).filter(x => {return !x[1].isValid}).length > 0 || isBusy
 
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
+
+  const formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
   //---------------------------
 </script>
 
 
 {#if isReady}
-  <form class='form-container' data-testid='form-container' style={`padding: 20px ${padding}px;`} autocomplete="on">
+  <form class='form-container' data-testid='form-container' style={formStyling} autocomplete="on">
     {#if formData.length > 0}
       {#each formData as data, i}
 
@@ -248,31 +269,34 @@
           {#if data.renderAs === 'rating'}
             <Rating {...stripUnusedProperties(data)} updateForm={updateForm} />
           {/if}
+          {#if data.renderAs === 'fileinput'}
+            <FileInput {...stripUnusedProperties(data)} updateForm={updateForm} />
+          {/if}          
         </div>                                                            
       {/each}
 
       
-      <div>
-        <!--
-        <div class='preview-container'>
-          <FormPreview data={completedFormData} />
-        </div>
-        -->
+      <section>        
+        {#if showPreview}
+          <div class='preview-container'>
+            <FormPreview data={completedFormData} />
+          </div>
 
-        <!-- 
-        <div class='error-container'>
-          <FormErrors errors={getErrorData} />
-        </div> 
-        -->
-
-        <div class='button-container'>
-          <Button onClick={onSubmitHandler} {disabled}>
-            <slot>
-              {isBusy ? 'Saving...' : 'Save'}
-            </slot>
-          </Button>
-        </div>
-      </div>
+          <div class='error-container'>
+            <FormErrors errors={getErrorData} />
+          </div> 
+        {/if}
+       
+        {#if showButton}
+          <div class='button-container'>
+            <Button onClick={onSubmitHandler} {disabled}>
+              <slot>
+                {isBusy ? 'Saving...' : 'Save'}
+              </slot>
+            </Button>
+          </div>
+        {/if}
+      </section>
     {:else}
       <p>No form data</p>
     {/if}

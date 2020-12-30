@@ -84,12 +84,11 @@
     updateForm && updateForm({key, val, isValid, errors})
   }
 
-  const toggle = (e, index) => {
+  const toggle = (index) => {
     let filtered = ratings.filter(x => x.selected === true) || null
     let lastEle = filtered && filtered[filtered.length - 1] || null           
     let unSelect = lastEle && lastEle.i - 1 === index
   
-    e.preventDefault()
     ratings = ratings.map((x, i) => {
       x.selected = unSelect ? false : i <= index
       return x
@@ -110,7 +109,7 @@
       <button role='button' 
         style={`width: ${!!fixedWidth ? fixedWidth : '100%'}`}             
         data-testid={`rating-btn-${i}`}
-        on:click={(e) => {toggle(e, index)}} >
+        on:click|preventDefault={() => {toggle(index)}} >
           {@html selected ? inSlots.selected : inSlots.notSelected }
       </button>
     {/each}

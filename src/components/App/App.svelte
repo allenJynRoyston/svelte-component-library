@@ -1,35 +1,90 @@
 <script>
-  import {onMount} from 'svelte'
-  import {Card, FormExample, FormLogin} from '../index'
+  //--------------------------- IMPORTS  
+  import {onMount, setContext, getContext } from 'svelte'
+  import {Feed, Button, TestUtility, FormExample} from '../index'
   import {IndexDBStore} from '../../js/index'
+  //--------------------------- 
 
-  const onSubmit = (e) => {
-    console.log(e)
-  }
+  //--------------------------- APP CONTEXT   
+  let myDetails = window.localStorage.getItem('me')  
+      myDetails = JSON.parse(myDetails) || null
 
-  onMount(async() => {
-    const indexdb = new IndexDBStore('snappfireDB', 1);            
-    const indexdbTables = ['users', 'posts', 'images', 'following']
-    await indexdb.createTable(indexdbTables);
+  setContext('myDetails', myDetails)  
+  setContext('loggedIn', myDetails !== null )
 
-
-    // let _id = Math.random().toString(36).substring(7);
-    // indexdb.add('posts', {_id, name: 'allen', age: 32}, true)
-    // indexdb.add('posts', {_id, name: 'royston', age: 45}, true)
-
-    // let data = await indexdb.get('posts', "zs7uk")
-    // console.log(data)
-
+  setContext('findUserById', (id) => {        
+    return indexdb.get('users', id)
   })
 
+  setContext('findPostById', (id) => {
+    return indexdb.get('posts', id)
+  })
+  
+  setContext('findImageById', (id) => {
+    return indexdb.get('images', id)
+  })  
 
+  setContext('updateUserById', (data) => {        
+    return indexdb.add('users', data, true)
+  })
+
+  setContext('updatePostById', (data) => {    
+    return indexdb.add('posts', data, true)
+  })
+  
+  setContext('updateImageById', (data) => {
+    return indexdb.add('images', data, true)
+  })    
+  //---------------------------   
+
+  //--------------------------- VARS  
+  const indexdb = new IndexDBStore('snappfireDB', 1);            
+  let isReady = false
+  let loggedIn = getContext('loggedIn')
+  let feedData = []
+
+  setContext('indexdb', indexdb)  
+  //---------------------------  
+
+  //--------------------------- ONMOUNT
+  onMount(async() => {
+    // setup required indexDB stuff
+    await setupIndexDB();
+
+    feedData = loggedIn ? await indexdb.getAll('posts') : []
+    feedData = feedData.filter(x => x.authorId ===  myDetails._id).map(x => {
+      x.postId = x._id
+      return x
+    })
+    isReady = true;
+  })
+  //---------------------------
+
+
+  //--------------------------- FUNCTIONS
+  const setupIndexDB = () => {
+    return new Promise(async(resolve) => {
+      const indexdbTables = ['users', 'posts', 'images', 'following']
+      await indexdb.createTable(indexdbTables);
+      resolve()
+    })
+  }
+  //---------------------------
+
+
+  //-------------------------- TEST DATA
+  //---------------------------
 </script>
 
 <style lang='scss' scoped>
   #app-wrapper{
     max-width: calc(800px - 40px);
-    padding: 20px;
+    padding: 0 20px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
   }
 </style>
 
@@ -44,13 +99,29 @@
 </Card> -->
 
 <div id='app-wrapper'>
+  {#if isReady}
+    <!-- <FormExample />     -->
+    <TestUtility />    
 
-  <Card>
-    <span slot='header'>Hello World</span>
-    <FormLogin localStorageKey={'form_C'} clearLocalStorage={true} />
-    <span slot='footer'>Hello World</span>
-  </Card>
+    <br><br>
+    <Feed 
+      owner={loggedIn ? myDetails._id : null} 
+      viewAs={loggedIn ? myDetails._id : null} 
+      data={feedData} 
+      />
 
+
+    <br><br>
+
+
+    <!-- <Card>
+      <span slot='header'>Header</span>
+      <FormLogin localStorageKey={'form_C'} clearLocalStorage={true} />
+      <span slot='footer'>Footer</span>
+    </Card> -->
+  {:else}
+    <p>Loading...</p>
+  {/if}
 </div>
 
 

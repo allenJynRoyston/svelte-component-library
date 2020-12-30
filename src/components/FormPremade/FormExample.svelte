@@ -3,6 +3,7 @@
 
   export let onSubmit = (e) => {
     isBusy = true
+    console.log(e)
     setTimeout(() => {
       alert('submitted')
       isBusy = false
@@ -75,7 +76,7 @@
       renderAs: 'textarea', 
       label: 'Description',
       key: 'description',      
-      value: 'blah blah blah blah',
+      value: '<h1>blah blah blah blah</h1>',
       required: true,
       contentEdit: true,
       minLength: 5,
@@ -131,9 +132,17 @@
       required: true
     },      
     {
+      renderAs: 'fileinput', 
+      label: 'File Input',
+      key: 'fileinput',      
+      value: 2,
+      accept: 'image/png, image/jpeg',
+      required: true
+    },      
+    {
       renderAs: 'selectmulti', 
       type: 'checkbox',
-      label: 'Select',
+      label: 'Multi Select',
       key: 'selectmulti',      
       value: [1, 3],      
       options: [
@@ -191,8 +200,6 @@
   }
 
 </script>
-
-
 
 
 <Form {...props} {isBusy} />

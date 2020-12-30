@@ -2,7 +2,6 @@
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
   import { validate } from '../../../js'
-  import InputCheckbox from '../InputCheckbox/InputCheckbox.svelte'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -113,7 +112,7 @@
     {/if}
 
     {#if allowShowToggle}
-      <button on:click={(e) => {e.preventDefault(); showPassword = !showPassword}} >{showPassword ? 'Hide' : 'Show'} Password</button>  
+      <button on:click|preventDefault={() => {showPassword = !showPassword}} >{showPassword ? 'Hide' : 'Show'} Password</button>  
     {/if}
 
   {:else if type === 'number'}

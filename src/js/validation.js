@@ -266,3 +266,23 @@ export const validateRating = (props) => {
   return { isValid, val: lastEle ? lastEle.i : null, validationErrors };
 };
 //-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+export const validateInputFile = (props) => {
+  const { formData = null, required } = props;
+  let isValid = true;
+  let validationErrors = [];
+
+  if (required) {
+    if (formData === null) {
+      isValid = false;
+      validationErrors.push({
+        type: "required",
+        message: "File required",
+      });
+    }
+  }
+
+  return { isValid, val: formData, validationErrors };
+};
+//-----------------------------------------------------------------------------

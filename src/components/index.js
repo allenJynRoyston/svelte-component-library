@@ -5,6 +5,7 @@ export { default as FormPreview } from "./Form/FormPreview/FormPreview.svelte";
 
 /* FORM COMPONENTS */
 export { default as Input } from "./FormComponents/Input/Input.svelte";
+export { default as FileInput } from "./FormComponents/FileInput/FileInput.svelte";
 export { default as InputDate } from "./FormComponents/InputDate/InputDate.svelte";
 export { default as InputTime } from "./FormComponents/InputTime/InputTime.svelte";
 export { default as InputCheckbox } from "./FormComponents/InputCheckbox/InputCheckbox.svelte";
@@ -19,7 +20,21 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 
 /* COMPONENTS */
 export { default as Button } from "./Button/Button.svelte";
+export { default as Feed } from "./Feed/Feed.svelte";
+export { default as SVG } from "./SVG/SVG.svelte";
+export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
+
+/* CARD */
 export { default as Card } from "./Card/Card.svelte";
+
+/* CARD COMPONENTS */
+export { default as CardHeaderForPosts } from "./Card/CardHeader/CardHeaderForPosts.svelte";
+export { default as CardBodyForPosts } from "./Card/CardBody/CardBodyForPosts.svelte";
+/* 
+
+/* FETCHERS */
+export { default as UserFetcher } from "./Fetcher/UserFetcher.svelte";
+export { default as PostFetcher } from "./Fetcher/PostFetcher.svelte";
 
 /* APP */
 export { default as App } from "./App/App.svelte";
