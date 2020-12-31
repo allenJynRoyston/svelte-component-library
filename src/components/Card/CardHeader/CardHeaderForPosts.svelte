@@ -10,13 +10,16 @@
   //--------------------------- COMPONENT PROPS
   export let author;
   export let post;
+  export let options;
   export let isMine;
   export let props;
+  export let checkPermissions;
   export let cardFunctions;
 
   //---------------------------
 
   //--------------------------- VARS
+  const buttonStyle = 'width: 25px; height: 25px; border-radius: 50%; margin: 0 5px;'
   //---------------------------
   
   //--------------------------- ONMOUNT
@@ -49,13 +52,27 @@
       {/if}
     </div>
 
-    {#if !props.showDots && !props.isEditing}
+    {#if !props.showDots}
       <div class='cardheader-container__options'>
-        <Button onClick={cardFunctions.toggleShowDots}>
-          <SVG icon={'dots'}/>
-        </Button>
+        {#if !props.isEditing}
+          {#each options as {fn, icon, showInTray, ownerRequired, loginRequired}}
+            {#if checkPermissions(loginRequired, ownerRequired) && showInTray}
+              <Button onClick={fn} style={buttonStyle}>
+                <SVG {icon} />              
+              </Button>                    
+            {/if}
+          {/each}   
+          <Button onClick={cardFunctions.toggleShowDots} style={buttonStyle}>
+            <SVG icon={'dots'}/>
+          </Button>        
+        {:else}    
+          <Button onClick={cardFunctions.toggleEdit} style={buttonStyle}>
+            <SVG icon={'arrow-left'}/>
+          </Button>   
+        {/if}
       </div>
     {/if}
+    
   </div>  
 {:else}
   <div class='cardheader-container'>
@@ -69,17 +86,26 @@
     border-bottom: 1px solid black;
     position: relative;
     height: 45px;
+    
 
-
-    &__portrait, &__options{
+    &__portrait{
       display: flex;
-      align-items: center;                  
+      align-items: center;                        
+      border-right: 1px solid black;
+      overflow: hidden;
+      width: 60px;
+      margin-right: 10px;
+      background: black;
 
       img{
-        width: auto;
-        height: 100%;
-        max-width: 60px;
+        width: 100%;
+        height: auto;
       }
+    }
+
+    &__options {
+      display: flex;
+      align-items: center;                        
     }
 
     &__bio{

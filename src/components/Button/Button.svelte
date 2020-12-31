@@ -29,7 +29,6 @@
 
     &:active{
       background: darkgrey;
-      color: white;
     }
   }
 </style>

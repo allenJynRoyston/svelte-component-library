@@ -20,17 +20,19 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 
 /* COMPONENTS */
 export { default as Button } from "./Button/Button.svelte";
-export { default as Feed } from "./Feed/Feed.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
 
-/* CARD */
-export { default as Card } from "./Card/Card.svelte";
+/* FEED */
+export { default as Feed } from "./Feed/Feed.svelte";
+export { default as FeedLogic } from "./Feed/FeedLogic/FeedLogic.svelte";
 
-/* CARD COMPONENTS */
+/* CARD  */
+export { default as Card } from "./Card/Card.svelte";
 export { default as CardHeaderForPosts } from "./Card/CardHeader/CardHeaderForPosts.svelte";
 export { default as CardBodyForPosts } from "./Card/CardBody/CardBodyForPosts.svelte";
-/* 
+export { default as CardFooterForPosts } from "./Card/CardFooter/CardFooterForPosts.svelte";
+export { default as CardComments } from "./Card/CardComments/CardComments.svelte";
 
 /* FETCHERS */
 export { default as UserFetcher } from "./Fetcher/UserFetcher.svelte";

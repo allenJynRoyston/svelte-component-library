@@ -6,11 +6,12 @@
 
   //--------------------------- COMPONENT PROPS
   export let data = []  
+  export let friendStatus;
   //---------------------------
 
   //--------------------------- APP CONTEXT 
   const findPostById = getContext('findPostById')
-  const updatePostById = getContext('updatePostById')
+  const updatePostById = getContext('updatePostById')  
   //---------------------------    
 
   //--------------------------- VARS
@@ -21,19 +22,15 @@
   })
 
   const feedFunctions = {
-    onEditSave: async({id, content}) => {
-      // @ts-ignore
-      let post = await findPostById(id)
-      post.content = content
+    update: async({post}) => {
       // @ts-ignore
       updatePostById(post)
-
       feedFunctions.clear()
       return post
     },
     editItem: (index) => {
       feedData = data.map((x, i) => {
-        x.isEditing = index === i
+        x.isEditing = index === i ? !x.isEditing : x.isEditing
         return x
       })   
     },
@@ -46,7 +43,7 @@
     },   
     blurAllBut: (index) => {
       feedData = data.map((x, i) => {
-        x.isBlurred = index !== i
+        x.isBlurred = index !== i ? !x.isBlurred : x.isBlurred
         return x
       })    
     }
@@ -75,7 +72,7 @@
 <div class='feed-container'>
   {#each feedData as data, index}
     <div class='feed-container-item' class:blur={data.isBlurred} on:click={data.isBlurred ? clearPrompt : () => {}} >
-      <Card {data} {index} {feedFunctions} />
+      <Card {data} {friendStatus} {index} {feedFunctions} />
     </div>
   {/each}
 </div>  
@@ -91,10 +88,11 @@
       margin-bottom: 20px;      
       transition: 0.3s;
       box-shadow: none;
+      transform: scale(0.95);
 
       &:hover{        
         box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.25);
-        transform: scale(1.01);
+        transform: scale(1);
       }
 
       &.blur{

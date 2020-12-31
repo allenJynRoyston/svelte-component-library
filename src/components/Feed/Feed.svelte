@@ -1,26 +1,22 @@
-<script>
+<script lang='ts'>
   //--------------------------- IMPORTS
   import {onMount, getContext} from 'svelte'
-  import {UserFetcher} from '../index'
-
-  import FeedLogic from './FeedLogic/FeedLogic.svelte'
-
+  import {UserFetcher, FeedLogic} from '../index'
+  
   //--------------------------- STATE
   export let feedOwnerId = null;  
+  export let friendStatus = null;
 
   //--------------------------- VARS
-  const loggedIn = getContext('loggedIn')
-  const myDetails = getContext('myDetails')
-  const indexdb = getContext('indexdb')
-    
+  const indexdb = getContext('indexdb')    
   let feedData = []  
   let isReady = false
   let feedOwner = null
-  
 
   //--------------------------- ONMOUNT
   onMount(async() => {
-    feedData = loggedIn ? await indexdb.getAll('posts') : []
+    // @ts-ignore
+    feedData = await indexdb.getAll('posts')
     feedData = feedData.filter(x => x.authorId ===  feedOwnerId).map(x => {
       x.postId = x._id
       return x
@@ -39,9 +35,11 @@
 
 
 
-<p>
+<p style='text-align: center'>
   {#if feedOwner}
     <strong>- {`${feedOwner.firstName} ${feedOwner.lastName}`} -</strong>
+    <br>
+    <small>Friendship status: <strong>{!!friendStatus ? `${friendStatus} 🤗` : "Not friends"}</strong></small>
   {/if}
 </p>
 
@@ -52,5 +50,5 @@
 
 
 {#if isReady}
-  <FeedLogic data={feedData} />
+  <FeedLogic data={feedData} {friendStatus} />
 {/if}

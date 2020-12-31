@@ -4,7 +4,7 @@
   export let icon = null;
   export let index = null;
   export let title = null;
-  export let useStyle = '';
+  export let style = null;
   export let onClick = null;
 </script>
 
@@ -27,7 +27,7 @@
 </style>
 
 
-<div on:click={() => {onClick && onClick(index)}} class='svg-container {onClick !== null ? "isbutton" : ""}' style={useStyle}>
+<div on:click={() => {onClick && onClick(index)}} class='svg-container {onClick !== null ? "isbutton" : ""}' {style}>
   <!---------->
   {#if icon === 'dots'}
     <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 20 20">

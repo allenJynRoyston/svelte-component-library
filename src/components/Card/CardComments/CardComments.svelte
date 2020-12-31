@@ -42,41 +42,15 @@
   
 </script>
 
-{#if post}
-  <div class='cardbody-container' >
-    {#if props.isEditing}
-      <Form {...formProps} isBusy={props.isSaving} style={'border: none'} >
-        Update
-      </Form>
-    {:else}
-      <div contenteditable="false" bind:innerHTML={post.content} />
-    {/if}
-  </div>
-
-  {#if props.isSaving}
-    <div class='cardbody-container__save'>
-      <SVG icon={'save'} />
-    </div>
-  {/if}
-{/if}
+<div class='cardcomments'>  
+  <p>Comments</p>
+</div>
 
 <style lang='scss'>
-  .cardbody-container{
-    display: flex;    
-    width: 100%;
-    position: relative;
-
-    &__save{
-      z-index: 1;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.75)
-    }
-  }  
+  .cardcomments{
+    width: calc(100% - 20px);
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 10px
+  }
 </style>

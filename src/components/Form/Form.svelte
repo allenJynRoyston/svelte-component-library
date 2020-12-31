@@ -289,7 +289,7 @@
        
         {#if showButton}
           <div class='button-container'>
-            <Button onClick={onSubmitHandler} {disabled}>
+            <Button onClick={onSubmitHandler} {disabled} style={'padding: 5px 10px'}>
               <slot>
                 {isBusy ? 'Saving...' : 'Save'}
               </slot>

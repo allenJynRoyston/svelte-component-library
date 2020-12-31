@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
   //---------------------------
   import {tick, onMount, getContext} from 'svelte'
   import {Button, Form, UserFetcher} from '../index'  
@@ -16,6 +16,7 @@
   let loginAsProps = {}
   let mimicAsProps = {}
   let viewer = null
+  let busy = false
   //---------------------------
 
   //---------------------------
@@ -77,6 +78,7 @@
   //---------------------------
   const setupMockUsers = () => {
     return new Promise(async(resolve) => {
+      // @ts-ignore
       resolve(await indexdb.getAll('users'))    
     })
   }
@@ -84,6 +86,11 @@
   const randomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
+
+  const returnRandomNumber = (dataset) => {
+    const random = Math.floor(Math.random() * dataset.data.length);
+    return random
+  }  
 
   const returnRandom = (dataset) => {
     const random = Math.floor(Math.random() * dataset.data.length);
@@ -94,83 +101,146 @@
     return Math.random().toString(36).substring(7);
   }
   
-  const addTestData = async(users = 10, posts = 500, images = 50) => {
-    let pData = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    let uData = await axios.get('https://jsonplaceholder.typicode.com/users')
-    let iData = await axios.get('https://jsonplaceholder.typicode.com/photos')
+  const addTestData = async(users = 10, posts = 100, images = 200) => {
+    busy = true
+    return new Promise( async(resolved) => {
+      let uData = await axios.get('https://jsonplaceholder.typicode.com/users') // 10 max
+      let pData = await axios.get('https://jsonplaceholder.typicode.com/posts') // 100 max      
+      let iData = await axios.get('https://jsonplaceholder.typicode.com/photos') // 5000 max
 
-    // fill fields to make it a compatable dataset
-    pData.data = pData.data.slice(0, posts).map(x => {
-      x._id = `p_${randomId()}`
-      return x
+      // fill fields to make it a compatable dataset
+      pData.data = pData.data.slice(0, posts).map(x => {
+        x._id = `p_${randomId()}`
+        return x
+      })      
+
+      uData.data = uData.data.slice(0, users).map(x => {
+        x._id = `u_${randomId()}`
+        return x
+      })    
+
+      iData.data = iData.data.slice(0, images).map((x, i) => {
+        x._id = `i_${randomId()}`
+        return x
+      })     
+      
+      let promises = [];
+
+      iData.data.forEach((x, index) => {        
+        if(index < images){
+          const {_id} = x  
+          promises.push(new Promise( async(resolve) => {
+            // @ts-ignore
+            await indexdb.add('images', {
+              _id, 
+              version: 0,
+              imageSrc: `https://picsum.photos/50/50?random=${index}`,
+              metadata: {}      
+            }, true)     
+            resolve(void)
+          }))   
+        }
+      })
+
+      uData.data.forEach((x, index) => {        
+        if(index < users){
+          const {_id, name} = x
+          promises.push(new Promise( async(resolve) => {
+            // @ts-ignore
+            await indexdb.add('users', {
+              _id, 
+              version: 0,
+              firstName: name.split(' ')[0],
+              lastName:  name.split(' ')[1] || 'Smith',
+              imageId: returnRandom(iData)._id
+            }, true)     
+            resolve(void)
+          }))   
+        }
+      }) 
+
+      pData.data.forEach((x, index) => {        
+        if(index < posts){   
+          const {_id, title} = x;   
+          promises.push(new Promise( async(resolve) => {
+            // @ts-ignore
+            await indexdb.add('posts', {
+              _id, 
+              version: 0,
+              content: title,
+              allowShare: {
+                friends: true,
+                anybody: false
+              },
+              allowComments: {
+                friends: true,
+                anybody: false
+              },
+              allowEmotes: {
+                friends: true,
+                anybody: false
+              },
+              emotes: {
+                myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',
+                like: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                dislike: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                angry: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                sad: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                wink: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                }                                
+              },
+              authorId: returnRandom(uData)._id,
+              updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
+            }, true)     
+            resolve(void)
+          }))   
+        }
+      }) 
+
+      Promise.all(promises).then(async() => {  
+        // @ts-ignore
+        let postCount = await indexdb.count('posts')
+        // @ts-ignore
+        let userCount = await indexdb.count('users')
+        // @ts-ignore
+        let imageCount = await indexdb.count('images')
+
+        alert(`${userCount} users created | ${postCount} posts created | ${imageCount} images created.`)        
+        location.reload()  
+        resolved(void)                    
+      })      
+
     })
-
-    uData.data = uData.data.slice(0, users).map(x => {
-      x._id = `u_${randomId()}`
-      return x
-    })    
-
-    iData.data = iData.data.slice(0, images).map((x, i) => {
-      x._id = `i_${randomId()}`
-      return x
-    })     
-    
-
-    iData.data.forEach((x, index) => {
-      const {_id} = x  
-      if(index < images){
-        indexdb.add('images', {
-          _id, 
-          version: 0,
-          imageSrc: `https://picsum.photos/50/50?random=${index}`,
-          metadata: {}      
-        }, true)     
-      }
-    })
-
-    uData.data.forEach((x, index) => {
-      const {_id, name} = x
-      if(index < users){
-        indexdb.add('users', {
-          _id, 
-          version: 0,
-          firstName: name.split(' ')[0],
-          lastName:  name.split(' ')[1] || 'Smith',
-          imageId: returnRandom(iData)._id
-        }, true)  
-      }
-    })    
-
-    pData.data.forEach((x, index) => {
-      const {_id, title} = x;   
-      if(index < posts){   
-        indexdb.add('posts', {
-          _id, 
-          version: 0,
-          content: title,
-          authorId: returnRandom(uData)._id,
-          updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
-        }, true)
-      }
-    })
-
-
-    setTimeout(() => {
-      alert("test data added.")
-      location.reload()
-    }, 4000)
   }  
 
   const logOut = () => {
     window.localStorage.removeItem('me')             
-    window.localStorage.removeItem('viewing')             
+    // window.localStorage.removeItem('viewing')             
     location.reload()
   }
 
   const clearTestData = () => {
+    // @ts-ignore
     indexdb.clear('following')
+    // @ts-ignore
     indexdb.clear('posts')
+    // @ts-ignore
     indexdb.clear('images')
+    // @ts-ignore
     indexdb.clear('users')
 
     window.localStorage.removeItem('me')     
@@ -198,9 +268,9 @@
 {#if isReady}
   <div class='testutility-container'>
     <div class='testutility-container__item'>
-      <Button onClick={addTestData}> Add test data </Button>
-      <Button onClick={clearTestData}> Clear test data </Button>  
-      <Button onClick={logOut}> Logout </Button>  
+      <Button disabled={busy} onClick={addTestData}> Add test data </Button>
+      <Button disabled={busy} onClick={clearTestData}> Clear test data </Button>  
+      <Button disabled={busy} onClick={logOut}> Logout </Button>  
     </div>
     <hr>
 

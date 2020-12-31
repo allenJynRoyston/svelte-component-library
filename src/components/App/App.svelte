@@ -14,7 +14,7 @@
 
   setContext('myDetails', myDetails)  
   setContext('loggedIn', myDetails !== null )
-
+  
   setContext('findUserById', (id) => {        
     return indexdb.get('users', id)
   })
@@ -90,7 +90,7 @@
   {#if isReady}    
     <!-- <FormExample />     -->
     <TestUtility viewerId={viewing && viewing._id} />    
-    <Feed feedOwnerId={viewing && viewing._id} />  
+    <Feed feedOwnerId={viewing && viewing._id} friendStatus={'friend'} />  
   {:else}
     <p>Loading...</p>
   {/if}

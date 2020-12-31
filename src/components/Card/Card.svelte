@@ -2,11 +2,16 @@
 import { tick, getContext } from 'svelte';
 
   //--------------------------- IMPORTS  
-  import { UserFetcher, PostFetcher, CardHeaderForPosts, CardBodyForPosts, Button, SVG } from '../index'
+  import { 
+    UserFetcher, PostFetcher, 
+    CardHeaderForPosts, CardBodyForPosts, CardFooterForPosts, CardComments,
+    Button
+  } from '../index'
 
   //--------------------------- COMPONENT PROPS
   export let data = null;    
   export let index = null;  
+  export let friendStatus = null;
   export let feedFunctions = null;  
   //---------------------------
 
@@ -16,7 +21,9 @@ import { tick, getContext } from 'svelte';
 
   let cardState = {
     render: true,
+    showExtraEmojis: false,    
     showDots: false,
+    showComments: false,
     isSaving: false,
     userFetchComplete: false,
     postFetchComplete: false
@@ -28,47 +35,103 @@ import { tick, getContext } from 'svelte';
       _id: null,
       displayName: null,
       imageSrc: null,
-      updatedOn: null
+      updatedOn: null, 
     },
     post: {
       _id: null,
       authorId: null,
       content: null, 
-      imageSrc: []
+      imageSrc: [],
+      emotes: {
+        myEmote: null
+      }      
     }
   }
 
   const cardFunctions = {
-    toggleShowDots: () => {
-      cardState.showDots = !cardState.showDots      
-    },
     onInit: (e) => {
       console.log(e)
     },
     onHide: () => {
       cardState.showDots = !cardState.showDots 
       console.log('hide...')
+    },    
+    toggleShowComments: () => {
+      cardState.showComments = !cardState.showComments      
     },
-    toggleEdit: () => {      
+    toggleShowDots: () => {
+      cardState.showDots = !cardState.showDots      
+    },
+    toggleShowEmojis: () => {
+      cardState.showExtraEmojis = !cardState.showExtraEmojis
+    },
+    toggleEdit: () => {     
       cardState.showDots = false;
       feedFunctions && feedFunctions.editItem(index)
       feedFunctions && feedFunctions.blurAllBut(index)
-    },
+    },  
+    share: () => {     
+      alert("share")
+    }, 
+    report: () => {     
+      alert("report")
+    },      
+    updateEmoji: async(emoji) => {           
+      // first, remove one from the count
+      let current = cardData.post.emotes.myEmote
+      cardData.post.emotes[current].count --
+
+      // add to the new one
+      cardData.post.emotes.myEmote = emoji      
+      cardData.post.emotes[emoji].count ++
+      updatePost(cardData.post)
+    },        
     onSubmit: async(data) => {
-      cardState.isSaving = true;
-      // @ts-ignore, first save
-      const post = feedFunctions && await feedFunctions.onEditSave({id: cardData.post._id, content: data[0].value})
-      // fetch post
+      cardData.post.content = data[0].value
+      updatePost(cardData.post)
+    }
+  }
+
+  const updatePost = async(p) => {
+      cardState.isSaving = true;      
+      // @ts-ignore, first updates and saves
+      const post = feedFunctions && await feedFunctions.update({id: p._id, post: p})
+      // then refetches
       appendPostData(post)
       cardState.isSaving = false
       cardState.render = false;
       await tick()
       cardState.render = true
-    }
   }
 
   let options = [
-    {name: 'Edit', fn: () => {cardFunctions.toggleEdit()}}
+    {
+      name: 'Back', 
+      icon: 'arrow-left', 
+      loginRequired: false,
+      ownerRequired: false,
+      showInTray: false,
+      showInSidebar: true,
+      fn: cardFunctions.toggleShowDots
+    },     
+    {
+      name: 'Edit', 
+      icon: 'edit', 
+      loginRequired: true, 
+      ownerRequired: true, 
+      showInTray: true,
+      showInSidebar: false, 
+      fn: cardFunctions.toggleEdit
+    },
+    {
+      name: 'Report', 
+      icon: 'warning', 
+      loginRequired: false, 
+      ownerRequired: false, 
+      showInTray: false,
+      showInSidebar: true,       
+      fn: cardFunctions.report
+    }    
   ]
   //---------------------------
 
@@ -76,6 +139,22 @@ import { tick, getContext } from 'svelte';
   //--------------------------- FUNCTIONS  
   const appendPostData = (post) => {
     cardData.post = post
+
+    if(post.allowShare.anybody || (post.allowShare.friends && friendStatus === 'friend') ){
+      if(options.filter(x => x.name === 'Share').length === 0){
+        options.push(
+          {
+            name: 'Share', 
+            icon: 'share', 
+            loginRequired: false, 
+            ownerRequired: false, 
+            showInTray: true,
+            showInSidebar: true, 
+            fn: cardFunctions.share
+          }        
+        )
+      }
+    }    
     cardState.postFetchComplete = true    
   }   
 
@@ -84,7 +163,15 @@ import { tick, getContext } from 'svelte';
     // @ts-ignore
     cardData.isMine = loggedIn ? (cardData.post.authorId === myDetails._id) : false
     cardState.userFetchComplete = true
-  }   
+  }  
+    
+  const checkPermissions = (loginRequired, ownerRequired) => {        
+    let state = loginRequired ? (loggedIn ? true : false) : true            
+        state = ownerRequired ? (cardData.isMine ? true : false) : state        
+    return state
+  }     
+
+  const buttonStyle = 'width: 100%; margin-bottom: 10px; padding: 10px'
   //---------------------------
 
   //--------------------------- $ 
@@ -107,20 +194,23 @@ import { tick, getContext } from 'svelte';
   <div class='card-container' class:blur={data && data.isBlurred}>
     <div class='card-container__header'>
       {#if mergedStates.userFetchComplete} 
-        <CardHeaderForPosts {...cardData} {cardFunctions} props={mergedStates} />
+        <CardHeaderForPosts {...cardData} {cardFunctions} {options} {checkPermissions} props={mergedStates} />
       {/if}
       <slot name='header'></slot>
     </div>
 
-    <div class='card-container__body'>
+    <div class='card-container__body' class:enlarge={cardState.showDots} >
       {#if mergedStates.postFetchComplete} 
         <CardBodyForPosts {...cardData} {cardFunctions} props={mergedStates} />
       {/if}
-      <slot></slot>
+      <slot />
     </div>
 
 
     <div class='card-container__footer'>
+      {#if mergedStates.postFetchComplete} 
+        <CardFooterForPosts  {...cardData} {cardFunctions} props={mergedStates} />
+      {/if}
       <slot name='footer'></slot>
     </div>      
 
@@ -128,22 +218,22 @@ import { tick, getContext } from 'svelte';
       <div class='card-container__overlay' />
 
       <div class='card-container__options'>
-        <div class='card-container__options-btn'>
-          <Button onClick={cardFunctions.toggleShowDots} >
-            <SVG icon='cross' />
-          </Button>
-        </div>
-        
         <div class='card-container__options-list'>     
-          {#each options as {name, fn}}   
-            <Button onClick={fn} style={'margin-bottom: 10px; padding: 10px'} >{name}</Button>            
+          {#each options as {name, showInSidebar, loginRequired, ownerRequired, fn}}   
+            {#if checkPermissions(loginRequired, ownerRequired) && showInSidebar }
+              <Button onClick={fn} style={buttonStyle}>
+                {name}
+              </Button>            
+            {/if}
           {/each}
         </div>
-      
       </div>    
     {/if}  
   </div>  
+{/if}
 
+{#if cardState.showComments}
+  <CardComments {...cardData} {cardFunctions} props={mergedStates}  />
 {/if}
 
 <style lang='scss'>
@@ -152,21 +242,22 @@ import { tick, getContext } from 'svelte';
     overflow: hidden;
     display: block;
     position: relative;
-    min-height: 200px;
     width: 100%;
     
-
     &__header{
-      font-size: 40px;      
-    }
-
-    &__footer{
-      font-size: 32px;
+      width: auto;
     }
 
     &__body{
-      padding: 10px; 
+      padding: 20px 10px; 
+      &.enlarge{
+        min-height: 80px
+      }
     }
+
+    &__footer{
+      width: auto;
+    }    
 
     &__overlay{
       position: absolute;
@@ -185,25 +276,23 @@ import { tick, getContext } from 'svelte';
       right: 0;
       width: calc(200px - 20px);
       padding: 10px;
-      height: 100%;      
-
+      height: 100%;     
+      background: white; 
+      border-left: 1px solid black;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
 
-      &-btn{
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
 
       &-list{
         position: absolute;
-        top: 40px;
+        top: 0px;
         right: 0;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;        
+        align-items: flex-start;
+        width: calc(100% - 20px);
+        padding: 10px;
       }      
     }    
   }   

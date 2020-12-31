@@ -11,9 +11,6 @@ jest.mock("dayjs", () => ({
 
 const toggleCheckbox = async ({ label }) => {
   fireEvent.click(screen.getByLabelText(label));
-
-  console.log(screen.getByLabelText(label).checkbox);
-
   await new Promise((r) => setTimeout(r, 1));
 };
 
