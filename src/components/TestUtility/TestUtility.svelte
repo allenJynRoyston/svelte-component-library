@@ -6,6 +6,7 @@
 
   //---------------------------
   export let viewerId = null
+  export let friendStatus = null;
 
   //---------------------------
   const indexdb = getContext('indexdb')
@@ -15,6 +16,7 @@
   let isReady = false;
   let loginAsProps = {}
   let mimicAsProps = {}
+  let friendStatusProps = {}
   let viewer = null
   let busy = false
   //---------------------------
@@ -70,6 +72,30 @@
         }  
       ]
     }
+
+    friendStatusProps = {
+      formData: [
+        {
+          renderAs: 'select', 
+          label: 'We are:',     
+          key: 'loginAs',      
+          value: 0,
+          defaultOption: 'Select an option',
+          options: [
+            {title: 'friends'}, 
+            {title: 'not_friends'}, 
+            {title: 'pending_request'}
+          ],
+          onInitFilter: (val, options) => {                  
+            return loggedIn ? options.find(x => x.title === friendStatus)  : null
+          },        
+          onChange: (val) => {    
+            window.localStorage.setItem('friendstatus', JSON.stringify(val))     
+            location.reload()
+          },     
+        }  
+      ]
+    }      
 
     await tick()
     isReady = true
@@ -137,7 +163,7 @@
               imageSrc: `https://picsum.photos/50/50?random=${index}`,
               metadata: {}      
             }, true)     
-            resolve(void)
+            resolve(null)
           }))   
         }
       })
@@ -154,7 +180,7 @@
               lastName:  name.split(' ')[1] || 'Smith',
               imageId: returnRandom(iData)._id
             }, true)     
-            resolve(void)
+            resolve(null)
           }))   
         }
       }) 
@@ -206,7 +232,7 @@
               authorId: returnRandom(uData)._id,
               updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
             }, true)     
-            resolve(void)
+            resolve(null)
           }))   
         }
       }) 
@@ -221,7 +247,7 @@
 
         alert(`${userCount} users created | ${postCount} posts created | ${imageCount} images created.`)        
         location.reload()  
-        resolved(void)                    
+        resolved(null)                    
       })      
 
     })
@@ -258,6 +284,9 @@
   }   
   //---------------------------
 
+  //--------------------------- STYLES
+  const buttonStyle = 'margin-right: 10px; padding: 5px'
+  const formStyle = 'margin-right: 5px'
 </script>
 
 
@@ -268,15 +297,16 @@
 {#if isReady}
   <div class='testutility-container'>
     <div class='testutility-container__item'>
-      <Button disabled={busy} onClick={addTestData}> Add test data </Button>
-      <Button disabled={busy} onClick={clearTestData}> Clear test data </Button>  
-      <Button disabled={busy} onClick={logOut}> Logout </Button>  
+      <Button disabled={busy} onClick={addTestData} style={buttonStyle}> Add test data </Button>
+      <Button disabled={busy} onClick={clearTestData} style={buttonStyle}> Clear test data </Button>  
+      <Button disabled={busy} onClick={logOut} style={buttonStyle}> Logout </Button>  
     </div>
     <hr>
 
     <div class='testutility-container__item'>
-      <Form {...loginAsProps} showButton={false} style={'margin-right: 5px'}/>    
-      <Form {...mimicAsProps} showButton={false} style={'margin-left: 5px'}/>    
+      <Form {...loginAsProps} showButton={false} style={formStyle}/>    
+      <Form {...mimicAsProps} showButton={false} style={formStyle}/>    
+      <Form {...friendStatusProps} showButton={false} style={formStyle}/>    
     </div>
 
 
@@ -300,9 +330,14 @@
 
 <style lang='scss'>
   .testutility-container{
+    width: 100%;
 
     &__item{
-      display: flex; justify-content: space-between      
+      display: flex; justify-content: flex-start      
+    }
+
+    p{
+      text-align: center
     }
 
   }

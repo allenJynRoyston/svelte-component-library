@@ -12,6 +12,9 @@
   let viewing = window.localStorage.getItem('viewing')  
       viewing = JSON.parse(viewing) || null      
 
+  let friendStatus = window.localStorage.getItem('friendstatus')  
+      friendStatus = JSON.parse(friendStatus).title || null          
+
   setContext('myDetails', myDetails)  
   setContext('loggedIn', myDetails !== null )
   
@@ -89,8 +92,8 @@
 <div id='app-wrapper'>
   {#if isReady}    
     <!-- <FormExample />     -->
-    <TestUtility viewerId={viewing && viewing._id} />    
-    <Feed feedOwnerId={viewing && viewing._id} friendStatus={'friend'} />  
+    <TestUtility viewerId={viewing && viewing._id}  {friendStatus}/>    
+    <Feed feedOwnerId={viewing && viewing._id} {friendStatus} />  
   {:else}
     <p>Loading...</p>
   {/if}

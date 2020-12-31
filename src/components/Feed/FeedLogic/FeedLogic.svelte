@@ -88,11 +88,9 @@
       margin-bottom: 20px;      
       transition: 0.3s;
       box-shadow: none;
-      transform: scale(0.95);
-
+      
       &:hover{        
-        box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.25);
-        transform: scale(1);
+        box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.25);      
       }
 
       &.blur{
