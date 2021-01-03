@@ -13,7 +13,8 @@
       viewing = JSON.parse(viewing) || null      
 
   let friendStatus = window.localStorage.getItem('friendstatus')  
-      friendStatus = JSON.parse(friendStatus).title || null          
+      friendStatus = JSON.parse(friendStatus) || null
+      friendStatus = !!friendStatus ? friendStatus.title : friendStatus 
 
   setContext('myDetails', myDetails)  
   setContext('loggedIn', myDetails !== null )
@@ -28,7 +29,12 @@
   
   setContext('findImageById', (id) => {
     return indexdb.get('images', id)
-  })  
+  })
+  
+  setContext('findCommentById', (id) => {
+    return indexdb.get('comments', id)
+  })
+    
 
   setContext('updateUserById', (data) => {        
     return indexdb.add('users', data, true)
@@ -41,11 +47,14 @@
   setContext('updateImageById', (data) => {
     return indexdb.add('images', data, true)
   })    
+
+  setContext('updateCommentById', (data) => {
+    return indexdb.add('comments', data, true)
+  })      
   //---------------------------   
 
   //--------------------------- VARS  
-  const indexdb = new IndexDBStore('snappfireDB', 1);            
-  const loggedIn = getContext('loggedIn')  
+  const indexdb = new IndexDBStore('snappfireDB', 1);             
   let isReady = false  
 
   setContext('indexdb', indexdb)  
@@ -63,7 +72,7 @@
   //--------------------------- FUNCTIONS
   const setupIndexDB = () => {
     return new Promise(async(resolve) => {
-      const indexdbTables = ['users', 'posts', 'images', 'following']
+      const indexdbTables = ['users', 'posts', 'comments', 'images', 'following']
       await indexdb.createTable(indexdbTables);
       resolve()
     })

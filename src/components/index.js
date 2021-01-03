@@ -32,11 +32,19 @@ export { default as Card } from "./Card/Card.svelte";
 export { default as CardHeaderForPosts } from "./Card/CardHeader/CardHeaderForPosts.svelte";
 export { default as CardBodyForPosts } from "./Card/CardBody/CardBodyForPosts.svelte";
 export { default as CardFooterForPosts } from "./Card/CardFooter/CardFooterForPosts.svelte";
-export { default as CardComments } from "./Card/CardComments/CardComments.svelte";
+
+/* COMMENTS */
+export { default as Comments } from "./Comments/Comments.svelte";
+export { default as CommentItem } from "./Comments/CommentItem/CommentItem.svelte";
+export { default as CommentHeader } from "./Comments/CommentHeader/CommentHeader.svelte";
+export { default as CommentEmotes } from "./Comments/CommentEmotes/CommentEmotes.svelte";
+export { default as CommentContent } from "./Comments/CommentContent/CommentContent.svelte";
 
 /* FETCHERS */
 export { default as UserFetcher } from "./Fetcher/UserFetcher.svelte";
 export { default as PostFetcher } from "./Fetcher/PostFetcher.svelte";
+export { default as ImageFetcher } from "./Fetcher/ImageFetcher.svelte";
+export { default as CommentFetcher } from "./Fetcher/CommentFetcher.svelte";
 
 /* APP */
 export { default as App } from "./App/App.svelte";

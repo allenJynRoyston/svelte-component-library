@@ -2,16 +2,10 @@
   //--------------------------- IMPORTS
   import {Button, SVG} from '../../index'
   //--------------------------- COMPONENT PROPS
-  export let post;
-  export let author;
-  export let isMine;
-  export let cardFunctions;
-  export let props;
-
+  export let data;
   //--------------------------- VARS  
-  const {updateEmoji, toggleShowEmojis, toggleShowComments} = cardFunctions;
-  const {myEmote} = post.emotes
-  const {myCommentId = null} = post.comments
+  const {myEmote} = data.emotes
+  const {myCommentId = null} = data.comments
 
   const emojis = [
     {name: 'like', inTray: true},
@@ -23,7 +17,7 @@
 
   //--------------------------- FN
   const getCount = (emoji) => {      
-    return post.emotes[emoji] && post.emotes[emoji].count || 0    
+    return data.emotes[emoji] && data.emotes[emoji].count || 0    
   }
 
   //--------------------------- STYLES
@@ -33,40 +27,40 @@
   const svgStyle = 'margin-right: 5px'
 </script>
 
-<div class='cardfooter'>
-  <div class='cardfooter__emotes'>
+<div class='commentfooter'>
+  <div class='commentfooter__emotes'>
 
-    <div class='cardfooter__emotes-tray'>
+    <div class='commentfooter__emotes-tray'>
       {#each emojis.filter(x => x.inTray) as {name}}
-        <Button style={buttonStyleLeft} onClick={() => {updateEmoji(name)}}>
+        <Button style={buttonStyleLeft} onClick={() => {}}>
           <SVG icon={name} size={12} fill={myEmote === name ? "green" : 'black'} style={svgStyle} /> 
           <strong>{getCount(name)}</strong>
         </Button>  
       {/each}
     </div>
-    <div class='cardfooter__emotes-outside' class:show={props.showExtraEmojis}>
+    <div class='commentfooter__emotes-outside' class:show={false}>
       {#each emojis.filter(x => !x.inTray) as {name}}
-        <Button style={buttonStyleLeft} onClick={() => {updateEmoji(name)}}>
+        <Button style={buttonStyleLeft} onClick={() => {}}>
           <SVG icon={name} size={12} fill={myEmote === name ? "green" : 'black'} style={svgStyle} /> 
           <strong>{getCount(name)}</strong>
         </Button>  
       {/each}  
-      <Button style={buttonStyleLeft} onClick={toggleShowEmojis}>
-        <SVG icon={props.showExtraEmojis ? 'arrow-left' : 'plus'} size={12} /> 
+      <Button style={buttonStyleLeft} onClick={() => {}}>
+        <SVG icon={false ? 'arrow-left' : 'plus'} size={12} />
       </Button>        
     </div>  
   </div>
 
-  <div class='cardfooter__comment'>
-    <Button style={buttonStyleRight} onClick={toggleShowComments}>
+  <div class='commentfooter__comment'>
+    <Button style={buttonStyleRight} onClick={() => {}}>
       <SVG icon="comments" size={12} fill={!!myCommentId ? 'green' : "black"} style={svgStyle}/> 
-      <strong>{post.comments.count}</strong>
+      <strong>{data.comments.count}</strong>
     </Button>     
   </div>
 </div>
 
 <style lang='scss'>
-  .cardfooter{
+  .commentfooter{
     height: 25px;
     border-top: 1px solid black;    
     display: flex;    

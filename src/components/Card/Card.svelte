@@ -4,8 +4,8 @@ import { tick, getContext } from 'svelte';
   //--------------------------- IMPORTS  
   import { 
     UserFetcher, PostFetcher, 
-    CardHeaderForPosts, CardBodyForPosts, CardFooterForPosts, CardComments,
-    Button
+    CardHeaderForPosts, CardBodyForPosts, CardFooterForPosts, 
+    Comments, Button
   } from '../index'
 
   //--------------------------- COMPONENT PROPS
@@ -38,13 +38,18 @@ import { tick, getContext } from 'svelte';
       updatedOn: null, 
     },
     post: {
-      _id: null,
+      allowComments: {},
+      allowEmotes: {},
+      allowShare: {},
       authorId: null,
+      comments: {},     
       content: null, 
-      imageSrc: [],
+      _id: null,
       emotes: {
         myEmote: null
-      }      
+      },
+      updatedOn: null,
+      version: null,                  
     }
   }
 
@@ -55,9 +60,17 @@ import { tick, getContext } from 'svelte';
     onHide: () => {
       cardState.showDots = !cardState.showDots 
       console.log('hide...')
-    },    
+    },  
+    share: () => {     
+      alert("share")
+    }, 
+    report: () => {     
+      alert("report")
+    },        
     toggleShowComments: () => {
-      cardState.showComments = !cardState.showComments      
+      // cardState.showComments = !cardState.showComments            
+      feedFunctions && feedFunctions.blurAllBut(index)
+      feedFunctions && feedFunctions.toggleShowComments(index)
     },
     toggleShowDots: () => {
       cardState.showDots = !cardState.showDots      
@@ -69,12 +82,6 @@ import { tick, getContext } from 'svelte';
       cardState.showDots = false;
       feedFunctions && feedFunctions.editItem(index)
       feedFunctions && feedFunctions.blurAllBut(index)
-    },  
-    share: () => {     
-      alert("share")
-    }, 
-    report: () => {     
-      alert("report")
     },      
     updateEmoji: async(emoji) => {           
       // first, remove one from the count
@@ -155,6 +162,7 @@ import { tick, getContext } from 'svelte';
         )
       }
     }    
+
     cardState.postFetchComplete = true    
   }   
 
@@ -232,8 +240,8 @@ import { tick, getContext } from 'svelte';
   </div>  
 {/if}
 
-{#if cardState.showComments}
-  <CardComments {...cardData} {cardFunctions} props={mergedStates}  />
+{#if data.showComments}
+  <Comments data={cardData.post.comments} />
 {/if}
 
 <style lang='scss'>

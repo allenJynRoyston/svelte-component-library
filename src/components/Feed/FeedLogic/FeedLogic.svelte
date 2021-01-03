@@ -16,6 +16,7 @@
 
   //--------------------------- VARS
   let feedData = data.map(x => {
+    x.showComments = false
     x.isBlurred = false
     x.isEditing = false
     return x
@@ -28,6 +29,12 @@
       feedFunctions.clear()
       return post
     },
+    toggleShowComments: (index) => {
+      feedData = data.map((x, i) => {
+        x.showComments = index === i ? !x.showComments : x.showComments
+        return x
+      })  
+    },
     editItem: (index) => {
       feedData = data.map((x, i) => {
         x.isEditing = index === i ? !x.isEditing : x.isEditing
@@ -36,6 +43,7 @@
     },
     clear: () => {
       feedData = data.map(x => {
+        x.showComments = false
         x.isEditing = false
         x.isBlurred = false
         return x
@@ -64,6 +72,13 @@
     else{
       feedFunctions.clear()
     }
+
+    const openComments = data.filter(x => x.showComments).length > 0
+    if(openComments){
+      feedFunctions.clear()
+    }
+
+
   }
   //---------------------------
 

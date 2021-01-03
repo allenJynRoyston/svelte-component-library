@@ -19,6 +19,36 @@
   let formData = [
     {
       renderAs: 'input',      
+      label: 'Firstname',
+      placeholder: 'example: john smith',
+      key: 'username',
+      value: 'allen.royston', 
+      regex: /^[a-zA-Z.]+$/,      
+      minLength: 3,
+      maxLength: 25,
+      required: true,
+      sizing: {
+        desktop: 25,
+        mobile: 50
+      }
+    },
+    {
+      renderAs: 'input',      
+      label: 'Lastname',
+      placeholder: 'example: john smith',
+      key: 'username',
+      value: 'allen.royston', 
+      regex: /^[a-zA-Z.]+$/,      
+      minLength: 3,
+      maxLength: 25,
+      required: true,
+      sizing: {
+        desktop: 25,
+        mobile: 50
+      }
+    },
+    {
+      renderAs: 'input',      
       label: 'Username',
       placeholder: 'example: john smith',
       key: 'username',

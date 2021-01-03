@@ -36,7 +36,7 @@
           value: 0,
           defaultOption: 'Select an option',
           options: options.map(x => {
-            x.title = `${x.firstName} ${x.lastName}`
+            x.title = `${x.firstName} ${x.lastName} | ${x._id}`
             return x
           }),
           onInitFilter: (val, options) => {                  
@@ -59,7 +59,7 @@
           value: 0,
           defaultOption: 'Select an option',
           options: options.map(x => {
-            x.title = `${x.firstName} ${x.lastName}`
+            x.title = `${x.firstName} ${x.lastName} | ${x._id}`
             return x
           }),
           onInitFilter: (val, options) => {                 
@@ -123,16 +123,21 @@
     return dataset.data[random]
   }
 
+  const returnRandomComments = (comments) => {
+
+  }
+
   const randomId = () => {
     return Math.random().toString(36).substring(7);
   }
   
-  const addTestData = async(users = 10, posts = 100, images = 200) => {
+  const addTestData = async(users = 10, posts = 100, images = 200, comments = 500) => {
     busy = true
     return new Promise( async(resolved) => {
       let uData = await axios.get('https://jsonplaceholder.typicode.com/users') // 10 max
       let pData = await axios.get('https://jsonplaceholder.typicode.com/posts') // 100 max      
       let iData = await axios.get('https://jsonplaceholder.typicode.com/photos') // 5000 max
+      let cData = await axios.get('https://jsonplaceholder.typicode.com/comments') // 100 max
 
       // fill fields to make it a compatable dataset
       pData.data = pData.data.slice(0, posts).map(x => {
@@ -145,10 +150,18 @@
         return x
       })    
 
-      iData.data = iData.data.slice(0, images).map((x, i) => {
+      iData.data = iData.data.slice(0, images).map(x => {
         x._id = `i_${randomId()}`
         return x
-      })     
+      })   
+      
+      cData.data = cData.data.slice(0, comments).map(x => {
+        x._id = `c_${randomId()}`
+        x.pid = returnRandom(pData)._id
+        x.authorId = returnRandom(uData)._id
+        return x
+      })  
+      
       
       let promises = [];
 
@@ -185,9 +198,58 @@
         }
       }) 
 
-      pData.data.forEach((x, index) => {        
+      cData.data.forEach((x, index) => {        
+        if(index < comments){
+          const {_id, pid, authorId, body} = x
+          promises.push(new Promise( async(resolve) => {
+            // @ts-ignore
+            await indexdb.add('comments', {
+              _id, 
+              version: 0,
+              pid, 
+              authorId, 
+              content: body,
+              comments: {
+                myCommentId: [], 
+                count: 0,
+                commentIds: []
+              },     
+              emotes: {
+                myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',
+                like: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                dislike: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                angry: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                sad: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                },
+                wink: {
+                  count: returnRandomNumber(uData),
+                  userIds: []
+                }                                
+              },                       
+            }, true)     
+            resolve(null)
+          }))   
+        }
+      })       
+
+      pData.data.forEach((x, index) => {               
         if(index < posts){   
           const {_id, title} = x;   
+
+          const authorId = returnRandom(uData)._id
+          const comments = cData.data.filter(x => x.pid === _id)
+
           promises.push(new Promise( async(resolve) => {
             // @ts-ignore
             await indexdb.add('posts', {
@@ -205,6 +267,11 @@
               allowEmotes: {
                 friends: true,
                 anybody: false
+              },
+              comments: {
+                myCommentId: comments.filter(x => x.authorId === authorId).map(x => x._id), 
+                count: comments.length,
+                commentIds: comments.filter(x => x.authorId !== authorId).map(x => x._id)
               },
               emotes: {
                 myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',
@@ -229,7 +296,7 @@
                   userIds: []
                 }                                
               },
-              authorId: returnRandom(uData)._id,
+              authorId,
               updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
             }, true)     
             resolve(null)
@@ -244,8 +311,10 @@
         let userCount = await indexdb.count('users')
         // @ts-ignore
         let imageCount = await indexdb.count('images')
+        // @ts-ignore
+        let commentCount = await indexdb.count('comments')        
 
-        alert(`${userCount} users created | ${postCount} posts created | ${imageCount} images created.`)        
+        alert(`${userCount} users created | ${postCount} posts created | ${imageCount} images created | ${commentCount} comments created.`)        
         location.reload()  
         resolved(null)                    
       })      
