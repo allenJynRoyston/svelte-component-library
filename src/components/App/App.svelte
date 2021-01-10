@@ -1,7 +1,7 @@
 <script>
   //--------------------------- IMPORTS  
   import {onMount, setContext, getContext } from 'svelte'
-  import {Feed, Button, TestUtility, FormExample} from '../index'
+  import {FeedContainer, TestUtility, FormExample} from '../index'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 
 
@@ -36,20 +36,28 @@
   })
     
 
-  setContext('updateUserById', (data) => {        
-    return indexdb.add('users', data, true)
-  })
+  setContext('updateUserById', async(data) => {
+    await indexdb.add('users', data, true)
+    const comment = await indexdb.get('users', data._id)
+    return comment
+  })  
 
-  setContext('updatePostById', (data) => {    
-    return indexdb.add('posts', data, true)
-  })
+  setContext('updatePostById', async(data) => {
+    await indexdb.add('posts', data, true)
+    const comment = await indexdb.get('posts', data._id)
+    return comment
+  })  
   
-  setContext('updateImageById', (data) => {
-    return indexdb.add('images', data, true)
+  setContext('updateImageById', async(data) => {
+    await indexdb.add('images', data, true)
+    const comment = await indexdb.get('images', data._id)
+    return comment
   })    
 
-  setContext('updateCommentById', (data) => {
-    return indexdb.add('comments', data, true)
+  setContext('updateCommentById', async(data) => {
+    await indexdb.add('comments', data, true)
+    const comment = await indexdb.get('comments', data._id)
+    return comment
   })      
   //---------------------------   
 
@@ -100,9 +108,10 @@
 
 <div id='app-wrapper'>
   {#if isReady}    
-    <!-- <FormExample />     -->
     <TestUtility viewerId={viewing && viewing._id}  {friendStatus}/>    
-    <Feed feedOwnerId={viewing && viewing._id} {friendStatus} />  
+    <FeedContainer feedOwnerId={viewing && viewing._id} {friendStatus} />  
+    <!-- <FormExample />     -->
+
   {:else}
     <p>Loading...</p>
   {/if}

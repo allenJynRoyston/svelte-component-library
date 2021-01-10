@@ -22,23 +22,26 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 export { default as Button } from "./Button/Button.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
+export { default as CreatePost } from "./CreatePost/CreatePost.svelte";
+
+/* SLOTS */
+export { default as ThreeSlot } from "./ThreeSlot/ThreeSlot.svelte";
 
 /* FEED */
+export { default as FeedContainer } from "./Feed/FeedContainer.svelte";
 export { default as Feed } from "./Feed/Feed.svelte";
-export { default as FeedLogic } from "./Feed/FeedLogic/FeedLogic.svelte";
-
-/* CARD  */
-export { default as Card } from "./Card/Card.svelte";
-export { default as CardHeaderForPosts } from "./Card/CardHeader/CardHeaderForPosts.svelte";
-export { default as CardBodyForPosts } from "./Card/CardBody/CardBodyForPosts.svelte";
-export { default as CardFooterForPosts } from "./Card/CardFooter/CardFooterForPosts.svelte";
+export { default as FeedItem } from "./Feed/FeedItem/FeedItem.svelte";
+export { default as FeedItemHeader } from "./Feed/FeedItem/Parts/FeedItemHeader.svelte";
+export { default as FeedItemContent } from "./Feed/FeedItem/Parts/FeedItemContent.svelte";
+export { default as FeedItemFooter } from "./Feed/FeedItem/Parts/FeedItemFooter.svelte";
 
 /* COMMENTS */
+export { default as CommentContainer } from "./Comments/CommentContainer.svelte";
 export { default as Comments } from "./Comments/Comments.svelte";
-export { default as CommentItem } from "./Comments/CommentItem/CommentItem.svelte";
-export { default as CommentHeader } from "./Comments/CommentHeader/CommentHeader.svelte";
-export { default as CommentEmotes } from "./Comments/CommentEmotes/CommentEmotes.svelte";
-export { default as CommentContent } from "./Comments/CommentContent/CommentContent.svelte";
+export { default as Comment } from "./Comments/Comment/Comment.svelte";
+export { default as CommentHeader } from "./Comments/Comment/Parts/CommentHeader.svelte";
+export { default as CommentEmotes } from "./Comments/Comment/Parts/CommentEmotes.svelte";
+export { default as CommentContent } from "./Comments/Comment/Parts/CommentContent.svelte";
 
 /* FETCHERS */
 export { default as UserFetcher } from "./Fetcher/UserFetcher.svelte";

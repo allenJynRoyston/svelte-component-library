@@ -101,7 +101,6 @@
     // map formData
     formData = await formData.map(x => {
       const {value = null} = x
-
       if(x.key){        
         completedFormData[!!idModifier ? `${x.key}_${idModifier}` : x.key] = {
           value,
@@ -113,7 +112,6 @@
 
       return x;
     })   
-
 
 
     // check if localStorage key exists
@@ -146,6 +144,8 @@
       hasError = true
       location.reload()
     }
+
+
 
     isReady = true; 
   }); 

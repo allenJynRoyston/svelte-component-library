@@ -1,70 +1,67 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {Form, SVG} from '../../index'
+  import {CreatePost, SVG} from '../../../index'
 
   //--------------------------- COMPONENT PROPS
-  export let post;
   export let author;
   export let isMine;
-  export let cardFunctions;
+  export let events;
   export let props;
-
+  export let options;
+  export let comment;
+  export let checkPermissions;
+  
   //---------------------------
 
-  //--------------------------- VARS
-  let formData = [
-    {
-      renderAs: 'textarea', 
-      key: props.postId,      
-      value: post.content,
-      required: true,
-      contentEdit: true,
-    }    
-  ]
-
+  //--------------------------- VARS   
   const formProps = {
-    formData,
-    onSubmit: cardFunctions.onSubmit,
+    formData: [
+      {
+        renderAs: 'textarea', 
+        key: comment._id,      
+        value: comment.content,
+        required: true,
+        contentEdit: true,
+      }    
+    ],
+    onSubmit: events.comment.onSubmit,
     padding: 20,
-    localStorageKey: 'postid',
+    localStorageKey: 'commentId',
     clearLocalStorage: true
   }      
+
+  
   //--------------------------- ONMOUNT
 
   //---------------------------   
 
-  //--------------------------- EVENT HANDLERS
-
-  //---------------------------
 
   //--------------------------- $
   //---------------------------
-  
 </script>
 
-{#if post}
-  <div class='cardbody-container' >
+{#if comment}
+  <div class='comment-content' >
     {#if props.isEditing}
-      <Form {...formProps} isBusy={props.isSaving} style={'border: none'} >
-        Update
-      </Form>
+      <CreatePost key={comment._id} content={comment.content} isBusy={props.isSaving} onSubmit={events.comment.onSubmit}/>
     {:else}
-      <div contenteditable="false" bind:innerHTML={post.content} />
+      <div contenteditable="false" bind:innerHTML={comment.content} />
     {/if}
   </div>
 
   {#if props.isSaving}
-    <div class='cardbody-container__save'>
+    <div class='comment-content__save'>
       <SVG icon={'save'} />
     </div>
   {/if}
 {/if}
 
-<style lang='scss'>
-  .cardbody-container{
+<style lang='scss' scoped>
+  .comment-content{
     display: flex;    
     width: 100%;
     position: relative;
+    padding: 20px 0;
 
     &__save{
       z-index: 1;

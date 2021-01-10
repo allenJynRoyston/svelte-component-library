@@ -198,7 +198,7 @@
         }
       }) 
 
-      cData.data.forEach((x, index) => {        
+      cData.data.forEach((x, index) => {                
         if(index < comments){
           const {_id, pid, authorId, body} = x
           promises.push(new Promise( async(resolve) => {
@@ -211,8 +211,8 @@
               content: body,
               comments: {
                 myCommentId: [], 
-                count: 0,
-                commentIds: []
+                count: 3,
+                commentIds: [_id, _id, _id]
               },     
               emotes: {
                 myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',

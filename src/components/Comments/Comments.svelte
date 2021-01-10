@@ -1,38 +1,113 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {CommentItem, CommentFetcher} from '../index'
+  import {getContext} from 'svelte'
+  import {Comment, CommentFetcher} from '../index'
 
   //--------------------------- COMPONENT PROPS
-  export let data;
-  
-
-
+  export let commentIds;
+  export let events = {}; 
+  export let state = {};
+  export let level;
   //---------------------------
+
+  //--------------------------- APP CONTEXT   
+  const updateCommentById = getContext('updateCommentById')  
+  //---------------------------    
+
 
   //--------------------------- VARS   
-  const {myCommentId, commentIds} = data;
-  const myComments = []
-  const allComments = []
-  let commentState = {
-    myCommentsComplete: false,
-    allCommentsComplete: false
-  }
+  let commentData = []
+  let fetchComplete = false;
   
-  //--------------------------- ONMOUNT
 
+  events = {
+    ...events,  
+    comments: {
+      share: (post) => {     
+        alert('share')
+      }, 
+      report: () => {     
+        alert("report")
+      },        
+      update: async({comment}) => {
+        commentData = commentData.map((x, i) => {
+          x.props.isBlurred = false
+          x.props.isEditing = false
+          return x
+        })   
+
+        // @ts-ignore
+        updateCommentById(comment)
+        return comment
+      },
+      toggleEmojis: (index) => {
+        commentData = commentData.map((x, i) => {          
+          x.props.showEmojis = index === i ? !x.props.showEmojis : x.props.showEmojis
+          return x
+        })  
+      },
+      toggleShowDots: (index) => {
+        commentData = commentData.map((x, i) => {
+          x.props.showDots = index === i ? !x.props.showDots : x.props.showDots
+          return x
+        })  
+        console.log(index)
+      },      
+      toggleShowComments: (index) => {
+        commentData = commentData.map((x, i) => {
+          x.props.showComments = index === i ? !x.props.showComments : x.props.showComments
+          return x
+        })          
+      },
+      toggleEdit: (index) => {       
+        commentData = commentData.map((x, i) => {
+          x.props.isEditing = index === i ? !x.props.isEditing : x.props.isEditing
+          x.props.isBlurred = index !== i ? !x.props.isBlurred : x.props.isBlurred
+          return x
+        })  
+      },
+      blurAllBut: (index) => {
+        commentData = commentData.map((x, i) => {
+          x.props.isBlurred = index !== i ? !x.props.isBlurred : x.props.isBlurred
+          return x
+        })    
+      },
+      clear: () => {
+        commentData = commentData.map(x => {
+          x.props = {
+            showComments: false,
+            showEmojis: false,
+            showDots: false,
+
+            isSaving: false,
+            isBlurred: false,
+            isEditing: false    
+          }        
+          return x
+        })    
+      },  
+    }
+  }
+
+
+  //--------------------------- ONMOUNT
+  const fetchComment = (data) => {
+    data.props = {
+      showComments: false,
+      showEmojis: false,
+      showDots: false,
+
+      isSaving: false,
+      isBlurred: false,
+      isEditing: false          
+    }
+    commentData.push(data)  
+
+    // @ts-ignore
+    fetchComplete = commentData.length === commentIds.length
+  }
   //---------------------------   
 
-  //--------------------------- EVENT HANDLERS
-  const appendMyComments = (data) => {
-    myComments.push(data)
-    commentState.myCommentsComplete = myComments.length === myCommentId.length
-  }
-
-  const appendAllComments = (data) => {
-    allComments.push(data)
-    commentState.allCommentsComplete = allComments.length === commentIds.length
-  }
-  //---------------------------
 
   //--------------------------- $
   //---------------------------
@@ -40,52 +115,21 @@
 </script>
 
 
-{#each myCommentId as id}
-  <CommentFetcher {id} onComplete={appendMyComments} />
+{#each commentIds as id}
+  <CommentFetcher {id} onComplete={fetchComment} />
 {/each}
 
-{#each commentIds as id}
-  <CommentFetcher {id} onComplete={appendAllComments} />
-{/each}  
+{#if fetchComplete}
+  {#each commentData as comment, index}
+    <div class='comment-section'>      
+      <Comment {comment} {events} {index} {level} />
+    </div>
+  {/each}
+{/if}
 
-
-<div class='comments'>  
-
-  {#if commentState.myCommentsComplete}
-    {#each myComments as comment}
-      <CommentItem data={comment} />      
-    {/each}
-  {/if}
-
-  {#if commentState.myCommentsComplete && commentState.allCommentsComplete}
-    {#if myComments.length > 0 && allComments.length > 0}
-      <hr>
-    {/if} 
-  {/if}
-
-
-  {#if commentState.allCommentsComplete}
-    {#each allComments as comment}
-      <CommentItem data={comment} />    
-    {/each}
-  {/if}
-
-  
-  </div>
 
 <style lang='scss'>
-  .comments{
-    width: calc(100% - 20px);
-    border: 1px solid black;
-    margin-top: 10px;
-    padding: 10px;
-    background: lightgrey;
-
-    hr{
-      border: none;
-      border-top: 1px solid white;      
-      margin-bottom: 10px
-    }
+  .comment-section{
+    width: 100%;    
   }
-
 </style>

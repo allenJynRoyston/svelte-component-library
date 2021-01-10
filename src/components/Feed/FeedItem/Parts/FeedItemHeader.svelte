@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import { SVG, Button } from '../../index'
+  import { ThreeSlot, SVG, Button } from '../../../index'
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime"
 
@@ -10,11 +10,11 @@
   //--------------------------- COMPONENT PROPS
   export let author;
   export let post;
-  export let options;
   export let isMine;
-  export let props;
+  export let options;
   export let checkPermissions;
-  export let cardFunctions;
+  export let events;
+  export let props;
 
   //---------------------------
 
@@ -34,14 +34,15 @@
 
 {#if author && post}
   <div class='cardheader-container'>
-    <div class='cardheader-container__portrait'>   
-      {#if author.portrait}   
-        <img src={author.portrait.imageSrc} alt={author.portrait.imageSrc} />
-      {:else}
-        <img src="https://via.placeholder.com/150/b2fe8" alt="https://via.placeholder.com/150/b2fe8" />
-      {/if}
-    </div>
-    <div class='cardheader-container__bio'>
+    <ThreeSlot>
+      <div slot='left'>
+        {#if author.portrait}   
+          <img src={author.portrait.imageSrc} alt={author.portrait.imageSrc} />
+        {:else}
+          <img src="https://via.placeholder.com/150/b2fe8" alt="https://via.placeholder.com/150/b2fe8" />
+        {/if}
+      </div>
+
       {#if author.firstName}
         <div class='name'>
           {isMine ? 'Me' : `${author.firstName} ${author.lastName}`}
@@ -50,10 +51,8 @@
       {#if post.updatedOn}
         <div class='date'>{dayjs(post.updatedOn).fromNow()}</div>
       {/if}
-    </div>
-
-    {#if !props.showDots}
-      <div class='cardheader-container__options'>
+         
+      <div slot='right' style='display: flex'>
         {#if !props.isEditing}
           {#each options as {fn, icon, showInTray, ownerRequired, loginRequired}}
             {#if checkPermissions(loginRequired, ownerRequired) && showInTray}
@@ -62,17 +61,19 @@
               </Button>                    
             {/if}
           {/each}   
-          <Button onClick={cardFunctions.toggleShowDots} style={buttonStyle}>
+          <Button onClick={events.feedItem.toggleShowDots} style={buttonStyle}>
             <SVG icon={'dots'}/>
-          </Button>        
+          </Button>                   
         {:else}    
-          <Button onClick={cardFunctions.toggleEdit} style={buttonStyle}>
-            <SVG icon={'arrow-left'}/>
+          <Button onClick={events.feedItem.toggleShowDots} style={buttonStyle}>
+            <SVG icon={'save'}/>
+          </Button>               
+          <Button onClick={events.feedItem.toggleEdit} style={buttonStyle}>
+            <SVG icon={'cross'}/>
           </Button>   
         {/if}
-      </div>
-    {/if}
-    
+      </div>           
+    </ThreeSlot>
   </div>  
 {:else}
   <div class='cardheader-container'>
@@ -87,39 +88,12 @@
     position: relative;
     height: 45px;
     
-
-    &__portrait{
-      display: flex;
-      align-items: center;                        
-      border-right: 1px solid black;
-      overflow: hidden;
-      width: 60px;
-      margin-right: 10px;
-      background: black;
-
-      img{
-        width: 100%;
-        height: auto;
-      }
+    .name{
+      font-weight: bold
     }
 
-    &__options {
-      display: flex;
-      align-items: center;                        
-    }
-
-    &__bio{
-      width: 100%;
-      padding: 5px 0;
-
-      .name{
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      .date{
-        font-size: 14px;
-      }
+    .date{
+      color: grey;
     }
 
   }  
