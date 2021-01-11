@@ -14,11 +14,20 @@
   //--------------------------- VARS
   const indexdb = getContext('indexdb')    
   let postComments = {    
-    myCommentId: [],
-    commentIds: [],    
+    allComments: {
+      cids: [],
+      count: null
+    },
+    myComments: {
+      cids: [],
+      count: null      
+    },
     count: null    
   }
   let isReady = false
+  let initialAmount = 5;
+  let fetchAmount = 10
+  let totalInFeed;
 
   events = {
     ...events,
@@ -36,13 +45,33 @@
 
     if(res.length > 0){
       postComments = {...res[0].comments}
+
+      console.log(postComments)
+
     }
 
     isReady = true
   })
   //---------------------------  
 
-  //--------------------------- EVENT HANDLERS
+  //--------------------------- FN
+  // const fetchPostCount = async() => {
+  //   // @ts-ignore
+  //   let res = await indexdb.getAll('posts')
+  //   let filtered = res.filter(x => x.authorId === feedOwnerId)
+  //   return filtered.length  
+  // }
+
+  // const fetchComments = async(startAt = postComments.length, amount = fetchAmount) => {
+  //   // @ts-ignore
+  //   let res = await indexdb.getAll(target)
+  //   res = res.filter(x => x._id ===  _id)
+
+  //   if(res.length > 0){
+  //     postComments = {...res[0].comments}
+  //   }  
+  // }
+
   const levelClass = () => {
     switch(level){
       case 1:
@@ -65,13 +94,13 @@
 {#if isReady}
 
   <div class='comments' style={levelClass()}>  
-    <Comments commentIds={postComments.myCommentId} {events} {level} />
+    <Comments commentIds={postComments.myComments.cids} {events} {level} />
 
-    {#if postComments.myCommentId.length > 0 && postComments.commentIds.length > 0}
+    {#if postComments.myComments.count > 0 && postComments.allComments.count > 0}
       <hr>
     {/if} 
 
-    <Comments commentIds={postComments.commentIds} {events} {level} />
+    <Comments commentIds={postComments.allComments.cids} {events} {level} />
   </div>
 
  {/if}

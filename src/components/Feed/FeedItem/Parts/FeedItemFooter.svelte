@@ -19,9 +19,11 @@
   const {myCommentId = null} = post.comments
 
   const emojis = [
+    {name: 'plus', inTray: true},
+    {name: 'minus', inTray: true},
     {name: 'like', inTray: true},
-    {name: 'dislike', inTray: true},
-    {name: 'angry', inTray: true},
+    {name: 'dislike', inTray: false},
+    {name: 'angry', inTray: false},
     {name: 'sad', inTray: false},
     {name: 'wink', inTray: false},
   ]
@@ -64,18 +66,18 @@
     </div>
 
     <div slot='right'>
-      <Button style={buttonStyleRight} onClick={toggleShowComments}>
+      <Button style={buttonStyleRight} onClick={post.comments.total > 0 && toggleShowComments}>
         <SVG icon="comments" size={12} fill={!!myCommentId ? 'green' : "black"} style={svgStyle}/> 
-        <strong>{post.comments.count}</strong>
+        <strong>{post.comments.total}</strong>
       </Button>             
     </div>
   </ThreeSlot>
 </div>
 
 <style lang='scss'>
-  .cardfooter{
-    height: 25px;
+  .cardfooter{    
     display: flex;    
+    padding-bottom: 10px;
 
     &__emotes{
       display: flex;
@@ -91,7 +93,7 @@
         z-index: 1;         
         display: flex;       
         transition: 0.3s;
-        transform: translateX(-66.666666%);
+        transform: translateX(calc(-100% + 50px));
         &.show{
           transform: translateX(0);
         }       

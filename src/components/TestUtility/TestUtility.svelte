@@ -1,7 +1,8 @@
 <script lang='ts'>
   //---------------------------
   import {tick, onMount, getContext} from 'svelte'
-  import {Button, Form, UserFetcher} from '../index'  
+  import Chance from 'chance'
+  import {Button, Form, UserFetcher} from '../index'    
   import axios from 'axios';
 
   //---------------------------
@@ -12,6 +13,7 @@
   const indexdb = getContext('indexdb')
   const loggedIn = getContext('loggedIn')
   const myDetails = getContext('myDetails')
+  const chance = new Chance();
 
   let isReady = false;
   let loginAsProps = {}
@@ -114,194 +116,219 @@
   }
 
   const returnRandomNumber = (dataset) => {
-    const random = Math.floor(Math.random() * dataset.data.length);
+    const random = chance.integer({ min: 0, max: dataset.length - 1})
     return random
   }  
 
   const returnRandom = (dataset) => {
-    const random = Math.floor(Math.random() * dataset.data.length);
-    return dataset.data[random]
+    const random = chance.integer({ min: 0, max: dataset.length - 1})
+    return dataset[random]
   }
 
-  const returnRandomComments = (comments) => {
+  const returnRandomData = ({type, amount}) => {
+    let data = []
 
+    for(let i = 0; i < amount; i++){
+      switch(type){
+        case 'users':
+          data.push({
+            _id: `u_${chance.fbid()}`,
+            name: chance.name()
+          })
+        break
+        case 'images':
+          data.push({
+            _id: `i_${chance.fbid()}`,
+            imageSrc: `https://picsum.photos/50/50?random=${chance.integer({ min: 1, max: 155 })}`,            
+          })
+        break         
+        case 'posts':
+          data.push({
+            _id: `u_${chance.fbid()}`,
+            content: chance.paragraph({ sentences: 2 }),
+            updatedOn: randomDate(new Date(2012, 0, 1), new Date())
+          })
+        break  
+        case 'comments':
+          data.push({
+            _id: `i_${chance.fbid()}`,
+            content: chance.paragraph({ sentences: 1 }),
+            updatedOn: randomDate(new Date(2012, 0, 1), new Date())
+          })
+        break                        
+      }      
+    }
+
+    return data
   }
 
-  const randomId = () => {
-    return Math.random().toString(36).substring(7);
-  }
-  
-  const addTestData = async(users = 10, posts = 100, images = 200, comments = 500) => {
+  const addTestData = async() => {
     busy = true
     return new Promise( async(resolved) => {
-      let uData = await axios.get('https://jsonplaceholder.typicode.com/users') // 10 max
-      let pData = await axios.get('https://jsonplaceholder.typicode.com/posts') // 100 max      
-      let iData = await axios.get('https://jsonplaceholder.typicode.com/photos') // 5000 max
-      let cData = await axios.get('https://jsonplaceholder.typicode.com/comments') // 100 max
+      let userData = returnRandomData({type: 'users', amount: 10})
+      let postData = returnRandomData({type: 'posts', amount: 500})
+      let imageData = returnRandomData({type: 'images', amount: 120})
+      let commentData = returnRandomData({type: 'comments', amount: 1000})
 
-      // fill fields to make it a compatable dataset
-      pData.data = pData.data.slice(0, posts).map(x => {
-        x._id = `p_${randomId()}`
+      commentData = commentData.map(x => {
+        x.pid = returnRandom(postData)._id
+        x.authorId = returnRandom(userData)._id
         return x
-      })      
-
-      uData.data = uData.data.slice(0, users).map(x => {
-        x._id = `u_${randomId()}`
-        return x
-      })    
-
-      iData.data = iData.data.slice(0, images).map(x => {
-        x._id = `i_${randomId()}`
-        return x
-      })   
-      
-      cData.data = cData.data.slice(0, comments).map(x => {
-        x._id = `c_${randomId()}`
-        x.pid = returnRandom(pData)._id
-        x.authorId = returnRandom(uData)._id
-        return x
-      })  
-      
+      })        
       
       let promises = [];
 
-      iData.data.forEach((x, index) => {        
-        if(index < images){
-          const {_id} = x  
-          promises.push(new Promise( async(resolve) => {
-            // @ts-ignore
-            await indexdb.add('images', {
-              _id, 
-              version: 0,
-              imageSrc: `https://picsum.photos/50/50?random=${index}`,
-              metadata: {}      
-            }, true)     
-            resolve(null)
-          }))   
-        }
+      imageData.forEach(x=> {        
+        const {_id, imageSrc} = x  
+        promises.push(new Promise( async(resolve) => {
+          // @ts-ignore
+          await indexdb.add('images', {
+            _id, 
+            version: 0,
+            imageSrc,
+            metadata: {}      
+          }, true)     
+          resolve(null)
+        }))   
       })
-
-      uData.data.forEach((x, index) => {        
-        if(index < users){
-          const {_id, name} = x
-          promises.push(new Promise( async(resolve) => {
-            // @ts-ignore
-            await indexdb.add('users', {
-              _id, 
-              version: 0,
-              firstName: name.split(' ')[0],
-              lastName:  name.split(' ')[1] || 'Smith',
-              imageId: returnRandom(iData)._id
-            }, true)     
-            resolve(null)
-          }))   
-        }
+  
+      userData.forEach(x => {        
+        const {_id, name} = x
+        promises.push(new Promise( async(resolve) => {
+          // @ts-ignore
+          await indexdb.add('users', {
+            _id, 
+            version: 0,
+            firstName: name.split(' ')[0],
+            lastName:  name.split(' ')[1] || 'Smith',
+            imageId: returnRandom(imageData)._id
+          }, true)     
+          resolve(null)
+        }))   
       }) 
 
-      cData.data.forEach((x, index) => {                
-        if(index < comments){
-          const {_id, pid, authorId, body} = x
-          promises.push(new Promise( async(resolve) => {
-            // @ts-ignore
-            await indexdb.add('comments', {
-              _id, 
-              version: 0,
-              pid, 
-              authorId, 
-              content: body,
-              comments: {
-                myCommentId: [], 
+    
+      commentData.forEach(x => {                
+        const {_id, pid, authorId, content} = x
+        promises.push(new Promise( async(resolve) => {
+          // @ts-ignore
+          await indexdb.add('comments', {
+            _id, 
+            version: 0,
+            pid, 
+            authorId, 
+            content,
+            comments: {
+              total: 3,
+              myComments: {
+                count: 0,
+                cids: []
+              },               
+              allComments: {
                 count: 3,
-                commentIds: [_id, _id, _id]
-              },     
-              emotes: {
-                myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',
-                like: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                dislike: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                angry: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                sad: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                wink: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                }                                
-              },                       
-            }, true)     
-            resolve(null)
-          }))   
-        }
+                cids: [_id, _id, _id]
+              }              
+            },     
+            emotes: {
+              myEmote: chance.coin() > 'heads' ? 'like' : 'dislike',
+              like: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              },
+              dislike: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              },
+              angry: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              },
+              sad: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              },
+              wink: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              }                                
+            },                       
+          }, true)     
+          resolve(null)
+        }))        
       })       
 
-      pData.data.forEach((x, index) => {               
-        if(index < posts){   
-          const {_id, title} = x;   
+      postData.forEach(x => {               
+        const {_id, content} = x;   
 
-          const authorId = returnRandom(uData)._id
-          const comments = cData.data.filter(x => x.pid === _id)
+        const authorId = returnRandom(userData)._id
+        const comments = commentData.filter(x => x.pid === _id)
 
-          promises.push(new Promise( async(resolve) => {
-            // @ts-ignore
-            await indexdb.add('posts', {
-              _id, 
-              version: 0,
-              content: title,
-              allowShare: {
-                friends: true,
-                anybody: false
+        promises.push(new Promise( async(resolve) => {
+          // @ts-ignore
+          await indexdb.add('posts', {
+            _id, 
+            version: 0,
+            content,
+            allowShare: {
+              friends: true,
+              anybody: false
+            },
+            allowComments: {
+              friends: true,
+              anybody: false
+            },
+            allowEmotes: {
+              friends: true,
+              anybody: false
+            },
+            comments: {
+              total: comments.filter(x => x.authorId === authorId).map(x => x._id).length + comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
+              myComments: {
+                count: comments.filter(x => x.authorId === authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId === authorId).map(x => x._id)
+              },               
+              allComments: {
+                count: comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId !== authorId).map(x => x._id)
+              }              
+            }, 
+            emotes: {
+              myEmote: chance.coin() > 'heads' ? 'plus' : 'minus',
+              plus: {
+                count: returnRandomNumber(userData),
+                userIds: []
               },
-              allowComments: {
-                friends: true,
-                anybody: false
+              minus: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              },              
+              like: {
+                count: returnRandomNumber(userData),
+                userIds: []
               },
-              allowEmotes: {
-                friends: true,
-                anybody: false
+              dislike: {
+                count: returnRandomNumber(userData),
+                userIds: []
               },
-              comments: {
-                myCommentId: comments.filter(x => x.authorId === authorId).map(x => x._id), 
-                count: comments.length,
-                commentIds: comments.filter(x => x.authorId !== authorId).map(x => x._id)
+              angry: {
+                count: returnRandomNumber(userData),
+                userIds: []
               },
-              emotes: {
-                myEmote: returnRandomNumber(uData) > uData.data.length/2 ? 'like' : 'dislike',
-                like: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                dislike: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                angry: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                sad: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                },
-                wink: {
-                  count: returnRandomNumber(uData),
-                  userIds: []
-                }                                
+              sad: {
+                count: returnRandomNumber(userData),
+                userIds: []
               },
-              authorId,
-              updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
-            }, true)     
-            resolve(null)
-          }))   
-        }
+              wink: {
+                count: returnRandomNumber(userData),
+                userIds: []
+              }                                
+            },
+            authorId,
+            updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
+          }, true)     
+          resolve(null)
+        }))   
+    
       }) 
 
       Promise.all(promises).then(async() => {  
@@ -337,6 +364,8 @@
     indexdb.clear('images')
     // @ts-ignore
     indexdb.clear('users')
+    // @ts-ignore
+    indexdb.clear('comments')    
 
     window.localStorage.removeItem('me')     
     window.localStorage.removeItem('viewing')             

@@ -64,9 +64,9 @@
     </div>
 
     <div slot='right'>
-      <Button style={buttonStyleRight} onClick={toggleShowComments}>
+      <Button style={buttonStyleRight} onClick={comment.comments.total > 0 && toggleShowComments}>
         <SVG icon="comments" size={12} fill={!!myCommentId ? 'green' : "black"} style={svgStyle}/> 
-        <strong>{comment.comments.count}</strong>
+        <strong>{comment.comments.total}</strong>
       </Button>             
     </div>
   </ThreeSlot>

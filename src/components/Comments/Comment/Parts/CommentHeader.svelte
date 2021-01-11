@@ -43,16 +43,16 @@
       {/if}
     </div>
 
-    <div slot='center'>
-      {#if author.firstName}
-        <div class='name'>
-          {isMine ? 'Me' : `${author.firstName} ${author.lastName}`}
-        </div>
-      {/if}
-      {#if comment.updatedOn}
-        <div class='date'>{dayjs(comment.updatedOn).fromNow()}</div>
-      {/if}
-    </div>
+  
+    {#if author.firstName}
+      <div class='name'>
+        {isMine ? 'Me' : `${author.firstName} ${author.lastName}`}
+      </div>
+    {/if}
+    {#if comment.updatedOn}
+      <div class='date'>{dayjs(comment.updatedOn).fromNow()}</div>
+    {/if}
+  
 
     <div slot='right' style='display: flex'>
       {#if !props.isEditing}
