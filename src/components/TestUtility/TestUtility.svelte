@@ -144,14 +144,14 @@
         break         
         case 'posts':
           data.push({
-            _id: `u_${chance.fbid()}`,
+            _id: `p_${chance.fbid()}`,
             content: chance.paragraph({ sentences: 2 }),
             updatedOn: randomDate(new Date(2012, 0, 1), new Date())
           })
         break  
         case 'comments':
           data.push({
-            _id: `i_${chance.fbid()}`,
+            _id: `c_${chance.fbid()}`,
             content: chance.paragraph({ sentences: 1 }),
             updatedOn: randomDate(new Date(2012, 0, 1), new Date())
           })
@@ -168,10 +168,10 @@
       let userData = returnRandomData({type: 'users', amount: 10})
       let postData = returnRandomData({type: 'posts', amount: 500})
       let imageData = returnRandomData({type: 'images', amount: 120})
-      let commentData = returnRandomData({type: 'comments', amount: 1000})
+      let commentData = returnRandomData({type: 'comments', amount: 2000})
 
       commentData = commentData.map(x => {
-        x.pid = returnRandom(postData)._id
+        x.refId = chance.coin() > 'heads' ? returnRandom(postData)._id : chance.coin() > 'heads' ? returnRandom(imageData)._id : returnRandom(commentData)._id
         x.authorId = returnRandom(userData)._id
         return x
       })        
@@ -180,12 +180,27 @@
 
       imageData.forEach(x=> {        
         const {_id, imageSrc} = x  
+
+        const authorId = returnRandom(userData)._id
+        const comments = commentData.filter(x => x.refId === _id)
+
         promises.push(new Promise( async(resolve) => {
           // @ts-ignore
           await indexdb.add('images', {
             _id, 
             version: 0,
             imageSrc,
+            comments: {
+              total: comments.length,
+              myComments: {
+                count: comments.filter(x => x.authorId === authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId === authorId).map(x => x._id)
+              },               
+              allComments: {
+                count: comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId !== authorId).map(x => x._id)
+              }              
+            },             
             metadata: {}      
           }, true)     
           resolve(null)
@@ -206,27 +221,29 @@
           resolve(null)
         }))   
       }) 
-
     
       commentData.forEach(x => {                
-        const {_id, pid, authorId, content} = x
+        const {_id, refId, authorId, content} = x
+
+        const comments = commentData.filter(x => x.refId === _id)
+
         promises.push(new Promise( async(resolve) => {
           // @ts-ignore
           await indexdb.add('comments', {
             _id, 
             version: 0,
-            pid, 
+            refId, 
             authorId, 
             content,
             comments: {
-              total: 3,
+              total: comments.length,
               myComments: {
-                count: 0,
-                cids: []
+                count: comments.filter(x => x.authorId === authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId === authorId).map(x => x._id)
               },               
               allComments: {
-                count: 3,
-                cids: [_id, _id, _id]
+                count: comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
+                cids: comments.filter(x => x.authorId !== authorId).map(x => x._id)
               }              
             },     
             emotes: {
@@ -261,7 +278,7 @@
         const {_id, content} = x;   
 
         const authorId = returnRandom(userData)._id
-        const comments = commentData.filter(x => x.pid === _id)
+        const comments = commentData.filter(x => x.refId === _id)
 
         promises.push(new Promise( async(resolve) => {
           // @ts-ignore
@@ -282,7 +299,7 @@
               anybody: false
             },
             comments: {
-              total: comments.filter(x => x.authorId === authorId).map(x => x._id).length + comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
+              total: comments.length,
               myComments: {
                 count: comments.filter(x => x.authorId === authorId).map(x => x._id).length,
                 cids: comments.filter(x => x.authorId === authorId).map(x => x._id)

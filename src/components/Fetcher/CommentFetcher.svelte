@@ -4,7 +4,8 @@
 
   //--------------------------- COMPONENT PROPS
   export let id = null;
-  export let onComplete = (comment) => {}
+  export let onInit = () => {}
+  export let onComplete = (comment) => {}  
   //---------------------------
 
   //--------------------------- VARS

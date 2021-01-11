@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext} from 'svelte'
+  import {getContext, tick} from 'svelte'
   import {Comment, CommentFetcher} from '../index'
 
   //--------------------------- COMPONENT PROPS
@@ -8,17 +8,15 @@
   export let events = {}; 
   export let state = {};
   export let level;
+  export let fetchMore = () => {}
   //---------------------------
 
   //--------------------------- APP CONTEXT   
   const updateCommentById = getContext('updateCommentById')  
   //---------------------------    
 
-
   //--------------------------- VARS   
   let commentData = []
-  let fetchComplete = false;
-  
 
   events = {
     ...events,  
@@ -50,8 +48,7 @@
         commentData = commentData.map((x, i) => {
           x.props.showDots = index === i ? !x.props.showDots : x.props.showDots
           return x
-        })  
-        console.log(index)
+        })          
       },      
       toggleShowComments: (index) => {
         commentData = commentData.map((x, i) => {
@@ -91,7 +88,7 @@
 
 
   //--------------------------- ONMOUNT
-  const fetchComment = (data) => {
+  const fetchComment = async(data) => {
     data.props = {
       showComments: false,
       showEmojis: false,
@@ -101,17 +98,11 @@
       isBlurred: false,
       isEditing: false          
     }
-    commentData.push(data)  
 
-    // @ts-ignore
-    fetchComplete = commentData.length === commentIds.length
+    commentData = [...commentData, data]
   }
   //---------------------------   
 
-
-  //--------------------------- $
-  //---------------------------
-  
 </script>
 
 
@@ -119,13 +110,13 @@
   <CommentFetcher {id} onComplete={fetchComment} />
 {/each}
 
-{#if fetchComplete}
-  {#each commentData as comment, index}
-    <div class='comment-section'>      
-      <Comment {comment} {events} {index} {level} />
-    </div>
-  {/each}
-{/if}
+
+{#each commentData as comment, index}
+  <div class='comment-section'>       
+    <Comment {comment} {events} {index} {level} />
+  </div>
+{/each}
+
 
 
 <style lang='scss'>

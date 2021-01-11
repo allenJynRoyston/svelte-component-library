@@ -80,7 +80,7 @@
   //--------------------------- FUNCTIONS
   const setupIndexDB = () => {
     return new Promise(async(resolve) => {
-      const indexdbTables = ['users', 'posts', 'comments', 'images', 'following']
+      const indexdbTables = ['users', 'posts', 'comments', 'images']
       await indexdb.createTable(indexdbTables);
       resolve()
     })
