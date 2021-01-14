@@ -12,7 +12,8 @@
   //---------------------------
 
   //--------------------------- APP CONTEXT   
-  const updateCommentById = getContext('updateCommentById')  
+  const updateCommentById = getContext('updateCommentById') 
+  const createComment = getContext('createComment') 
   //---------------------------    
 
   //--------------------------- VARS   
@@ -37,6 +38,33 @@
         // @ts-ignore
         updateCommentById(comment)
         return comment
+      },
+      createNewComment: async({comment, index}) => {
+        commentData = commentData.map((x, i) => {          
+          x.props.isCreating = index === i ? true : x.props.isCreating
+          return x
+        })  
+
+        // @ts-ignore
+        await createComment(comment)
+
+        commentData = commentData.map((x, i) => {          
+          x.props.isCreating = index === i ? false : x.props.isCreating
+          x.props.showReply = false
+          return x
+        })  
+      },
+      toggleShowEmotions: (index) => {
+        commentData = commentData.map((x, i) => {          
+          x.props.showEmotions = index === i ? !x.props.showEmotions : x.props.showEmotions
+          return x
+        })  
+      },
+      toggleReply: (index) => {
+        commentData = commentData.map((x, i) => {          
+          x.props.showReply = index === i ? !x.props.showReply : x.props.showReply
+          return x
+        }) 
       },
       toggleEmojis: (index) => {
         commentData = commentData.map((x, i) => {          
@@ -75,7 +103,10 @@
             showComments: false,
             showEmojis: false,
             showDots: false,
+            showEmotions: false,
+            showReply: false,
 
+            isCreating: false,
             isSaving: false,
             isBlurred: false,
             isEditing: false    
@@ -93,7 +124,10 @@
       showComments: false,
       showEmojis: false,
       showDots: false,
+      showEmotions: false,
+      showReply: false,
 
+      isCreating: false,
       isSaving: false,
       isBlurred: false,
       isEditing: false          
@@ -110,14 +144,11 @@
   <CommentFetcher {id} onComplete={fetchComment} />
 {/each}
 
-
 {#each commentData as comment, index}
   <div class='comment-section'>       
-    <Comment {comment} {events} {index} {level} />
+    <Comment {comment} {events} {index} {level} last={index + 1 === commentData.length}/>
   </div>
 {/each}
-
-
 
 <style lang='scss'>
   .comment-section{

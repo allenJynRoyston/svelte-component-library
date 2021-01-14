@@ -22,6 +22,9 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 export { default as Button } from "./Button/Button.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
+export { default as MoodSelector } from "./MoodSelector/MoodSelector.svelte";
+export { default as MoodPortrait } from "./MoodPortrait/MoodPortrait.svelte";
+export { default as UserPortrait } from "./UserPortrait/UserPortrait.svelte";
 export { default as CreatePost } from "./CreatePost/CreatePost.svelte";
 
 /* SLOTS */
@@ -40,7 +43,7 @@ export { default as CommentContainer } from "./Comments/CommentContainer.svelte"
 export { default as Comments } from "./Comments/Comments.svelte";
 export { default as Comment } from "./Comments/Comment/Comment.svelte";
 export { default as CommentHeader } from "./Comments/Comment/Parts/CommentHeader.svelte";
-export { default as CommentEmotes } from "./Comments/Comment/Parts/CommentEmotes.svelte";
+export { default as CommentFooter } from "./Comments/Comment/Parts/CommentFooter.svelte";
 export { default as CommentContent } from "./Comments/Comment/Parts/CommentContent.svelte";
 
 /* FETCHERS */

@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import { ThreeSlot, SVG, Button } from '../../../index'
+  import { ThreeSlot, SVG, Button, UserPortrait } from '../../../index'
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime"
 
@@ -15,7 +15,6 @@
   export let checkPermissions;
   export let events;
   export let props;
-
   //---------------------------
 
   //--------------------------- VARS
@@ -36,11 +35,7 @@
   <div class='cardheader-container'>
     <ThreeSlot>
       <div slot='left'>
-        {#if author.portrait}   
-          <img src={author.portrait.imageSrc} alt={author.portrait.imageSrc} />
-        {:else}
-          <img src="https://via.placeholder.com/150/b2fe8" alt="https://via.placeholder.com/150/b2fe8" />
-        {/if}
+        <UserPortrait userId={author._id} />
       </div>
 
       {#if author.firstName}
@@ -64,10 +59,7 @@
           <Button onClick={events.feedItem.toggleShowDots} style={buttonStyle}>
             <SVG icon={'dots'}/>
           </Button>                   
-        {:else}    
-          <Button onClick={events.feedItem.toggleShowDots} style={buttonStyle}>
-            <SVG icon={'save'}/>
-          </Button>               
+        {:else}                 
           <Button onClick={events.feedItem.toggleEdit} style={buttonStyle}>
             <SVG icon={'cross'}/>
           </Button>   

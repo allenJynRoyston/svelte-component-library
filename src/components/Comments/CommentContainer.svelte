@@ -101,7 +101,7 @@
     {#if comment.myComments.count > 0}
       <Comments commentIds={comment.myComments.cids} {events} {level}  />
       {#if comment.myComments.cids.length < comment.myComments.count}
-        <button on:click={() => {fetchAllComments()}}>Fetch more...</button>
+        <button on:click={() => {fetchMyComments()}}>Fetch more...</button>
       {/if}
     {/if}
 

@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {CreatePost, SVG} from '../../../index'
+  import {CreatePost, MoodPortrait, SVG} from '../../../index'
 
   //--------------------------- COMPONENT PROPS
   export let author;
@@ -23,14 +23,20 @@
 
   //--------------------------- $
   //---------------------------  
+
 </script>
 
 {#if post}
   <div class='cardbody-container' >
     {#if props.isEditing}
-      <CreatePost key={post._id} content={post.content} isBusy={props.isSaving} onSubmit={events.feedItem.onSubmit}/>
+      <CreatePost key={post._id} content={post.content} permissions={post.permissions} currentEmotion={post.currentEmotion} isBusy={props.isSaving} onSubmit={events.feedItem.onSubmit} showUser={true} allowMood={true} />
     {:else}
-      <div contenteditable="false" bind:innerHTML={post.content} />
+      <div style='display: flex'>
+        {#if author && post.currentEmotion}
+          <MoodPortrait userId={author._id} currentEmotion={post.currentEmotion}/>
+        {/if}
+        <div contenteditable="false" bind:innerHTML={post.content} />
+      </div>
     {/if}
   </div>
 

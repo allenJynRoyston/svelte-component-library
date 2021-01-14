@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {CreatePost, SVG} from '../../../index'
+  import {CreatePost, SVG, MoodPortrait} from '../../../index'
 
   //--------------------------- COMPONENT PROPS
   export let author;
@@ -43,9 +43,15 @@
 {#if comment}
   <div class='comment-content' >
     {#if props.isEditing}
-      <CreatePost key={comment._id} content={comment.content} isBusy={props.isSaving} onSubmit={events.comment.onSubmit}/>
+      <CreatePost key={comment._id} content={comment.content} currentEmotion={comment.currentEmotion} isBusy={props.isSaving} onSubmit={events.comment.onSubmit} />
     {:else}
-      <div contenteditable="false" bind:innerHTML={comment.content} />
+      <div style='display: flex'>
+        {#if author && comment.currentEmotion}
+          <MoodPortrait userId={author._id} currentEmotion={comment.currentEmotion}/>
+        {/if}
+        <div contenteditable="false" bind:innerHTML={comment.content} />
+      </div>
+
     {/if}
   </div>
 

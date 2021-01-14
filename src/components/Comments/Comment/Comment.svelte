@@ -3,8 +3,8 @@
   import {tick, getContext} from 'svelte'  
   import {
     CommentContainer, UserFetcher, 
-    Button, 
-    CommentHeader, CommentContent, CommentEmotes
+    Button, CreatePost,
+    CommentHeader, CommentContent, CommentFooter
   } from '../../index'
  
   //--------------------------- COMPONENT PROPS
@@ -12,6 +12,7 @@
   export let events; 
   export let index;
   export let level;
+  export let last;
 
   if(level != null){level++}  
   //---------------------------
@@ -22,11 +23,8 @@
 
   let author = null;
   let isMine;
-
-  let state = {
-    render: true
-  }
-
+  let render = true;
+  
   events = {
     ...events,
     comment:{       
@@ -42,11 +40,31 @@
           // @ts-ignore
           events!.comments && events.comments.toggleEmojis(index)
         },
+        toggleShowEmotions: () => {          
+          // @ts-ignore
+          events!.comments && events.comments.toggleShowEmotions(index)
+        },        
+        toggleReply: () => {          
+          // @ts-ignore
+          events!.comments && events.comments.toggleReply(index)
+        },          
         toggleEdit: () => {   
           // @ts-ignore
           events!.comments && events.comments.toggleEdit(index)
-        },      
-        updateEmoji: async(emoji) => {           
+        },  
+        createNewComment: ({value:content, mood:currentEmotion, permissions}) => {
+          let newComment = {
+            refId: comment._id, 
+            // @ts-ignore
+            authorId: myDetails._id, 
+            content,
+            permissions,            
+            currentEmotion,   
+          }
+
+          events!.comments && events.comments.createNewComment({comment: newComment, index})          
+        },   
+        updateEmoji: async(emoji) => {    
           // first, remove one from the count
           let current = comment.emotes.myEmote
           comment.emotes[current].count --
@@ -55,10 +73,16 @@
           comment.emotes.myEmote = emoji      
           comment.emotes[emoji].count ++
 
+          updateComment(comment, true)
+        },  
+        updateEmote: (emote) => {
+          comment.currentEmotion = emote
           updateComment(comment)
-        },        
-        onSubmit: async(data) => {
-          comment.content = data[0].value
+        },     
+        onSubmit: async({mood:currentEmotion, permissions, value:content}) => {
+          comment.currentEmotion = currentEmotion
+          comment.permissions = permissions
+          comment.content = content
           updateComment(comment)
         }
     }
@@ -88,8 +112,8 @@
         icon: 'share', 
         loginRequired: false, 
         ownerRequired: false, 
-        showInTray: true,
-        showInSidebar: true,       
+        showInTray: (loggedIn && comment.permissions.allowShare.friends) || (!loggedIn && comment.permissions.allowShare.anybody),
+        showInSidebar: (loggedIn && comment.permissions.allowShare.friends) || (!loggedIn && comment.permissions.allowShare.anybody),
         fn: () => {
           events.comments.share(comment)
         }
@@ -109,10 +133,14 @@
 
   
   //--------------------------- FN
-  const updateComment = async(c) => {    
-    state.render = false
+  const updateComment = async(c, reRender = false) => {    
+    if(reRender){
+      render = false
+    }
     events!.comments && await events.comments.update({id: c._id, comment: c})
-    state.render = true
+    if(reRender){
+      render = true
+    }    
   }
     
   const fetchUser = (data) => {
@@ -138,17 +166,17 @@
       events,
       options,
       checkPermissions,
-      props: comment.props,
+      props: comment.props
   }
 
   //---------------------------
 </script>
 
-{#if state.render}
+<UserFetcher id={comment.authorId} onComplete={fetchUser} />
 
-  <UserFetcher id={comment.authorId} onComplete={fetchUser} />
 
-  <div class='comment'>
+
+  <div class='comment' class:isLast={last} class:hasExtension={comment.props.showReply} >
     {#if comment.props.showDots}
       <div class='comment__overlay' on:click={events.comment.toggleShowDots} />
     {/if}
@@ -170,16 +198,30 @@
     {#if !!author}
       <CommentHeader {...props} />
     {/if}
+    
     <CommentContent  {...props} />
-    <CommentEmotes  {...props} /> 
+
+    {#if render}
+      <CommentFooter  {...props} /> 
+    {/if}
   </div>
 
 
-  {#if comment.props.showComments}    
-    <CommentContainer _id={comment._id} target='comments' />
-  {/if}
 
+{#if comment.props.showReply}
+  <div class='replay-container'>
+    <CreatePost content={''} isBusy={comment.props.isCreating} onSubmit={events.comment.createNewComment} allowMood={true}>
+      Reply
+    </CreatePost>
+  </div>
 {/if}
+
+
+{#if comment.props.showComments}    
+  <CommentContainer _id={comment._id} target='comments' />
+{/if}
+
+
 
 <style lang='scss'>
   .comment{
@@ -190,6 +232,15 @@
     border-radius: 10px;
     margin-bottom: 20px;
     overflow: hidden;
+
+    &.hasExtension{
+      border-radius: 10px 10px 0 0;      
+      margin-bottom: 0;
+    }
+
+    &.isLast{
+      margin-bottom: 0px;
+    }
 
     &__overlay{
       position: absolute;
@@ -227,5 +278,12 @@
         padding: 10px;
       }      
     }   
+  }
+
+  .replay-container{
+    background: white;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 20px;
   }
 </style>

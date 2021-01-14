@@ -1,5 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
+  import {getContext} from 'svelte';
   import {ThreeSlot, Button, SVG} from '../../../index'
   
   //--------------------------- COMPONENT PROPS
@@ -10,10 +11,10 @@
   export let options;
   export let comment;
   export let checkPermissions;
-  
 
   //--------------------------- VARS  
-  const {updateEmoji, toggleShowEmojis, toggleShowComments} = events.comment;
+  const {updateEmoji, toggleShowEmojis, toggleReply, toggleShowComments} = events.comment;
+  const loggedIn = getContext('loggedIn')
 
   const {myEmote} = comment.emotes
   const {myCommentId = null} = comment.comments
@@ -44,30 +45,39 @@
     <div slot='left' style='display: flex; width: 100%'>
       <div class='commentfooter__emotes-tray'>
         {#each emojis.filter(x => x.inTray) as {name}}
-          <Button style={buttonStyleLeft} onClick={() => {updateEmoji(name)}}>
-            <SVG icon={name} size={12} fill={myEmote === name ? "green" : 'black'} style={svgStyle} /> 
+          <Button style={buttonStyleLeft} onClick={() => {loggedIn && updateEmoji(name)}}>
+            <SVG icon={name} size={12} fill={loggedIn ? (myEmote === name ? "green" : 'black') : 'grey'} style={svgStyle} /> 
             <strong>{getCount(name)}</strong>
           </Button>  
         {/each}
       </div>
-      <div class='commentfooter__emotes-outside' class:show={props.showEmojis}>
-        {#each emojis.filter(x => !x.inTray) as {name}}
-          <Button style={buttonStyleLeft} onClick={() => {updateEmoji(name)}}>
-            <SVG icon={name} size={12} fill={myEmote === name ? "green" : 'black'} style={svgStyle} /> 
-            <strong>{getCount(name)}</strong>
-          </Button>  
-        {/each}  
-        <Button style={buttonStyleLeft} onClick={toggleShowEmojis}>
-          <SVG icon={props.showEmojis ? 'arrow-left' : 'plus'} size={12} /> 
-        </Button>        
-      </div>              
+      {#if loggedIn}
+        <div class='commentfooter__emotes-outside' class:show={props.showEmojis}>
+          {#each emojis.filter(x => !x.inTray) as {name}}
+            <Button style={buttonStyleLeft} onClick={() => {loggedIn && updateEmoji(name)}}>
+              <SVG icon={name} size={12} fill={loggedIn ? (myEmote === name ? "green" : 'black') : 'grey'} style={svgStyle} /> 
+              <strong>{getCount(name)}</strong>
+            </Button>  
+          {/each}  
+          <Button style={buttonStyleLeft} onClick={toggleShowEmojis}>
+            <SVG icon={props.showEmojis ? 'arrow-left' : 'plus'} size={12} /> 
+          </Button>        
+        </div>       
+      {/if}       
     </div>
 
     <div slot='right'>
-      <Button style={buttonStyleRight} onClick={comment.comments.total > 0 && toggleShowComments}>
-        <SVG icon="comments" size={12} fill={!!myCommentId ? 'green' : "black"} style={svgStyle}/> 
-        <strong>{comment.comments.total}</strong>
-      </Button>             
+      <div style='display: flex'>
+        {#if loggedIn}
+          <Button style={buttonStyleRight} onClick={toggleReply}>
+            <SVG icon="post" size={16} style={svgStyle}/>           
+          </Button>    
+        {/if}     
+        <Button style={buttonStyleRight} onClick={comment.comments.total > 0 && toggleShowComments}>
+          <SVG icon="comments" size={12} fill={loggedIn ? (!!myCommentId ? 'green' : "black") : 'grey'} style={svgStyle}/> 
+          <strong>{comment.comments.total}</strong>
+        </Button>             
+      </div>
     </div>
   </ThreeSlot>
 </div>

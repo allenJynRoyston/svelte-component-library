@@ -12,6 +12,7 @@
 
   //--------------------------- APP CONTEXT   
   const updatePostById = getContext('updatePostById')  
+  const createComment = getContext('createComment')
   //---------------------------    
 
   //--------------------------- VARS
@@ -19,8 +20,7 @@
   events = {
     ...events,
     feed:{
-      share: (post) => {     
-        console.log(post)
+      share: (post) => {             
         alert('share')
       }, 
       report: () => {     
@@ -31,12 +31,33 @@
           x.props.isBlurred = false
           x.props.isEditing = false
           return x
-        })   
+        })           
 
         // @ts-ignore
         updatePostById(post)
         return post
       },
+      createNewComment: async({comment, index}) => {
+        feedData = feedData.map((x, i) => {          
+          x.props.isCreating = index === i ? true : x.props.isCreating
+          return x
+        })  
+
+        // @ts-ignore
+        await createComment(comment)
+
+        feedData = feedData.map((x, i) => {          
+          x.props.isCreating = index === i ? false : x.props.isCreating
+          x.props.showReply = false
+          return x
+        })  
+      },      
+      toggleReply: (index) => {
+        feedData = feedData.map((x, i) => {          
+          x.props.showReply = index === i ? !x.props.showReply : x.props.showReply
+          return x
+        }) 
+      },      
       toggleEmojis: (index) => {
         feedData = feedData.map((x, i) => {
           x.props.showEmojis = index === i ? !x.props.showEmojis : x.props.showEmojis
@@ -74,10 +95,13 @@
             showComments: false,
             showEmojis: false,
             showDots: false,
+            showEmotions: false,
+            showReply: false,
 
+            isCreating: false,
             isSaving: false,
             isBlurred: false,
-            isEditing: false    
+            isEditing: false     
           }        
           return x
         })    
@@ -130,7 +154,7 @@
     position: relative;    
 
     &-item{
-      width: calc(100% - 10px);    
+      width: 100%;
       margin-bottom: 20px;      
       transition: 0.3s;
       box-shadow: none;

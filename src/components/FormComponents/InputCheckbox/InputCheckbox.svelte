@@ -113,6 +113,7 @@
       align-items: center;
       justify-content: flex-start;
       font-size: 12px;
+      width: auto;
       cursor: pointer;
       input{        
         margin-left: 0px;

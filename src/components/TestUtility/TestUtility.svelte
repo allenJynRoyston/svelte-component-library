@@ -2,7 +2,8 @@
   //---------------------------
   import {tick, onMount, getContext} from 'svelte'
   import Chance from 'chance'
-  import {Button, Form, UserFetcher} from '../index'    
+  import {Button, Form, UserFetcher} from '../index'   
+  import {CreateComment, CreatePost, CreateUser} from '../../js/create'
   import axios from 'axios';
 
   //---------------------------
@@ -146,14 +147,14 @@
           data.push({
             _id: `p_${chance.fbid()}`,
             content: chance.paragraph({ sentences: 2 }),
-            updatedOn: randomDate(new Date(2012, 0, 1), new Date())
+            updatedOn: randomDate(new Date(2012, 0, 1), new Date()) 
           })
         break  
         case 'comments':
           data.push({
             _id: `c_${chance.fbid()}`,
             content: chance.paragraph({ sentences: 1 }),
-            updatedOn: randomDate(new Date(2012, 0, 1), new Date())
+            updatedOn: new Date()
           })
         break                        
       }      
@@ -171,7 +172,7 @@
       let commentData = returnRandomData({type: 'comments', amount: 2000})
 
       commentData = commentData.map(x => {
-        x.refId = chance.coin() > 'heads' ? returnRandom(postData)._id : chance.coin() > 'heads' ? returnRandom(imageData)._id : returnRandom(commentData)._id
+        x.refId = chance.coin() > 'heads' ? returnRandom(postData)._id : returnRandom(commentData)._id
         x.authorId = returnRandom(userData)._id
         return x
       })        
@@ -184,6 +185,7 @@
         const authorId = returnRandom(userData)._id
         const comments = commentData.filter(x => x.refId === _id)
 
+        //--------------------------------------------
         promises.push(new Promise( async(resolve) => {
           // @ts-ignore
           await indexdb.add('images', {
@@ -206,40 +208,47 @@
           resolve(null)
         }))   
       })
-  
+      //--------------------------------------------
+      
+      //--------------------------------------------
       userData.forEach(x => {        
-        const {_id, name} = x
+        const {name} = x
         promises.push(new Promise( async(resolve) => {
-          // @ts-ignore
-          await indexdb.add('users', {
-            _id, 
-            version: 0,
+
+          let user = {  
+            ...x,  
             firstName: name.split(' ')[0],
-            lastName:  name.split(' ')[1] || 'Smith',
-            imageId: returnRandom(imageData)._id
-          }, true)     
+            lastName:  name.split(' ')[1] || 'Smith',    
+            imageId: returnRandom(imageData)._id,
+            emotionImageSrc: chance.coin() > 'heads' ? {
+              happy: '/images/emotions/happy-test.png',
+              anger: '/images/emotions/anger-test.png',
+              sad: '/images/emotions/sad-test.png',
+              shocked: '/images/emotions/shocked-test.png',
+            } : null                           
+          }
+
+          await CreateUser(user, indexdb)
+
           resolve(null)
         }))   
       }) 
-    
+      //--------------------------------------------
+
+      //--------------------------------------------
       commentData.forEach(x => {                
-        const {_id, refId, authorId, content} = x
+        const {_id, authorId} = x
 
         const comments = commentData.filter(x => x.refId === _id)
 
         promises.push(new Promise( async(resolve) => {
-          // @ts-ignore
-          await indexdb.add('comments', {
-            _id, 
-            version: 0,
-            refId, 
-            authorId, 
-            content,
+          let comment = {
+            ...x,           
             comments: {
               total: comments.length,
               myComments: {
-                count: comments.filter(x => x.authorId === authorId).map(x => x._id).length,
-                cids: comments.filter(x => x.authorId === authorId).map(x => x._id)
+                count: 0,
+                cids: []
               },               
               allComments: {
                 count: comments.filter(x => x.authorId !== authorId).map(x => x._id).length,
@@ -268,36 +277,28 @@
                 count: returnRandomNumber(userData),
                 userIds: []
               }                                
-            },                       
-          }, true)     
+            },              
+          }
+
+          await CreateComment(comment, indexdb)
+    
           resolve(null)
         }))        
-      })       
+      })  
+      //--------------------------------------------     
 
+      //--------------------------------------------     
       postData.forEach(x => {               
-        const {_id, content} = x;   
+        const {_id} = x;   
 
         const authorId = returnRandom(userData)._id
         const comments = commentData.filter(x => x.refId === _id)
 
         promises.push(new Promise( async(resolve) => {
-          // @ts-ignore
-          await indexdb.add('posts', {
-            _id, 
-            version: 0,
-            content,
-            allowShare: {
-              friends: true,
-              anybody: false
-            },
-            allowComments: {
-              friends: true,
-              anybody: false
-            },
-            allowEmotes: {
-              friends: true,
-              anybody: false
-            },
+
+          let post = {
+            ...x, 
+            authorId,  
             comments: {
               total: comments.length,
               myComments: {
@@ -340,11 +341,13 @@
                 userIds: []
               }                                
             },
-            authorId,
-            updatedOn: randomDate(new Date(2012, 0, 1), new Date())  
-          }, true)     
+          }
+
+          await CreatePost(post, indexdb)
+
           resolve(null)
-        }))   
+        }))
+        //--------------------------------------------        
     
       }) 
 
@@ -374,8 +377,6 @@
 
   const clearTestData = () => {
     // @ts-ignore
-    indexdb.clear('following')
-    // @ts-ignore
     indexdb.clear('posts')
     // @ts-ignore
     indexdb.clear('images')
@@ -383,9 +384,8 @@
     indexdb.clear('users')
     // @ts-ignore
     indexdb.clear('comments')    
-
-    window.localStorage.removeItem('me')     
-    window.localStorage.removeItem('viewing')             
+    
+    window.localStorage.clear()         
           
     alert("clear test data.")
     location.reload()

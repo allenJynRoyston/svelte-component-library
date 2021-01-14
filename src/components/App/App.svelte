@@ -2,6 +2,7 @@
   //--------------------------- IMPORTS  
   import {onMount, setContext, getContext } from 'svelte'
   import {FeedContainer, TestUtility, FormExample} from '../index'
+  import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 
 
@@ -59,6 +60,12 @@
     const comment = await indexdb.get('comments', data._id)
     return comment
   })      
+
+  setContext('createComment', (comment) => {    
+    return new Promise(async(resolve) => {            
+      resolve(await CreateComment(comment, indexdb))
+    })    
+  })
   //---------------------------   
 
   //--------------------------- VARS  

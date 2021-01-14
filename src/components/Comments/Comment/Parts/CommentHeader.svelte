@@ -1,9 +1,8 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {ThreeSlot, Button, SVG} from '../../../index'
+  import {ThreeSlot, Button, SVG, MoodSelector, UserPortrait} from '../../../index'
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime"
-
   dayjs.extend(relativeTime)
 
   //--------------------------- COMPONENT PROPS
@@ -14,17 +13,22 @@
   export let options;
   export let comment;
   export let checkPermissions;
-
-
   //---------------------------
 
   //--------------------------- VARS   
   const buttonStyle = 'width: 25px; height: 25px; border-radius: 50%; margin: 0 5px;'
-  const {toggleShowDots, toggleEdit} = events.comment
+  const {toggleShowDots, toggleEdit, toggleShowEmotions, updateEmote} = events.comment  
   //---------------------------
 
-  
-  //--------------------------- ONMOUNT
+  //--------------------------- FN
+  const changeEmote = (emote) => {
+    updateEmote && updateEmote(emote)
+    toggleShowEmotions && toggleShowEmotions()
+  }
+
+  const toggleEmotions = () => {
+    toggleShowEmotions && toggleShowEmotions()
+  }
   //---------------------------   
 
 
@@ -36,11 +40,7 @@
 <div class='comment-header'>
   <ThreeSlot>
     <div slot='left'>
-      {#if author.portrait}   
-        <img src={author.portrait.imageSrc} alt={author.portrait.imageSrc} style='border-radius: 50%' />
-      {:else}
-        <img src="https://via.placeholder.com/150/b2fe8" alt="https://via.placeholder.com/150/b2fe8" />
-      {/if}
+      <UserPortrait userId={author._id} rounded={true} onClick={() => {isMine && toggleEmotions()}}  />
     </div>
 
   
@@ -66,21 +66,51 @@
         <Button onClick={toggleShowDots} style={buttonStyle}>
           <SVG icon={'dots'}/>
         </Button>                   
-      {:else}    
-        <Button onClick={toggleShowDots} style={buttonStyle}>
-          <SVG icon={'save'}/>
-        </Button>               
+      {:else}           
         <Button onClick={toggleEdit} style={buttonStyle}>
           <SVG icon={'cross'}/>
         </Button>   
       {/if}
     </div>
   </ThreeSlot>
+
+  {#if isMine}
+    <div class='comment-header__emotes' class:show={props.showEmotions} >
+      <MoodSelector userId={author._id} onClick={changeEmote} />
+    </div>
+  {/if}
 </div>
 
 
 <style lang='scss'>
   .comment-header{
+    position: relative;
     width: 100%;
+
+    img{
+      width: 35px;
+      height: auto;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .emotion{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 20px;
+    }
+
+    &__emotes{
+      position: relative;
+      top: 0;
+      left: 0;      
+      height: 0;
+      overflow: hidden;
+      &.show{
+        height: auto;
+        margin-top: 20px;
+      }
+    }
   }
 </style>

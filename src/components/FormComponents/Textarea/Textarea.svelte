@@ -53,6 +53,10 @@
   *
   */
   export let contentEdit = false
+  /*
+  *
+  */
+  export let hasSubmitted = false  
   //---------------------------
 
   //--------------------------- VARS
@@ -116,7 +120,7 @@
 
 </script>
 
-<div class='input-container' test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' test-dataid='input-container' class:invalid={hasSubmitted && errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -124,7 +128,7 @@
   {#if contentEdit}
     <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} bind:this={element}/>  
   {:else}
-    <textarea class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value bind:this={element} />
+    <textarea wrap="hard" class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value bind:this={element} />
   {/if}
 
 </div>
@@ -143,10 +147,14 @@
 
     .textarea{
       height: 30px;
-      width: calc(100% - 20px);
+      width: 100%;
+      max-width: calc(100% - 20px);
       padding: 10px;      
       min-height: 50px;
       border: 1px solid black;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
     }
 
     &.valid{

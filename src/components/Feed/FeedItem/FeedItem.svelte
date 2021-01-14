@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { tick, getContext } from 'svelte';
+  import {CreatePost} from '../../index'
   
     //--------------------------- IMPORTS  
     import { 
@@ -23,12 +24,10 @@
 
     let post = null;
     let author = null;
-    let isMine;
-  
-    let state = {      
-      render: true  
-    }    
-  
+    let render = true;
+    let isMine;    
+     
+
     events = {
       ...events,
       feedItem:{      
@@ -44,10 +43,26 @@
           // @ts-ignore
           events!.feed && events.feed.toggleEmojis(index)
         },
+        toggleReply: () => {          
+          // @ts-ignore
+          events!.feed && events.feed.toggleReply(index)
+        },          
         toggleEdit: () => {   
           // @ts-ignore
           events!.feed && events.feed.toggleEdit(index)
-        },      
+        },     
+        createNewComment: ({value:content, mood:currentEmotion, permissions}) => {
+          let newComment = {
+            refId: post._id, 
+            // @ts-ignore
+            authorId: myDetails._id, 
+            content,
+            permissions,            
+            currentEmotion,   
+          }
+
+          events!.feed && events.feed.createNewComment({comment:newComment, index})          
+        },           
         updateEmoji: async(emoji) => {           
           // first, remove one from the count
           let current = post.emotes.myEmote
@@ -59,8 +74,10 @@
 
           updatePost(post)
         },        
-        onSubmit: async(data) => {
-          post.content = data[0].value
+        onSubmit: async({mood:currentEmotion, permissions, value:content}) => {
+          post.currentEmotion = currentEmotion
+          post.permissions = permissions
+          post.content = content
           updatePost(post)
         }
       }
@@ -90,8 +107,8 @@
         icon: 'share', 
         loginRequired: false, 
         ownerRequired: false, 
-        showInTray: true,
-        showInSidebar: true,       
+        showInTray: (loggedIn && data.permissions.allowShare.friends) || (!loggedIn && data.permissions.allowShare.anybody),
+        showInSidebar: (loggedIn && data.permissions.allowShare.friends) || (!loggedIn && data.permissions.allowShare.anybody),
         fn: () => {
           events.feed.share(data)
         }
@@ -107,21 +124,21 @@
           events.feed.report(data)
         }
       }    
-    ]
+    ]    
     //---------------------------
   
   
     //--------------------------- FN  
     const updatePost = async(p) => {
-      state.render = false
+      render = false
       events!.feed && await events.feed.update({id: p._id, post: p})
-      state.render = true
+      render = true
     }
 
     const fetchPostComplete = (data) => {
       post = data
   
-      if(post.allowShare.anybody || (post.allowShare.friends && friendStatus === 'friend') ){
+      if(post.permissions.allowShare.anybody || (post.permissions.allowShare.friends && friendStatus === 'friend') ){
         if(options.filter(x => x.name === 'Share').length === 0){
           options.push(
             {
@@ -177,7 +194,7 @@
   <UserFetcher id={post.authorId} onComplete={fetchUserComplete} />
 {/if}
 
-{#if state.render}
+
 
   <div class='card-container' >
     <div class='card-container__header'>
@@ -196,7 +213,7 @@
 
 
     <div class='card-container__footer'>
-      {#if !!post} 
+      {#if !!post && render} 
         <FeedItemFooter  {...props} /> 
       {/if}
       <slot name='footer'></slot>
@@ -217,10 +234,19 @@
         </div>
       </div>    
     {/if}  
+
+
+    {#if data.props.showReply}
+      <div class='card-container__comment'>        
+        <CreatePost content={''} isBusy={data.props.isCreating} onSubmit={events.feedItem.createNewComment} showUser={true} >      
+          Reply
+        </CreatePost>
+      </div>
+    {/if}    
   </div>  
 
-{/if}
-  
+
+
 
 {#if data.props.showComments}
   <CommentContainer _id={post._id} target='posts' />

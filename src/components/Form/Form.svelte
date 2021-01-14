@@ -2,7 +2,7 @@
   //--------------------------- IMPORTS
   import { onMount, onDestroy, tick } from 'svelte';  
   import {
-    Button, Input, InputDate, Textarea, FileInput,
+    Button, Input, InputDate, Textarea, FileInput, SVG,
     InputTime, InputCheckbox, Select, SelectMulti, Rating,
     FormErrors, FormPreview,     
   } from '../index'
@@ -155,7 +155,9 @@
   const onSubmitHandler = () => {
     let data = Object.entries(completedFormData).map(x => {
       return !!idModifier ? 
+        // @ts-ignore
         {key: x[0].split(`_${idModifier}`)[0], value: x[1].value} : 
+        // @ts-ignore
         {key: x[0], value: x[1].value}
     })
     onSubmit && onSubmit(data)
@@ -240,16 +242,21 @@
 
 
 {#if isReady}
-  <form class='form-container' data-testid='form-container' style={formStyling} autocomplete="on">
+  <form class='form-container' class:isBusy={isBusy} data-testid='form-container' style={formStyling} autocomplete="on">
+
+    <div class='form-container__overlay' class:show={isBusy}>
+      <SVG icon='save' />
+    </div>
+
     {#if formData.length > 0}
       {#each formData as data, i}
 
         <div style={layoutSize === 'mobile' ? applyStyles(data.sizing, 'mobile') : applyStyles(data.sizing, 'desktop') } >
           {#if data.renderAs === 'input'}
-            <Input {...stripUnusedProperties(data)} updateForm={updateForm} />
+            <Input {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
           {/if}
           {#if data.renderAs === 'textarea'}
-            <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} />
+            <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
           {/if}      
           {#if data.renderAs === 'date'}
             <InputDate {...stripUnusedProperties(data)} updateForm={updateForm} />
@@ -289,11 +296,14 @@
        
         {#if showButton}
           <div class='button-container'>
+            <slot name='options' />
             <Button onClick={onSubmitHandler} {disabled} style={'padding: 5px 10px'}>
               <slot>
                 {isBusy ? 'Saving...' : 'Save'}
               </slot>
             </Button>
+
+           
           </div>
         {/if}
       </section>
@@ -312,9 +322,42 @@
     border-radius: 5px;   
     display: flex;
     flex-wrap: wrap;
+    opacity: 1;
+    position: relative;
+
+    section{
+      width: 100%
+    }    
+
+    &__overlay{
+      width: 100%;
+      height: 100%;      
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;      
+      &.show{
+        display: flex
+      }
+    }
+
+    &.isBusy{
+      opacity: 0.7;
+      pointer-events: none;
+      cursor: not-allowed
+    }
 
     .preview-container, .error-container, .button-container{
       margin: 10px 0;
+    }
+
+    .button-container{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
     }
 
   }

@@ -1,7 +1,9 @@
 <script>
+  export let style = null;
+
 </script>
 
-<div class='threecolumn'>
+<div class='threecolumn' {style}>
 
   <div class='threecolumn__left'>
     <slot name='left' />
