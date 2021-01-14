@@ -13,7 +13,7 @@
   //---------------------------
   const indexdb = getContext('indexdb')
   const loggedIn = getContext('loggedIn')
-  const myDetails = getContext('myDetails')
+  const myDetails = getContext('myDetails') 
   const chance = new Chance();
 
   let isReady = false;
@@ -436,6 +436,11 @@
         and viewing  <strong>{`${viewer.firstName} ${viewer.lastName}`}</strong>
       {/if}
     </p>
+
+    <p>
+      <small>Friendship status: <strong>{!!friendStatus ? `${friendStatus} 🤗` : "Not friends"}</strong></small>    
+    </p>
+    
 
     <hr>
     

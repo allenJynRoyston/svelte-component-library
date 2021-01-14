@@ -11,6 +11,7 @@
   export let allowMood = true;
   export let showUser = true;
   export let style = null;
+  export let render = true;
   export let currentEmotion = null;
   export let requireClickToActivate = false;
   export let permissions =  {
@@ -199,7 +200,7 @@
 
   {#if isBusy}
     <div class='createpost__overlay' >
-        <SVG icon='save' />
+      <SVG icon='save' />
     </div>  
   {/if}
 
@@ -207,20 +208,17 @@
   <ThreeSlot style={'margin-bottom: 10px'}>
     <div slot='left'>
       {#if showUser}
-        <UserPortrait userId={myDetails._id} rounded={true} 
-        />      
+        <UserPortrait userId={myDetails._id} rounded={true} />      
       {/if}
     </div>
 
-
-    <slot name='header' />
-
-    {#if showUser}      
-      <p>
-        Replying...
-      </p>      
-    {/if}
-
+    <slot name='header' >
+      {#if showUser}      
+        <p>
+          Replying...
+        </p>  
+      {/if}
+    </slot>
 
     <div slot='right' style='display: flex'>
       {#if allowMood}
@@ -232,22 +230,21 @@
 
   <div style='display: flex'>
     <MoodPortrait userId={myDetails._id} currentEmotion={mood || currentEmotion}/>      
-    
-    <Form {...formProps} style={formStyle} >    
-
-      <div slot='options' style={optionStyle}>         
-        <div style='display: flex;'>
-          <small style='width: 200px'>Friends <b>can</b>:</small> <Form {...friendPermissions} style={'border: none; padding: 0; width: 100%;'} showButton={false} />
-        </div>
-        <div style='display: flex;'>
-          <small style='width: 200px'>Strangers <b>can</b>:</small>  <Form {...anybodyPermissions} style={'border: none; padding: 0; width: 100%;'} showButton={false} />
-        </div>
-      </div>
-        
-      <slot>
-        Smash
-      </slot>
-    </Form>
+    {#if render}
+      <Form {...formProps} style={formStyle} >    
+        <div slot='options' style={optionStyle}>         
+          <div style='display: flex;'>
+            <small style='width: 200px'>Friends <b>can</b>:</small> <Form {...friendPermissions} style={'border: none; padding: 0; width: 100%;'} showButton={false} />
+          </div>
+          <div style='display: flex;'>
+            <small style='width: 200px'>Strangers <b>can</b>:</small>  <Form {...anybodyPermissions} style={'border: none; padding: 0; width: 100%;'} showButton={false} />
+          </div>
+        </div>          
+        <slot>
+          Smash
+        </slot>
+      </Form>
+    {/if}
   </div>
 
 

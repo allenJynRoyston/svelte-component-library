@@ -259,7 +259,7 @@
       display: block;
       position: relative;
       width: calc(100% - 2px);
-      border-radius: 5px;
+      border-radius: 0 10px 0px 10px;
 
       &.blur{
         filter: blur(5px);

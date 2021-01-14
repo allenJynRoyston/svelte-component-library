@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
-  import {onMount, getContext} from 'svelte'
+  import {onMount, getContext, tick} from 'svelte'
   import {UserFetcher, Feed, CreatePost, UserPortrait} from '../index'
   
   //--------------------------- STATE
@@ -20,6 +20,13 @@
   let initialAmount = 5;
   let fetchAmount = 10
   let totalInFeed;
+  let newPost = {
+    isBusy: false,
+    render: true,
+    submitSuccess: false
+  }
+
+
 
 
   events = {
@@ -72,13 +79,29 @@
   }
 
   const postToFeed = (post) => {
-    if(feedOwnerId === myDetails._id){
-      console.log("owner")
-    }
-    else{
-      console.log('somebody else')
-    }
-    return null;
+    newPost.isBusy = true
+
+    setTimeout(async() => {
+      //---------------------  
+      if(feedOwnerId === myDetails._id){
+        console.log("owner")
+      }
+      else{
+        console.log('somebody else')
+      }    
+      //---------------------  
+
+      //---------------------  
+      newPost.render = false;
+      await tick()
+      newPost.render = true;
+
+      newPost.isBusy = false
+      newPost.submitSuccess = true
+      setTimeout(() => {
+        newPost.submitSuccess = false        
+      }, 2000)
+    }, 2000)
   }  
 
   const fetchUser = (user) => {  
@@ -90,15 +113,6 @@
 
 
 
-<p style='text-align: center'>
-  {#if feedOwner}
-    <strong>- {`${feedOwner.firstName} ${feedOwner.lastName}`} -</strong>
-    <br>
-    <small>Friendship status: <strong>{!!friendStatus ? `${friendStatus} 🤗` : "Not friends"}</strong></small>
-  {/if}
-</p>
-
-
 {#if feedOwnerId} 
   <UserFetcher id={feedOwnerId} onComplete={fetchUser} />  
 {/if}
@@ -107,25 +121,24 @@
 
   {#if loggedIn && feedOwner}
     <div class='feed-container__post'>
-
-        <CreatePost content={''} isBusy={''} onSubmit={postToFeed} allowMood={true} showUser={false} requireClickToActivate={true} >
-
-        <div slot='header' style='display: flex'>
-          <UserPortrait userId={feedOwner._id} style={'margin-right: 10px'} />      
-          <p>{feedOwnerId === myDetails._id ? 'Post something:' : `Leave ${feedOwner.firstName} a message:`}</p>
+      {#if newPost.submitSuccess}
+        <div style='text-align: center'>
+          <h3>Submission Success!</h3>
         </div>
-
-        Reply
-      </CreatePost>
+      {:else}
+        <CreatePost content={''} isBusy={newPost.isBusy} onSubmit={postToFeed} allowMood={true} showUser={false} requireClickToActivate={true} >
+          <div slot='header' style='display: flex'>
+            <UserPortrait userId={feedOwner._id} style={'margin-right: 10px'} />      
+            <p>{feedOwnerId === myDetails._id ? 'Post something:' : `Leave ${feedOwner.firstName} a message:`}</p>
+          </div>
+        </CreatePost>
+      {/if}
     </div>
   {/if}
 
   {#if isReady}
     <div class='feed-container__feed'>
-
       <!-- <div class='feed-container__overlay' /> -->
-
-
       <Feed {feedData} {friendStatus} {events} />
 
       {#if feedData.length < totalInFeed}
@@ -143,7 +156,7 @@
       position: relative;
       width: calc(100% - 2px); 
       border: 1px solid black; 
-      margin-bottom: 20px      
+      margin-bottom: 20px;
     }
 
     &__feed{
