@@ -7,9 +7,4 @@ describe("Button component", () => {
     const { getByText } = render(Button);
     expect(getByText("Button")).toBeInTheDocument();
   });
-
-  test("should render component correctly", () => {
-    const { getByText } = render(Button, { name: "Submit" });
-    expect(getByText("Submit")).toBeInTheDocument();
-  });
 });

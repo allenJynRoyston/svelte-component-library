@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
-  import { validate } from '../../js'
+  import { onMount, onDestroy } from 'svelte';
+  import { validate } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -49,6 +49,14 @@
    * 
   */  
   export let maxLength = null;
+  /*
+  *
+  */
+  export let contentEdit = false
+  /*
+  *
+  */
+  export let hasSubmitted = false  
   //---------------------------
 
   //--------------------------- VARS
@@ -57,12 +65,34 @@
     id:key,
     placeholder,    
   }
+  let element;
+
+  const autoExpand = (e, el) => {
+    var el = el || e.target
+    el.style.height = 'inherit'
+    el.style.height = `${el.scrollHeight}px`    
+    setTimeout(() => { updateParent(value) })
+  }
+
 
 
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(value)
+    element.addEventListener('paste', autoExpand)
+    element.addEventListener('input', autoExpand)
+    element.addEventListener('keyup', autoExpand)        
+    autoExpand(null, element)    
   }); 
+
+
+  onDestroy(async () => {
+    if(element){
+      element.removeEventListener('paste',autoExpand)
+      element.removeEventListener('input',autoExpand)
+      element.removeEventListener('keyup',autoExpand)    
+    }
+  })  
   //---------------------------   
 
   //--------------------------- EVENT HANDLERS
@@ -90,12 +120,17 @@
 
 </script>
 
-<div class='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' test-dataid='input-container' class:invalid={hasSubmitted && errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
   
-  <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
+  {#if contentEdit}
+    <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} bind:this={element}/>  
+  {:else}
+    <textarea wrap="hard" class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value bind:this={element} />
+  {/if}
+
 </div>
 
 <style lang="scss">
@@ -103,26 +138,31 @@
     width: 100%;
     margin-bottom: 10px;    
 
+
     label{
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;
     }
 
-    textarea{
+    .textarea{
       height: 30px;
-      width: calc(100% - 20px);
+      width: 100%;
+      max-width: calc(100% - 20px);
       padding: 10px;      
-      min-height: 50px
+      min-height: 50px;
+      border: 1px solid black;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
     }
 
     &.valid{
       label{
         color: black
       }
-      textarea{
+      .textarea{
         color: black;
-        border: 1px solid black;
       }
     }
 
@@ -130,7 +170,7 @@
       label{
         color: red
       }
-      textarea{
+      .textarea{
         color: red;
         border: 1px solid red;
       }

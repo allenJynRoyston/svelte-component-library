@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount } from 'svelte';
-  import { validate } from '../../js'
+  import { validateCheckbox } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
   /**
@@ -16,11 +16,7 @@
    * updateForm event
   */  
   export let updateForm = null;    
-
-  /**
-   * 
-  */  
-  export let type = null  
+  
   /**
    * 
   */  
@@ -28,31 +24,23 @@
   /**
    * 
   */  
-  export let value = ''
+  export let value = false
   /**
    * 
-  */  
+  */ 
+  export let text = null;
+  /**
+   * 
+  */   
   export let key = null
   /**
    * 
   */
-  export let label = null;
-  /**
-   * 
-  */  
-  export let regex = null;
+  export let label = null; 
   /**
    * 
   */  
   export let required = null;
-  /**
-   * 
-  */  
-  export let minLength = null;
-  /**
-   * 
-  */  
-  export let maxLength = null;
   //---------------------------
 
   //--------------------------- VARS
@@ -71,21 +59,24 @@
 
   //--------------------------- EVENT HANDLERS
   const onChangeEventHandler = () => {   
-    onChange && onChange(value)
-    updateParent(value)
-  }
-
-  const onKeypressHandler = (e) => {
     setTimeout(() => {
-      onKeypress && onKeypress(value)
+      onChange && onChange(value)
       updateParent(value)
     })
   }
   //---------------------------
 
   //--------------------------- FUNCTIONS
+  const toggle = () => {
+    value = !value
+    setTimeout(() => {
+      onChange && onChange(value)
+      updateParent(value)
+    })
+  }
+
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validate({value, regex, required, minLength, maxLength})
+    const {isValid, validationErrors} = validateCheckbox({value, required})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -94,24 +85,21 @@
 
 </script>
 
-<div class='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class='inputcheckbox-container' class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+
   {#if label}
     <label for={key} >{label}</label>
-  {/if}
-  
-  {#if type === 'password'}
-    <input type='password' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {:else if type === 'textarea'}    
-    <textarea {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {:else}
-    <input type='text' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
-  {/if}
+  {/if}  
+
+  <div class='cb-container'  on:click={toggle}>
+    <input type='checkbox' {...props} on:change={onChangeEventHandler} bind:checked={value} />  
+    <span class='cb-text'>{text}</span>
+  </div>
 
 </div>
 
 <style lang="scss">
-  .input-container {    
-    margin-bottom: 10px;
+  .inputcheckbox-container {        
     width: 100%;
     
     label{
@@ -120,32 +108,36 @@
       display: flex;
     }
 
-    input{
-      height: 30px;
-      width: calc(100% - 20px);
-      padding: 0 10px;
+    .cb-container{
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 12px;
+      width: auto;
+      cursor: pointer;
+      input{        
+        margin-left: 0px;
+        margin-right: 5px;
+        padding: 0 0;
+        cursor: pointer;
+      }
+    }   
+
+    &.hasLabel{
+      margin-bottom: 10px;
     }
+        
 
     &.valid{
-      label{
-        color: black
-      }
-      input{
+      .cb-text{
         color: black;
-        border: 1px solid black;
       }
     }
 
     &.invalid{
-      label{
-        color: red
-      }
-      input{
+      .cb-text{
         color: red;
-        border: 1px solid red;
       }
     }
-
-  }
-  
+  }  
 </style>

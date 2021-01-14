@@ -21,10 +21,8 @@
 <div class='formpreview-container'>  
   <ul>
     <span>Submit</span>
-    {#each previewData as {key, value}}
-      {#if value}
-        <li><strong>{key}:</strong> {value}</li>
-      {/if}
+    {#each previewData as {key, value}}     
+      <li><strong>{key}:</strong> {JSON.stringify(value)}</li> 
     {/each}
   </ul>
 </div>

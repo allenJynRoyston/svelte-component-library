@@ -9,6 +9,8 @@
   "compilerOptions": {
     "target": "es2019",
     "types": ["svelte", "jest"],
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }
