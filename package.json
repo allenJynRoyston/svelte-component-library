@@ -10,6 +10,7 @@
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
     "@snowpack/plugin-svelte": "^3.3.1",
+    "@snowpack/plugin-webpack": "^2.3.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/svelte": "^3.0.0",
     "@testing-library/user-event": "^12.5.0",

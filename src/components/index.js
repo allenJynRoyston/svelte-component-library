@@ -19,6 +19,7 @@ export { default as FormExample } from "./FormPremade/FormExample.svelte";
 export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 
 /* COMPONENTS */
+export { default as Header } from "./Header/Header.svelte";
 export { default as Button } from "./Button/Button.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
@@ -26,6 +27,7 @@ export { default as MoodSelector } from "./MoodSelector/MoodSelector.svelte";
 export { default as MoodPortrait } from "./MoodPortrait/MoodPortrait.svelte";
 export { default as UserPortrait } from "./UserPortrait/UserPortrait.svelte";
 export { default as CreatePost } from "./CreatePost/CreatePost.svelte";
+export { default as Channels } from "./Channels/Channels.svelte";
 
 /* SLOTS */
 export { default as ThreeSlot } from "./ThreeSlot/ThreeSlot.svelte";
