@@ -1,7 +1,7 @@
 <script>
   //--------------------------- IMPORTS  
   import {onMount, setContext } from 'svelte'
-  import {Header, Channels, TestUtility} from '../index'
+  import {Header, Footer, Channels, TestUtility} from '../index'
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 
@@ -123,8 +123,9 @@
 
 
 <div id='app-wrapper'>
+  <Header />
   {#if isReady}    
-    <Header />
+    
     <TestUtility />
     <div style='display: flex'>
       <button on:click={() => {channelData.current = 0}}>Home</button>
@@ -135,6 +136,7 @@
   {:else}
     <p>Loading...</p>
   {/if}
+  <Footer />
 </div>
 
 <style lang='scss'>

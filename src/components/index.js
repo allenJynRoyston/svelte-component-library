@@ -20,6 +20,8 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 
 /* COMPONENTS */
 export { default as Header } from "./Header/Header.svelte";
+export { default as Footer } from "./Footer/Footer.svelte";
+
 export { default as Button } from "./Button/Button.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
