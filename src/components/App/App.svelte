@@ -1,7 +1,7 @@
 <script>
   //--------------------------- IMPORTS  
-  import {onMount, setContext, getContext } from 'svelte'
-  import {FeedContainer, TestUtility, FormExample} from '../index'
+  import {onMount, setContext } from 'svelte'
+  import {Header, Channels, TestUtility} from '../index'
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 
@@ -36,7 +36,6 @@
     return indexdb.get('comments', id)
   })
     
-
   setContext('updateUserById', async(data) => {
     await indexdb.add('users', data, true)
     const comment = await indexdb.get('users', data._id)
@@ -96,13 +95,52 @@
 
 
   //-------------------------- TEST DATA
+  let channelData = {
+     data: [
+      {id: 0, type: 'feed', props: {feedOwnerId: viewing && viewing._id, friendStatus}},
+      {id: 1, type: 'test'},
+      {id: 2, type: 'form'},
+      {id: 3, type: ''},
+      // {id: 4, type: ''},
+      // {id: 5, type: ''},
+      // {id: 6, type: ''},
+      // {id: 7, type: ''}
+    ],
+    current: 0,
+    transition: {
+      ease: 'cubicOut',
+      speed: 600
+    },
+    onNext: () => {
+      // console.log(val)
+    },
+    onPrev: () => {
+      // console.log(val)
+    },
+  }
   //---------------------------
 </script>
 
-<style lang='scss' scoped>
+
+<div id='app-wrapper'>
+  {#if isReady}    
+    <Header />
+    <TestUtility />
+    <div style='display: flex'>
+      <button on:click={() => {channelData.current = 0}}>Home</button>
+      <button on:click={() => {channelData.current++}}>+ Channel</button>
+      <button on:click={() => {channelData.current--}}>- Channel</button>
+    </div>
+    <Channels {...channelData} />
+  {:else}
+    <p>Loading...</p>
+  {/if}
+</div>
+
+<style lang='scss'>
   #app-wrapper{
-    max-width: calc(800px - 40px);
-    padding: 0 20px;
+    width: 100vw;
+    height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -110,18 +148,4 @@
     overflow: hidden;
   }
 </style>
-
-
-
-<div id='app-wrapper'>
-  {#if isReady}    
-    <TestUtility viewerId={viewing && viewing._id}  {friendStatus}/>    
-    <FeedContainer feedOwnerId={viewing && viewing._id} {friendStatus} />  
-    <!-- <FormExample />     -->
-
-  {:else}
-    <p>Loading...</p>
-  {/if}
-</div>
-
 
