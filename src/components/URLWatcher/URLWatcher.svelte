@@ -19,6 +19,7 @@
   const channelProps = {
      data: [
       {type: 'feed', render: true, props: {feedOwnerId: viewing && viewing._id, friendStatus}},
+      {type: 'form', render: true},
     ],
     current: 0,
     transition: {

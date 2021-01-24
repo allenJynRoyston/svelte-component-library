@@ -1,6 +1,6 @@
 <script>
   import {onMount} from 'svelte'
-  import {Loader, FeedContainer, TestUtility, FormExample} from '../index'
+  import {Loader, FeedContainer, FormExample} from '../index'
 
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';

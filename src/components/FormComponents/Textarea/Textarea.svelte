@@ -120,7 +120,7 @@
 
 </script>
 
-<div class='input-container' test-dataid='input-container' class:invalid={hasSubmitted && errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
