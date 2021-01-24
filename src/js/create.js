@@ -75,12 +75,14 @@ const CreateUser = (user, indexdb) => {
       _id = `u_${chance.fbid()}`,
       firstName = null,
       lastName = null,
+      username = null,
       imageId = null,
       emotionImageSrc,
     } = user;
 
     const newUser = {
       _id,
+      username,
       firstName,
       lastName,
       imageId,

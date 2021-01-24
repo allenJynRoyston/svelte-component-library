@@ -1,7 +1,7 @@
 <script>
   //--------------------------- IMPORTS  
   import {onMount, setContext } from 'svelte'
-  import {Header, Footer, Channels, TestUtility} from '../index'
+  import {Header, Footer, URLWatcher, TestUtility} from '../index'
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 
@@ -10,19 +10,19 @@
   let myDetails = window.localStorage.getItem('me')  
       myDetails = JSON.parse(myDetails) || null
 
-  let viewing = window.localStorage.getItem('viewing')  
-      viewing = JSON.parse(viewing) || null      
-
-  let friendStatus = window.localStorage.getItem('friendstatus')  
-      friendStatus = JSON.parse(friendStatus) || null
-      friendStatus = !!friendStatus ? friendStatus.title : friendStatus 
-
   setContext('myDetails', myDetails)  
   setContext('loggedIn', myDetails !== null )
   
   setContext('findUserById', (id) => {        
     return indexdb.get('users', id)
   })
+
+  setContext('findUserByUsername', (username) => {    
+    return new Promise(async(resolve) => {    
+      let users = await indexdb.getAll('users')      
+      resolve(users.find(x => x.username === username) || null)      
+    })
+  })  
 
   setContext('findPostById', (id) => {
     return indexdb.get('posts', id)
@@ -75,9 +75,8 @@
   //---------------------------  
 
   //--------------------------- ONMOUNT
-  onMount(async() => {
-    // setup required indexDB stuff
-    await setupIndexDB();
+  onMount(async() => {    
+    await setupIndexDB();  // setup required indexDB stuff
     isReady = true;
   })
   //---------------------------
@@ -93,32 +92,6 @@
   }
   //---------------------------
 
-
-  //-------------------------- TEST DATA
-  let channelData = {
-     data: [
-      {id: 0, type: 'feed', props: {feedOwnerId: viewing && viewing._id, friendStatus}},
-      {id: 1, type: 'test'},
-      {id: 2, type: 'form'},
-      {id: 3, type: ''},
-      // {id: 4, type: ''},
-      // {id: 5, type: ''},
-      // {id: 6, type: ''},
-      // {id: 7, type: ''}
-    ],
-    current: 0,
-    transition: {
-      ease: 'cubicOut',
-      speed: 600
-    },
-    onNext: () => {
-      // console.log(val)
-    },
-    onPrev: () => {
-      // console.log(val)
-    },
-  }
-  //---------------------------
 </script>
 
 
@@ -127,12 +100,8 @@
   {#if isReady}    
     
     <TestUtility />
-    <div style='display: flex'>
-      <button on:click={() => {channelData.current = 0}}>Home</button>
-      <button on:click={() => {channelData.current++}}>+ Channel</button>
-      <button on:click={() => {channelData.current--}}>- Channel</button>
-    </div>
-    <Channels {...channelData} />
+    <URLWatcher />
+    
   {:else}
     <p>Loading...</p>
   {/if}

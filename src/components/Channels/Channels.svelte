@@ -1,6 +1,6 @@
 <script>
   import {onMount} from 'svelte'
-  import {FeedContainer, TestUtility, FormExample} from '../index'
+  import {Loader, FeedContainer, TestUtility, FormExample} from '../index'
 
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -9,6 +9,7 @@
   export let current = 0
   export let onNext = null;
   export let onPrev = null;
+  export let channelReady = null;
   export let transition = {
               easing: 'cubicOut',
               speed: 400
@@ -79,6 +80,7 @@
     let val = table[currentChannel]
     await xpos.set(val)
     onNext && onNext()    
+    channelReady && channelReady(currentChannel)  
   }
 
   const prev = async() => {
@@ -86,8 +88,10 @@
     currentChannel = currentChannel - 1 < 0 ? 0 : currentChannel - 1
     let val = table[currentChannel]
     await xpos.set(val)
-    onPrev && onPrev()    
+    onPrev && onPrev()  
+    channelReady && channelReady(currentChannel)  
   }
+  
 
   $: watchChange = () => {
     if(currentChannel !== current){
@@ -117,14 +121,18 @@
 
 {#if ready && watchChange()}
   <div class='channels' style={`${channelsStyle()};${xPostiion()}`}>
-    {#each data as {type, props}, index}
+    {#each data as {type, render, props}, index}
       <div class='channel' style={channelStyle()}>
         <div class='channel__inner'>
-          {#if type === 'feed'}          
+          {#if !render}
+            <Loader />
+          {/if}
+
+          {#if type === 'feed' && render}          
             <FeedContainer {...props}/>
           {/if}
-          {#if type === 'form'}
-            <FormExample />
+          {#if type === 'form' && render}
+            <FormExample />         
           {/if}   
         </div>     
       </div>

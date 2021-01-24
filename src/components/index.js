@@ -21,7 +21,7 @@ export { default as FormLogin } from "./FormPremade/FormLogin.svelte";
 /* COMPONENTS */
 export { default as Header } from "./Header/Header.svelte";
 export { default as Footer } from "./Footer/Footer.svelte";
-
+export { default as Link } from "./Link/Link.svelte";
 export { default as Button } from "./Button/Button.svelte";
 export { default as SVG } from "./SVG/SVG.svelte";
 export { default as TestUtility } from "./TestUtility/TestUtility.svelte";
@@ -30,6 +30,8 @@ export { default as MoodPortrait } from "./MoodPortrait/MoodPortrait.svelte";
 export { default as UserPortrait } from "./UserPortrait/UserPortrait.svelte";
 export { default as CreatePost } from "./CreatePost/CreatePost.svelte";
 export { default as Channels } from "./Channels/Channels.svelte";
+export { default as URLWatcher } from "./URLWatcher/URLWatcher.svelte";
+export { default as Loader } from "./Loader/Loader.svelte";
 
 /* SLOTS */
 export { default as ThreeSlot } from "./ThreeSlot/ThreeSlot.svelte";
