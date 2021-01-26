@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from "@testing-library/svelte";
 import SelectMulti from "./SelectMulti.svelte";
 
 const toggleValue = async (id) => {
-  fireEvent.click(screen.getByTestId(`option-${id}`));
+  fireEvent.click(screen.getByTestId(`selectmulti-option-${id}`));
   await new Promise((r) => setTimeout(r, 1));
 };
 
@@ -78,10 +78,10 @@ describe("SelectMulti component", () => {
     });
 
     it("... if selected they should be shown as clicked", () => {
-      expect(screen.getByTestId("option-0").checked).toBe(true);
-      expect(screen.getByTestId("option-1").checked).toBe(false);
-      expect(screen.getByTestId("option-2").checked).toBe(false);
-      expect(screen.getByTestId("option-3").checked).toBe(true);
+      expect(screen.getByTestId("selectmulti-option-0").checked).toBe(true);
+      expect(screen.getByTestId("selectmulti-option-1").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-2").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-3").checked).toBe(true);
     });
 
     test("... selecting an option works", async () => {
@@ -89,19 +89,19 @@ describe("SelectMulti component", () => {
       await toggleValue(1);
       await toggleValue(2);
       await toggleValue(3);
-      expect(screen.getByTestId("option-0").checked).toBe(false);
-      expect(screen.getByTestId("option-1").checked).toBe(true);
-      expect(screen.getByTestId("option-2").checked).toBe(true);
-      expect(screen.getByTestId("option-3").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-0").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-1").checked).toBe(true);
+      expect(screen.getByTestId("selectmulti-option-2").checked).toBe(true);
+      expect(screen.getByTestId("selectmulti-option-3").checked).toBe(false);
     });
 
     test("... value is required", async () => {
       await toggleValue(0);
       await toggleValue(3);
-      expect(screen.getByTestId("option-0").checked).toBe(false);
-      expect(screen.getByTestId("option-1").checked).toBe(false);
-      expect(screen.getByTestId("option-2").checked).toBe(false);
-      expect(screen.getByTestId("option-3").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-0").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-1").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-2").checked).toBe(false);
+      expect(screen.getByTestId("selectmulti-option-3").checked).toBe(false);
 
       let e = screen.getByTestId("selectmulti-container");
       expect(e).toHaveClass("invalid");

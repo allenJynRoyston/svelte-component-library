@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, tick } from 'svelte';
-  import {Button} from '../../index'
+  import Button from '../../Button/Button.svelte'
   import { validateInputFile } from '../../../js'
 
   //--------------------------- COMPONENT PROPS

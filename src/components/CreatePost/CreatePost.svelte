@@ -1,7 +1,12 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
   import {getContext} from 'svelte'
-  import {Form, SVG, MoodSelector, ThreeSlot, UserPortrait, MoodPortrait} from '../index'
+  import Form from '../Form/Form.svelte'
+  import SVG from '../SVG/SVG.svelte'
+  import MoodSelector from '../MoodSelector/MoodSelector.svelte'
+  import ThreeSlot from '../ThreeSlot/ThreeSlot.svelte'
+  import UserPortrait from '../UserPortrait/UserPortrait.svelte'
+  import MoodPortrait from '../MoodPortrait/MoodPortrait.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let isBusy;

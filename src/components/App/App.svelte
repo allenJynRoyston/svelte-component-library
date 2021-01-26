@@ -1,7 +1,11 @@
 <script>
   //--------------------------- IMPORTS  
   import {onMount, setContext } from 'svelte'
-  import {Header, Footer, URLWatcher, TestUtility} from '../index'
+  import Header from '../Header/Header.svelte'
+  import Footer from '../Footer/Footer.svelte'
+  import URLWatcher from '../URLWatcher/URLWatcher.svelte'
+  import TestUtility from '../TestUtility/TestUtility.svelte'
+
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
   //--------------------------- 

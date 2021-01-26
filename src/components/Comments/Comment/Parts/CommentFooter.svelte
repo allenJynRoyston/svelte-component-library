@@ -1,7 +1,9 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
-  import {getContext} from 'svelte';
-  import {ThreeSlot, Button, SVG} from '../../../index'
+  import {getContext} from 'svelte';  
+  import ThreeSlot from '../../../ThreeSlot/ThreeSlot.svelte'
+  import Button from '../../../Button/Button.svelte'
+  import SVG from '../../../SVG/SVG.svelte'
   
   //--------------------------- COMPONENT PROPS
   export let author;

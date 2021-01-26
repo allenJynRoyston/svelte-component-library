@@ -1,6 +1,8 @@
 <script lang='ts'>
-  //--------------------------- IMPORTS  
-  import {CreatePost, MoodPortrait, SVG} from '../../../index'
+  //--------------------------- IMPORTS    
+  import CreatePost from '../../../CreatePost/CreatePost.svelte'
+  import MoodPortrait from '../../../MoodPortrait/MoodPortrait.svelte'
+  import SVG from '../../../SVG/SVG.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let author;

@@ -1,8 +1,7 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext} from 'svelte'
-  import {FeedItem} from '../index'
-
+  import {getContext} from 'svelte'  
+  import FeedItem from './FeedItem/FeedItem.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let feedData = []  

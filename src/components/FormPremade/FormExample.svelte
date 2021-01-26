@@ -1,5 +1,5 @@
-<script>
-  import { Form } from '../index'
+<script>  
+  import Form from '../Form/Form.svelte'
 
   export let onSubmit = (e) => {
     isBusy = true

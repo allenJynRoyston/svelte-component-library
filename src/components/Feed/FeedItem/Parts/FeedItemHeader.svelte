@@ -1,6 +1,10 @@
 <script lang='ts'>
-  //--------------------------- IMPORTS  
-  import { ThreeSlot, SVG, Button, UserPortrait } from '../../../index'
+  //--------------------------- IMPORTS    
+  import ThreeSlot from '../../../ThreeSlot/ThreeSlot.svelte'  
+  import Button from '../../../Button/Button.svelte'  
+  import SVG from '../../../SVG/SVG.svelte'  
+  import UserPortrait from '../../../UserPortrait/UserPortrait.svelte'
+
   import dayjs from "dayjs";
   import relativeTime from "dayjs/plugin/relativeTime"
 

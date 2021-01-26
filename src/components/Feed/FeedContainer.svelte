@@ -1,7 +1,10 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
   import {onMount, getContext, tick} from 'svelte'
-  import {UserFetcher, Feed, CreatePost, UserPortrait} from '../index'
+  import UserFetcher from '../Fetcher/UserFetcher.svelte'
+  import Feed from './Feed.svelte'
+  import CreatePost from '../CreatePost/CreatePost.svelte'
+  import UserPortrait from '../UserPortrait/UserPortrait.svelte'
   
   //--------------------------- STATE
   export let feedOwnerId = null;  

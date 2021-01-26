@@ -114,7 +114,7 @@
   <ul class='selectmulti-options'>
     {#each _options as option, i}        
       <li class='selectmulti-option' on:click={() => {onClick(i)}} >
-        <input data-testid={`option-${i}`} type={type} checked={option._selected}>
+        <input data-testid={`selectmulti-option-${i}`} type={type} checked={option._selected}>
         <span class='text'>{option.title}</span>        
       </li>  
     {/each}

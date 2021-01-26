@@ -1,15 +1,16 @@
 <script lang='ts'>
-  import { tick, getContext } from 'svelte';
-  import {CreatePost} from '../../index'
+  import { getContext } from 'svelte';  
+  import CreatePost from '../../CreatePost/CreatePost.svelte'
   
     //--------------------------- IMPORTS  
-    import { 
-      UserFetcher, PostFetcher, 
-      FeedItemHeader, 
-      FeedItemContent,
-      FeedItemFooter,
-      CommentContainer, Button
-    } from '../../index'
+    import UserFetcher from '../../Fetcher/UserFetcher.svelte'
+    import PostFetcher from '../../Fetcher/PostFetcher.svelte'
+    import FeedItemHeader from './Parts/FeedItemHeader.svelte'
+    import FeedItemContent from './Parts/FeedItemContent.svelte'
+    import FeedItemFooter from './Parts/FeedItemFooter.svelte'
+    import CommentContainer from '../../Comments/CommentContainer.svelte'
+    import Button from '../../Button/Button.svelte'
+
   
     //--------------------------- COMPONENT PROPS
     export let data = null;    

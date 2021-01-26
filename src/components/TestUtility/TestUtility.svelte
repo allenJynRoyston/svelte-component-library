@@ -1,9 +1,13 @@
 <script lang='ts'>
   //---------------------------
   import {tick, onMount, getContext} from 'svelte'
-  import Chance from 'chance'
-  import {Button, Form, UserFetcher} from '../index'   
   import {CreateComment, CreatePost, CreateUser} from '../../js/create'
+
+  import Chance from 'chance'
+  import Button from '../Button/Button.svelte'
+  import Form from '../Form/Form.svelte'
+  import UserFetcher from '../Fetcher/UserFetcher.svelte'
+
 
   //---------------------------
   export let viewerId = null
@@ -37,6 +41,7 @@
           key: 'loginAs',      
           value: 0,
           defaultOption: 'Select an option',
+          /* @ts-ignore */
           options: options.map(x => {
             x.title = `${x.firstName} ${x.lastName} | ${x._id}`
             return x

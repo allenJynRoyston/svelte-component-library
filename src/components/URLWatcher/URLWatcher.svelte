@@ -1,6 +1,6 @@
 <script>
   import {onMount, onDestroy, getContext} from 'svelte'
-  import {Channels} from '../index'
+  import Channels from '../Channels/Channels.svelte'
 
   //--------------------------- APP CONTEXT   
   const findUserByUsername = getContext('findUserByUsername') 

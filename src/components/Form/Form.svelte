@@ -1,11 +1,20 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
   import { onMount, onDestroy, tick } from 'svelte';  
-  import {
-    Button, Input, InputDate, Textarea, FileInput, SVG,
-    InputTime, InputCheckbox, Select, SelectMulti, Rating,
-    FormErrors, FormPreview,     
-  } from '../index'
+
+  import Button from '../Button/Button.svelte'
+  import Input from '../FormComponents/Input/Input.svelte'
+  import InputDate from '../FormComponents/InputDate/InputDate.svelte'
+  import Textarea from '../FormComponents/Textarea/Textarea.svelte'
+  import FileInput from '../FormComponents/FileInput/FileInput.svelte'
+  import SVG from '../SVG/SVG.svelte'
+  import InputTime from '../FormComponents/InputTime/InputTime.svelte'
+  import Select from '../FormComponents/Select/Select.svelte'
+  import SelectMulti from '../FormComponents/SelectMulti/SelectMulti.svelte'
+  import Rating from '../FormComponents/Rating/Rating.svelte'
+  import InputCheckbox from '../FormComponents/InputCheckbox/InputCheckbox.svelte'
+  import FormErrors from './FormErrors/FormErrors.svelte'
+  import FormPreview from './FormPreview/FormPreview.svelte'
   //---------------------------
 
   //--------------------------- VARS
@@ -144,9 +153,7 @@
       hasError = true
       location.reload()
     }
-
-
-
+    
     isReady = true; 
   }); 
   //--------------------------- 

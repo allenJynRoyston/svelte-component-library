@@ -126,7 +126,7 @@
   {/if}
   
   {#if contentEdit}
-    <div class='textarea' contenteditable   on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} bind:this={element}/>  
+    <div class='textarea' contenteditable on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:innerHTML={value} bind:this={element}/>  
   {:else}
     <textarea wrap="hard" class='textarea' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value bind:this={element} />
   {/if}

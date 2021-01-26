@@ -1,11 +1,15 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {tick, getContext} from 'svelte'  
-  import {
-    CommentContainer, UserFetcher, 
-    Button, CreatePost,
-    CommentHeader, CommentContent, CommentFooter
-  } from '../../index'
+  import {getContext} from 'svelte'  
+
+  import CommentContainer from '../CommentContainer.svelte'
+  import UserFetcher from '../../Fetcher/UserFetcher.svelte'
+  import Button from '../../Button/Button.svelte'
+  import CreatePost from '../../CreatePost/CreatePost.svelte'
+  import CommentHeader from './Parts/CommentHeader.svelte'
+  import CommentContent from './Parts/CommentContent.svelte'
+  import CommentFooter from './Parts/CommentFooter.svelte'
+
  
   //--------------------------- COMPONENT PROPS
   export let comment;

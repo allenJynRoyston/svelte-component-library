@@ -1,7 +1,8 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {onMount, getContext} from 'svelte'
-  import {Comments} from '../index'
+  import {onMount, getContext} from 'svelte'  
+  import Comments from './Comments.svelte'
+
   //---------------------------
  
   //--------------------------- COMPONENT PROPS
