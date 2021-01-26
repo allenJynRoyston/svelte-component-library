@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen, waitFor } from "@testing-library/svelte";
+import { render, screen, waitFor, fireEvent } from "@testing-library/svelte";
 import userEvent from "@testing-library/user-event";
 import Form from "./Form.svelte";
 
@@ -9,8 +9,6 @@ Object.defineProperty(window, "matchMedia", {
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
@@ -227,6 +225,13 @@ let formData = [
   },
 ];
 
+const changeInputValue = async ({ label, value }) => {
+  userEvent.clear(screen.getByLabelText(label));
+  userEvent.type(screen.getByLabelText(label), value);
+  expect(screen.getByLabelText(label)).toHaveValue(value);
+  await new Promise((r) => setTimeout(r, 1));
+};
+
 describe("Form component", () => {
   const waitForForm = () => {
     return new Promise(async (resolve) => {
@@ -239,7 +244,7 @@ describe("Form component", () => {
 
   describe(`Form`, () => {
     let ele;
-    let onSubmit = (e) => {};
+    let onSubmit = jest.fn();
 
     beforeEach(() => {
       const props = {
@@ -299,6 +304,155 @@ describe("Form component", () => {
             break;
         }
       });
+    });
+  });
+
+  describe(`Form validation`, () => {
+    let ele;
+    let onSubmit = jest.fn();
+
+    beforeEach(() => {
+      const props = {
+        isBusy: false,
+        formData: [
+          {
+            renderAs: "input",
+            label: "Firstname",
+            placeholder: "example: john smith",
+            key: "firstname",
+            value: "",
+            regex: /^[a-zA-Z.]+$/,
+            minLength: 3,
+            maxLength: 25,
+            required: true,
+            sizing: {
+              desktop: 25,
+              mobile: 50,
+            },
+          },
+        ],
+        onSubmit,
+        padding: 0,
+        idModifier: null,
+        localStorageKey: null,
+        clearLocalStorage: true,
+      };
+
+      ele = render(Form, { ...props });
+    });
+
+    test(`Submit buttons should be disabled, clicking on it should not trigger the onSubmit function`, async () => {
+      const button = screen.getByTestId("submit-btn");
+      expect(button).toHaveAttribute("disabled");
+      fireEvent.click(screen.getByTestId("submit-btn"));
+      expect(onSubmit).not.toBeCalled();
+    });
+
+    test(`Submit buttons should be disabled, clicking on it should not trigger the onSubmit function`, async () => {
+      const button = screen.getByTestId("submit-btn");
+      expect(button).toHaveAttribute("disabled");
+      fireEvent.click(screen.getByTestId("submit-btn"));
+      expect(onSubmit).not.toBeCalled();
+
+      await changeInputValue({ label: "Firstname", value: "allen" });
+      fireEvent.click(screen.getByTestId("submit-btn"));
+      expect(onSubmit).toHaveBeenLastCalledWith([
+        { key: "firstname", value: "allen" },
+      ]);
+    });
+  });
+
+  describe(`Data`, () => {
+    let ele;
+    let onSubmit = jest.fn();
+
+    test(`If dataset is empty, should return an empty message`, async () => {
+      const props = {
+        onSubmit,
+      };
+
+      ele = render(Form, { ...props });
+      await waitForForm();
+      expect(screen.getByTestId("empty-form")).toBeInTheDocument();
+    });
+  });
+
+  describe(`Busy`, () => {
+    let ele;
+    let onSubmit = jest.fn();
+
+    test(`If busy is false, then busy icon should NOT be visible`, async () => {
+      const props = {
+        isBusy: false,
+        formData,
+        onSubmit,
+        padding: 0,
+        idModifier: null,
+        localStorageKey: null,
+        clearLocalStorage: true,
+      };
+
+      ele = render(Form, { ...props });
+      await waitForForm();
+      expect(screen.getByTestId("busy")).not.toHaveClass("show");
+    });
+
+    test(`If busy is true, then busy icon should be visible`, async () => {
+      const props = {
+        isBusy: true,
+        formData,
+        onSubmit,
+        padding: 0,
+        idModifier: null,
+        localStorageKey: null,
+        clearLocalStorage: true,
+      };
+
+      ele = render(Form, { ...props });
+      await waitForForm();
+      expect(screen.getByTestId("busy")).toHaveClass("show");
+    });
+  });
+
+  describe(`OnSubmit`, () => {
+    let ele;
+    let onSubmit = jest.fn();
+
+    beforeEach(() => {
+      const props = {
+        isBusy: false,
+        formData,
+        onSubmit,
+        padding: 0,
+        idModifier: null,
+        localStorageKey: null,
+        clearLocalStorage: true,
+      };
+
+      ele = render(Form, { ...props });
+    });
+    test(`Clicking the Submit button should return an array with the correct information in it`, async () => {
+      await waitForForm();
+
+      fireEvent.click(screen.getByTestId("submit-btn"));
+
+      await waitFor(() =>
+        expect(onSubmit).toHaveBeenLastCalledWith([
+          { key: "firstname", value: "allen" },
+          { key: "lastname", value: "royston" },
+          { key: "username", value: "allen.royston" },
+          { key: "password", value: "notapassword" },
+          { key: "age", value: "25" },
+          { key: "city", value: "Reno" },
+          { key: "description", value: "I am a developer" },
+          { key: "date", value: "1982-12-01" },
+          { key: "time", value: "09:00" },
+          { key: "select", value: 3 },
+          { key: "selectmulti", value: [1, 3] },
+          { key: "rating", value: 2 },
+          { key: "agree", value: true },
+        ])
+      );
     });
   });
 });

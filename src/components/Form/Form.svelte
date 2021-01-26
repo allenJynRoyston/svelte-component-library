@@ -138,7 +138,8 @@
         if(!!savedData){                      
           completedFormData = JSON.parse(savedData)                              
           
-          for (const [key, pair] of Object.entries(completedFormData)) {                   
+          for (const [key, pair] of Object.entries(completedFormData)) {      
+            /* @ts-ignore */             
             formData.find(x => x.key === key).value = pair.value
           }
 
@@ -238,9 +239,11 @@
   //---------------------------  
 
 
-  //--------------------------- $
+  //--------------------------- $  
+  /* @ts-ignore */
   $: disabled = Object.entries(completedFormData).filter(x => {return !x[1].isValid}).length > 0 || isBusy
 
+  /* @ts-ignore */
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
 
   const formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
@@ -251,7 +254,7 @@
 {#if isReady}
   <form class='form-container' class:isBusy={isBusy} data-testid='form-container' style={formStyling} autocomplete="on">
 
-    <div class='form-container__overlay' class:show={isBusy}>
+    <div class='form-container__overlay' data-testid='busy' class:show={isBusy}>
       <SVG icon='save' />
     </div>
 
@@ -304,7 +307,7 @@
         {#if showButton}
           <div class='button-container'>
             <slot name='options' />
-            <Button onClick={onSubmitHandler} {disabled} style={'padding: 5px 10px'}>
+            <Button onClick={!disabled && onSubmitHandler} {disabled} dataTestid={'submit-btn'} style={'padding: 5px 10px'}>
               <slot>
                 {isBusy ? 'Saving...' : 'Save'}
               </slot>
@@ -315,7 +318,11 @@
         {/if}
       </section>
     {:else}
-      <p>No form data</p>
+      <div data-testid='empty-form'>
+        <slot name='empty'>
+          <p>No form data</p>
+        </slot>
+      </div>
     {/if}
   </form>
 {:else}

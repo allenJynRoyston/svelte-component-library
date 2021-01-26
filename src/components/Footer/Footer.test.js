@@ -1,10 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/svelte";
 import userEvent from "@testing-library/user-event";
-
 import Footer from "./Footer.svelte";
-
-console.log(Footer);
 
 describe("Footer component", () => {
   describe(`Footer`, () => {
