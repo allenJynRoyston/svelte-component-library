@@ -1,118 +1,57 @@
 <script>
   //--------------------------- IMPORTS  
-  import {onMount, setContext } from 'svelte'
-  import Header from '../Header/Header.svelte'
-  import Footer from '../Footer/Footer.svelte'
-  import URLWatcher from '../URLWatcher/URLWatcher.svelte'
-  import TestUtility from '../TestUtility/TestUtility.svelte'
-
-  import {CreateComment} from '../../js/create'
-  import {IndexDBStore} from '../../js/index'
+  import Header from '../Header/Header'
+  import Footer from '../Footer/Footer'
+  import HashWatch from '../URLWatcher/HashWatch'
+  import Link from '../Link/Link'
+  import Library from '../_Library/Library'
+  import TestApp from '../_TestApp/TestApp'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
-  let myDetails = window.localStorage.getItem('me')  
-      myDetails = JSON.parse(myDetails) || null
-
-  setContext('myDetails', myDetails)  
-  setContext('loggedIn', myDetails !== null )
-  
-  setContext('findUserById', (id) => {        
-    return indexdb.get('users', id)
-  })
-
-  setContext('findUserByUsername', (username) => {    
-    return new Promise(async(resolve) => {    
-      let users = await indexdb.getAll('users')      
-      resolve(users.find(x => x.username === username) || null)      
-    })
-  })  
-
-  setContext('findPostById', (id) => {
-    return indexdb.get('posts', id)
-  })
-  
-  setContext('findImageById', (id) => {
-    return indexdb.get('images', id)
-  })
-  
-  setContext('findCommentById', (id) => {
-    return indexdb.get('comments', id)
-  })
-    
-  setContext('updateUserById', async(data) => {
-    await indexdb.add('users', data, true)
-    const comment = await indexdb.get('users', data._id)
-    return comment
-  })  
-
-  setContext('updatePostById', async(data) => {
-    await indexdb.add('posts', data, true)
-    const comment = await indexdb.get('posts', data._id)
-    return comment
-  })  
-  
-  setContext('updateImageById', async(data) => {
-    await indexdb.add('images', data, true)
-    const comment = await indexdb.get('images', data._id)
-    return comment
-  })    
-
-  setContext('updateCommentById', async(data) => {
-    await indexdb.add('comments', data, true)
-    const comment = await indexdb.get('comments', data._id)
-    return comment
-  })      
-
-  setContext('createComment', (comment) => {    
-    return new Promise(async(resolve) => {            
-      resolve(await CreateComment(comment, indexdb))
-    })    
-  })
   //---------------------------   
 
   //--------------------------- VARS  
-  const indexdb = new IndexDBStore('snappfireDB', 1);             
-  let isReady = false  
-
-  setContext('indexdb', indexdb)  
+  let view = null;
+  let startOn = null;
   //---------------------------  
 
   //--------------------------- ONMOUNT
-  onMount(async() => {    
-    await setupIndexDB();  // setup required indexDB stuff
-    isReady = true;
-  })
   //---------------------------
 
 
   //--------------------------- FUNCTIONS
-  const setupIndexDB = () => {
-    return new Promise(async(resolve) => {
-      const indexdbTables = ['users', 'posts', 'comments', 'images']
-      await indexdb.createTable(indexdbTables);
-      resolve()
-    })
+  const hashChange = ({hash, params}) => {
+    view = hash;
+    startOn = params.component || null
   }
   //---------------------------
 
 </script>
 
-
 <div id='app-wrapper'>
+  <HashWatch onChange={hashChange} />
+  
   <Header />
-  {#if isReady}    
-    
-    <TestUtility />
-    <URLWatcher />
-    
-  {:else}
-    <p>Loading...</p>
-  {/if}
+    <div class='app-content'>
+      {#if view === 'app'}      
+        <TestApp />    
+      {/if}
+
+      {#if view === 'library'}
+        <Library startOn={startOn} />
+      {/if}
+    </div>
   <Footer />
 </div>
 
-<style lang='scss'>
+
+<div id='app-selector'>
+  <Link href='#app' onClick={() => {view = 'app'}}>App</Link>
+  <Link href='#library' onClick={() => {view = 'library'}}>Library</Link>
+</div>
+
+<style lang='scss' scoped>
   #app-wrapper{
     width: 100vw;
     height: 100vh;
@@ -120,7 +59,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
+
+    .app-content{
+      width: 100%;
+      min-height: 100%;
+    }
+  }
+
+  #app-selector{
+    position: fixed;
+    top: 10px;
+    right: 25px;
+    padding: 10px;
+    background: black;
+    border-radius: 10px;
+    color: white;
   }
 </style>
 

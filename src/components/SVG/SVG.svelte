@@ -1,11 +1,84 @@
-<script>  
-  export let size = 14; 
-  export let fill = null;
-  export let icon = null;
-  export let index = null;
-  export let title = null;
-  export let style = null;
-  export let onClick = null;
+<script lang='ts'>  
+
+type IconTypes =
+  | null
+  | 'dots'
+  | 'home'
+  | 'spinner'
+  | 'cogs'
+  | 'fire'
+  | 'usertie'
+  | 'search'
+  | 'cross'
+  | 'globe'
+  | 'image'
+  | 'star-full'
+  | 'star-empty'
+  | 'comments'
+  | 'chain'
+  | 'chainbroken'
+  | 'plus'
+  | 'minus'
+  | 'checkbox-unchecked'
+  | 'checkbox-checked'
+  | 'locked'
+  | 'unlocked'
+  | 'file-text'
+  | 'youtube'
+  | 'like'
+  | 'dislike'
+  | 'love'
+  | 'camera'
+  | 'save'
+  | 'grid-small'
+  | 'grid-large'
+  | 'showcase'
+  | 'arrow-left'
+  | 'arrow-right'
+  | 'edit'
+  | 'bin'
+  | 'display'
+  | 'play'
+  | 'friend'
+  | 'list'
+  | 'bell'
+  | 'people'
+  | 'shield'
+  | 'edit'
+  | 'link'
+  | 'flag'
+  | 'post'
+  | 'checkmark'
+  | 'happy'
+  | 'sad'
+  | 'angry'
+  | 'wink'
+  | 'shocked'
+  | 'crying'
+  | 'baffled'
+  | 'bullhorn'
+  | 'circleup'
+  | 'warning'
+  | 'notification'
+  | 'email'
+  | 'instagram'
+  | 'linkedin'
+  | 'conversation'
+  | 'globe2'
+  | 'share'
+  | 'stats'
+  | 'upload'
+  | 'menu'
+  | 'hashtag'
+  | 'refresh'
+  
+  export let size:number = 14; 
+  export let fill:string|null = null;
+  export let icon:IconTypes = null
+  export let index:number|null = null;
+  export let title:string|null = null;
+  export let style:string|null = null;
+  export let onClick:(index) => void|null = null;
 </script>
 
 
@@ -27,10 +100,10 @@
 </style>
 
 
-<div on:click={() => {onClick && onClick(index)}} class='svg-container {onClick !== null ? "isbutton" : ""}' {style}>
+<div on:click={() => {onClick && onClick(index)}} class='svg-container {onClick && "isbutton"}' {style}>
   <!---------->
   {#if icon === 'dots'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 20 20">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 20 20">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -40,7 +113,7 @@
 
 
   {#if icon === 'home'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -49,16 +122,16 @@
   {/if}
 
   {#if icon === 'spinner'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
       <path fill={fill || null}  d="M16 0c-8.711 0-15.796 6.961-15.995 15.624 0.185-7.558 5.932-13.624 12.995-13.624 7.18 0 13 6.268 13 14 0 1.657 1.343 3 3 3s3-1.343 3-3c0-8.837-7.163-16-16-16zM16 32c8.711 0 15.796-6.961 15.995-15.624-0.185 7.558-5.932 13.624-12.995 13.624-7.18 0-13-6.268-13-14 0-1.657-1.343-3-3-3s-3 1.343-3 3c0 8.837 7.163 16 16 16z"></path>
     </svg> 
   {/if}
-
+  
   {#if icon === 'cogs'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 512 512">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 512 512">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -67,7 +140,7 @@
   {/if}
     
   {#if icon === 'fire'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -76,7 +149,7 @@
   {/if}
 
   {#if icon === 'usertie'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -85,7 +158,7 @@
   {/if}
 
   {#if icon === 'search'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -95,7 +168,7 @@
 
 
   {#if icon === 'cross'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -104,7 +177,7 @@
   {/if}
 
   {#if icon === 'globe'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -114,7 +187,7 @@
 
 
   {#if icon === 'image'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -125,7 +198,7 @@
   {/if}
 
   {#if icon === 'star-full'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -134,7 +207,7 @@
   {/if}
 
   {#if icon === 'star-empty'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -143,7 +216,7 @@
   {/if}
 
   {#if icon === 'comments'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -152,7 +225,7 @@
   {/if}
 
   {#if icon === 'chain'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -161,7 +234,7 @@
   {/if}
 
   {#if icon === 'chainbroken'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -170,7 +243,7 @@
   {/if}
 
   {#if icon === 'plus'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -179,7 +252,7 @@
   {/if}
 
   {#if icon === 'minus'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -188,7 +261,7 @@
   {/if}
 
   {#if icon === 'checkbox-unchecked'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -197,7 +270,7 @@
   {/if}
 
   {#if icon === 'checkbox-checked'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -206,7 +279,7 @@
   {/if}
 
   {#if icon === 'locked'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -215,7 +288,7 @@
   {/if}
 
   {#if icon === 'unlocked'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -225,7 +298,7 @@
 
 
   {#if icon === 'file-text'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -235,7 +308,7 @@
 
 
   {#if icon === 'youtube'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size * 2.5} :height={size} viewBox="0 0 80 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size * 2.5} height={size} viewBox="0 0 80 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -250,7 +323,7 @@
 
 
   {#if icon === 'like'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 25 28">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 25 28">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -260,7 +333,7 @@
 
 
   {#if icon === 'dislike'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 25 28" style='transform: scaleY(-1)'>
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 25 28" style='transform: scaleY(-1)'>
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -269,7 +342,7 @@
   {/if}
 
   {#if icon === 'love'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -278,7 +351,7 @@
   {/if}
 
   {#if icon === 'camera'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32" style='transform: translateY(-2px)'>
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32" style='transform: translateY(-2px)'>
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -287,7 +360,7 @@
   {/if}
 
   {#if icon === 'save'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -297,7 +370,7 @@
 
 
   {#if icon === 'grid-small'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -307,7 +380,7 @@
 
 
   {#if icon === 'grid-large'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -317,7 +390,7 @@
 
 
   {#if icon === 'showcase'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -326,7 +399,7 @@
   {/if}
 
   {#if icon === 'arrow-left'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -336,7 +409,7 @@
 
 
   {#if icon === 'arrow-right'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -345,7 +418,7 @@
   {/if}
 
   {#if icon === 'edit'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32" style='transform: scale(1.2) translateX(0px) translateY(-1px)'>
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32" style='transform: scale(1.2) translateX(0px) translateY(-1px)'>
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -354,7 +427,7 @@
   {/if}
 
   {#if icon === 'bin'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -363,7 +436,7 @@
   {/if}
 
   {#if icon === 'display'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -373,7 +446,7 @@
 
 
   {#if icon === 'play'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -383,7 +456,7 @@
 
 
   {#if icon === 'friend'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -394,7 +467,7 @@
 
 
   {#if icon === 'list'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -404,7 +477,7 @@
 
 
   {#if icon === 'bell'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -414,7 +487,7 @@
 
 
   {#if icon === 'people'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -423,7 +496,7 @@
   {/if}
 
   {#if icon === 'shield'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -433,7 +506,7 @@
 
 
   {#if icon === 'exit'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -443,7 +516,7 @@
 
 
   {#if icon === 'link'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -453,7 +526,7 @@
   {/if}
 
   {#if icon === 'flag'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -465,7 +538,7 @@
 
 
   {#if icon === 'post'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -475,7 +548,7 @@
 
 
   {#if icon === 'checkmark'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -485,7 +558,7 @@
 
 
   {#if icon === 'happy'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -494,7 +567,7 @@
   {/if}
 
   {#if icon === 'sad'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -504,7 +577,7 @@
 
 
   {#if icon === 'angry'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -513,7 +586,7 @@
   {/if}
 
   {#if icon === 'wink'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -523,7 +596,7 @@
 
 
   {#if icon === 'shocked'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -532,7 +605,7 @@
   {/if}
 
   {#if icon === 'crying'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -542,7 +615,7 @@
 
 
   {#if icon === 'baffled'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -554,7 +627,7 @@
 
 
   {#if icon === 'bullhorn'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -563,7 +636,7 @@
   {/if}
 
   {#if icon === 'circleup'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -573,7 +646,7 @@
   {/if}
 
   {#if icon === 'warning'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -584,7 +657,7 @@
   {/if}
 
   {#if icon === 'notification'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -593,7 +666,7 @@
   {/if}
 
   {#if icon === 'email'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -602,7 +675,7 @@
   {/if}
 
   {#if icon === 'instagram'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -613,7 +686,7 @@
   {/if}
 
   {#if icon === 'linkedin'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -623,7 +696,7 @@
 
 
   {#if icon === 'conversation'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -632,7 +705,7 @@
   {/if}
 
   {#if icon === 'globe2'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -641,7 +714,7 @@
   {/if}
 
   {#if icon === 'share'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -651,7 +724,7 @@
 
 
   {#if icon === 'stats'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -661,7 +734,7 @@
 
 
   {#if icon === 'upload'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -670,7 +743,7 @@
   {/if}
 
   {#if icon === 'menu'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -679,7 +752,7 @@
   {/if}
 
   {#if icon === 'hashtag'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}
@@ -688,7 +761,7 @@
   {/if}
 
   {#if icon === 'refresh'}
-    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} :height={size} viewBox="0 0 32 32">
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
         <title>{title}</title>
       {/if}

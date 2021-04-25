@@ -147,6 +147,7 @@
       font-size: 14px;
       cursor: pointer;
       display: flex;
+      color: black;
 
       input{
         cursor: pointer;

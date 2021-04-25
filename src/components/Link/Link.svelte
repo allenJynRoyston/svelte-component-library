@@ -2,6 +2,8 @@
 
   //--------------------------- COMPONENT PROPS
   export let href: string
+  export let active = false;
+  export let onClick = null;
   //---------------------------
 
   //--------------------------- VARS    
@@ -18,13 +20,21 @@
 
 </script>
 
-<a {href}>
+<a {href} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>Link</slot>
 </a>
 
 
-<style style='scss' scoped>
+<style lang='scss' scoped>
   a{
-    cursor: pointer
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 5px;
+
+    &.active{
+      color: red;
+    }
+    
   }
 </style>

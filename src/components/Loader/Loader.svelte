@@ -1,6 +1,12 @@
-<div class='loader'>
-  <p>Loading...</p>
-</div>
+<script>
+  export let show = false
+</script>
+
+{#if show}
+  <div class='loader'>
+    <p>Loading...</p>
+  </div>
+{/if}
 
 <style lang='scss'>
   .loader{

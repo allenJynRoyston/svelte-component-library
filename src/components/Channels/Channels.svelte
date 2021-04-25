@@ -1,114 +1,78 @@
 <script>
   import {onMount} from 'svelte'  
-
-  import Loader from '../Loader/Loader.svelte'
-  import FeedContainer from '../Feed/FeedContainer.svelte'
-  import FormExample from '../FormPremade/FormExample.svelte'
-
+  import Loader from '../Loader/Loader'
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
   export let data = []
   export let current = 0
-  export let onNext = null;
-  export let onPrev = null;
+  export let afterUpdate = null;
   export let channelReady = null;
   export let transition = {
               easing: 'cubicOut',
               speed: 400
             }
+  export let buttons = false;
 
   let ready = false
-  let sizeTables = {}
   let xpos;
-  let currentChannel = current
+  let currentChannel = current;
+  let busy = false
 
   const createSizeTables = () => {
-    for(let n = 1; n <= 100; n ++){
-      let isEven = n & 1 ? false : true
-      
-      if(isEven){
-        let sizeInPercentage = ((1/n)/2*100) 
-        let halved = Math.floor(n/2)    
-        let table = []                
-        for(let i = 1; i <= halved; i++){          
-          const p = sizeInPercentage * (n - (i *2) + 1)
-          table.push(parseFloat(p.toFixed(4)))
-        }
-        for(let i = halved; i > 0; i--){
-          const p = sizeInPercentage * (n - (i *2) + 1)
-          table.push(-parseFloat(p.toFixed(4)))
-        }         
-        sizeTables[n] = {table}      
-      }
-
-      else{
-        let sizeInPercentage = ((1/n)*100) 
-        let halved = Math.floor(n/2)  
-        let table = []
-
-        for(let i = halved; i > 0; i--){
-          const p = sizeInPercentage * i
-          table.push(parseFloat(p.toFixed(4)))
-        }
-        table.push(n === 0 ? 100 : 0)
-        for(let i = 1; i <= halved; i++){
-          const p = sizeInPercentage * i
-          table.push(-parseFloat(p.toFixed(4)))
-        }    
-        sizeTables[n] = {table}        
-      }      
-    }
+    const table = []
+    const chunk = (100 / data.length).toFixed(4)
+    data.forEach((x, i) => {
+      table.push(-(i * chunk))
+    })
+    return table
   }
 
   onMount(() => {
-    // first, creates a size table that we use for reference
-    createSizeTables()
-
-    // reference table
-    let {table} = sizeTables[data.length]
-
+    const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
       duration: transition.speed,
       easing: cubicOut
     });  
-
     ready = true
+    channelReady && channelReady(currentChannel)  
   })
 
+  const goto = async (channel) => {
+    if(!busy){
+      busy = true;
+      currentChannel = channel      
+      draw()       
+    }
+  }
+
   const next = async() => {
-    let {table} = sizeTables[data.length]
-    currentChannel = currentChannel + 1 > data.length - 1 ? data.length - 1 : currentChannel + 1
-    let val = table[currentChannel]
-    await xpos.set(val)
-    onNext && onNext()    
-    channelReady && channelReady(currentChannel)  
+    if(!busy && currentChannel < data.length - 1){
+      busy = true;
+      currentChannel = currentChannel + 1
+      draw()
+    }    
   }
 
   const prev = async() => {
-    let {table} = sizeTables[data.length]
-    currentChannel = currentChannel - 1 < 0 ? 0 : currentChannel - 1
-    let val = table[currentChannel]
-    await xpos.set(val)
-    onPrev && onPrev()  
-    channelReady && channelReady(currentChannel)  
-  }
-  
-
-  $: watchChange = () => {
-    if(currentChannel !== current){
-      if(current > currentChannel){
-        next()
-      }
-      if(current < currentChannel){
-        prev()
-      }
+    if(!busy && currentChannel > 0){
+      busy = true;    
+      currentChannel = currentChannel - 1
+      draw()
     }
-    return true
   }
 
-  $: xPostiion = () => {
+  const draw = async() => {
+    const table = createSizeTables()
+    const val = table[currentChannel]    
+    channelReady && channelReady(currentChannel)  
+    await xpos.set(val)
+    afterUpdate && afterUpdate()    
+    busy = false
+  }
+
+  $: xPostiion = () => {    
     return `transform: translateX(${$xpos}%); `
   }
 
@@ -117,35 +81,51 @@
   }
 
   $: channelStyle = () => {
-    return `width: calc(${((1 / data.length)*100).toFixed(4)}% - 40px); padding: 0 20px`
+    return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
+  }  
+
+  $: {
+     if(current != currentChannel){
+       goto(current)
+     }     
   }  
   
 </script>
 
-{#if ready && watchChange()}
-  <div class='channels' style={`${channelsStyle()};${xPostiion()}`}>
-    {#each data as {type, render, props}, index}
-      <div class='channel' style={channelStyle()}>
-        <div class='channel__inner'>
-          {#if !render}
-            <Loader />
-          {/if}
+<div class='channels'>
 
-          {#if type === 'feed' && render}          
-            <FeedContainer {...props}/>
-          {/if}
-          {#if type === 'form' && render}
-            <FormExample />         
-          {/if}   
-        </div>     
-      </div>
-    {/each}
-  </div> 
-{/if}
+  {#if buttons}
+    <button on:click={() => {goto(0)}}>Home</button>
+    <button on:click={next}>+ Channel</button>
+    <button on:click={prev}>- Channel</button>   
+  {/if}
+
+  {#if ready}
+    <div class='channels-container' style={`${channelsStyle()};${xPostiion()}`}>
+      {#each data as {content, render, active, props}}
+        <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
+          <div class='channel__inner'>
+            {#if render}
+              <svelte:component this={content} {...props} />
+            {:else}
+              <Loader show />    
+            {/if}
+          </div>     
+        </div>
+      {/each}
+    </div> 
+  {:else}
+    <p>Loading...</p>
+  {/if}
+</div>
 
 <style lang='scss' scoped>
   .channels{
-    height: 100vh;
+    overflow: hidden;
+  }
+
+  .channels-container{
+    position: relative;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -153,11 +133,19 @@
   }
 
   .channel{
-    height: calc(100%);
-    overflow-y: auto;
+    width: 100%;   
+    transition: 400ms;
 
-    &__inner{
-      width: 100%
+    &.inactive{
+      opacity: 0;
+    }
+
+    &.active{
+      opacity: 1
+    }     
+    
+    &__inner{    
+      width: 100%;
     }
   }
 </style>

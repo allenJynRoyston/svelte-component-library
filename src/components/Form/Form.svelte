@@ -332,12 +332,11 @@
 
 <style lang="scss" scoped>
   .form-container {    
-    border: 1px solid black;
-    border-radius: 5px;   
     display: flex;
     flex-wrap: wrap;
     opacity: 1;
     position: relative;
+    
 
     section{
       width: 100%

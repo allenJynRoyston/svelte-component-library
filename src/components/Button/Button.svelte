@@ -1,22 +1,12 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
-
-
   export let onClick = null
   export let disabled = false
   export let style = null
   export let role = 'button'
   export let dataTestid = null
-
-  const onClickHandler = () => {    
-    onClick && onClick()
-  }
-
-
 </script>
 
-<button type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClickHandler}>
+<button type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && onClick()}>
   <slot>Button</slot>
 </button>
 
@@ -25,7 +15,8 @@
   button{
     outline: none;
     border: none;
-    height: 100%;
+    width: 100%;
+    height: 50px;    
     cursor: pointer;
     background: lightgrey;
 

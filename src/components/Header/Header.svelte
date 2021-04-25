@@ -1,11 +1,13 @@
 <nav>
-  <h1>Svelte Component Library</h1>
+  <slot>
+    <h1>Svelte Component Library</h1>
+  </slot>
 </nav>
 
 
 <style>
   nav{
-    width: 100%;
+    width: calc(100% - 40px);
     padding: 20px;
 
     display: flex;
