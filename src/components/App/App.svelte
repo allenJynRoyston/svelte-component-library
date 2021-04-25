@@ -1,10 +1,10 @@
 <script>
   //--------------------------- IMPORTS  
-  import Header from '../Header/Header'
-  import Footer from '../Footer/Footer'
   import HashWatch from '../URLWatcher/HashWatch'
   import Link from '../Link/Link'
-  import ComponentLibrary from '../../Apps/ComponentLibrary/ComponentLibrary'
+
+  import ComponentLibraryApp from '../../Apps/ComponentLibrary/ComponentLibrary'
+  import StrongCookieApp from '../../Apps/StrongCookie/StrongCookie'
   import TestApp from '../../Apps/TestApp/TestApp'
   //--------------------------- 
 
@@ -31,24 +31,26 @@
 
 <div id='app-wrapper'>
   <HashWatch onChange={hashChange} />
-  
-  <Header />
-    <div class='app-content'>
-      {#if view === 'app'}      
-        <TestApp />    
-      {/if}
+  <div class='app-content'>
+    {#if view === 'test-app'}      
+      <TestApp />    
+    {/if}
 
-      {#if view === 'library'}
-        <ComponentLibrary startOn={startOn} />
-      {/if}
-    </div>
-  <Footer />
+    {#if view === 'strong-cookie'}
+      <StrongCookieApp />
+    {/if}      
+
+    {#if view === 'library'}
+      <ComponentLibraryApp startOn={startOn} />
+    {/if}
+  </div>
 </div>
 
 
 <div id='app-selector'>
-  <Link href='#app' onClick={() => {view = 'app'}}>App</Link>
   <Link href='#library' onClick={() => {view = 'library'}}>Library</Link>
+  <Link href='#test-app' onClick={() => {view = 'app'}}>Test App</Link>
+  <Link href='#strong-cookie' onClick={() => {view = 'strong-cookie'}}>Cookie</Link>
 </div>
 
 <style lang='scss' scoped>
@@ -69,12 +71,14 @@
 
   #app-selector{
     position: fixed;
-    top: 10px;
+    bottom: 10px;
     right: 25px;
     padding: 10px;
     background: black;
     border-radius: 10px;
     color: white;
+    display: flex;
+    flex-direction: column;
   }
 </style>
 

@@ -1,19 +1,21 @@
 <script>
+  import Header from '../../components/Header/Header'
+  import Footer from '../../components/Footer/Footer'  
   import BasicLayout from '../../components/Layout/BasicLayout'
   import Channels from '../../components/Channels/Channels'
   import Link from '../../components/Link/Link'
 
-  import ButtonAlias from './sections/_button'
-  import HeaderAlias from './sections/_header'
-  import FooterAlias from './sections/_footer'
-  import LoaderAlias from './sections/_loader'
-  import LinkAlias from './sections/_link'
-  import FormAlias from './sections/_formExample'
-  import SearchAlias from './sections/_search'
-  import HashWatchAlias from './sections/_hashwatch'
-  import SVGAlias from './sections/_svg'
-  import ThreeSlotAlias from './sections/_threeslot'
-  import ChannelAlias from './sections/_channels'
+  import ButtonAlias from './components/_button'
+  import HeaderAlias from './components/_header'
+  import FooterAlias from './components/_footer'
+  import LoaderAlias from './components/_loader'
+  import LinkAlias from './components/_link'
+  import FormAlias from './components/_formExample'
+  import SearchAlias from './components/_search'
+  import HashWatchAlias from './components/_hashwatch'
+  import SVGAlias from './components/_svg'
+  import ThreeSlotAlias from './components/_threeslot'
+  import ChannelAlias from './components/_channels'
   
   export let startOn = null;
   
@@ -59,6 +61,9 @@
   
 </script>
 
+<Header>
+  <h1>Svelte Component Library</h1>
+</Header>
 <BasicLayout >
   <div slot='directory'>
     <div class='column'>
@@ -71,7 +76,7 @@
   </div>
   <Channels {...channelProps} />
 </BasicLayout>
-
+<Footer />
 
 <style lang='scss' scoped>
   .column {
