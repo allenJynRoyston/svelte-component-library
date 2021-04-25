@@ -1,4 +1,5 @@
 <script>
+  import BasicLayout from '../../components/Layout/BasicLayout'
   import Channels from '../../components/Channels/Channels'
   import Link from '../../components/Link/Link'
 
@@ -58,50 +59,24 @@
   
 </script>
 
-<div class='library'>
-  <div class='directory'>
-    {#each channelProps.data as { title, active }, i}
-      <Link active={active} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-        {title}
-      </Link>
-    {/each}
+<BasicLayout >
+  <div slot='directory'>
+    <div class='column'>
+      {#each channelProps.data as { title, active }, i}
+        <Link active={active} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+          {title}
+        </Link>
+      {/each}
+    </div>
   </div>
+  <Channels {...channelProps} />
+</BasicLayout>
 
-  <div class='channel-container'>
-    <Channels {...channelProps} />
-  </div>
-</div>
 
 <style lang='scss' scoped>
-  .library{
-    width: 100%;
-    display: flex;
-    overflow: auto;
-
-    .directory{
-      width: auto;
-      height: 100vh;
-      padding: 10px 50px 10px 10px;
-      display: flex;
-      flex-direction: column;
-      background: grey;
-      color: white;
-
-      a{
-        margin: 2px 0;
-        cursor: pointer;
-        &.active{
-          color: red;
-        }
-      }
-    }
-
-    .channel-container{      
-      width: 100%;
-      padding: 10px;
-      overflow: hidden;
-    }
+  .column {
+    display: flex; 
+    flex-direction: column;
   }
-
-
 </style>
+

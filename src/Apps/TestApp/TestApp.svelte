@@ -4,6 +4,8 @@
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
 
+  import Link from '../../components/Link/Link'
+  import BasicLayout from '../../components/Layout/BasicLayout'
   import TestUtility from '../../components/TestUtility/TestUtility'  
   import Channels from '../../components/Channels/Channels'
   import LoremBlock from '../../components/LoremBlock/LoremBlock'
@@ -97,12 +99,8 @@
 
   const channelProps = {
      data: [
-      {content: TestUtility, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false}
+      {content: TestUtility, title: 'TestUtility', render: false, active: false},
+      {content: LoremBlock, title: 'Section 1', render: false, active: false},
     ],
     current: 0,
     transition: {
@@ -124,23 +122,35 @@
     }
   }    
 
+  const gotoChannel = (index) => {
+    channelProps.current = index
+  }  
+
 </script>
 
-
-
-<div class='test-app'>
-  <h1>Test App</h1>
+<BasicLayout >
+  <div slot='directory'>
+    <div class='column'>
+      {#each channelProps.data as { title, active }, i}
+        <Link active={active} href={`#app?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+          {title}
+        </Link>
+      {/each}
+    </div>
+  </div>
   {#if ready}
-    <Channels {...channelProps} buttons />
+    <Channels {...channelProps} />
   {/if}
-</div>
+</BasicLayout>
+
+
+
 
 <style lang='scss' scoped>
-  .test-app{
-    width: calc(100% - 50px);
-    height: 100vh;
-    padding: 10px 25px;
-    display: block;
-    overflow-y: auto;
+  .column {
+    display: flex; 
+    flex-direction: column;
   }
 </style>
+
+
