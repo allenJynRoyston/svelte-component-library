@@ -4,8 +4,8 @@
   import Footer from '../Footer/Footer'
   import HashWatch from '../URLWatcher/HashWatch'
   import Link from '../Link/Link'
-  import Library from '../_Library/Library'
-  import TestApp from '../_TestApp/TestApp'
+  import ComponentLibrary from '../../Apps/ComponentLibrary/ComponentLibrary'
+  import TestApp from '../../Apps/TestApp/TestApp'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
@@ -22,7 +22,7 @@
 
   //--------------------------- FUNCTIONS
   const hashChange = ({hash, params}) => {
-    view = hash;
+    view = hash || 'library';
     startOn = params.component || null
   }
   //---------------------------
@@ -39,7 +39,7 @@
       {/if}
 
       {#if view === 'library'}
-        <Library startOn={startOn} />
+        <ComponentLibrary startOn={startOn} />
       {/if}
     </div>
   <Footer />

@@ -1,6 +1,6 @@
 <script>
-  import ThreeSlot from '../../ThreeSlot/ThreeSlot'
-  import LibraryBlock from '../LibraryBlock'
+  import ThreeSlot from '../../../components/ThreeSlot/ThreeSlot'
+  import LibraryBlock from './__LibraryBlock'
 </script>
 
 <h1>ThreeSlot</h1>

@@ -1,6 +1,6 @@
 <script>
-  import SVG from '../../SVG/SVG'
-  import LibraryBlock from '../LibraryBlock'
+  import SVG from '../../../components/SVG/SVG'
+  import LibraryBlock from './__LibraryBlock'
 </script>
 
 <h1>SVG</h1>

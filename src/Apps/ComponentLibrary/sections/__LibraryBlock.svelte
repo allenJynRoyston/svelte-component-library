@@ -1,5 +1,5 @@
 <script>
-  import CodeBlock from '../CodeBlock/CodeBlock'
+  import CodeBlock from '../../../components/CodeBlock/CodeBlock'
 
   export let code = false;
   export let section = false;

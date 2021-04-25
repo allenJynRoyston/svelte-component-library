@@ -1,6 +1,6 @@
 <script>
-  import Link from '../../Link/Link'
-  import LibraryBlock from '../LibraryBlock'
+  import Link from '../../../components/Link/Link'
+  import LibraryBlock from './__LibraryBlock'
 </script>
 
 <h1>Link</h1>

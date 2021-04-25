@@ -1,8 +1,7 @@
 <script>
-  import Link from '../../Link/Link'
-  import HashWatch from '../../URLWatcher/HashWatch'
-  import LibraryBlock from '../LibraryBlock'
-  import CodeBlock from '../../CodeBlock/CodeBlock'
+  import Link from '../../../components/Link/Link'
+  import HashWatch from '../../../components/URLWatcher/HashWatch'
+  import LibraryBlock from './__LibraryBlock'  
 
   let hashWatchValue = null;
 </script>

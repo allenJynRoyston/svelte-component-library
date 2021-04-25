@@ -1,6 +1,6 @@
 <script>
-  import Footer from '../../Footer/Footer'
-  import LibraryBlock from '../LibraryBlock'
+  import Footer from '../../../components/Footer/Footer'
+  import LibraryBlock from './__LibraryBlock'
 </script>
 
 <h2>Footer</h2>

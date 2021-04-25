@@ -1,7 +1,7 @@
 <script>
-  import Channels from '../../Channels/Channels'
-  import LibraryBlock from '../LibraryBlock'
-  import LoremBlock from '../LoremBlock'
+  import Channels from '../../../components/Channels/Channels'
+  import LibraryBlock from './__LibraryBlock'
+  import LoremBlock from '../../../components/LoremBlock/LoremBlock'
 
   const channelProps = {
      data: [

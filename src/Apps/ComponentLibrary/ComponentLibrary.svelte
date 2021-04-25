@@ -1,35 +1,32 @@
 <script>
-  import Channels from '../Channels/Channels'
-  import Link from '../Link/Link'
-  import HashWatch from '../URLWatcher/HashWatch'
+  import Channels from '../../components/Channels/Channels'
+  import Link from '../../components/Link/Link'
 
-  import Buttom from './sections/_button'
-  import Header from './sections/_header'
-  import Footer from './sections/_footer'
-  import Loader from './sections/_loader'
+  import ButtonAlias from './sections/_button'
+  import HeaderAlias from './sections/_header'
+  import FooterAlias from './sections/_footer'
+  import LoaderAlias from './sections/_loader'
   import LinkAlias from './sections/_link'
-  import FormExample from './sections/_formExample'
-  import Search from './sections/_search'
+  import FormAlias from './sections/_formExample'
+  import SearchAlias from './sections/_search'
   import HashWatchAlias from './sections/_hashwatch'
-  import SVG from './sections/_svg'
-  import ThreeSlot from './sections/_threeslot'
+  import SVGAlias from './sections/_svg'
+  import ThreeSlotAlias from './sections/_threeslot'
   import ChannelAlias from './sections/_channels'
   
   export let startOn = null;
   
-  let hashWatchValue = null;
-
   const data =  [     
-    {content: Header, title: "Header", render: false, active: false},
-    {content: Footer, title: "Footer", render: false, active: false},
-    {content: Buttom, title: "Button", render: false, active: false},
-    {content: Loader, title: "Loader", render: false, active: false},
+    {content: HeaderAlias, title: "Header", render: false, active: false},
+    {content: FooterAlias, title: "Footer", render: false, active: false},
+    {content: ButtonAlias, title: "Button", render: false, active: false},
+    {content: LoaderAlias, title: "Loader", render: false, active: false},
     {content: LinkAlias, title: "Link", render: false, active: false},
-    {content: FormExample, title: "Form", render: false, active: false},
-    {content: Search, title: "Search", render: false, active: false},
+    {content: FormAlias, title: "Form", render: false, active: false},
+    {content: SearchAlias, title: "Search", render: false, active: false},
     {content: HashWatchAlias, title: "HashWatch", render: false, active: false},
-    {content: SVG, title: "SVG", render: false, active: false},
-    {content: ThreeSlot, title: "ThreeSlot", render: false, active: false},
+    {content: SVGAlias, title: "SVG", render: false, active: false},
+    {content: ThreeSlotAlias, title: "ThreeSlot", render: false, active: false},
     {content: ChannelAlias, title: "Channels", render: false, active: false},
   ]
 

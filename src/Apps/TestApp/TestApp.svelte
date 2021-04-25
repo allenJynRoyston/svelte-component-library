@@ -4,13 +4,13 @@
   import {CreateComment} from '../../js/create'
   import {IndexDBStore} from '../../js/index'
 
-  import TestUtility from '../TestUtility/TestUtility'  
-  import URLWatcher from '../URLWatcher/URLWatcher'
-  import Channels from '../Channels/Channels'
-  import LoremBlock from '../_Library/LoremBlock'
+  import TestUtility from '../../components/TestUtility/TestUtility'  
+  import Channels from '../../components/Channels/Channels'
+  import LoremBlock from '../../components/LoremBlock/LoremBlock'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
+  let ready = false;
   let myDetails = window.localStorage.getItem('me')  
       myDetails = JSON.parse(myDetails) || null
 
@@ -77,8 +77,9 @@
   //---------------------------  
 
   //--------------------------- ONMOUNT
-  onMount(async() => {    
+  onMount(async() => {        
     await setupIndexDB();  // setup required indexDB stuff
+    ready = true
   })
   //---------------------------
 
@@ -96,12 +97,12 @@
 
   const channelProps = {
      data: [
-      {content: LoremBlock, render: false},
-      {content: LoremBlock, render: false},
-      {content: LoremBlock, render: false},
-      {content: LoremBlock, render: false},
-      {content: LoremBlock, render: false},
-      {content: LoremBlock, render: false}
+      {content: TestUtility, render: false, active: false},
+      {content: LoremBlock, render: false, active: false},
+      {content: LoremBlock, render: false, active: false},
+      {content: LoremBlock, render: false, active: false},
+      {content: LoremBlock, render: false, active: false},
+      {content: LoremBlock, render: false, active: false}
     ],
     current: 0,
     transition: {
@@ -110,8 +111,10 @@
     },
     channelReady: (index) => {
       channelProps.data = channelProps.data.map((x, i) => {
+        x.active = false;
         if(i === index){
-          x.render = true
+          x.active = true;
+          x.render = true;
         }
         return x
       })      
@@ -127,8 +130,9 @@
 
 <div class='test-app'>
   <h1>Test App</h1>
-  <!-- <TestUtility /> -->
-  <!-- <Channels {...channelProps} /> -->
+  {#if ready}
+    <Channels {...channelProps} buttons />
+  {/if}
 </div>
 
 <style lang='scss' scoped>

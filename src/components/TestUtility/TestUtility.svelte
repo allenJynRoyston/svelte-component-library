@@ -8,7 +8,6 @@
   import Form from '../Form/Form.svelte'
   import UserFetcher from '../Fetcher/UserFetcher.svelte'
 
-
   //---------------------------
   export let viewerId = null
   export let friendStatus = null;
