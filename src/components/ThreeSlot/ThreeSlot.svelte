@@ -1,41 +1,49 @@
 <script>
   export let style = null;
 
+  export let showLeft = false;
+  export let showRight = false;
+  export let showCenter = false;
+
 </script>
 
-<div class='threecolumn' {style}>
+<div class='three-slot' {style}>
 
-  <div class='threecolumn__left'>
-    <slot name='left' />
-  </div>
-
-  <div class='threecolumn__center'>
+  {#if showLeft}
+    <div class='left'>
+      <slot name='left' />
+    </div>
+  {/if}
+  
+  <div class='center'>
     <slot />
   </div>
 
-  <div class='threecolumn__right'>
-    <slot name='right' />
-  </div>
+  {#if showRight}
+    <div class='right'>
+      <slot name='right' />
+    </div>
+  {/if}
 </div>
 
 <style lang='scss' scoped>
-  .threecolumn{
+  .three-slot{
     width: 100%;
     display: flex;
     align-items: center;
 
-    &__left{
+    .left{
       display: flex;
       align-items: center;    
       width: auto;                    
     }
 
-    &__center{
+    .center{
       width: calc(100% - 20px);
       padding: 5px 10px;
     }    
 
-    &__right {
+    .right {
       width: auto;
       display: flex;
       flex-direction: column;

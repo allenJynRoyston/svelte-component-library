@@ -5,13 +5,16 @@
   import Link from '../../components/Link/Link'
   import BasicLayout from '../../components/Layout/BasicLayout'  
   import Channels from '../../components/Channels/Channels'
-
-  import Home from './components/StrongCookieHome'
-  import About from './components/StrongCookieAbout'
-  import Products from './components/StrongCookieProducts'
+  import HashWatch from '../../components/URLWatcher/HashWatch'
+  
+  import Home from './pages/StrongCookieHome'
+  import About from './pages/StrongCookieAbout'
+  import Products from './pages/StrongCookieProducts'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
+  let ready = false;
+
   const channelProps = {
      data: [
       {content: Home, title: 'Home', render: false, active: false},
@@ -42,26 +45,39 @@
     channelProps.current = index
   }  
 
+  const onChange = ({params}) => {    
+    ready = true;
+    if(params?.component){
+      const index = channelProps.data.findIndex(channel => {
+        return channel.title.toLowerCase() === params.component
+      })
+      gotoChannel(index)
+    }  
+  }
+
 </script>
 
-<Header>
-  <h1>Strongcookie.com</h1>
-</Header>
-<BasicLayout >
-  <div slot='directory'>
-    <div class='column'>
-      {#each channelProps.data as { title, active }, i}
-        <Link active={active} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-          {title}
-        </Link>
-      {/each}
+
+<HashWatch onChange={onChange}/>
+
+{#if ready}
+  <Header>
+    <h1>Strongcookie.com</h1>
+  </Header>
+  <BasicLayout >
+    <div slot='directory'>
+      <div class='column'>
+        {#each channelProps.data as { title, active }, i}
+          <Link active={active} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+            {title}
+          </Link>
+        {/each}
+      </div>
     </div>
-  </div>
-  <Channels {...channelProps} />
-</BasicLayout>
-
-<Footer />
-
+    <Channels {...channelProps} />
+  </BasicLayout>
+  <Footer />
+{/if}
 
 <style lang='scss' scoped>
   .column {

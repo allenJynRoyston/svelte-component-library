@@ -7,7 +7,7 @@
 <hr>
 
 <LibraryBlock section >
-  <ThreeSlot >
+  <ThreeSlot showLeft showRight >
     <div slot='left'>
       <h2>Left</h2>
     </div>

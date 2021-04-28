@@ -4,11 +4,12 @@
   import BasicLayout from '../../components/Layout/BasicLayout'
   import Channels from '../../components/Channels/Channels'
   import Link from '../../components/Link/Link'
-
+  
   import ButtonAlias from './components/_button'
   import HeaderAlias from './components/_header'
   import FooterAlias from './components/_footer'
   import LoaderAlias from './components/_loader'
+  import ProductCard from './components/_productcard'
   import LinkAlias from './components/_link'
   import FormAlias from './components/_formExample'
   import SearchAlias from './components/_search'
@@ -24,6 +25,7 @@
     {content: FooterAlias, title: "Footer", render: false, active: false},
     {content: ButtonAlias, title: "Button", render: false, active: false},
     {content: LoaderAlias, title: "Loader", render: false, active: false},
+    {content: ProductCard, title: "ProductCard", render: false, active: false},
     {content: LinkAlias, title: "Link", render: false, active: false},
     {content: FormAlias, title: "Form", render: false, active: false},
     {content: SearchAlias, title: "Search", render: false, active: false},
