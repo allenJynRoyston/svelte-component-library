@@ -11,6 +11,7 @@
   <ProductCard index={1} onClick={onClick} />
   <ProductCard index={2} onClick={onClick} />
   <ProductCard index={3} onClick={onClick} />
+  <ProductCard index={3} onClick={onClick} />
 </div>
 
 
