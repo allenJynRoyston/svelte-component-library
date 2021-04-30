@@ -1,7 +1,7 @@
 <script>
   import Header from '../../components/Header/Header'
   import Footer from '../../components/Footer/Footer'  
-  import BasicLayout from '../../components/Layout/BasicLayout'
+  import ColumnLayout from '../../components/Layout/ColumnLayout'
   import Channels from '../../components/Channels/Channels'
   import Link from '../../components/Link/Link'
   
@@ -16,8 +16,12 @@
   import HashWatchAlias from './components/_hashwatch'
   import SVGAlias from './components/_svg'
   import ThreeSlotAlias from './components/_threeslot'
+  import TwoSlotAlias from './components/_twoslot'
   import ChannelAlias from './components/_channels'
-  
+  import GridLayoutAlias from './components/_gridLayout'
+  import ColumnLayoutAlias from './components/_columnLayout'
+  import ShoppingCartAlias from './components/_shoppingCart'
+
   export let startOn = null;
   
   const data =  [     
@@ -32,7 +36,11 @@
     {content: HashWatchAlias, title: "HashWatch", render: false, active: false},
     {content: SVGAlias, title: "SVG", render: false, active: false},
     {content: ThreeSlotAlias, title: "ThreeSlot", render: false, active: false},
+    {content: TwoSlotAlias, title: "TwoSlot", render: false, active: false},
     {content: ChannelAlias, title: "Channels", render: false, active: false},
+    {content: GridLayoutAlias, title: "GridLayout", render: false, active: false},
+    {content: ColumnLayoutAlias, title: "ColumnLayout", render: false, active: false},
+    {content: ShoppingCartAlias, title: "ShoppingCart", render: false, active: false},
   ]
 
   const current = data.findIndex(x => x.title.toLowerCase() === startOn) < 0 ? 0 : data.findIndex(x => x.title.toLowerCase() === startOn)
@@ -66,22 +74,22 @@
 <Header>
   <h1>Svelte Component Library</h1>
 </Header>
-<BasicLayout >
-  <div slot='directory'>
-    <div class='column'>
-      {#each channelProps.data as { title, active }, i}
-        <Link active={active} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-          {title}
-        </Link>
-      {/each}
-    </div>
+
+<ColumnLayout >
+  <div slot='directory'  class='directory'>
+    {#each channelProps.data as { title, active }, i}
+      <Link active={active} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+        {title}
+      </Link>
+    {/each}
   </div>
   <Channels {...channelProps} />
-</BasicLayout>
+</ColumnLayout>
+
 <Footer />
 
 <style lang='scss' scoped>
-  .column {
+  .directory {
     display: flex; 
     flex-direction: column;
   }

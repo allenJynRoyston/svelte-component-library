@@ -5,7 +5,7 @@
   import {IndexDBStore} from '../../js/index'
 
   import Link from '../../components/Link/Link'
-  import BasicLayout from '../../components/Layout/BasicLayout'
+  import ColumnLayout from '../../components/Layout/ColumnLayout'
   import TestUtility from '../../components/TestUtility/TestUtility'  
   import Channels from '../../components/Channels/Channels'
   import LoremBlock from '../../components/LoremBlock/LoremBlock'
@@ -128,7 +128,7 @@
 
 </script>
 
-<BasicLayout >
+<ColumnLayout >
   <div slot='directory'>
     <div class='column'>
       {#each channelProps.data as { title, active }, i}
@@ -141,7 +141,7 @@
   {#if ready}
     <Channels {...channelProps} />
   {/if}
-</BasicLayout>
+</ColumnLayout>
 
 
 

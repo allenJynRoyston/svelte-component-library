@@ -1,17 +1,15 @@
 <script>
-  import Channels from '../../../components/Channels/Channels'  
+  import Channels from '../../../components/Channels/Channels'
   import HashWatch from '../../../components/URLWatcher/HashWatch'
-  import TwoSlot from '../../../components/TwoSlot/TwoSlot'
 
-  import Products from '../components/Products.svelte'
+  import Checkout from '../components/Checkout'
   import ProductDetails from '../components/ProductDetails'
-
-  let ready = false;
-
+  import TwoSlot from '../../../components/TwoSlot/TwoSlot'
+  
   const channelProps = {
      data: [
-      {content: Products, render: false, active: false},
-      {content: ProductDetails, render: false, active: false}
+      {content: Checkout, render: false, active: false},
+      {content: ProductDetails, render: false, active: false},
     ],
     current: 0,
     transition: {
@@ -38,25 +36,23 @@
   }  
 
   const onChange = ({params}) => {
-    ready = true;
-    gotoChannel(0)
     if(params?.product){
       gotoChannel(1)
+    }
+    else{
+      gotoChannel(0)
     }
   }
 
 </script>
 
+<TwoSlot showRight={channelProps.current === 1} >
+  <h1>Checkout</h1>
+  <div slot='right'>
+    <button style="cursor: pointer" on:click={() => {window.history.back()}}>Back</button>
+  </div>
+</TwoSlot>
+<hr>
 
-<HashWatch onChange={onChange}/>
-
-{#if ready}
-  <TwoSlot showRight={channelProps.current === 1} >  
-    <h1>Products</h1>     
-    <div slot='right'>
-      <button style="cursor: pointer" on:click={() => {window.history.back()}}>Back</button>
-    </div>
-  </TwoSlot>
-  <hr>
-  <Channels {...channelProps} />
-{/if}
+<HashWatch {onChange} />
+<Channels {...channelProps} />

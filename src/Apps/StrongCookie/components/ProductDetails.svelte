@@ -17,6 +17,8 @@
   <div class='product-details'>
     <h3>Product name: <strong>Item {productId}</strong></h3>    
   </div>
+{:else}
+  <p>Invalid product id</p>
 {/if}
 
 

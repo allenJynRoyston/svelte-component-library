@@ -1,23 +1,33 @@
 <script>
+  import GridLayout from '../../../components/Layout/GridLayout'
   import ProductCard from '../../../components/ProductCard/ProductCard'
 
-  const onClick = (index) => {
+  const onInfoBtn = (index) => {
     const parts = window.location.hash.split('&product=')
     window.location.hash = `${parts[0]}&product=${index}`
   }
+
+  const onPurchaseBtn = (index) => {
+    console.log(index)
+  } 
+
+  export let items = [
+    {component: ProductCard, row: 2, column: 2, props:{onInfoBtn, onPurchaseBtn, title: 'Strong Cookie', price: '100.00$', infoText: 'Info'} }, 
+    {component: ProductCard, row: 2, column: 1, props:{onInfoBtn, onPurchaseBtn, title: 'Stronger Cookie', price: '100.00$', infoText: 'Info'} }, 
+    {component: ProductCard, row: 2, column: 1, props:{onInfoBtn, onPurchaseBtn, title: 'Strongest Cookie', price: '100.00$', infoText: 'Info'} }
+  ]
+
+
 </script>
 
 <div class='products'>
-  <ProductCard index={1} onClick={onClick} />
-  <ProductCard index={2} onClick={onClick} />
-  <ProductCard index={3} onClick={onClick} />
-  <ProductCard index={3} onClick={onClick} />
+  <GridLayout {items} outline/>  
 </div>
 
 
 <style lang='scss' scoped>
   .products{
-    display: flex;
-    gap: 10px;
+    width: 100%;    
+    height: auto;
   }
 </style>

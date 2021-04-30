@@ -13,11 +13,12 @@
   </div>
 </div>
 
-<style lang='scss' scoped>
+<style lang='scss'>
   .layout{
     width: 100%;
     display: flex;
     overflow: auto;
+
 
     .directory{
       width: auto;
@@ -25,7 +26,6 @@
       padding: 10px 50px 10px 10px;
       background: grey;
       color: white;
-
       a{
         margin: 2px 0;
         cursor: pointer;
@@ -34,6 +34,11 @@
         }
       }
     }
+
+    .directory div{
+      border: 1px solid blue;
+    }
+    
 
     .content{      
       width: 100%;

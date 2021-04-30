@@ -1,0 +1,453 @@
+// Small tablets and large smartphones (landscape view)
+$mobile: 0px;
+$tablet: 992px;
+$desktop: 1024px;
+$widescreen: 1400px;
+
+
+
+$mediaQuery: ();
+
+$mq-ems: false !default;
+$mq-em-base: 16px !default;
+$mq-debug: false !default;
+
+@import '_functions';
+
+@function mediaType($mediaType: false, $hasAnd: true){
+	$media: '';
+	$mediaType: if($mediaType == 'not', 'not all', $mediaType);
+	@if ($mediaType){
+		$media: if($hasAnd, $mediaType + ' and ', $mediaType);
+	}
+	@return $media;
+}
+
+@function isRatio($string){
+	@if (type-of($string) == 'string' and $string != 'plus'){
+		@if (str-index($string, "/")){
+			@return true;
+		}
+	}
+	@return false;
+}
+
+@function isMedia($string){
+	@return type-of($string) == 'string' and $string != 'plus' and not isRatio($string);
+}
+
+@function calculateMQ($range, $breakpoint_1: null, $breakpoint_2: null, $mediaType: false, $debug: $mq-debug){
+
+	$swap-values: false;
+
+	$mediaTypeString: '' + $mediaType + '';
+
+	$invalidMediaType:
+		($mediaType != false) and (
+			(type-of($mediaType) == 'number') or
+			(str-index($mediaTypeString, '/') != null)
+		);
+
+	@if ($invalidMediaType == true){
+		@error '"'+$mediaType+'" is not a valid media type';
+	}
+
+	@if ($range == null) {
+		@return $mediaType;
+	}
+
+	@if ($breakpoint_2 != null){
+
+		@if (isRatio($breakpoint_1)){
+
+			$A1: get-start($breakpoint_1);
+			$A2: get-end($breakpoint_1);
+
+			$B1: get-start($breakpoint_2);
+			$B2: get-end($breakpoint_2);
+
+			@if ($debug) {
+				@debug range_numbers "('A1/A2', 'B1/B2')" (A1: $A1, A2: $A2, B1: $B1, B2: $B2);
+			}
+
+			$swap-values: $A1 / $A2 < $B1 / $B2;
+		} @else {
+			$swap-values: $breakpoint_1 < $breakpoint_2;
+		}
+
+		//Swaps the breakpoint_s around
+		@if ($swap-values){
+			$temp: $breakpoint_1;
+			$breakpoint_1: $breakpoint_2;
+			$breakpoint_2: $temp;
+		}
+
+	} @else {
+		$breakpoint_2: 0;
+	}
+
+	$mediaString: '';
+
+	@if ($range == 'orientation'){
+		@if ($breakpoint_1 != 'landscape' and $breakpoint_1 != 'portrait'){
+			@error '"orientation" range only accepts the values "landscape" and "portrait". Currently providing the value "#{$breakpoint_1}".';
+		}
+	}
+
+	@if ($debug){
+		@debug calculateMQ (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType);
+	}
+
+	@if (str-index($range, 'inside') != null or str-index($range, 'outside') != null){
+		@if ($breakpoint_2 == 0) {
+			@error '"#{$range}" range requires a second value. Currently only providing "#{$breakpoint_1}" as a value.';
+		}
+	} @else {
+		@if ($breakpoint_2 != 0) {
+			@error '"#{$range}" range can only take one value. Currently providing both "#{$breakpoint_1}" and "#{$breakpoint_2}" as values.';
+		}
+	}
+
+	@if (str-index($range, 'ratio') == null){
+		//if a standard media query
+		@if (type-of($breakpoint_1) != number and $range != 'orientation'){
+			@if ($breakpoint_2 != 0) {
+				@error '"#{$range}" range requires the breakpoint_s ("#{$breakpoint_1}" and "#{$breakpoint_2}") to be pixel values';
+			} @else {
+				@error '"#{$range}" range requires the breakpoint_ "#{$breakpoint_1}" to be a pixel value';
+			}
+		}
+	} @else {
+		//else if it's a ratio...
+		@if ((($breakpoint_2 != 0) and (type-of($breakpoint_2) != string))){
+			@error '"#{$range}" range requires the breakpoint_s ("#{$breakpoint_1}" and "#{$breakpoint_2}") to both be strings in this format "4 / 3" (width ratio / height ratio).';
+		} @else if (type-of($breakpoint_1) != string) {
+			@error '"#{$range}" range requires the breakpoint_ "#{$breakpoint_1}" to be a string in this format "4 / 3" (width ratio / height ratio).';
+		}
+	}
+
+	$breakpoint_1_plus: $breakpoint_1 + 1;
+	$breakpoint_2_plus: $breakpoint_2 + 1;
+
+	$media: if($mediaType, $mediaType, '');
+
+	@if ($mq-ems) {
+		$breakpoint_1: _mq-em($breakpoint_1);
+		$breakpoint_2: _mq-em($breakpoint_2);
+		$breakpoint_1_plus: _mq-em($breakpoint_1_plus);
+		$breakpoint_2_plus: _mq-em($breakpoint_2_plus);
+	}
+
+	$min-width: '(min-width: #{$breakpoint_1_plus})';
+	$max-width: '(max-width: #{$breakpoint_1})';
+
+	$inside-width: '(max-width: #{$breakpoint_1}) and (min-width: #{$breakpoint_2_plus})';
+	$outside-width: '(max-width: #{$breakpoint_2}), '+$media+'(min-width: #{$breakpoint_1_plus})';
+
+	$mediaString: map-get((
+	//*1 value given*/
+		min : $min-width,
+		max : $max-width,
+	
+		min-width : $min-width,
+		max-width : $max-width,
+
+		min-height : '(min-height: #{$breakpoint_1_plus})',
+		max-height : '(max-height: #{$breakpoint_1})',
+
+		ratio : '(aspect-ratio: #{$breakpoint_1})',
+		min-ratio : '(min-aspect-ratio: #{$breakpoint_1})',
+		max-ratio : '(max-aspect-ratio: #{$breakpoint_1})',
+
+		device-ratio : '(device-aspect-ratio: #{$breakpoint_1})',
+		min-device-ratio : '(min-device-aspect-ratio: #{$breakpoint_1})',
+		max-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_1})',
+
+		orientation : '(orientation: #{$breakpoint_1})',
+
+	//*2 values given*/
+		inside : $inside-width,
+		outside : $outside-width,
+
+		inside-width : $inside-width,
+		outside-width : $outside-width,
+
+		inside-height : '(max-height: #{$breakpoint_1}) and (min-height: #{$breakpoint_2_plus})',
+		outside-height : '(max-height: #{$breakpoint_2}), '+$media+'(min-height: #{$breakpoint_1_plus})',
+		
+		inside-ratio : '(max-aspect-ratio: #{$breakpoint_1}) and (min-aspect-ratio: #{$breakpoint_2})',
+		outside-ratio : '(max-aspect-ratio: #{$breakpoint_2}), '+$media+'(min-aspect-ratio: #{$breakpoint_1})',
+		
+		inside-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_1}) and (min-device-aspect-ratio: #{$breakpoint_2})',
+		outside-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_2}), '+$media+'(min-device-aspect-ratio: #{$breakpoint_1})',
+	), $range);
+
+	@return $mediaString;
+}
+
+@function isBasicQuery($range) {
+	$first_is_string: type-of(nth($range,1)) == string;
+	$longer_than_1: length($range) > 1;
+	$not_plus_statment: true;
+	@if ($longer_than_1) {
+		$not_plus_statment: nth($range,2) != 'plus';
+	}
+	@return $first_is_string and $longer_than_1 and $not_plus_statment;
+}
+
+@function get_values($mqSet, $debug: $mq-debug){
+
+	@if ($mq-debug) {
+		@debug mqSet (length: length($mqSet), mqSet: $mqSet);
+	}
+
+	$range: nth($mqSet,1);
+	$breakpoint_1: null;
+	$breakpoint_2: null;
+	$media: false;
+
+	@if (length($mqSet) == 1){
+		$first: nth($mqSet, 1);
+		@if (type-of($first) != 'string'){
+			@error '"#{$first}" is not a valid media type';
+		}
+		$range: null;
+		$media: $first;
+	}
+
+	@if (length($mqSet) > 1){
+		$breakpoint_1: nth($mqSet, 2);
+	}
+
+	@if (length($mqSet) == 3){
+		$third: nth($mqSet, 3);
+
+		@if (type-of($third) == 'number' or isRatio($third)){
+			$breakpoint_2: $third;
+		} @else {
+			$media: $third;
+		}
+	}
+
+	@if (length($mqSet) == 4){
+		$third: nth($mqSet, 3);
+		$fourth: nth($mqSet, 4);
+
+		@if ($fourth == false and isMedia($third)){
+			$media: $third;
+		} @else {
+			$breakpoint_2: $third;
+			$media: $fourth;
+		}
+
+		@if ($media == " and ") {
+			$media: '';
+		}
+	}
+
+	$finalValues: (
+		range: $range,
+		breakpoint_1: $breakpoint_1,
+		breakpoint_2: $breakpoint_2,
+		media: mediaType($media, $range != null),
+	);
+
+	@if ($debug) {
+		@debug get_values_result $finalValues;
+	}
+
+	@return $finalValues;
+}
+
+@function get_media($mqSet){
+	@return map-get( get_values($mqSet), media);
+}
+
+@function calculateBasicQuery($mqSet, $isAndStatement: false, $debug: $mq-debug){
+	$values: get_values($mqSet, $debug);
+
+	$range: map-get($values, range);
+	$breakpoint_1: map-get($values, breakpoint_1);
+	$breakpoint_2: map-get($values, breakpoint_2);
+	$media: map-get($values, media);
+
+	@if ($range == null) {
+		//if only a media type is given return nothing because it is added elsewhere
+		@return '';
+	}
+
+	@if ((str-index($range, 'outside') != null) and $isAndStatement){
+		$error: 'All "outside" range types are incompatible with "plus" statements: (' + $mqSet + ')';
+		@error $error;
+	}
+
+	@return calculateMQ($range, $breakpoint_1, $breakpoint_2, $media, $debug: $debug);
+}
+
+@function joinQueries($range, $queryString: (), $debug: $mq-debug){
+
+	$isAndStatement: false;
+	$contains_media_only_statement: false;
+	$media_statement_at_start: true;
+
+	@if (length($range) > 1) {
+		@for $i from 1 through length($range) {
+			$statement: nth($range,$i);
+			@if ($debug) {
+				@debug joinQueries_statement $statement;
+			}
+			$mediaNotFirst: $i != 1 and isMedia($statement);
+			@if ($statement == 'plus') {
+				$isAndStatement: true;
+				@if ($i == 2 and length(nth($range,1)) == 1) {
+					$contains_media_only_statement: true;
+				}
+			}
+			@if ($mediaNotFirst){
+				$media_statement_at_start: false;
+			}
+		}
+	} @else if (type-of(nth($range,1)) == 'string') {
+		$contains_media_only_statement: true;
+	}
+
+	@if ($isAndStatement and not $media_statement_at_start) {
+		@error 'Media type definitions must be specified at the start of plus statements: (#{$range})';
+	}
+
+	//Uses this functionality if using a single level MQ variable
+	//eg:
+	//$MQ-example--single: inside, 1000px, 500px;
+	//@include mq($MQ-example--single){}
+	@if (isBasicQuery($range)){
+
+		@return get_media($range) + calculateBasicQuery($range, $isAndStatement, $debug: $debug);
+
+	//Uses this functionality if using a multi level MQ variable
+	//eg:
+	//$MQ-example--multiple:
+	//	(inside, 1000px, 500px),
+	//	(min, 1200px)
+	//;
+	//@include mq($MQ-example--multiple){}
+	} @else {
+
+		@each $mqSet in $range {
+
+			@if ($mqSet != 'plus') {
+				@if (isBasicQuery($mqSet)){
+
+					$newQuery: calculateBasicQuery($mqSet, $isAndStatement, $debug: $debug);
+
+					$media: get_media($mqSet);
+
+					@if ($isAndStatement) {
+						@if ($queryString == ()){
+							$queryString: $media + $newQuery;
+						} @else if ($newQuery != '') {
+							$queryString: $queryString + ' and ' + $newQuery;
+						}
+					} @else {
+						$queryString: append($queryString, $media + $newQuery, 'comma');
+					}
+
+				} @else {
+
+					$is_media_only_statment: $contains_media_only_statement and type-of($mqSet) == 'string';
+
+					@if ($isAndStatement) {
+						@if ($is_media_only_statment) {
+							$queryString: mediaType($mqSet, false);
+						} @else {
+							$queryString: joinQueries($mqSet, $queryString, $debug);
+						}
+						@if (length($queryString) > 1){
+							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
+							@error $error;
+						}
+					} @else {
+						@if ($is_media_only_statment) {
+							$queryString: $mqSet;
+						} @else {
+							$queryString: append($queryString, joinQueries($mqSet, $debug: $debug), 'comma');
+						}
+					}
+				}
+			}
+		}
+
+		@return $queryString;
+	}
+}
+
+@mixin mq($range, $breakpoint_1: null, $breakpoint_2: null, $mediaType: false, $debug: $mq-debug) {
+
+	@if ($debug) {
+		@debug $range;
+	}
+
+	@if (length($range) > 1) {
+		$finalOutput: joinQueries($range, $debug: $debug);
+		@if ($debug) {
+			@debug '!!!!! FINAL OUTPUT: @media ' + $finalOutput;
+		}
+		@media #{$finalOutput} {
+			@content;
+		}
+
+	//Uses this functionality if placing MQ data inline
+	//eg:
+	//@include mq(inside, 1000px, 500px, 'screen');
+	} @else {
+		//standardises the values to prevent mediaType from getting confused with breakpoint_2
+		$mediaOnly: $breakpoint_1 == null and $breakpoint_2 == null and $mediaType == false;
+		@if ($debug) {
+			@debug inline_mq_values (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType, mediaOnly: $mediaOnly);
+		}
+		$values: get_values(if($mediaOnly, $range, ($range $breakpoint_1 $breakpoint_2 $mediaType)), $debug: $debug);
+
+		$newRange: map-get($values, range);
+		$newWidth1: map-get($values, breakpoint_1);
+		$newWidth2: map-get($values, breakpoint_2);
+		$newMedia: map-get($values, media);
+
+		@if ($mediaOnly) {
+
+			@if ($debug) {
+				@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia;
+			}
+
+			@media #{ $newMedia } {
+				@content;
+			}
+
+		} @else {
+
+			$finalMQ: $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2, $debug: $debug);
+
+			@if ($debug) {
+				@debug '!!!!! FINAL OUTPUT: @media ' + $finalMQ ;
+			}
+
+			@media #{ $finalMQ } {
+				@content;
+			}
+
+		}
+	}
+
+	@if ($debug){
+		//spacer for seperating results
+		@debug '';
+	}
+
+}
+
+@mixin retina($density: 2) {
+		@media
+		only screen and (min-device-pixel-ratio: $density),
+		only screen and (min-resolution: $density * 96ppi),
+		only screen and (min-resolution: $density * 1dppx) {
+			@content;
+	}
+}

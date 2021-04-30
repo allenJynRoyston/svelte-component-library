@@ -3,13 +3,14 @@
   import Header from '../../components/Header/Header'
   import Footer from '../../components/Footer/Footer'    
   import Link from '../../components/Link/Link'
-  import BasicLayout from '../../components/Layout/BasicLayout'  
+  import ColumnLayout from '../../components/Layout/ColumnLayout'  
   import Channels from '../../components/Channels/Channels'
   import HashWatch from '../../components/URLWatcher/HashWatch'
   
   import Home from './pages/StrongCookieHome'
   import About from './pages/StrongCookieAbout'
   import Products from './pages/StrongCookieProducts'
+  import Checkout from './pages/StrongCookieCheckout'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
@@ -20,6 +21,7 @@
       {content: Home, title: 'Home', render: false, active: false},
       {content: About, title: 'About', render: false, active: false},
       {content: Products, title: 'Products', render: false, active: false},
+      {content: Checkout, title: 'Checkout', render: false, active: false},
     ],
     current: 0,
     transition: {
@@ -64,23 +66,21 @@
   <Header>
     <h1>Strongcookie.com</h1>
   </Header>
-  <BasicLayout >
-    <div slot='directory'>
-      <div class='column'>
-        {#each channelProps.data as { title, active }, i}
-          <Link active={active} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-            {title}
-          </Link>
-        {/each}
-      </div>
+  <ColumnLayout >
+    <div class='directory' slot='directory'>
+      {#each channelProps.data as { title, active }, i}
+        <Link active={active} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+          {title}
+        </Link>
+      {/each}
     </div>
     <Channels {...channelProps} />
-  </BasicLayout>
+  </ColumnLayout>
   <Footer />
 {/if}
 
 <style lang='scss' scoped>
-  .column {
+  .directory {
     display: flex; 
     flex-direction: column;
   }
