@@ -13,7 +13,6 @@
 
   //--------------------------- VARS  
   let view = null;
-  let startOn = null;
   //---------------------------  
 
   //--------------------------- ONMOUNT
@@ -23,7 +22,6 @@
   //--------------------------- FUNCTIONS
   const hashChange = ({hash, params}) => {
     view = hash || 'library';
-    startOn = params.component || null
   }
   //---------------------------
 
@@ -41,16 +39,16 @@
     {/if}      
 
     {#if view === 'library'}
-      <ComponentLibraryApp startOn={startOn} />
+      <ComponentLibraryApp />
     {/if}
   </div>
 </div>
 
 
 <div id='app-selector'>
-  <Link href='#library' onClick={() => {view = 'library'}}>Library</Link>
-  <Link href='#test-app' onClick={() => {view = 'app'}}>Test App</Link>
-  <Link href='#strong-cookie' onClick={() => {view = 'strong-cookie'}}>Cookie</Link>
+  <Link href='#library' active={view === 'library'} onClick={() => {view = 'library'}}>Library</Link>
+  <Link href='#test-app' active={view === 'test-app'} onClick={() => {view = 'app'}}>Test App</Link>
+  <Link href='#strong-cookie' active={view === 'strong-cookie'} onClick={() => {view = 'strong-cookie'}}>Cookie</Link>
 </div>
 
 <style lang='scss' scoped>

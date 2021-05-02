@@ -1,18 +1,20 @@
-<script>
+<script lang='ts'>
   import {onMount} from 'svelte'  
-  import Loader from '../Loader/Loader'
+  import Loader from '../Loader/Loader.svelte'
+  
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
   export let data = []
-  export let current = 0
+  export let current;
   export let afterUpdate = null;
   export let channelReady = null;
-  export let transition = {
-              easing: 'cubicOut',
-              speed: 400
-            }
+
+  export let duration = 400;
+  export let easing = 'cubicOut'
+
   export let buttons = false;
+  export let animate = false;
 
   let ready = false
   let xpos;
@@ -21,7 +23,7 @@
 
   const createSizeTables = () => {
     const table = []
-    const chunk = (100 / data.length).toFixed(4)
+    const chunk = Number((100 / data.length).toFixed(4))
     data.forEach((x, i) => {
       table.push(-(i * chunk))
     })
@@ -32,9 +34,10 @@
     const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
-      duration: transition.speed,
-      easing: cubicOut
-    });  
+      duration,
+      easing: easing === 'cubicOut' ? cubicOut : cubicOut
+    });   
+
     ready = true
     channelReady && channelReady(currentChannel)  
   })
@@ -67,6 +70,7 @@
     const table = createSizeTables()
     const val = table[currentChannel]    
     channelReady && channelReady(currentChannel)  
+
     await xpos.set(val)
     afterUpdate && afterUpdate()    
     busy = false
@@ -92,14 +96,8 @@
   
 </script>
 
-<div class='channels'>
 
-  {#if buttons}
-    <button on:click={() => {goto(0)}}>Home</button>
-    <button on:click={next}>+ Channel</button>
-    <button on:click={prev}>- Channel</button>   
-  {/if}
-
+<div class='channels' class:animate={animate}>
   {#if ready}
     <div class='channels-container' style={`${channelsStyle()};${xPostiion()}`}>
       {#each data as {content, render, active, props}}
@@ -119,6 +117,7 @@
   {/if}
 </div>
 
+
 <style lang='scss' scoped>
   .channels{
     overflow: hidden;
@@ -134,8 +133,7 @@
 
   .channel{
     width: 100%;   
-    transition: 400ms;
-
+    
     &.inactive{
       opacity: 0;
     }

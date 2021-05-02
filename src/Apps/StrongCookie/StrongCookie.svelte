@@ -1,83 +1,83 @@
-<script>
+<script lang='ts'>
   //--------------------------- IMPORTS  
-  import Header from '../../components/Header/Header'
-  import Footer from '../../components/Footer/Footer'    
-  import Link from '../../components/Link/Link'
-  import ColumnLayout from '../../components/Layout/ColumnLayout'  
-  import Channels from '../../components/Channels/Channels'
-  import HashWatch from '../../components/URLWatcher/HashWatch'
+  import {tick} from 'svelte'
+  import Header from '../../components/Header/Header.svelte'
+  import Footer from '../../components/Footer/Footer.svelte'    
+  import Link from '../../components/Link/Link.svelte'
+  import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'  
+  import Channels from '../../components/Channels/Channels.svelte'
+  import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
   
-  import Home from './pages/StrongCookieHome'
-  import About from './pages/StrongCookieAbout'
-  import Products from './pages/StrongCookieProducts'
-  import Checkout from './pages/StrongCookieCheckout'
+  import Home from './pages/StrongCookieHome.svelte'
+  import About from './pages/StrongCookieAbout.svelte'
+  import Products from './pages/StrongCookieProducts.svelte'
+  import Checkout from './pages/StrongCookieCheckout.svelte'
+  import IDB from '../../components/Utility/IndexDBSetup.svelte'
+
+  import { createChannel, createDB } from '../../js/utility'
   //--------------------------- 
 
-  //--------------------------- APP CONTEXT   
-  let ready = false;
-
-  const channelProps = {
-     data: [
-      {content: Home, title: 'Home', render: false, active: false},
-      {content: About, title: 'About', render: false, active: false},
-      {content: Products, title: 'Products', render: false, active: false},
-      {content: Checkout, title: 'Checkout', render: false, active: false},
-    ],
-    current: 0,
-    transition: {
-      ease: 'cubicOut',
-      speed: 400
-    },
-    channelReady: (index) => {
-      channelProps.data = channelProps.data.map((x, i) => {
-        x.active = false;
-        if(i === index){
-          x.active = true;
-          x.render = true;
-        }
-        return x
-      })      
-    },
-    afterUpdate: () => {
-      
-    }
-  }    
+  //--------------------------- CHANNEL
+  const channel = createChannel({
+    data: [
+      {content: Home, title: 'Home'},
+      {content: About, title: 'About'},
+      {content: Products, title: 'Products'},
+      {content: Checkout, title: 'Checkout'},
+    ]  
+  }) 
 
   const gotoChannel = (index) => {
-    channelProps.current = index
+    channel.current = index
   }  
 
-  const onChange = ({params}) => {    
-    ready = true;
-    if(params?.component){
-      const index = channelProps.data.findIndex(channel => {
-        return channel.title.toLowerCase() === params.component
-      })
-      gotoChannel(index)
-    }  
+  const onChange = async({params}) => {                
+    const index = channel.data.findIndex(channel => {
+      return channel.title.toLowerCase() === params?.component
+    })    
+    gotoChannel(index < 0 ? 0 : index)    
   }
+  //---------------------------
+
+  //--------------------------- DB
+  const db = createDB({
+    version: 1,
+    name: 'strongcookie', 
+    clearOnRefresh: true,
+    tables: ['products'], 
+    data: {
+      products: [
+        {name: 'Product 1', price: 1, description: 'foo'},
+        {name: 'Product 2', price: 2, description: 'bar'},
+        {name: 'Product 3', price: 3, description: 'foobar'},
+        {name: 'Product 4', price: 4, description: 'extrabar'},
+      ]
+    }, 
+  })
+  //---------------------------
 
 </script>
 
+<IDB {...db} />
+<HashWatch {onChange} />
 
-<HashWatch onChange={onChange}/>
+<Header>
+  <h1>Strongcookie.com</h1>
+</Header>
 
-{#if ready}
-  <Header>
-    <h1>Strongcookie.com</h1>
-  </Header>
-  <ColumnLayout >
-    <div class='directory' slot='directory'>
-      {#each channelProps.data as { title, active }, i}
-        <Link active={active} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-          {title}
-        </Link>
-      {/each}
-    </div>
-    <Channels {...channelProps} />
-  </ColumnLayout>
-  <Footer />
-{/if}
+<ColumnLayout >
+  <div class='directory' slot='directory'>
+    {#each channel.data as { title }, i}
+      <Link active={channel.current === i} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+        {title} 
+      </Link>
+    {/each}
+  </div>
+  <Channels {...channel} />
+</ColumnLayout>
+
+<Footer />
+
 
 <style lang='scss' scoped>
   .directory {

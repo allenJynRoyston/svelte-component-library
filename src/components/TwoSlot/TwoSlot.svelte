@@ -1,14 +1,17 @@
 <script>
   export let style = null;
   export let showRight = false;
+  export let showLeft = false
 
 </script>
 
 <div class='two-slot' {style}>
 
-  <div class='left'>
-    <slot>Left</slot>
-  </div>
+  {#if showLeft}
+    <div class='left'>
+      <slot>Left</slot>
+    </div>
+  {/if}
 
   {#if showRight}
     <div class='right'>

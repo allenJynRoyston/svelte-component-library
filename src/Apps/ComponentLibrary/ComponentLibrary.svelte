@@ -1,75 +1,67 @@
-<script>
-  import Header from '../../components/Header/Header'
-  import Footer from '../../components/Footer/Footer'  
-  import ColumnLayout from '../../components/Layout/ColumnLayout'
-  import Channels from '../../components/Channels/Channels'
-  import Link from '../../components/Link/Link'
+<script lang='ts'>
+  import Header from '../../components/Header/Header.svelte'
+  import Footer from '../../components/Footer/Footer.svelte'  
+  import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'
+  import Channels from '../../components/Channels/Channels.svelte'
+  import Link from '../../components/Link/Link.svelte'
+  import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
+  import { createChannel } from '../../js/utility'
+
+  import ButtonAlias from './components/_button.svelte'
+  import HeaderAlias from './components/_header.svelte'
+  import FooterAlias from './components/_footer.svelte'
+  import LoaderAlias from './components/_loader.svelte'
+  import ProductCard from './components/_productcard.svelte'
+  import LinkAlias from './components/_link.svelte'
+  import FormAlias from './components/_formExample.svelte'
+  import SearchAlias from './components/_search.svelte'
+  import HashWatchAlias from './components/_hashwatch.svelte'
+  import SVGAlias from './components/_svg.svelte'
+  import ThreeSlotAlias from './components/_threeslot.svelte'
+  import TwoSlotAlias from './components/_twoslot.svelte'
+  import ChannelAlias from './components/_channels.svelte'
+  import GridLayoutAlias from './components/_gridLayout.svelte'
+  import ColumnLayoutAlias from './components/_columnLayout.svelte'
+  import ShoppingCartAlias from './components/_shoppingCart.svelte'
+  import IndexDBAlias from './components/_idb.svelte'
   
-  import ButtonAlias from './components/_button'
-  import HeaderAlias from './components/_header'
-  import FooterAlias from './components/_footer'
-  import LoaderAlias from './components/_loader'
-  import ProductCard from './components/_productcard'
-  import LinkAlias from './components/_link'
-  import FormAlias from './components/_formExample'
-  import SearchAlias from './components/_search'
-  import HashWatchAlias from './components/_hashwatch'
-  import SVGAlias from './components/_svg'
-  import ThreeSlotAlias from './components/_threeslot'
-  import TwoSlotAlias from './components/_twoslot'
-  import ChannelAlias from './components/_channels'
-  import GridLayoutAlias from './components/_gridLayout'
-  import ColumnLayoutAlias from './components/_columnLayout'
-  import ShoppingCartAlias from './components/_shoppingCart'
-
-  export let startOn = null;
-  
-  const data =  [     
-    {content: HeaderAlias, title: "Header", render: false, active: false},
-    {content: FooterAlias, title: "Footer", render: false, active: false},
-    {content: ButtonAlias, title: "Button", render: false, active: false},
-    {content: LoaderAlias, title: "Loader", render: false, active: false},
-    {content: ProductCard, title: "ProductCard", render: false, active: false},
-    {content: LinkAlias, title: "Link", render: false, active: false},
-    {content: FormAlias, title: "Form", render: false, active: false},
-    {content: SearchAlias, title: "Search", render: false, active: false},
-    {content: HashWatchAlias, title: "HashWatch", render: false, active: false},
-    {content: SVGAlias, title: "SVG", render: false, active: false},
-    {content: ThreeSlotAlias, title: "ThreeSlot", render: false, active: false},
-    {content: TwoSlotAlias, title: "TwoSlot", render: false, active: false},
-    {content: ChannelAlias, title: "Channels", render: false, active: false},
-    {content: GridLayoutAlias, title: "GridLayout", render: false, active: false},
-    {content: ColumnLayoutAlias, title: "ColumnLayout", render: false, active: false},
-    {content: ShoppingCartAlias, title: "ShoppingCart", render: false, active: false},
-  ]
-
-  const current = data.findIndex(x => x.title.toLowerCase() === startOn) < 0 ? 0 : data.findIndex(x => x.title.toLowerCase() === startOn)
-
-  const channelProps = {
-    data,
-    current,
-    transition: {
-      ease: 'cubicOut',
-      speed: 400
-    },
-    channelReady: (index) => {
-      channelProps.data = channelProps.data.map((x, i) => {
-        x.active = false;
-        if(i === index){
-          x.render = true
-          x.active = true
-        }
-        return x
-      })      
-    },
-    afterUpdate: () => {}
-  }   
+   //--------------------------- CHANNEL
+  const channel = createChannel({data: [
+    {content: HeaderAlias, title: "Header"},
+    {content: FooterAlias, title: "Footer"},
+    {content: ButtonAlias, title: "Button"},
+    {content: LoaderAlias, title: "Loader"},
+    {content: ProductCard, title: "ProductCard"},
+    {content: LinkAlias, title: "Link"},
+    {content: FormAlias, title: "Form"},
+    {content: SearchAlias, title: "Search"},
+    {content: HashWatchAlias, title: "HashWatch"},
+    {content: SVGAlias, title: "SVG"},
+    {content: ThreeSlotAlias, title: "ThreeSlot"},
+    {content: TwoSlotAlias, title: "TwoSlot"},
+    {content: ChannelAlias, title: "Channels"},
+    {content: GridLayoutAlias, title: "GridLayout"},
+    {content: ColumnLayoutAlias, title: "ColumnLayout"},
+    {content: ShoppingCartAlias, title: "ShoppingCart"},
+    {content: IndexDBAlias, title: "IndexDB"},
+  ]})   
 
   const gotoChannel = (index) => {
-    channelProps.current = index
+    channel.current = index
   }
+
+  const onChange = ({params}) => {       
+    const index = channel.data.findIndex(channel => {
+      return channel.title.toLowerCase() === params?.component
+    }) 
+    gotoChannel(index < 0 ? 0 : index)    
+  }  
+  //--------------------------- 
   
 </script>
+
+<HashWatch onChange={onChange}/>
+
 
 <Header>
   <h1>Svelte Component Library</h1>
@@ -77,13 +69,13 @@
 
 <ColumnLayout >
   <div slot='directory'  class='directory'>
-    {#each channelProps.data as { title, active }, i}
-      <Link active={active} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
+    {#each channel.data as { title }, i}
+      <Link active={channel.current === i} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
         {title}
       </Link>
     {/each}
   </div>
-  <Channels {...channelProps} />
+  <Channels {...channel} />
 </ColumnLayout>
 
 <Footer />

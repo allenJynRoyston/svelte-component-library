@@ -1,40 +1,30 @@
-<script>
-  import Channels from '../../../components/Channels/Channels'
-  import LibraryBlock from './__LibraryBlock'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock'
+<script lang='ts'>
+  import Channels from '../../../components/Channels/Channels.svelte'
+  import LibraryBlock from './__LibraryBlock.svelte'
+  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte'
+  import {createChannel} from '../../../js/utility'
 
-  const channelProps = {
+   //--------------------------- CHANNEL
+   const channel = createChannel({
+     current: 0,
      data: [
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-      {content: LoremBlock, render: false, active: false},
-    ],
-    current: 0,
-    transition: {
-      ease: 'cubicOut',
-      speed: 400
-    },
-    channelReady: (index) => {
-      channelProps.data = channelProps.data.map((x, i) => {
-        x.active = false;
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+    ]
+  })   
 
-        if(i === index){
-          x.render = true
-          x.active = true
-        }
-
-        return x
-      })      
-    },
-    afterUpdate: () => {}
-  }   
+  const gotoChannel = (index) => {
+    channel.current = index
+  }    
+  //---------------------------   
   
 
 </script>
@@ -42,7 +32,23 @@
 <h2>Channels</h2>
 <hr>
 <LibraryBlock section>
-  <div>
-    <Channels buttons {...channelProps} />
+  <div class='button-block'>
+    {#each channel.data as ch, index}
+      <button on:click={() => {gotoChannel(index)}}>{index}</button>    
+    {/each}
   </div>
+  <Channels {...channel} />
 </LibraryBlock>   
+
+<style lang='scss' scoped>
+  .button-block{
+    display: flex; 
+    gap: 5px    
+  }
+
+  button{
+    cursor: pointer;
+    color: black;
+  }
+
+</style>
