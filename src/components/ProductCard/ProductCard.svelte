@@ -1,7 +1,8 @@
 <script>
   export let style = null;
   export let imgsrc = 'https://picsum.photos/200/200';
-  export let title = 'Product'
+  export let name = 'Product'
+  export let description = 'Description'
   export let price = 'Price'
   export let infoText = 'More'
   export let purchaseText = 'Buy';
@@ -17,13 +18,15 @@
 <div class='product-card' {style}>
   <div class='image' on:click={() => {onInfoBtn(index)}} >
     <div class='price'>
-      <h2>{price}</h2>
+      <h2>{name}</h2>
+      <p>{description}</p>     
     </div>
-    <FullImage src={imgsrc} alt={title} />
+    <FullImage src={imgsrc} alt={name} />
   </div>
   <div class='description'>
-    <TwoSlot showRight>
-      <h3>{title}</h3>        
+    <TwoSlot showRight showLeft>
+      <h3>${price}</h3>   
+     
       <div class='buttons' slot='right'>
         <Button onClick={() => {onInfoBtn(index)}} >{infoText}</Button>
         <Button onClick={() => {onPurchaseBtn(index)}} >{purchaseText}</Button>

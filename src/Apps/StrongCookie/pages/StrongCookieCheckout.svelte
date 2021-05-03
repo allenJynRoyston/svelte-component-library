@@ -26,7 +26,7 @@
 
 </script>
 
-<TwoSlot showRight={channel.current === 1} >
+<TwoSlot showLeft showRight={channel.current === 1} >
   <h1>Checkout</h1>
   <div slot='right'>
     <button style="cursor: pointer" on:click={() => {window.history.back()}}>Back</button>

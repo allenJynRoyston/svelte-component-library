@@ -75,6 +75,7 @@
       </Link>
     {/each}
   </div>
+
   <Channels {...channel} />
 </ColumnLayout>
 

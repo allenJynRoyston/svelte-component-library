@@ -23,7 +23,7 @@ export class IndexDBStore {
     this.version = version;
   }
 
-  createTable(tableNames = []) {
+  createTable(tableNames = [], keyPath = "_id") {
     return new Promise((resolve, reject) => {
       const indexedDB =
         window.indexedDB ||
@@ -43,8 +43,8 @@ export class IndexDBStore {
         this.db = req.result;
         tableNames.forEach((name) => {
           this.db.createObjectStore(name, {
-            keyPath: "_id",
-            autoIncrement: true,
+            keyPath,
+            autoIncrement: keyPath === "_id",
           });
         });
       };

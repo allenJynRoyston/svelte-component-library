@@ -1,21 +1,19 @@
 <script lang='ts'>
-  import {onMount, setContext} from 'svelte';
-  import {IndexDBStore} from '../../js/index'
-
-  export let version = 1
-  export let name = 'database'
+  import {onMount} from 'svelte';
+  
+  export let indexdb:any;
   export let data:any = []
   export let tables:string[] = []
   export let clearOnRefresh = false;
-
-  const indexdb = new IndexDBStore(name, version);             
-  setContext('indexdb', indexdb)    
+  export let queryBy = "_id"
 
   export let onReady = () => {}
   export let onUpdate = () => {}
 
   let isReady = false;
-  
+
+  const keys = !!data ? Object.keys(data) : []
+
   //--------------------------- ONMOUNT
   onMount(async() => {     
     // setup required indexDB stuff   
@@ -33,24 +31,24 @@
   //---------------------------
   
   //--------------------------- 
-  const setupIndexDB = () => {
+  const setupIndexDB = () => {  
     return new Promise<void>(async(resolve) => {
-      await indexdb.createTable(tables);
+      await indexdb.createTable(tables, queryBy);
       resolve()
     })
   }
   //---------------------------  
 
+
   //---------------------------  
   const setupData = () => {   
-    const keys = !!data ? Object.keys(data) : []
 
     // delete previous database entries
-    if(clearOnRefresh){
-      keys.forEach(key => {
+    keys.forEach(key => {
+      if(clearOnRefresh){
         indexdb.clear(key)
-      })
-    }
+      }
+    })
 
     return new Promise<void>(async(resolved) => {
       let promises = [];

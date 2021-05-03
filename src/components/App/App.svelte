@@ -13,6 +13,7 @@
 
   //--------------------------- VARS  
   let view = null;
+  let ele;
   //---------------------------  
 
   //--------------------------- ONMOUNT
@@ -22,12 +23,13 @@
   //--------------------------- FUNCTIONS
   const hashChange = ({hash, params}) => {
     view = hash || 'library';
+    // ele && ele.scrollTo(0, 0)    
   }
   //---------------------------
 
 </script>
 
-<div id='app-wrapper'>
+<div id='app-wrapper' bind:this={ele}>
   <HashWatch onChange={hashChange} />
   <div class='app-content'>
     {#if view === 'test-app'}      
@@ -62,7 +64,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x: hidden;
+    overflow: hidden;
+    
 
     .app-content{
       width: 100%;

@@ -51,7 +51,6 @@
           kp = returnKeyPair([strWithParams[1]])
         }
       }
-
       onChange && onChange({hash: strWithParams[0], params: {...kp}})
     }
   }  

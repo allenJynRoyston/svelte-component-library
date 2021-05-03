@@ -5,7 +5,7 @@
   export let items = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
 </script>
 
-<ul class='grid-layout'  >
+<ul class='grid-layout' >
   {#each items as {component, row, column, onClick, props}, index}
     <li class='grid-item'         
         class:row-two={row && row === 2} 
@@ -22,6 +22,8 @@
  @import "../../scss/src/_media-queries.scss";
 
 .grid-layout {
+  padding: 0;
+  margin: 0;
 	// Flexbox Default/Fallback - does not produce 100% matching result 
 	display: flex;
 	flex-wrap: wrap;

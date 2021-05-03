@@ -1,5 +1,6 @@
 <script lang='ts'>
-  import {onMount} from 'svelte'  
+  import {onMount, tick} from 'svelte'  
+  import HashWatch from '../URLWatcher/HashWatch.svelte'
   import Loader from '../Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -9,17 +10,21 @@
   export let current;
   export let afterUpdate = null;
   export let channelReady = null;
+  export let hideoverflow = false;
+  export let nopadding = false;
 
   export let duration = 400;
   export let easing = 'cubicOut'
 
   export let buttons = false;
   export let animate = false;
+  
 
   let ready = false
   let xpos;
   let currentChannel = current;
   let busy = false
+  let ele; 
 
   const createSizeTables = () => {
     const table = []
@@ -30,7 +35,7 @@
     return table
   }
 
-  onMount(() => {
+  onMount(async() => {
     const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
@@ -39,7 +44,7 @@
     });   
 
     ready = true
-    channelReady && channelReady(currentChannel)  
+    channelReady && channelReady(currentChannel)    
   })
 
   const goto = async (channel) => {
@@ -47,22 +52,6 @@
       busy = true;
       currentChannel = channel      
       draw()       
-    }
-  }
-
-  const next = async() => {
-    if(!busy && currentChannel < data.length - 1){
-      busy = true;
-      currentChannel = currentChannel + 1
-      draw()
-    }    
-  }
-
-  const prev = async() => {
-    if(!busy && currentChannel > 0){
-      busy = true;    
-      currentChannel = currentChannel - 1
-      draw()
     }
   }
 
@@ -75,7 +64,7 @@
     afterUpdate && afterUpdate()    
     busy = false
   }
-
+  
   $: xPostiion = () => {    
     return `transform: translateX(${$xpos}%); `
   }
@@ -93,18 +82,20 @@
        goto(current)
      }     
   }  
+
+  
   
 </script>
 
 
-<div class='channels' class:animate={animate}>
+<div class='channels' class:animate={animate} bind:this={ele}>
   {#if ready}
     <div class='channels-container' style={`${channelsStyle()};${xPostiion()}`}>
-      {#each data as {content, render, active, props}}
+      {#each data as {content, render, active}}
         <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-          <div class='channel__inner'>
+          <div class='channel__inner' class:hideoverflow={hideoverflow} class:nopadding={nopadding}>
             {#if render}
-              <svelte:component this={content} {...props} />
+              <svelte:component this={content}  />
             {:else}
               <Loader show />    
             {/if}
@@ -143,7 +134,23 @@
     }     
     
     &__inner{    
-      width: 100%;
+      width: calc(100% - 20px);
+      height: calc(100vh - 20px);
+      padding: 10px;      
+      overflow-x: hidden;
+      overflow-y: auto;
+      
+      &.nopadding{
+        width: 100%;
+        height: 100%;
+        padding: 0;
+      }
+      
+      &.hideoverflow{        
+        overflow: hidden;
+      }
+
     }
   }
 </style>
+

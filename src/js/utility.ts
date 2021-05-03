@@ -48,27 +48,27 @@ export const createChannel = ({
 };
 
 type CreateDBType = {
-  version?: number;
-  name: string;
+  indexdb: any;
   clearOnRefresh?: boolean;
   tables?: string[];
   data?: any;
+  queryBy?: string | string[];
   onReady?: () => void;
   onUpdate?: () => void;
 };
 
 export const createDB = ({
-  version = 1,
-  name,
+  indexdb,
   clearOnRefresh = false,
   tables = [],
   data = {},
+  queryBy = "_id",
   onReady = () => {},
   onUpdate = () => {},
 }: CreateDBType) => {
   return {
-    version,
-    name,
+    indexdb,
+    queryBy,
     clearOnRefresh,
     tables,
     data,

@@ -42,7 +42,6 @@
 
     .content{      
       width: 100%;
-      padding: 10px;
       overflow: hidden;
     }
   }

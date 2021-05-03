@@ -1,6 +1,8 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {tick} from 'svelte'
+  import {setContext} from 'svelte'
+  import {IndexDBStore} from '../../js/index'
+
   import Header from '../../components/Header/Header.svelte'
   import Footer from '../../components/Footer/Footer.svelte'    
   import Link from '../../components/Link/Link.svelte'
@@ -14,7 +16,11 @@
   import Checkout from './pages/StrongCookieCheckout.svelte'
   import IDB from '../../components/Utility/IndexDBSetup.svelte'
 
-  import { createChannel, createDB } from '../../js/utility'
+  import { createChannel, createDB } from '../../js/utility'  
+  //--------------------------- 
+
+  //--------------------------- 
+  let ready = false;
   //--------------------------- 
 
   //--------------------------- CHANNEL
@@ -39,32 +45,41 @@
   }
   //---------------------------
 
-  //--------------------------- DB
+  //--------------------------- DB (must be set at root of app)
+  // name/version
+  const indexdb = new IndexDBStore('strongcookie', 1); 
+  // set context so it can be referenced in children components
+  setContext('indexdb', indexdb)
+  
   const db = createDB({
-    version: 1,
-    name: 'strongcookie', 
+    indexdb,
     clearOnRefresh: true,
     tables: ['products'], 
     data: {
       products: [
-        {name: 'Product 1', price: 1, description: 'foo'},
-        {name: 'Product 2', price: 2, description: 'bar'},
-        {name: 'Product 3', price: 3, description: 'foobar'},
-        {name: 'Product 4', price: 4, description: 'extrabar'},
+        {_id: 0, name: 'Strong Cookie', price: 1, description: 'Strength level:  high'},
+        {_id: 1, name: 'Stronger Cookie', price: 2, description: 'Strength level:  dude'},
+        {_id: 2, name: 'Strongest Cookie', price: 3, description: 'Strength level:  whoa'},
       ]
     }, 
+    queryBy: '_id'
   })
+
+  const dbReady = async() => {
+    ready = true;
+  }
   //---------------------------
 
 </script>
 
-<IDB {...db} />
+<IDB {...db} onReady={dbReady} />
 <HashWatch {onChange} />
-
+<!-- 
 <Header>
   <h1>Strongcookie.com</h1>
 </Header>
 
+<Footer /> -->
 <ColumnLayout >
   <div class='directory' slot='directory'>
     {#each channel.data as { title }, i}
@@ -73,10 +88,12 @@
       </Link>
     {/each}
   </div>
-  <Channels {...channel} />
+  {#if ready}
+    <Channels {...channel} />
+  {/if}
 </ColumnLayout>
 
-<Footer />
+
 
 
 <style lang='scss' scoped>
