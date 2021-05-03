@@ -3,7 +3,7 @@
   import LibraryBlock from './__LibraryBlock'
 </script>
 
-<h1>Header</h1>
+<h2>Header</h2>
 <hr>
 <LibraryBlock section >
   <Header >

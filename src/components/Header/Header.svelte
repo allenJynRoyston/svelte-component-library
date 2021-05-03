@@ -5,8 +5,9 @@
 </nav>
 
 
-<style>
+<style lang='scss' scoped>
   nav{
+
     width: calc(100% - 40px);
     padding: 20px;
 
@@ -15,8 +16,6 @@
     justify-content: center;    
 
     background: black;
-    color: white
-
+    color: white;  
   }
-
 </style>

@@ -51,7 +51,10 @@
   <Link href='#strong-cookie' active={view === 'strong-cookie'} onClick={() => {view = 'strong-cookie'}}>Cookie</Link>
 </div>
 
-<style lang='scss' scoped>
+
+<style lang='scss'>
+  @import '../../scss/global.scss';
+
   #app-wrapper{
     width: 100vw;
     height: 100vh;
