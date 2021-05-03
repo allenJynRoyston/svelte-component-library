@@ -19,7 +19,7 @@
   </ul>
 
 <style lang='scss'>
- @import "../../scss/global.scss";
+ @import "../../scss/src/_media-queries.scss";
 
 .grid-layout {
 	// Flexbox Default/Fallback - does not produce 100% matching result 
@@ -31,7 +31,7 @@
 	grid-gap: 10px;
 	grid-auto-rows: minmax(20vh, 200px);
 
-  @include mq(min, $tablet){
+  @include desktop-and-up{
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }   
 }
@@ -59,7 +59,7 @@
 			width: initial;
 			min-width: initial;
 
-      @include mq(min, $tablet){
+      @include desktop-and-up{
         &.column-two{
           grid-column: span 2;
         }
