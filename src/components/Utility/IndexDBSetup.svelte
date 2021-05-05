@@ -5,7 +5,7 @@
   export let data:any = []
   export let tables:string[] = []
   export let clearOnRefresh = false;
-  export let queryBy = "_id"
+  export let queryBy:string[] | string = "_id"
 
   export let onReady = () => {}
   export let onUpdate = () => {}

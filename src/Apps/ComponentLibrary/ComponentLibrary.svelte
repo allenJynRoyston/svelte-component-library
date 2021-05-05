@@ -1,10 +1,12 @@
 <script lang='ts'>
+  import {setContext} from 'svelte';
   import Header from '../../components/Header/Header.svelte'
   import Footer from '../../components/Footer/Footer.svelte'  
   import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'
   import Channels from '../../components/Channels/Channels.svelte'
   import Link from '../../components/Link/Link.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
+  import SnackBar from '../../components/Snackbar/Snackbar.svelte'
   import { createChannel } from '../../js/utility'
 
   import ButtonAlias from './components/_button.svelte'
@@ -24,7 +26,8 @@
   import ColumnLayoutAlias from './components/_columnLayout.svelte'
   import ShoppingCartAlias from './components/_shoppingCart.svelte'
   import IndexDBAlias from './components/_idb.svelte'
-  
+  import SnackbarAlias from './components/_snackbar.svelte'
+
    //--------------------------- CHANNEL
   const channel = createChannel({data: [
     {content: HeaderAlias, title: "Header"},
@@ -43,6 +46,7 @@
     {content: GridLayoutAlias, title: "GridLayout"},
     {content: ColumnLayoutAlias, title: "ColumnLayout"},
     {content: ShoppingCartAlias, title: "ShoppingCart"},
+    {content: SnackbarAlias, title: "Snackbar"},
     {content: IndexDBAlias, title: "IndexDB"},
   ]})   
 
@@ -57,10 +61,18 @@
     gotoChannel(index < 0 ? 0 : index)    
   }  
   //--------------------------- 
+
+  //---------------------------  SNACKBAR CODE
+  let snack;
+  setContext('addSnack', (newSnack) => {
+    snack = newSnack
+  })
+  //--------------------------- 
   
 </script>
 
 <HashWatch onChange={onChange}/>
+<SnackBar {snack} />
 
 
 <Header>
@@ -80,6 +92,7 @@
 </ColumnLayout>
 
 <Footer />
+
 
 <style lang='scss' scoped>
   .directory {

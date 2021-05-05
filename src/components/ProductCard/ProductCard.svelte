@@ -1,6 +1,6 @@
 <script>
   export let style = null;
-  export let imgsrc = 'https://picsum.photos/200/200';
+  export let imgSrc = 'https://picsum.photos/200/200';
   export let name = 'Product'
   export let description = 'Description'
   export let price = 'Price'
@@ -21,7 +21,7 @@
       <h2>{name}</h2>
       <p>{description}</p>     
     </div>
-    <FullImage src={imgsrc} alt={name} />
+    <FullImage src={imgSrc} alt={name} />
   </div>
   <div class='description'>
     <TwoSlot showRight showLeft>

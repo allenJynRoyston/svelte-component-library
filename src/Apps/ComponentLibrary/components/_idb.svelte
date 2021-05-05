@@ -3,9 +3,20 @@
   import LibraryBlock from './__LibraryBlock.svelte'
   import {createDB} from '../../../js/utility'
 
-  const db = createDB({
-    version: 1,
-    name: 'example', 
+  import {setContext} from 'svelte'
+  import {IndexDBStore} from '../../../js/index'
+
+  const db = new IndexDBStore('example', 1); 
+  // set context so it can be referenced in children components
+  setContext('indexdb', db)
+
+  let allUsers = [];
+  let allPlaces = [];
+
+  let query;
+
+  const idb = createDB({
+    indexdb: db,
     clearOnRefresh: true,
     tables: ['user', 'places'], 
     data: {
@@ -18,16 +29,40 @@
         {name: 'Area 1', weather: 'warm'},
         {name: 'Area 2', weather: 'cold'},
         {name: 'Area 3', weather: 'chilly'},
-      ]      
+      ]  
     }, 
+    queryBy: 'name'
   })  
+
+  const onReady = async() => {
+    allUsers = await db.getAll('user');
+    allPlaces = await db.getAll('places');
+
+    query = await db.get('user', 'Person 2')
+  }
 
 </script>
 
-<IDB {...db} />
+<IDB {...idb} {onReady} />
 
 <h2>IndexDB</h2>
 <hr>
-<LibraryBlock section >
+<LibraryBlock section code >
   <p>Check application/database</p>
+
+  <div slot='codeblock'>
+    <h3>Results:</h3>
+    <h5>Users:</h5>
+    {JSON.stringify(allUsers, null, 4)}     
+    <hr> 
+
+    <h5>Places:</h5>
+    {JSON.stringify(allPlaces, null, 4)}     
+    <hr>   
+    
+    <h5>Query:</h5>
+    {JSON.stringify(query, null, 4)}     
+    <hr>       
+  </div>
+
 </LibraryBlock>

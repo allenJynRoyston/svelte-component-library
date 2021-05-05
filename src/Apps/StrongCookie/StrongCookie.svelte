@@ -4,12 +4,12 @@
   import {IndexDBStore} from '../../js/index'
 
   import Header from '../../components/Header/Header.svelte'
-  import Footer from '../../components/Footer/Footer.svelte'    
   import Link from '../../components/Link/Link.svelte'
   import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'  
   import Channels from '../../components/Channels/Channels.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
-  
+  import SnackBar from '../../components/Snackbar/Snackbar.svelte'
+
   import Home from './pages/StrongCookieHome.svelte'
   import About from './pages/StrongCookieAbout.svelte'
   import Products from './pages/StrongCookieProducts.svelte'
@@ -57,12 +57,14 @@
     tables: ['products'], 
     data: {
       products: [
-        {_id: 0, name: 'Strong Cookie', price: 1, description: 'Strength level:  high'},
-        {_id: 1, name: 'Stronger Cookie', price: 2, description: 'Strength level:  dude'},
-        {_id: 2, name: 'Strongest Cookie', price: 3, description: 'Strength level:  whoa'},
+        {_id: 0, name: 'Strong Cookie', urlName: 'strong-cookie', imgSrc: 'https://picsum.photos/id/2/400/400', price: 1, description: 'Strength level:  high'},
+        {_id: 1, name: 'Stronger Cookie', urlName: 'stronger-cookie',  imgSrc: 'https://picsum.photos/id/541/400/400', price: 2, description: 'Strength level:  dude'},
+        {_id: 2, name: 'Strongest Cookie', urlName: 'strongest-cookie',  imgSrc: 'https://picsum.photos/id/622/400/400', price: 3, description: 'Strength level:  whoa'},
+        {_id: 3, name: 'Smart Cookie', urlName: 'smart-cookie',  imgSrc: 'https://picsum.photos/id/622/400/400', price: 4, description: 'Smart level:  !!'},
+        {_id: 4, name: 'Smarter Cookie', urlName: 'smarter-cookie',  imgSrc: 'https://picsum.photos/id/622/400/400', price: 4, description: 'Smart level:  !!!'},
       ]
     }, 
-    queryBy: '_id'
+    queryBy: 'urlName'
   })
 
   const dbReady = async() => {
@@ -70,16 +72,23 @@
   }
   //---------------------------
 
+  //---------------------------  SNACKBAR CODE
+  let snack;
+  setContext('addSnack', (newSnack) => {
+    snack = newSnack
+  })
+  //--------------------------- 
+
 </script>
 
 <IDB {...db} onReady={dbReady} />
 <HashWatch {onChange} />
-<!-- 
+<SnackBar {snack} />
+
 <Header>
   <h1>Strongcookie.com</h1>
 </Header>
 
-<Footer /> -->
 <ColumnLayout >
   <div class='directory' slot='directory'>
     {#each channel.data as { title }, i}
@@ -89,10 +98,9 @@
     {/each}
   </div>
   {#if ready}
-    <Channels {...channel} />
+    <Channels {...channel} backtotop />
   {/if}
 </ColumnLayout>
-
 
 
 

@@ -1,5 +1,4 @@
 <script lang='ts'>
-  import { onMount, getContext } from 'svelte';
   import { createChannel } from '../../../js/utility'
 
   import Channels from '../../../components/Channels/Channels.svelte'  
@@ -9,7 +8,6 @@
   import Products from '../components/Products.svelte'
   import ProductDetails from '../components/ProductDetails.svelte'
   //--------------------------- 
-
 
   //--------------------------- CHANNEL
   const channel = createChannel({
@@ -42,5 +40,6 @@
 </TwoSlot>
 <hr>
 
-<!-- <Channels {...channel} nopadding /> -->
+
+<Channels {...channel} embedded />
 

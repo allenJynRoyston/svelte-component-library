@@ -1,4 +1,5 @@
 <script lang='ts'>
+  import ProductCard from '../../../components/ProductCard/ProductCard.svelte'
   import HashWatch from '../../../components/URLWatcher/HashWatch.svelte'
   import {getContext} from 'svelte';
 
@@ -9,7 +10,8 @@
   const onChange = async({params}) => {
     if(params?.product){
       productId = params?.product
-      product = await indexdb.get('products', 0)
+      product = await indexdb.get('products', productId)
+      console.log(product)
     }
   }
 </script>
@@ -18,7 +20,7 @@
 
 {#if !!product && productId}
   <div class='product-details'>
-    <h3>Product name: <strong>Item {JSON.stringify(product)}</strong></h3>    
+    <ProductCard {...product} />
   </div>
 {:else}
   <p>Invalid product id</p>
@@ -26,5 +28,7 @@
 
 
 <style lang='scss' scoped>
-
+  .product-details{
+    height: 400px
+  }
 </style>

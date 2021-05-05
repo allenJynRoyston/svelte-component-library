@@ -1,11 +1,19 @@
-<script>
-  import LoremBlock from '../LoremBlock/LoremBlock'
+<script lang='ts'>
+  import LoremBlock from '../LoremBlock/LoremBlock.svelte'
 
-  export let outline = false;
-  export let items = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
+  export let size:number = 150;
+  export let gap:number = 10;
+
+  export let outline:boolean = false;
+  export let items:any = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
+
+  const style = () => {    
+    return `grid-auto-rows: ${size}px; grid-template-columns: repeat(auto-fill, minmax(${size}px, 1fr)); grid-gap: ${gap}px`
+  }
+
 </script>
 
-<ul class='grid-layout' >
+<ul class='grid-layout' style={style()}>
   {#each items as {component, row, column, onClick, props}, index}
     <li class='grid-item'         
         class:row-two={row && row === 2} 
@@ -27,15 +35,8 @@
 	// Flexbox Default/Fallback - does not produce 100% matching result 
 	display: flex;
 	flex-wrap: wrap;
-	
 	// Use Grid if browser supports it
 	display: grid;
-	grid-gap: 10px;
-	grid-auto-rows: minmax(20vh, 200px);
-
-  @include desktop-and-up{
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }   
 }
 
 .grid-item{

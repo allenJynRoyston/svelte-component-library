@@ -65,7 +65,6 @@
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    
 
     .app-content{
       width: 100%;
@@ -76,13 +75,18 @@
   #app-selector{
     position: fixed;
     bottom: 10px;
-    right: 25px;
+    left: 10px;
     padding: 10px;
     background: black;
     border-radius: 10px;
     color: white;
     display: flex;
     flex-direction: column;
+    opacity: 0.1;
+    transition: 0.3s;
+    &:hover{
+      opacity: 1;
+    }
   }
 </style>
 

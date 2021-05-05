@@ -10,11 +10,11 @@
   export let current;
   export let afterUpdate = null;
   export let channelReady = null;
-  export let hideoverflow = false;
-  export let nopadding = false;
 
   export let duration = 400;
   export let easing = 'cubicOut'
+  export let embedded = false;
+  export let backtotop = false;
 
   export let buttons = false;
   export let animate = false;
@@ -25,6 +25,7 @@
   let currentChannel = current;
   let busy = false
   let ele; 
+  let rootEle;
 
   const createSizeTables = () => {
     const table = []
@@ -64,6 +65,15 @@
     afterUpdate && afterUpdate()    
     busy = false
   }
+
+  const resetScrollTop = () => {
+    if(rootEle){
+      const eleNodes = rootEle.getElementsByClassName('channel__inner')
+      for(ele of eleNodes){
+        ele.scrollTop = 0
+      }
+    }
+  }
   
   $: xPostiion = () => {    
     return `transform: translateX(${$xpos}%); `
@@ -77,45 +87,62 @@
     return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
   }  
 
-  $: {
-     if(current != currentChannel){
-       goto(current)
-     }     
+  $: innerStyle = () => {
+    if(ele){
+      const top = ele.getBoundingClientRect().top
+      return `height: calc(100vh - ${top}px - ${embedded ? 10 : 20}px);`
+    }
+  }  
+
+  $: {      
+    backtotop && resetScrollTop()
+    current != currentChannel && goto(current)     
   }  
 
   
   
 </script>
 
-
-<div class='channels' class:animate={animate} bind:this={ele}>
-  {#if ready}
-    <div class='channels-container' style={`${channelsStyle()};${xPostiion()}`}>
-      {#each data as {content, render, active}}
-        <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-          <div class='channel__inner' class:hideoverflow={hideoverflow} class:nopadding={nopadding}>
-            {#if render}
-              <svelte:component this={content}  />
-            {:else}
-              <Loader show />    
-            {/if}
-          </div>     
-        </div>
-      {/each}
-    </div> 
-  {:else}
-    <p>Loading...</p>
-  {/if}
+<div class:embedded={embedded}>
+  <div class='channels' class:animate={animate} >
+    {#if ready}
+      <div class='channels-container' bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
+        {#each data as {content, render, active}}
+          <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
+            <div class='channel__inner' bind:this={ele} class:embedded={embedded} style={innerStyle()} >
+              {#if render}
+                <svelte:component this={content} />
+              {:else}
+                <Loader show />    
+              {/if}
+            </div>     
+          </div>
+        {/each}
+      </div> 
+    {:else}
+      <p>Loading...</p>
+    {/if}
+  </div>
 </div>
 
-
 <style lang='scss' scoped>
+  @function double($val){
+    @return $val * 2
+  }
+
+  :root{
+    --channels-padding: 10px;
+  }
+
+  .embedded{
+    overflow: hidden;
+  }
+
   .channels{
     overflow: hidden;
   }
 
   .channels-container{
-    position: relative;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -123,6 +150,7 @@
   }
 
   .channel{
+    position: relative;
     width: 100%;   
     
     &.inactive{
@@ -133,23 +161,16 @@
       opacity: 1
     }     
     
-    &__inner{    
-      width: calc(100% - 20px);
-      height: calc(100vh - 20px);
-      padding: 10px;      
+    &__inner{   
+      width: calc(100% - double(----channels-padding));      
+      padding: var(--channels-padding);
       overflow-x: hidden;
       overflow-y: auto;
-      
-      &.nopadding{
-        width: 100%;
-        height: 100%;
-        padding: 0;
-      }
-      
-      &.hideoverflow{        
-        overflow: hidden;
-      }
 
+      &.embedded{
+        width: calc(100% - var(--channels-padding));
+        padding: 0 var(--channels-padding) 0 0;
+      }
     }
   }
 </style>
