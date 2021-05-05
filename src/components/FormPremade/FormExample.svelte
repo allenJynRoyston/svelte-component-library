@@ -1,5 +1,5 @@
-<script>
-  import { Form } from '../index'
+<script>  
+  import Form from '../Form/Form.svelte'
 
   export let onSubmit = (e) => {
     isBusy = true
@@ -106,7 +106,7 @@
       renderAs: 'textarea', 
       label: 'Description',
       key: 'description',      
-      value: '<h1>blah blah blah blah</h1>',
+      value: 'blah blah blah blah',
       required: true,
       contentEdit: true,
       minLength: 5,
@@ -167,7 +167,7 @@
       key: 'fileinput',      
       value: 2,
       accept: 'image/png, image/jpeg',
-      required: true
+      required: false
     },      
     {
       renderAs: 'selectmulti', 
@@ -231,5 +231,6 @@
 
 </script>
 
-
-<Form {...props} {isBusy} />
+<div style='background: white; overflow: hidden; border-radius: 10px'>
+  <Form {...props} {isBusy} />
+</div>

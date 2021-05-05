@@ -1,7 +1,8 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext, tick} from 'svelte'
-  import {Comment, CommentFetcher} from '../index'
+  import {getContext} from 'svelte'  
+  import Comment from './Comment/Comment.svelte'
+  import CommentFetcher from '../Fetcher/CommentFetcher.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let commentIds;

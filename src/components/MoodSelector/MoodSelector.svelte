@@ -1,7 +1,7 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {UserFetcher, Button} from '../index'
-
+  import UserFetcher from '../Fetcher/UserFetcher.svelte'
+  import Button from '../Button/Button.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let userId;

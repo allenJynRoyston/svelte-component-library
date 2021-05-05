@@ -80,7 +80,7 @@ describe("InputTime component", () => {
     test("... max time works correctly", async () => {
       let e = ele.container.querySelector("#time").parentElement;
       let label = "Time";
-      await changeInputValue({ label, value: "22:01" });
+      await changeInputValue({ label, value: "22:02" });
       expect(e).toHaveClass("invalid");
       await changeInputValue({ label, value: "22:00" });
       expect(e).toHaveClass("valid");

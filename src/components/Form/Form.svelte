@@ -1,11 +1,20 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
   import { onMount, onDestroy, tick } from 'svelte';  
-  import {
-    Button, Input, InputDate, Textarea, FileInput, SVG,
-    InputTime, InputCheckbox, Select, SelectMulti, Rating,
-    FormErrors, FormPreview,     
-  } from '../index'
+
+  import Button from '../Button/Button.svelte'
+  import Input from '../FormComponents/Input/Input.svelte'
+  import InputDate from '../FormComponents/InputDate/InputDate.svelte'
+  import Textarea from '../FormComponents/Textarea/Textarea.svelte'
+  import FileInput from '../FormComponents/FileInput/FileInput.svelte'
+  import SVG from '../SVG/SVG.svelte'
+  import InputTime from '../FormComponents/InputTime/InputTime.svelte'
+  import Select from '../FormComponents/Select/Select.svelte'
+  import SelectMulti from '../FormComponents/SelectMulti/SelectMulti.svelte'
+  import Rating from '../FormComponents/Rating/Rating.svelte'
+  import InputCheckbox from '../FormComponents/InputCheckbox/InputCheckbox.svelte'
+  import FormErrors from './FormErrors/FormErrors.svelte'
+  import FormPreview from './FormPreview/FormPreview.svelte'
   //---------------------------
 
   //--------------------------- VARS
@@ -129,7 +138,8 @@
         if(!!savedData){                      
           completedFormData = JSON.parse(savedData)                              
           
-          for (const [key, pair] of Object.entries(completedFormData)) {                   
+          for (const [key, pair] of Object.entries(completedFormData)) {      
+            /* @ts-ignore */             
             formData.find(x => x.key === key).value = pair.value
           }
 
@@ -144,9 +154,7 @@
       hasError = true
       location.reload()
     }
-
-
-
+    
     isReady = true; 
   }); 
   //--------------------------- 
@@ -231,9 +239,11 @@
   //---------------------------  
 
 
-  //--------------------------- $
+  //--------------------------- $  
+  /* @ts-ignore */
   $: disabled = Object.entries(completedFormData).filter(x => {return !x[1].isValid}).length > 0 || isBusy
 
+  /* @ts-ignore */
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
 
   const formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
@@ -244,7 +254,7 @@
 {#if isReady}
   <form class='form-container' class:isBusy={isBusy} data-testid='form-container' style={formStyling} autocomplete="on">
 
-    <div class='form-container__overlay' class:show={isBusy}>
+    <div class='form-container__overlay' data-testid='busy' class:show={isBusy}>
       <SVG icon='save' />
     </div>
 
@@ -297,7 +307,7 @@
         {#if showButton}
           <div class='button-container'>
             <slot name='options' />
-            <Button onClick={onSubmitHandler} {disabled} style={'padding: 5px 10px'}>
+            <Button onClick={!disabled && onSubmitHandler} {disabled} dataTestid={'submit-btn'} style={'padding: 5px 10px'}>
               <slot>
                 {isBusy ? 'Saving...' : 'Save'}
               </slot>
@@ -308,7 +318,11 @@
         {/if}
       </section>
     {:else}
-      <p>No form data</p>
+      <div data-testid='empty-form'>
+        <slot name='empty'>
+          <p>No form data</p>
+        </slot>
+      </div>
     {/if}
   </form>
 {:else}
@@ -318,12 +332,11 @@
 
 <style lang="scss" scoped>
   .form-container {    
-    border: 1px solid black;
-    border-radius: 5px;   
     display: flex;
     flex-wrap: wrap;
     opacity: 1;
     position: relative;
+    
 
     section{
       width: 100%

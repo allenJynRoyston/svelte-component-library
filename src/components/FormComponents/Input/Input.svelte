@@ -32,6 +32,10 @@
   /**
    * 
   */  
+  export let noBottomMargin = false
+  /**
+   * 
+  */  
   export let key = null
   /**
    * 
@@ -73,7 +77,7 @@
   let showPassword = false
 
   //--------------------------- ONMOUNT
-	onMount(() => {
+	onMount(() => {  
     updateParent(value)
   }); 
   //---------------------------   
@@ -103,7 +107,7 @@
 
 </script>
 
-<div class='input-container' data-testid='input-container' class:invalid={hasSubmitted && errors.length > 0} class:valid={errors.length === 0}>
+<div class='input-container' data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -130,6 +134,10 @@
   .input-container {    
     margin-bottom: 10px;
     width: 100%;
+
+    &.no-bottom-margin{
+      margin-bottom: 0px;
+    }
     
     label{
       font-size: 10px;

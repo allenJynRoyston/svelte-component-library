@@ -1,14 +1,21 @@
 <nav>
-  <p>Hello World</p>
+  <slot>
+    <h1>Svelte Component Library</h1>
+  </slot>
 </nav>
 
 
-<style>
+<style lang='scss' scoped>
   nav{
-    width: 100%;
-    height: 100px;
-    background: black;
-    color: white
-  }
 
+    width: calc(100% - 40px);
+    padding: 20px;
+
+    display: flex;
+    align-content: center;
+    justify-content: center;    
+
+    background: black;
+    color: white;  
+  }
 </style>

@@ -1,6 +1,7 @@
 <script lang='ts'>
-  //--------------------------- IMPORTS  
-  import { UserFetcher } from '../index'
+  //--------------------------- IMPORTS    
+  import Link from '../Link/Link.svelte'
+  import UserFetcher from '../Fetcher/UserFetcher.svelte'
 
   //---------------------------
 
@@ -38,8 +39,8 @@
     }
   }
 
-  const fetchUser = (u) => {
-    user = u
+  const fetchUser = (data) => {
+    user = data
   }
   //---------------------------  
 </script>
@@ -48,10 +49,12 @@
 
 {#if user}
   <div class='userportrait'  {style}>
-    <img class='portrait' class:rounded={rounded} src={getPortrait()} alt="emotion" on:click={onClick} />
-    {#if currentEmotion}
-      <img class='emotion' class:rounded={rounded} src={getCurrentEmotion(currentEmotion)} alt="emotion" on:click={onClick} />
-    {/if}
+    <Link href={`#/feed/${user.username}`}>
+      <img class='portrait' class:rounded={rounded} src={getPortrait()} alt="emotion" on:click={onClick} />
+      {#if currentEmotion}
+        <img class='emotion' class:rounded={rounded} src={getCurrentEmotion(currentEmotion)} alt="emotion" on:click={onClick} />
+      {/if}
+    </Link>
   </div>
 {/if}
 
