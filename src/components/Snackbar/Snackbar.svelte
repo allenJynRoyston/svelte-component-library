@@ -2,6 +2,7 @@
 //--------------------------- IMPORTS  
 import { onDestroy } from 'svelte';
 import SVG from '../SVG/SVG.svelte'
+import Link from '../Link/Link.svelte'
 
 export let onComplete = () => {};
 export let snack = null;
@@ -109,7 +110,7 @@ const returnIcon = (type) => {
 
 //---------------------------
 $: {
-  snack !== currentSnack && newSnack()
+    snack !== currentSnack && newSnack()
 }
 //---------------------------
 
@@ -118,14 +119,21 @@ $: {
 <div class='snackbar'>
   {#each snacks as snack (snack.id)}
     <div class={`snack ${snack.type}`} on:mouseenter={() => {cancelTimer(snack.id)}} class:animateIn={snack.animateIn} class:animateOut={!snack.animateIn} >
-      
+
       <div class='icon'>
         <SVG icon={returnIcon(snack.type)} fill={returnIconColor(snack.type)} />
       </div>
 
-      <div class='message'>
-        {snack.message}
+      
+      <div class='content' class:content-padding={snack?.component}>
+        {#if snack?.message}
+          {snack.message}
+        {/if}
+        {#if snack?.component}
+          <svelte:component this={snack?.component} {...snack?.props} />
+        {/if}
       </div>
+    
 
       <div class='close-btn' on:click={() => {animateOutSnack(snack, true)}}>
         <SVG icon={snack?.duration ? 'unlocked' : 'cross' } fill='white' size={12} />
@@ -194,14 +202,19 @@ $: {
       transform: translateX(0);
     }
 
+
     .icon{
       padding-right: 10px;
     }
 
-    .message{
+    .content{
       flex: 1 1 auto;
       text-align: left;
       font-weight: bold;
+
+      &.content-padding{
+        padding: 10px 0;
+      }
     }
 
     .close-btn{

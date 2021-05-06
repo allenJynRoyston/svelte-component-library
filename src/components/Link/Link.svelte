@@ -4,6 +4,7 @@
   export let href: string
   export let active = false;
   export let onClick = null;
+  export let text = null;
   //---------------------------
 
   //--------------------------- VARS    
@@ -21,7 +22,7 @@
 </script>
 
 <a {href} class:active={active} on:click={() => {onClick && onClick()}}>
-  <slot>Link</slot>
+  <slot>{text || 'Link'}</slot>
 </a>
 
 

@@ -35,8 +35,6 @@
   } 
 
 
-
-
 </script>
 
 <div class='products'>
