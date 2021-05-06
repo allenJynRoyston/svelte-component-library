@@ -24,6 +24,11 @@
     }}, type})
   }  
 
+  const closeOnClick = (type) => {
+    addSnack({closeOnClick: true, message: 'Close on click', type})
+  }  
+
+
 </script>
 
 <h2>Snackbar</h2>
@@ -33,17 +38,17 @@
 <LibraryBlock section>
   <h3>With Timer</h3>
   <hr>
-  <button on:click={() => {addDurationSnack('success')}}>Success</button>
   <button on:click={() => {addDurationSnack('primary')}}>Primary</button>
+  <button on:click={() => {addDurationSnack('success')}}>Success</button>
   <button on:click={() => {addDurationSnack('warning')}}>Warning</button>
   <button on:click={() => {addDurationSnack('error')}}>Error</button>
 </LibraryBlock>
 
 <LibraryBlock section>
   <h3>No Timer</h3>
-  <hr>  
-  <button on:click={() => {addStaticSnack('success')}}>Success (static)</button>
+  <hr>    
   <button on:click={() => {addStaticSnack('primary')}}>Primary (static)</button>
+  <button on:click={() => {addStaticSnack('success')}}>Success (static)</button>  
   <button on:click={() => {addStaticSnack('warning')}}>Warning (static)</button>
   <button on:click={() => {addStaticSnack('error')}}>Error (static)</button>  
 </LibraryBlock>
@@ -51,8 +56,8 @@
 <LibraryBlock section>
   <h3>With Components (Link)</h3>
   <hr>
-  <button on:click={() => {withLink('success')}}>Success</button>
-  <button on:click={() => {withLink('primary')}}>Primary</button>
+  <button on:click={() => {withLink('primary')}}>Primary</button>  
+  <button on:click={() => {withLink('success')}}>Success</button>  
   <button on:click={() => {withLink('warning')}}>Warning</button>
   <button on:click={() => {withLink('error')}}>Error</button>
 </LibraryBlock>
@@ -60,10 +65,16 @@
 <LibraryBlock section>
   <h3>With Components (Buttons)</h3>
   <hr>
-  <button on:click={() => {withButton('success')}}>Success</button>
   <button on:click={() => {withButton('primary')}}>Primary</button>
+  <button on:click={() => {withButton('success')}}>Success</button>
   <button on:click={() => {withButton('warning')}}>Warning</button>
   <button on:click={() => {withButton('error')}}>Error</button>
+</LibraryBlock>
+
+<LibraryBlock section>
+  <h3>Test cases</h3>
+  <hr>
+  <button on:click={() => {closeOnClick('primary')}}>Close on click</button>
 </LibraryBlock>
 
 <style lang='scss' scoped>

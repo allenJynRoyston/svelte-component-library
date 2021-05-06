@@ -22,8 +22,7 @@
 
   let ready = false
   let xpos;
-  let currentChannel = current;
-  let busy = false
+  let currentChannel = current;  
   let ele; 
   let rootEle;
 
@@ -49,11 +48,8 @@
   })
 
   const goto = async (channel) => {
-    if(!busy){
-      busy = true;
-      currentChannel = channel      
-      draw()       
-    }
+    currentChannel = channel      
+    draw()       
   }
 
   const draw = async() => {
@@ -62,8 +58,7 @@
     channelReady && channelReady(currentChannel)  
 
     await xpos.set(val)
-    afterUpdate && afterUpdate()    
-    busy = false
+    afterUpdate && afterUpdate()        
   }
 
   const resetScrollTop = () => {

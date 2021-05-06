@@ -32,6 +32,7 @@
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
+    color: white;
 
     &.active{
       color: red;

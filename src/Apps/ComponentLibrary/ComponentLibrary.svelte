@@ -4,7 +4,6 @@
   import Footer from '../../components/Footer/Footer.svelte'  
   import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'
   import Channels from '../../components/Channels/Channels.svelte'
-  import Link from '../../components/Link/Link.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
   import SnackBar from '../../components/Snackbar/Snackbar.svelte'
   import { createChannel } from '../../js/utility'
@@ -30,35 +29,54 @@
 
    //--------------------------- CHANNEL
   const channel = createChannel({data: [
-    {content: HeaderAlias, title: "Header"},
-    {content: FooterAlias, title: "Footer"},
-    {content: ButtonAlias, title: "Button"},
-    {content: LoaderAlias, title: "Loader"},
-    {content: ProductCard, title: "ProductCard"},
-    {content: LinkAlias, title: "Link"},
-    {content: FormAlias, title: "Form"},
-    {content: SearchAlias, title: "Search"},
-    {content: HashWatchAlias, title: "HashWatch"},
-    {content: SVGAlias, title: "SVG"},
-    {content: ThreeSlotAlias, title: "ThreeSlot"},
-    {content: TwoSlotAlias, title: "TwoSlot"},
-    {content: ChannelAlias, title: "Channels"},
-    {content: GridLayoutAlias, title: "GridLayout"},
-    {content: ColumnLayoutAlias, title: "ColumnLayout"},
-    {content: ShoppingCartAlias, title: "ShoppingCart"},
-    {content: SnackbarAlias, title: "Snackbar"},
-    {content: IndexDBAlias, title: "IndexDB"},
+    {content: HeaderAlias},
+    {content: FooterAlias},
+    {content: ButtonAlias},
+    {content: LoaderAlias},
+    {content: ProductCard},
+    {content: LinkAlias},
+    {content: FormAlias},
+    {content: SearchAlias},
+    {content: HashWatchAlias},
+    {content: SVGAlias},
+    {content: ThreeSlotAlias},
+    {content: TwoSlotAlias},
+    {content: ChannelAlias},
+    {content: GridLayoutAlias},
+    {content: ColumnLayoutAlias},
+    {content: ShoppingCartAlias},
+    {content: SnackbarAlias},
+    {content: IndexDBAlias},
   ]})   
 
-  const gotoChannel = (index) => {
-    channel.current = index
-  }
+  const hrefroot = '#library?component'
+
+  const links = [
+    {title: 'Header', href: `${hrefroot}=header` },
+    {title: 'Footer', href: `${hrefroot}=footer` },
+    {title: 'Button', href: `${hrefroot}=button` },
+    {title: 'Loader', href: `${hrefroot}=loader` },
+    {title: 'ProductCard', href: `${hrefroot}=productcard` },
+    {title: 'Link', href: `${hrefroot}=link` },
+    {title: 'Form', href: `${hrefroot}=form` },
+    {title: 'Search', href: `${hrefroot}=search` },
+    {title: 'HashWatch', href: `${hrefroot}=hashwatch` },
+    {title: 'SVG', href: `${hrefroot}=svg` },
+    {title: 'ThreeSlot', href: `${hrefroot}=threeslot` },
+    {title: 'TwoSlot', href: `${hrefroot}=twoslot` },
+    {title: 'Channels', href: `${hrefroot}=channels` },
+    {title: 'GridLayout', href: `${hrefroot}=gridlayout` },
+    {title: 'ColumnLayout', href: `${hrefroot}=columnlayout` },
+    {title: 'ShoppingCart', href: `${hrefroot}=shoppingcart` },
+    {title: 'Snackbar', href: `${hrefroot}=snackbar`},
+    {title: 'IndexDB', href: `${hrefroot}=indexdb` }
+  ]
 
   const onChange = ({params}) => {       
-    const index = channel.data.findIndex(channel => {
-      return channel.title.toLowerCase() === params?.component
+    const index = links.findIndex(link => {
+      return link?.title.toLowerCase() === params?.component
     }) 
-    gotoChannel(index < 0 ? 0 : index)    
+    channel.current = index < 0 ? 0 : index
   }  
   //--------------------------- 
 
@@ -74,20 +92,11 @@
 <HashWatch onChange={onChange}/>
 <SnackBar {snack} />
 
-
 <Header>
   <h1>Svelte Component Library</h1>
 </Header>
 
-<ColumnLayout >
-  <div slot='directory'  class='directory'>
-    {#each channel.data as { title }, i}
-      <Link active={channel.current === i} href={`#library?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-        {title}
-      </Link>
-    {/each}
-  </div>
-
+<ColumnLayout {links} currentIndex={channel.current} >
   <Channels {...channel} />
 </ColumnLayout>
 

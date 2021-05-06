@@ -1,17 +1,19 @@
 <script lang="ts">
 //--------------------------- IMPORTS  
 import { onDestroy } from 'svelte';
-import SVG from '../SVG/SVG.svelte'
-import Link from '../Link/Link.svelte'
+import { tweened } from 'svelte/motion';
+import { cubicOut } from 'svelte/easing';
 
-export let onComplete = () => {};
+import SVG from '../SVG/SVG.svelte'
+
 export let snack = null;
+export let onComplete = () => {};
+export let onClick = () => {}
 
 let currentSnack = null;
 let eventTimers = [];
 let removeTimers = [];
 let snacks = []
-
 
 //--------------------------- ONMOUNT
 onDestroy(() => {
@@ -75,7 +77,10 @@ const removeSnack = (snack) => {
 
 const newSnack = async() => {
   const id = Math.random().toString(36).substring(7);
-  snack = {...snack, processed: false, animateIn: true, id}
+
+  const progress = 50
+
+  snack = {...snack, processed: false, animateIn: true, progress, id}
   currentSnack = snack;
   snacks = [...snacks, snack]
   processSnack()
@@ -108,9 +113,11 @@ const returnIcon = (type) => {
   }  
 }
 
+
+
 //---------------------------
 $: {
-    snack !== currentSnack && newSnack()
+  snack !== currentSnack && newSnack()    
 }
 //---------------------------
 
@@ -118,12 +125,17 @@ $: {
 
 <div class='snackbar'>
   {#each snacks as snack (snack.id)}
-    <div class={`snack ${snack.type}`} on:mouseenter={() => {cancelTimer(snack.id)}} class:animateIn={snack.animateIn} class:animateOut={!snack.animateIn} >
+    <div 
+      class={`snack ${snack.type} ${snack?.closeOnClick && 'clickable'}`} 
+      class:animateIn={snack.animateIn} 
+      class:animateOut={!snack.animateIn}
+      class:btmpadding={snack?.duration}
+      on:click={snack?.closeOnClick ? () => {removeSnack(snack)} : onClick} 
+      on:mouseenter={() => {cancelTimer(snack.id)}} >
 
       <div class='icon'>
         <SVG icon={returnIcon(snack.type)} fill={returnIconColor(snack.type)} />
       </div>
-
       
       <div class='content' class:content-padding={snack?.component}>
         {#if snack?.message}
@@ -134,21 +146,23 @@ $: {
         {/if}
       </div>
     
-
       <div class='close-btn' on:click={() => {animateOutSnack(snack, true)}}>
         <SVG icon={snack?.duration ? 'unlocked' : 'cross' } fill='white' size={12} />
       </div>
+
+      {#if snack?.duration}
+        <progress class='progress-bar' />
+      {/if}
+
     </div>
   {/each}
 </div>
 
-<div class='test'>
 
-</div>
 
 <style lang='scss'>
   .snackbar{
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     z-index: 100;  
@@ -166,6 +180,14 @@ $: {
     border-radius: 5px;
     min-width: 150px;
     font-size: 12px;
+
+    &.btmpadding{
+      padding-bottom: 4px;
+    }
+
+    &.clickable{
+      cursor: pointer
+    }
 
     &:hover{
       background: #262B2A
@@ -202,6 +224,17 @@ $: {
       transform: translateX(0);
     }
 
+    .progress-bar{
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+
+      &.close{
+        opacity: 0
+      }      
+    }   
 
     .icon{
       padding-right: 10px;

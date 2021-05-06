@@ -24,12 +24,21 @@
   //--------------------------- 
 
   //--------------------------- CHANNEL
+  const hrefroot = '#strong-cookie?component'
+
+  const links = [
+    {title: 'Home', href: `${hrefroot}=home` },
+    {title: 'About', href: `${hrefroot}=about` },
+    {title: 'Products', href: `${hrefroot}=products` },
+    {title: 'Checkout', href: `${hrefroot}=checkout` },
+  ]
+
   const channel = createChannel({
     data: [
-      {content: Home, title: 'Home'},
-      {content: About, title: 'About'},
-      {content: Products, title: 'Products'},
-      {content: Checkout, title: 'Checkout'},
+      {content: Home},
+      {content: About},
+      {content: Products},
+      {content: Checkout},
     ]  
   }) 
 
@@ -37,12 +46,12 @@
     channel.current = index
   }  
 
-  const onChange = async({params}) => {                
-    const index = channel.data.findIndex(channel => {
-      return channel.title.toLowerCase() === params?.component
-    })    
-    gotoChannel(index < 0 ? 0 : index)    
-  }
+  const onChange = ({params}) => {       
+    const index = links.findIndex(link => {
+      return link?.title.toLowerCase() === params?.component
+    }) 
+    channel.current = index < 0 ? 0 : index
+  }  
   //---------------------------
 
   //--------------------------- DB (must be set at root of app)
@@ -89,14 +98,7 @@
   <h1>Strongcookie.com</h1>
 </Header>
 
-<ColumnLayout >
-  <div class='directory' slot='directory'>
-    {#each channel.data as { title }, i}
-      <Link active={channel.current === i} href={`#strong-cookie?component=${title.toLowerCase()}`} onClick={() => {gotoChannel(i)}}>
-        {title} 
-      </Link>
-    {/each}
-  </div>
+<ColumnLayout {links} currentIndex={channel.current} >
   {#if ready}
     <Channels {...channel} backtotop />
   {/if}
