@@ -26,6 +26,7 @@
   import ShoppingCartAlias from './components/_shoppingCart.svelte'
   import IndexDBAlias from './components/_idb.svelte'
   import SnackbarAlias from './components/_snackbar.svelte'
+  import AccordionAlias from './components/_accordion.svelte'
 
    //--------------------------- CHANNEL
   const channel = createChannel({data: [
@@ -33,6 +34,7 @@
     {content: FooterAlias},
     {content: ButtonAlias},
     {content: LoaderAlias},
+    {content: AccordionAlias},    
     {content: ProductCard},
     {content: LinkAlias},
     {content: FormAlias},
@@ -52,10 +54,12 @@
   const hrefroot = '#library?component'
 
   const links = [
-    {title: 'Header', href: `${hrefroot}=header` },
+    
     {title: 'Footer', href: `${hrefroot}=footer` },
+    {title: 'Header', href: `${hrefroot}=header` },
     {title: 'Button', href: `${hrefroot}=button` },
     {title: 'Loader', href: `${hrefroot}=loader` },
+    {title: 'Accordion', href: `${hrefroot}=accordion` },        
     {title: 'ProductCard', href: `${hrefroot}=productcard` },
     {title: 'Link', href: `${hrefroot}=link` },
     {title: 'Form', href: `${hrefroot}=form` },
@@ -70,12 +74,14 @@
     {title: 'ShoppingCart', href: `${hrefroot}=shoppingcart` },
     {title: 'Snackbar', href: `${hrefroot}=snackbar`},
     {title: 'IndexDB', href: `${hrefroot}=indexdb` }
+    
   ]
 
   const onChange = ({params}) => {       
     const index = links.findIndex(link => {
       return link?.title.toLowerCase() === params?.component
     }) 
+    
     channel.current = index < 0 ? 0 : index
   }  
   //--------------------------- 
