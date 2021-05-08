@@ -19,12 +19,12 @@
     width: 100%;
     height: 30px;    
     cursor: pointer;
-    background: lightgrey;
-    color: black;
+    background: #555;
+    color: white;
 
 
     &:active{
-      background: darkgrey;
+      background: #444;
     }
   }
 </style>

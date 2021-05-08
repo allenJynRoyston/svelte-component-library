@@ -27,48 +27,22 @@
   //---------------------------
 
   //--------------------------- PROPS
-  /**
-   * label
-  */
   export let formData = []
-  /**
-   * onSubmit event
-  */
   export let onSubmit = null;  
-  /**         
-  */
   export let padding = 10
-  /**         
-  */  
   export let breakpoints = {
     mobile: 480,
     tablet: 800,
     desktop: 1920,
     wide: 2440
   }
-  /**         
-  */  
-  export let localStorageKey = null;
-  /**         
-  */    
-  export let clearLocalStorage = true;
-  /**     
-   * If multiple forms are on the page at the same time, adding a unique idModifier to will make sure they have unique ID's    
-  */      
-  export let idModifier = null;
-  /**     
-   * set busy state
-  */        
+  export let localStorageKey = null;    
+  export let clearLocalStorage = false;     
+  export let idModifier = null;       
   export let isBusy = false
-  /*
-  */
   export let showPreview = false
-  /*
-  */
   export let style = null
-  /*
-  */
-  export let showButton = true
+  export let showButton = false
   //---------------------------
 
   //--------------------------- ONMOUNT/ONDESTROY

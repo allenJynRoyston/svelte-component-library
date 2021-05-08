@@ -30,6 +30,7 @@
 <style lang="scss">
   .formpreview-container{
     margin-top: 10px;
+    color: black;
     
     &.hide{
       display: none

@@ -1,29 +1,37 @@
 <script>
   import TwoSlot from '../TwoSlot/TwoSlot.svelte'
   import SVG from '../SVG/SVG.svelte'
+
+  export let open = false
+  export let fill = false
+  export let theme = 'dark';
   
-  let open = false;
+  let isOpened = open;
+
+  const toggle = () => {
+    isOpened = !isOpened
+  }
 
 </script>
 
-<div class='accordion'>
+<div class='accordion' class:dark={theme === 'dark'} class:light={theme === 'light'}>
   <div class='accordion-inner'>
     <TwoSlot showLeft showRight>     
 
-      <button on:click={() => {open = !open}}>
+      <button on:click={toggle} style='width: 100%; text-align: left'>
         <slot name='title'>
           <h2>Accordian</h2>
         </slot> 
       </button>  
 
       <div slot='right'>
-        <SVG icon={open ? 'minus' : 'plus'} onClick={() => {open = !open}} fill="white"/>
+        <SVG icon={isOpened ? 'minus' : 'plus'} onClick={toggle} fill={theme === 'dark' ? 'white' : '#333'}/>
       </div>
     </TwoSlot>
   </div>
 
-  {#if open}
-    <div class='accordion-content'>
+  {#if isOpened}
+    <div class='accordion-content' class:fill={fill}>
       <div class='inner'>
         <slot name='content'>
           Accordion content... 
@@ -37,8 +45,23 @@
 <style lang='scss' scoped>
   .accordion{
     width: 100%;
-    background: #333;
-    border-radius: 10px;
+
+    &.dark{
+      background: #333;   
+      button, .inner{
+        color: white;
+      }      
+    }
+
+    &.light{
+      background: white;;
+      button, .inner{
+        color: #333;
+      }     
+    }
+     
+    border-radius: 10px; 
+    margin-bottom: 10px;   
 
     button{
       background: none;
@@ -55,6 +78,10 @@
     max-height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
+
+    &.fill{
+      max-height: 1000vh;
+    }
 
 
     .inner{

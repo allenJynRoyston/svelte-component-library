@@ -15,7 +15,7 @@
       <div class='directory' class:collapse={collapse}>
 
         <button class='collapse-btn' class:collapse={collapse} on:click={() => {collapse = !collapse}}>
-          <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} size={10} />
+          <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} size={16} />
         </button>
 
         <div class='directory-inner' class:collapse={collapse}>
@@ -48,7 +48,7 @@
   }
 
   .directory {
-    width: auto;
+    width: 0;
     height: 100vh;
     display: flex;
     flex-direction: row; 
@@ -75,7 +75,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding: 10px;
-
+    color: white;
     
     @include desktop-and-up {
       padding: 10px 50px 10px 10px!important;   
@@ -95,13 +95,16 @@
     display: block;
     position: absolute;
     top: calc(50% - 120px);
-    right: -20px;
-    width: 20px;
+    right: -40px;
+    width: 40px;
     height: 60px;
     background: darkgrey;
     border-radius: 0 10px 10px 0;
     cursor: pointer;
     z-index: 1;
+    border: none;
+    outline: none;
+    box-shadow: -2px 5px 5px rgba(0,0,0,0.2);
 
     &.collapse{
       border-radius: 10px 0 0 10px;      

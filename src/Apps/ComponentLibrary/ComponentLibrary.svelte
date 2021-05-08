@@ -21,12 +21,14 @@
   import ThreeSlotAlias from './components/_threeslot.svelte'
   import TwoSlotAlias from './components/_twoslot.svelte'
   import ChannelAlias from './components/_channels.svelte'
+  import ChannelButtonAlias from './components/_channelbutton.svelte'
   import GridLayoutAlias from './components/_gridLayout.svelte'
   import ColumnLayoutAlias from './components/_columnLayout.svelte'
   import ShoppingCartAlias from './components/_shoppingCart.svelte'
   import IndexDBAlias from './components/_idb.svelte'
   import SnackbarAlias from './components/_snackbar.svelte'
   import AccordionAlias from './components/_accordion.svelte'
+  import CodeBlockAlias from './components/_codeblock.svelte'
 
    //--------------------------- CHANNEL
   const channel = createChannel({data: [
@@ -44,19 +46,20 @@
     {content: ThreeSlotAlias},
     {content: TwoSlotAlias},
     {content: ChannelAlias},
+    {content: ChannelButtonAlias},
     {content: GridLayoutAlias},
     {content: ColumnLayoutAlias},
     {content: ShoppingCartAlias},
     {content: SnackbarAlias},
     {content: IndexDBAlias},
+    {content: CodeBlockAlias},    
   ]})   
 
   const hrefroot = '#library?component'
 
   const links = [
-    
+    {title: 'Header', href: `${hrefroot}=header` },    
     {title: 'Footer', href: `${hrefroot}=footer` },
-    {title: 'Header', href: `${hrefroot}=header` },
     {title: 'Button', href: `${hrefroot}=button` },
     {title: 'Loader', href: `${hrefroot}=loader` },
     {title: 'Accordion', href: `${hrefroot}=accordion` },        
@@ -69,12 +72,13 @@
     {title: 'ThreeSlot', href: `${hrefroot}=threeslot` },
     {title: 'TwoSlot', href: `${hrefroot}=twoslot` },
     {title: 'Channels', href: `${hrefroot}=channels` },
+    {title: 'ChannelButton', href: `${hrefroot}=channelbutton` },
     {title: 'GridLayout', href: `${hrefroot}=gridlayout` },
     {title: 'ColumnLayout', href: `${hrefroot}=columnlayout` },
     {title: 'ShoppingCart', href: `${hrefroot}=shoppingcart` },
     {title: 'Snackbar', href: `${hrefroot}=snackbar`},
-    {title: 'IndexDB', href: `${hrefroot}=indexdb` }
-    
+    {title: 'IndexDB', href: `${hrefroot}=indexdb` },
+    {title: 'Codeblock', href: `${hrefroot}=codeblock` },
   ]
 
   const onChange = ({params}) => {       
@@ -106,13 +110,7 @@
   <Channels {...channel} />
 </ColumnLayout>
 
+
 <Footer />
 
-
-<style lang='scss' scoped>
-  .directory {
-    display: flex; 
-    flex-direction: column;
-  }
-</style>
 

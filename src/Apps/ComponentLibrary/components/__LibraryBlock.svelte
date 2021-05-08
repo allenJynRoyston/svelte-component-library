@@ -1,46 +1,25 @@
 <script>
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock'
+  import Accordion from '../../../components/Accordion/Accordion'
 
-  export let code = false;
-  export let section = false;
-  export let style = null;
-
+  export let title = null;
+  
 </script>
 
-<div class='library-block' {style}>
-  <h3 class='title'>
-    <slot name='title' />
-  </h3>
-
-  {#if section}
-    <div class='section'>    
+<div class='library-block'>
+  <Accordion fill open theme='light'>
+    <div slot='title' class='title'>
+      <h3>{title || 'Title'}</h3>
+    </div>
+    <div slot='content'>    
       <slot />
     </div>   
-  {/if}
-  
-  {#if code}
-    <CodeBlock>
-      <slot name='codeblock' />
-    </CodeBlock>  
-  {/if}
+  </Accordion>
 </div>
 
-<style lang='scss' scoped>
+<style lang='scss'>
   .library-block{
-    margin: 20px 0;
-
-    .title{
-      width: 100%;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-      
-    .section{
-      color: white;
-      background: #717E8E;
-      padding: 20px;
-      width: calc(100% - 40px);   
-    }  
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid grey;
   }
 </style>

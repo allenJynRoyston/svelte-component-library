@@ -32,7 +32,7 @@
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
-    color: white;
+    color: inherit;
 
     &.active{
       color: red;

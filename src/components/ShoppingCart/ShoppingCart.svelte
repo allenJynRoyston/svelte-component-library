@@ -91,7 +91,7 @@
   <p>Nothing in shopping cart.</p>
 {/if}
 
-<style lang='scss'>
+<style lang='scss' scoped>
   .shopping-cart{        
     width: 100%;
 
@@ -116,6 +116,8 @@
       cursor: pointer;
       padding: 10px 0;
       background: none;
+      border: none;
+      outline: none;
     }
   }  
   

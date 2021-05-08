@@ -232,5 +232,5 @@
 </script>
 
 <div style='background: white; overflow: hidden; border-radius: 10px'>
-  <Form {...props} {isBusy} />
+  <Form {...props} {isBusy} showButton clearLocalStorage />
 </div>

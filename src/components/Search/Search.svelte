@@ -2,7 +2,6 @@
   //--------------------------- IMPORTS  
   import SVG from '../SVG/SVG.svelte'
   import Input from '../FormComponents/Input/Input.svelte'
-  import Button from '../Button/Button'
   //---------------------------
 
 

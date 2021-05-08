@@ -6,6 +6,8 @@
   import ComponentLibraryApp from '../../Apps/ComponentLibrary/ComponentLibrary'
   import StrongCookieApp from '../../Apps/StrongCookie/StrongCookie'
   import TestApp from '../../Apps/TestApp/TestApp'
+
+  import '../../scss/global.scss'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
@@ -21,9 +23,8 @@
 
 
   //--------------------------- FUNCTIONS
-  const hashChange = ({hash, params}) => {
+  const hashChange = ({hash}) => {
     view = hash || 'library';
-    // ele && ele.scrollTo(0, 0)    
   }
   //---------------------------
 
@@ -56,7 +57,7 @@
 
 <style lang='scss'>
   @import '../../scss/global.scss';
-
+   
   #app-wrapper{
     width: 100vw;
     height: 100vh;

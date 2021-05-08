@@ -1,6 +1,5 @@
 <script>
   export let style = null;
-
   export let showLeft = false;
   export let showRight = false;
   export let showCenter = false;

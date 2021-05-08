@@ -52,7 +52,7 @@
     overflow: hidden;
 
     &.outline{
-      outline: 2px solid white;
+      outline: 2px solid #333;
     }
 
 		@supports ( display: grid ) {
