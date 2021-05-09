@@ -55,7 +55,7 @@
     {content: CodeBlockAlias},    
   ]})   
 
-  const hrefroot = '#library?component'
+  const hrefroot = '#components?component'
 
   const links = [
     {title: 'Header', href: `${hrefroot}=header` },    

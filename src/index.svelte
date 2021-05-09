@@ -1,13 +1,12 @@
-<script>
+<script lang='ts'>
   //--------------------------- IMPORTS  
-  import HashWatch from '../URLWatcher/HashWatch'
-  import Link from '../Link/Link'
+  import HashWatch from './components/URLWatcher/HashWatch.svelte'
+  import Link from './components/Link/Link.svelte'
 
-  import ComponentLibraryApp from '../../Apps/ComponentLibrary/ComponentLibrary'
-  import StrongCookieApp from '../../Apps/StrongCookie/StrongCookie'
-  import TestApp from '../../Apps/TestApp/TestApp'
+  import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
+  import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
+  import StrongCookieApp from './Apps/StrongCookie/StrongCookie.svelte'
 
-  import '../../scss/global.scss'
   //--------------------------- 
 
   //--------------------------- APP CONTEXT   
@@ -24,7 +23,7 @@
 
   //--------------------------- FUNCTIONS
   const hashChange = ({hash}) => {
-    view = hash || 'library';
+    view = hash || 'components';
   }
   //---------------------------
 
@@ -33,30 +32,32 @@
 <div id='app-wrapper' bind:this={ele}>
   <HashWatch onChange={hashChange} />
   <div class='app-content'>
-    {#if view === 'test-app'}      
-      <TestApp />    
+    {#if view === 'components'}
+      <ComponentLibraryApp />
+    {/if}
+
+    {#if view === 'component-db'}      
+      <ComponentDBLibrary />    
     {/if}
 
     {#if view === 'strong-cookie'}
       <StrongCookieApp />
     {/if}      
 
-    {#if view === 'library'}
-      <ComponentLibraryApp />
-    {/if}
+
   </div>
 </div>
 
 
 <div id='app-selector'>
-  <Link href='#library' active={view === 'library'} onClick={() => {view = 'library'}}>Library</Link>
-  <Link href='#test-app' active={view === 'test-app'} onClick={() => {view = 'app'}}>Test App</Link>
-  <Link href='#strong-cookie' active={view === 'strong-cookie'} onClick={() => {view = 'strong-cookie'}}>Cookie</Link>
+  <Link href='#components' active={view === 'components'} onClick={() => {view = 'components'}}>Components</Link>
+  <Link href='#component-db' active={view === 'component-db'} onClick={() => {view = 'component-db'}}>ComponentsDB</Link>
+  <Link href='#strong-cookie' active={view === 'strong-cookie'} onClick={() => {view = 'strong-cookie'}}>StrongCookie</Link>
 </div>
 
 
 <style lang='scss'>
-  @import '../../scss/global.scss';
+  @import './scss/global.scss';
    
   #app-wrapper{
     width: 100vw;

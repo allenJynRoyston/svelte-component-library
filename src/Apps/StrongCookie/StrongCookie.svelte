@@ -4,7 +4,6 @@
   import {IndexDBStore} from '../../js/index'
 
   import Header from '../../components/Header/Header.svelte'
-  import Link from '../../components/Link/Link.svelte'
   import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'  
   import Channels from '../../components/Channels/Channels.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
@@ -41,10 +40,6 @@
       {content: Checkout},
     ]  
   }) 
-
-  const gotoChannel = (index) => {
-    channel.current = index
-  }  
 
   const onChange = ({params}) => {       
     const index = links.findIndex(link => {

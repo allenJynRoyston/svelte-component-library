@@ -33,8 +33,6 @@
   //--------------------------- 
   const setupIndexDB = () => {  
     return new Promise<void>(async(resolve) => {
-      console.log(queryBy)
-
       await indexdb.createTable(tables, queryBy);
       resolve()
     })

@@ -1,3 +1,6 @@
+
+
+
 <script>
   //--------------------------- IMPORTS  
   // import {onMount, setContext } from 'svelte'
@@ -9,14 +12,14 @@
   // import TestUtility from '../../components/TestUtility/TestUtility'  
   // import Channels from '../../components/Channels/Channels'
   // import LoremBlock from '../../components/LoremBlock/LoremBlock'
-  import IDB from '../../components/Utility/IndexDBSetup.svelte'
+  // import IDB from '../../components/Utility/IndexDBSetup.svelte'
 
-  //--------------------------- APP CONTEXT   
-  let ready = false;
+  // //--------------------------- APP CONTEXT   
+  // let ready = false;
 
-  const onReady = () => {
-    ready = true
-  }  
+  // const onReady = () => {
+  //   ready = true
+  // }  
 
   //--------------------------- APP CONTEXT   
   // let ready = false;

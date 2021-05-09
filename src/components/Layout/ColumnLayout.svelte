@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
   import Link from '../Link/Link.svelte'
   import SVG from '../SVG/SVG.svelte'
 
@@ -6,6 +6,10 @@
   export let currentIndex = null;
 
   let collapse = false
+
+  const toggleCollapse = (state = null) => {
+    collapse = !!state || !collapse
+  }
 
 </script>
 
@@ -20,7 +24,7 @@
 
         <div class='directory-inner' class:collapse={collapse}>
           {#each links as { title, href }, i}
-            <Link active={currentIndex === i} {href} >
+            <Link active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
               {title}
             </Link>        
           {/each}  
@@ -55,6 +59,7 @@
     background: grey;
     position: relative;
     font-size: 12px;
+    overflow: hidden;
 
     &.collapse{
       width: 100%;
@@ -94,7 +99,7 @@
   .collapse-btn{
     display: block;
     position: absolute;
-    top: calc(50% - 120px);
+    top: calc(80% - 120px);
     right: -40px;
     width: 40px;
     height: 60px;
