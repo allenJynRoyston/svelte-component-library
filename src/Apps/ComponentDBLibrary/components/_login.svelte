@@ -1,14 +1,19 @@
 <script lang='ts'>
+  import {getContext} from 'svelte'
   import LibraryBlock from '../../ComponentLibrary/components/__LibraryBlock.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
 
   import Login from '../../../components-db/Login.svelte'
   import LocalStorageWatch from '../../../components-db/LocalStorageWatch.svelte'
 
+  const indexdb:any = getContext('indexdb')
+
   let loggedIn, loginData;
 
-  const login = () => {
-    window.localStorage.setItem('login', JSON.stringify({firstname: 'John', lastname: 'Smith', _id: 0, age: 35}))
+  const login = async() => {
+    let users = await indexdb.getAll('users')
+
+    window.localStorage.setItem('login', JSON.stringify(users[0]))
     location.reload()
   }
 
@@ -31,7 +36,7 @@
 <LibraryBlock title="Live:">
   <button  disabled={!loggedIn} on:click={logout} > Log Out </button>
   <button  disabled={loggedIn} on:click={login}> Log In </button>
-
+  <br><br>
   <Login />
 </LibraryBlock>
 

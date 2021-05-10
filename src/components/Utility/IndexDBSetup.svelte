@@ -4,7 +4,8 @@
   export let indexdb:any;
   export let data:any = []
   export let tables:string[] = []
-  export let clearOnRefresh = false;
+  export let createIfEmpty:boolean = false;
+  export let clearOnRefresh:boolean = false;
   export let queryBy:string[] | string = "_id"
 
   export let onReady = () => {}
@@ -15,7 +16,7 @@
   const keys = !!data ? Object.keys(data) : []
 
   //--------------------------- ONMOUNT
-  onMount(async() => {     
+  onMount(async() => {   
     // setup required indexDB stuff   
     await setupIndexDB();  
 
@@ -44,11 +45,13 @@
   const setupData = () => {   
 
     // delete previous database entries
-    keys.forEach(key => {
-      if(clearOnRefresh){
-        indexdb.clear(key)
-      }
-    })
+    if(clearOnRefresh){
+      window.addEventListener('beforeunload', function (e) {
+        keys.forEach(key => {
+          indexdb.clear(key)
+        })
+      })
+    }
 
     return new Promise<void>(async(resolved) => {
       let promises = [];

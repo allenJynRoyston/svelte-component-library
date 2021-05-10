@@ -9,8 +9,13 @@
   //--------------------------- ONMOUNT
   onMount(() => {
     if(!!key){
-      const data = JSON.parse(window[type].getItem(key) ) || null
-      onFetch && onFetch({success: !!data, data})
+      try{
+        const data = JSON.parse(window[type].getItem(key) ) || null
+        onFetch && onFetch({success: !!data, data})
+      }
+      catch(err){
+        onFetch && onFetch({success: false})
+      }
     }
     else{
       onFetch && onFetch({success: false})

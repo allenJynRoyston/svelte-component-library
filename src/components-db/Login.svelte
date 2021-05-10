@@ -13,7 +13,7 @@
 
 <LocalStorageWatch key='login' {onFetch}/>
 
-{#if loggedIn && loginDetails}
+{#if loggedIn && !!loginDetails}
   Logged data: <strong>{JSON.stringify(loginDetails, null, 4)}</strong>
 {:else}
   Not logged in

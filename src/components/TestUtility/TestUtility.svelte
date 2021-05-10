@@ -1,24 +1,24 @@
 <script lang='ts'>
   //---------------------------
-  import {tick, onMount, getContext} from 'svelte'
+  import {onMount, getContext} from 'svelte'
   import Form from '../Form/Form.svelte'
+  import LocalStorageWatch from '../../components-db/LocalStorageWatch.svelte'
 
   export let viewerId = null
   export let friendStatus = null;
 
-  const indexdb = getContext('indexdb')
+  const indexdb:any = getContext('indexdb')
 
   let ready = false;
   let loginAsProps = {}
   let mimicAsProps = {}
   let friendStatusProps = {}
+  
   //---------------------------
 
   //---------------------------
-  onMount(async() => {
-    await setupMockUsers()
-
-    const options = await setupMockUsers() || []    
+  onMount(async() => {    
+    const options = await indexdb.getAll('users') || []
 
     loginAsProps = {
       formData: [
@@ -94,33 +94,20 @@
     ready = true
   })
 
-  //---------------------------
-  const setupMockUsers = () => {
-    return new Promise(async(resolve) => {
-      resolve(await indexdb.getAll('users'))    
-    })
+
+  //---------------------------  LOCALSTORAGE 
+  let loginData = null;
+  const onFetch = ({success, data}) => {
+    loginData = success ? data : null;
+    console.log(loginData)
   }
-
-
-  // const clearTestData = () => {
-  //   // @ts-ignore
-  //   indexdb.clear('posts')
-  //   // @ts-ignore
-  //   indexdb.clear('images')
-  //   // @ts-ignore
-  //   indexdb.clear('users')
-  //   // @ts-ignore
-  //   indexdb.clear('comments')    
-    
-  //   window.localStorage.clear()         
-          
-  //   alert("clear test data.")
-  //   location.reload()
-  // }
-  //---------------------------
+  //---------------------------     
 
   
 </script>
+
+
+<LocalStorageWatch key='login' {onFetch}/>
 
 
 {#if ready}

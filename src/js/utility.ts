@@ -49,6 +49,7 @@ export const createChannel = ({
 
 type CreateDBType = {
   indexdb: any;
+  createIfEmpty?: boolean;
   clearOnRefresh?: boolean;
   tables?: string[];
   data?: any;
@@ -59,6 +60,7 @@ type CreateDBType = {
 
 export const createDB = ({
   indexdb,
+  createIfEmpty = false,
   clearOnRefresh = false,
   tables = [],
   data = {},
@@ -69,6 +71,7 @@ export const createDB = ({
   return {
     indexdb,
     queryBy,
+    createIfEmpty,
     clearOnRefresh,
     tables,
     data,

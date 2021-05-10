@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS    
-  import Link from '../Link/Link.svelte'
+  import Link from '../../components/Link/Link.svelte'
   import UserFetcher from '../Fetcher/UserFetcher.svelte'
 
   //---------------------------
@@ -45,11 +45,10 @@
   //---------------------------  
 </script>
 
-<UserFetcher id={userId} onComplete={fetchUser}/>
-
+<UserFetcher query={userId} onComplete={fetchUser}/>
 {#if user}
   <div class='userportrait'  {style}>
-    <Link href={`#/feed/${user.username}`}>
+    <Link href={`#${user.username}`}>
       <img class='portrait' class:rounded={rounded} src={getPortrait()} alt="emotion" on:click={onClick} />
       {#if currentEmotion}
         <img class='emotion' class:rounded={rounded} src={getCurrentEmotion(currentEmotion)} alt="emotion" on:click={onClick} />

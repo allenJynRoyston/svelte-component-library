@@ -11,10 +11,13 @@
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
   import SnackBar from '../../components/Snackbar/Snackbar.svelte'
   import IDB from '../../components/Utility/IndexDBSetup.svelte'
+  import LocalStorageWatch from '../../components-db/LocalStorageWatch.svelte'
 
   import LocalStorageWatchAlias from './components/_localstoragewatch.svelte'
   import LoginAlias from './components/_login.svelte'
-  import TestUtility from './components/_testutility.svelte'
+  import TestUtilityAlias from './components/_testutility.svelte'
+  import UserFetcherAlias from './components/_userfetcher.svelte'
+  import UserPortraitAlias from './components/_userportrait.svelte'
 
 
   //--------------------------- 
@@ -25,7 +28,9 @@
   const channel = createChannel({data: [
     {content: LocalStorageWatchAlias}, 
     {content: LoginAlias}, 
-    {content: TestUtility}, 
+    {content: TestUtilityAlias}, 
+    {content: UserFetcherAlias}, 
+    {content: UserPortraitAlias}, 
   ]})   
 
   const hrefroot = '#component-db?component'
@@ -34,6 +39,10 @@
     {title: 'LocalStorageWatch', href: `${hrefroot}=localstoragewatch` },    
     {title: 'Login', href: `${hrefroot}=login` },   
     {title: 'TestUtility', href: `${hrefroot}=testutility` },    
+    {title: 'UserFetcher', href: `${hrefroot}=userfetcher` },    
+    {title: 'UserPortrait', href: `${hrefroot}=userportrait` },    
+
+
   ]
 
   const onChange = ({params}) => {       
@@ -47,24 +56,19 @@
 
   //--------------------------- DB (must be set at root of app)
   // name/version
-  const indexdb = new IndexDBStore('components-db', 1); 
+  const indexdb:any = new IndexDBStore('components-db', 1); 
   let db = null;
   
   // set context so it can be referenced in children components
   setContext('indexdb', indexdb)
 
   onMount(async() => {
-    let {users, images, comments, posts} = await createTestData()
 
     db = createDB({
       indexdb,
-      clearOnRefresh: true,
       tables: ['users', 'posts', 'images', 'comments'], 
       data: {
-        users,
-        posts,
-        images,
-        comments
+
       }, 
       queryBy: '_id'
     })
@@ -74,6 +78,55 @@
   const dbReady = async() => {
     ready = true;
   }  
+
+  const populateDB = async() => {
+    let {users, images, comments, posts} = await createTestData()
+
+    const promises = []
+    
+    users.forEach(user => {
+      promises.push(new Promise( async(resolve) => {
+        await indexdb.add('users', user, true)
+        resolve(null)
+      }))
+    })
+
+    images.forEach(image => {
+      promises.push(new Promise( async(resolve) => {
+        await indexdb.add('images', image, true)
+        resolve(null)
+      }))
+    })    
+
+    comments.forEach(comment => {
+      promises.push(new Promise( async(resolve) => {
+        await indexdb.add('comments', comment, true)
+        resolve(null)
+      }))
+    })
+
+    posts.forEach(post => {
+      promises.push(new Promise( async(resolve) => {
+        indexdb.add('posts', post, true)
+        resolve(null)
+      }))
+    })    
+
+    Promise.all(promises).then(async() => {  
+      location.reload();
+    })    
+  }
+
+  const clearDB = () => {
+    indexdb.clear('users')
+    indexdb.clear('posts')
+    indexdb.clear('images')
+    indexdb.clear('comments')
+
+    localStorage.removeItem('login')
+
+    location.reload()
+  }
   //---------------------------  
 
 
@@ -139,8 +192,17 @@
     snack = newSnack
   })
   //--------------------------- 
+
+  //---------------------------  LOCALSTORAGE 
+  let loginData = null;
+  const onFetch = ({success, data}) => {
+    loginData = success ? data : null;
+  }
+  //---------------------------   
   
 </script>
+
+<LocalStorageWatch key='login' {onFetch}/>
 
 {#if !!db}
   <IDB {...db} onReady={dbReady} />
@@ -163,3 +225,28 @@
 <Footer />
 
 
+<div class='options'>
+  {#if loginData?.username}
+    <p>Logged in as: {loginData.username}</p>
+  {/if}
+  <button on:click={populateDB}>Populate Database</button>
+  <button on:click={clearDB}>Clear Database and Logout</button>
+</div>
+
+<style lang='scss'>
+  .options{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #333;
+    color: white;  
+    padding: 10px;
+    border-radius: 10px; 
+
+    p{
+      padding-bottom: 10px;
+      margin: 0;
+    } 
+  }
+
+</style>
