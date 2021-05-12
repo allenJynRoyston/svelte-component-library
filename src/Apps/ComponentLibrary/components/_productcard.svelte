@@ -8,7 +8,7 @@
 <h1>Loader</h1>
 <hr>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <div style='height: 400px'>
     <ProductCard />
   </div>

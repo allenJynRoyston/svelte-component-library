@@ -37,7 +37,7 @@
 
 
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
     <div class='button-block'>
       {#each channel.data as ch, index}
         <button on:click={() => {gotoChannel(index)}}>{index}</button>    

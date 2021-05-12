@@ -3,6 +3,7 @@ import SVG from '../../../components/SVG/SVG.svelte'
 import LibraryBlock from './__LibraryBlock.svelte'
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
 import GridLayout from '../../../components/Layout/GridLayout.svelte'
+import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 
 const svgs = [
   'dots',
@@ -87,9 +88,16 @@ export let items = svgs.map(svg =>{
 <h1>SVG</h1>
 <hr>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <GridLayout {items} size={50} gap={10} outline/>
 </LibraryBlock>
+
+<ThemeWrapper theme='dark'>
+  <LibraryBlock title="Dark Theme:">
+    <GridLayout {items} size={50} gap={10} outline/>
+  </LibraryBlock>
+</ThemeWrapper>
+
 
 <CodeBlock title='Properties:' snippet={
     `

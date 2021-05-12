@@ -2,6 +2,7 @@
   import ColumnLayout from '../../../components/Layout/ColumnLayout'
   import LibraryBlock from './__LibraryBlock'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 
   const links = [
     {title: 'Link_1', href: '#' },    
@@ -14,6 +15,7 @@
 <h2>GridLayout</h2>
 <hr>
 
+
 <LibraryBlock section >
   <div style='height: 300px'>
     <ColumnLayout {links} currentIndex={1} >
@@ -23,6 +25,18 @@
     </ColumnLayout>
   </div>
 </LibraryBlock>
+
+<ThemeWrapper theme='dark'>
+  <LibraryBlock section >
+    <div style='height: 300px'>
+      <ColumnLayout {links} currentIndex={1} >
+        <div style='padding: 0 10px'>
+          <h3>I am content!</h3>
+        </div>
+      </ColumnLayout>
+    </div>
+  </LibraryBlock>
+</ThemeWrapper>
 
 <CodeBlock title='Properties:' snippet={`
   export let links = []

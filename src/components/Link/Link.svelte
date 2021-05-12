@@ -1,10 +1,13 @@
 <script lang='ts'>
 
   //--------------------------- COMPONENT PROPS
-  export let href: string
+  export let href: string|null = null;
   export let active = false;
   export let onClick = null;
   export let text = null;
+  export let inherit = false;
+  
+  export let type = 'bar'
   //---------------------------
 
   //--------------------------- VARS    
@@ -21,22 +24,43 @@
 
 </script>
 
-<a {href} class:active={active} on:click={() => {onClick && onClick()}}>
+<a {href} class={`root-component ${type}`} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 
 
 <style lang='scss' scoped>
-  a{
-    color: inherit;
+  a{    
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
-    color: inherit;
+    color:white;
+
+
+    &.inherit{
+      color: inherit!important
+    }
+
+    
 
     &.active{
-      color: red;
+      font-weight: 700;
+      
+      &.underline{
+        border-bottom: 2px solid white;
+      }
     }
+
+    &.dark-theme{
+      color: black;
+      &.active{
+
+        &.underline{
+          border-bottom: 2px solid black;
+        }
+      }
+    }
+
     
   }
 </style>

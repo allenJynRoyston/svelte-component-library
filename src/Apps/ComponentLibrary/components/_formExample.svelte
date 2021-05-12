@@ -7,7 +7,7 @@
 
 <h2>FormExample</h2>
 <hr>
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <FormExample />       
 </LibraryBlock>
 

@@ -50,7 +50,7 @@
 <h2>IndexDB</h2>
 <hr>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <p>Check application/database</p>
   <IDB {...idb} {onReady} />
 </LibraryBlock>

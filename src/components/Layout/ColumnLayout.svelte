@@ -13,7 +13,7 @@
 
 </script>
 
-<div class='layout' >
+<div class={`root-component layout`} >
 
     <div class='layout-inner'>
       <div class='directory' class:collapse={collapse}>
@@ -24,8 +24,8 @@
 
         <div class='directory-inner' class:collapse={collapse}>
           {#each links as { title, href }, i}
-            <Link active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
-              {title}
+            <Link inherit type='bar' active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
+              {title} 
             </Link>        
           {/each}  
         </div>
@@ -55,8 +55,7 @@
     width: 0;
     height: 100vh;
     display: flex;
-    flex-direction: row; 
-    background: grey;
+    flex-direction: row;     
     position: relative;
     font-size: 12px;
     overflow: hidden;
@@ -80,8 +79,9 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding: 10px;
-    color: white;
-    
+    background: #999;
+    color: white;    
+ 
     @include desktop-and-up {
       padding: 10px 50px 10px 10px!important;   
       text-align: left!important;
@@ -92,8 +92,18 @@
       padding: 10px 0;   
       text-align: center;
     }
-   
   }
+  
+    background: white;
+    color: #333;
+
+    &.dark-theme{
+      background: #333;
+      color: white;
+      .directory-inner{
+        background: #111;
+      }
+    }  
 
 
   .collapse-btn{

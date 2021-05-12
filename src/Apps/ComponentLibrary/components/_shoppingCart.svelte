@@ -19,7 +19,7 @@
 <h1>Shopping Cart</h1>
 <hr>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <ShoppingCart {items} {onClick} />
 </LibraryBlock>
 

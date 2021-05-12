@@ -2,10 +2,11 @@
   export let style = null;
   export let showRight = false;
   export let showLeft = false
-
+  export let outline = false; 
+  export let rounded = false;
 </script>
 
-<div class='two-slot' {style}>
+<div class={`root-component two-slot`} class:outline={outline} class:rounded={rounded} {style}>
 
   {#if showLeft}
     <div class='left'>
@@ -28,10 +29,26 @@
     display: flex;
     align-items: center;
 
+    &.outline{
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: 3px solid #333;
+    }
+
+    &.rounded{
+      border-radius: 20px;
+    }
+
+    &.dark-theme{
+      &.outline{
+        border: 3px solid white;
+      }
+    }
+
     .left{
       display: flex;
       align-items: center;    
-      width: 100%;                      
+      flex: 1 1 auto;
     }
 
     .right{

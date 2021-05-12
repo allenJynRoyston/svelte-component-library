@@ -1,11 +1,14 @@
 type ChannelDataType = {
   content?: any;
+  id?: string;
   title?: string;
   render?: boolean;
   active?: boolean;
 };
 
 type CreateChannelType = {
+  sort?: boolean;
+  sortBy?: string;
   data?: ChannelDataType[];
   current?: number;
   easing?: string;
@@ -16,12 +19,18 @@ type CreateChannelType = {
 
 export const createChannel = ({
   data = [],
+  sort = false,
+  sortBy = "id",
   current = null,
   easing = "cubicOut",
   duration = 400,
   onReady,
   onUpdate,
 }: CreateChannelType) => {
+  if (sort) {
+    data = data.sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+  }
+
   const channelReady = (index) => {
     data = data.map((x, i) => {
       x.active = false;
@@ -78,4 +87,8 @@ export const createDB = ({
     onReady,
     onUpdate,
   };
+};
+
+export const capitalizeStr = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };

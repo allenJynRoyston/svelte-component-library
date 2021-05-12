@@ -6,7 +6,7 @@
 </script>
 
 <div class='library-block'>
-  <Accordion fill open theme='light'>
+  <Accordion fill open>
     <div slot='title' class='title'>
       <h3>{title || 'Title'}</h3>
     </div>

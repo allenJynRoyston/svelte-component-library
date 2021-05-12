@@ -29,7 +29,7 @@
 
 <LocalStorageWatch key='login' {onFetch}/>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   {#if loggedIn && loginData?._id}
     <UserFetcher {onComplete} query={loginData._id} />
 

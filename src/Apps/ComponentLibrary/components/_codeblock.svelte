@@ -8,7 +8,7 @@
 <hr>
 
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <CodeBlock open title='Example:' snippet={`
     const greeting = "hello world"
     <h1>{greeting}<h1>

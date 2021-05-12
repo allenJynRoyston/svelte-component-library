@@ -3,6 +3,7 @@
   import LoremBlock from '../../../components/LoremBlock/LoremBlock'
   import LibraryBlock from './__LibraryBlock'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 
 
   export let items = [
@@ -22,6 +23,12 @@
 <LibraryBlock >
   <GridLayout outline {items} />
 </LibraryBlock>
+
+<ThemeWrapper theme='dark'>
+  <LibraryBlock >
+    <GridLayout outline {items} />
+  </LibraryBlock>
+</ThemeWrapper>
 
 <CodeBlock title='Properties:' snippet={`
   export let size:number = 150;

@@ -15,7 +15,7 @@
 
 <ul class='grid-layout' style={style()}>
   {#each items as {component, row, column, onClick, props}, index}
-    <li class='grid-item'         
+    <li class={`root-component grid-item`}
         class:row-two={row && row === 2} 
         class:row-three={row && row === 3}     
         class:column-two={column && column === 2} 
@@ -24,7 +24,7 @@
         <svelte:component this={component} {...props} {index} />
     </li>
   {/each}
-  </ul>
+</ul>
 
 <style lang='scss'>
  @import "../../scss/src/_media-queries.scss";
@@ -40,46 +40,54 @@
 }
 
 .grid-item{
-		flex: 0 0 auto;
-		flex-wrap: wrap;
-		height: 20vh;
-		margin: .12rem;
-		width: 20rem;
-		min-width: 15rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  height: 20vh;
+  margin: .12rem;
+  width: 20rem;
+  min-width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 
+  &.outline{
+    outline: 2px solid #333;
+  }  
+
+  &.dark-theme{
     &.outline{
-      outline: 2px solid #333;
-    }
+      outline: 2px solid white;
+    }  
+  }
 
-		@supports ( display: grid ) {
-			//unset the propertied used for flexbox fallback
-			height: initial;
-			margin: unset;
-			width: initial;
-			min-width: initial;
 
-      @include desktop-and-up{
-        &.column-two{
-          grid-column: span 2;
-        }
 
-        &.column-three{
-          grid-column: span 2;
-        }      
+  @supports ( display: grid ) {
+    //unset the propertied used for flexbox fallback
+    height: initial;
+    margin: unset;
+    width: initial;
+    min-width: initial;
+
+    @include desktop-and-up{
+      &.column-two{
+        grid-column: span 2;
+      }
+
+      &.column-three{
+        grid-column: span 2;
+      }      
+    }        
+    
+    &.row-two{
+        grid-row: span 2;
+      }
+
+      &.row-three{
+        grid-row: span 2;
       }        
-      
-      &.row-two{
-          grid-row: span 2;
-        }
-
-        &.row-three{
-          grid-row: span 2;
-        }        
-		}
+  }
 }
 
 </style>

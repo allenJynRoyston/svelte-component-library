@@ -2,16 +2,26 @@
   import Footer from '../../../components/Footer/Footer.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 </script>
 
 <h2>Footer</h2>
 <hr>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <Footer >
     Made with ❤️ Allen Royston 2021
   </Footer>
 </LibraryBlock>
+
+<ThemeWrapper theme='dark'>
+  <LibraryBlock title="Dark Theme:">
+    <Footer >
+      Made with ❤️ Allen Royston 2021
+    </Footer>
+  </LibraryBlock>
+</ThemeWrapper>
+
 
 <CodeBlock title='Properties:' snippet={
   `

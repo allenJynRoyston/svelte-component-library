@@ -2,11 +2,11 @@
   export let style = null;
   export let showLeft = false;
   export let showRight = false;
-  export let showCenter = false;
-
+  export let outline = false; 
+  export let rounded = false;
 </script>
 
-<div class='three-slot' {style}>
+<div class={`root-component three-slot`} class:outline={outline} class:rounded={rounded} {style}>
 
   {#if showLeft}
     <div class='left'>
@@ -30,6 +30,22 @@
     width: 100%;
     display: flex;
     align-items: center;
+
+    &.outline{
+      width: calc(100% - 20px);
+      padding: 0 10px;
+      border: 3px solid #333;
+    }
+
+    &.rounded{
+      border-radius: 20px;
+    }
+
+    &.dark-theme{
+      &.outline{
+        border: 3px solid white;
+      }
+    }
 
     .left{
       display: flex;

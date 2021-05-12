@@ -1,20 +1,31 @@
 <script>
+  import {onMount} from 'svelte';
+
   import TwoSlot from '../TwoSlot/TwoSlot.svelte'
   import SVG from '../SVG/SVG.svelte'
 
   export let open = false
   export let fill = false
-  export let theme = 'dark';
+  export let rounded = false;
+  export let outline = false;
   
   let isOpened = open;
+  let ele;
+  let isDark = false;
 
   const toggle = () => {
     isOpened = !isOpened
   }
 
+  onMount(async() => {
+    setTimeout(() => {
+      isDark = ele.className.includes('dark-theme')
+    }, 10)
+  })
+
 </script>
 
-<div class='accordion' class:dark={theme === 'dark'} class:light={theme === 'light'}>
+<div class={`root-component accordion`} class:rounded={rounded} class:outline={outline} bind:this={ele} >
   <div class='accordion-inner'>
     <TwoSlot showLeft showRight>     
 
@@ -25,40 +36,52 @@
       </button>  
 
       <div slot='right'>
-        <SVG icon={isOpened ? 'minus' : 'plus'} onClick={toggle} fill={theme === 'dark' ? 'white' : '#333'}/>
+        <SVG icon={isOpened ? 'minus' : 'plus'} onClick={toggle} fill={isDark ? 'white' : '#333'}/>
       </div>
     </TwoSlot>
   </div>
 
-  {#if isOpened}
-    <div class='accordion-content' class:fill={fill}>
-      <div class='inner'>
-        <slot name='content'>
-          Accordion content... 
-        </slot>
-      </div>
+
+  <div class='accordion-content' class:opened={isOpened} class:fill={fill}>
+    <div class='inner'>
+      <slot name='content'>
+        Accordion content... 
+      </slot>
     </div>
-  {/if}
+  </div>
 
 </div>
 
 <style lang='scss' scoped>
   .accordion{
     width: 100%;
+    background: transparent;
 
-    &.dark{
+    &.rounded{
+      border-radius: 20px
+    }
+
+    &.outline{
+      width: calc(100% - 6px);
+      border: 3px solid #333;
+      &.dark-theme{
+        border: 3px solid #555;
+      }
+    }
+
+    
+    background: white;;
+    button, .inner{
+      color: #333;
+    }      
+
+    &.dark-theme{
       background: #333;   
       button, .inner{
         color: white;
       }      
     }
 
-    &.light{
-      background: white;;
-      button, .inner{
-        color: #333;
-      }     
-    }
      
     border-radius: 10px; 
     margin-bottom: 10px;   
@@ -75,9 +98,15 @@
   }
 
   .accordion-content{
+    height: 0;
     max-height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
+    background: transparent;
+
+    &.opened{
+      height: auto
+    }
 
     &.fill{
       max-height: 1000vh;
@@ -85,8 +114,8 @@
 
 
     .inner{
-      width: calc(100% - 20px);
-      padding: 10px;
+      width: calc(100% - 40px);
+      padding: 20px;
     }
     
   }

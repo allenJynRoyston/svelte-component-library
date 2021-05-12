@@ -1,7 +1,7 @@
 <script lang='ts'>
   import {onMount, setContext} from 'svelte';
   import {IndexDBStore} from '../../js/index'
-  import { createChannel, createDB } from '../../js/utility'  
+  import { capitalizeStr, createChannel, createDB } from '../../js/utility'  
   import {createTestData} from '../../js/testutility'
 
   import Header from '../../components/Header/Header.svelte'
@@ -25,25 +25,21 @@
   //--------------------------- 
 
    //--------------------------- CHANNEL
-  const channel = createChannel({data: [
-    {content: LocalStorageWatchAlias}, 
-    {content: LoginAlias}, 
-    {content: TestUtilityAlias}, 
-    {content: UserFetcherAlias}, 
-    {content: UserPortraitAlias}, 
+  const channel = createChannel({
+    sort: true,
+    sortBy: 'id',
+    data: [
+    {content: LocalStorageWatchAlias, id: 'localstoragewatch'}, 
+    {content: LoginAlias, id: 'login'}, 
+    {content: TestUtilityAlias, id: 'testutility'}, 
+    {content: UserFetcherAlias, id: 'userfetcher'}, 
+    {content: UserPortraitAlias, id: 'userportrait'}, 
   ]})   
 
-  const hrefroot = '#component-db?component'
+  const links = channel.data.map(({id}) => {
+    return {title: capitalizeStr(id), href: `#components-db?component=${id}`}
+  }).sort((a, b) => a?.title.localeCompare(b?.title))
 
-  const links = [
-    {title: 'LocalStorageWatch', href: `${hrefroot}=localstoragewatch` },    
-    {title: 'Login', href: `${hrefroot}=login` },   
-    {title: 'TestUtility', href: `${hrefroot}=testutility` },    
-    {title: 'UserFetcher', href: `${hrefroot}=userfetcher` },    
-    {title: 'UserPortrait', href: `${hrefroot}=userportrait` },    
-
-
-  ]
 
   const onChange = ({params}) => {       
     const index = links.findIndex(link => {

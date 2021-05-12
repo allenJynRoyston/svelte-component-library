@@ -2,18 +2,28 @@
   import ChannelButton from '../../../components/ChannelButton/ChannelButton.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-
+  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
+  
 </script>
 
 <h2>Channel Button</h2>
 <hr>
 
 
-<LibraryBlock title="Live:">
-  <ChannelButton leftIcon='globe' rightIcon='plus' >
+<LibraryBlock title="Default:">
+  <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
     <h3>Check it out!</h3>
   </ChannelButton>
 </LibraryBlock>
+
+<ThemeWrapper theme='dark'>
+  <LibraryBlock title="Default:">
+      <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
+        <h3>Check it out!</h3>
+      </ChannelButton>  
+  </LibraryBlock>
+</ThemeWrapper>
+
 
 <CodeBlock title='Properties:' snippet={`
   export let onClick = () => {}

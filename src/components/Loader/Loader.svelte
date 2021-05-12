@@ -3,7 +3,7 @@
 </script>
 
 {#if show}
-  <div class="loader">
+  <div class={`root-component loader`}>
     <div class="line" />
   </div>
 {/if}
@@ -16,18 +16,27 @@
   height: 10px;
   border-radius: 10px;
   position: relative;
+
+  .line {
+    background: #000;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    width: 100px;
+    height: 10px;
+    animation: line-bounce 1s infinite;
+  }  
+
+  &.dark-theme{
+    background: #555;    
+    .line{
+      background: #888;
+    }
+  }
 }
 
-.line {
-  background: #000;
-  border-radius: 10px;
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  width: 100px;
-  height: 10px;
-  animation: line-bounce 1s infinite;
-}
+
 
 @keyframes line-bounce {
   0%{

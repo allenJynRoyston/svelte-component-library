@@ -107,7 +107,7 @@
 
 </script>
 
-<div class='input-container' data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component input-container`} data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -138,7 +138,8 @@
     &.no-bottom-margin{
       margin-bottom: 0px;
     }
-    
+
+
     label{
       font-size: 10px;
       margin-bottom: 2px;
@@ -154,6 +155,7 @@
         color: lightgrey;
       }
     }
+
 
     &.valid{
       label{
@@ -173,7 +175,26 @@
         color: red;
         border: 1px solid red;
       }
-    }
+    }    
+
+    &.dark-theme{
+      input{
+        background: #555;
+        // border: 2px solid #666;
+      }
+
+
+      &.valid{
+        label{
+          color: black
+        }
+        input{
+          color: black;
+          border: 1px solid #555;
+        }
+      }
+    }    
+
 
   }
   

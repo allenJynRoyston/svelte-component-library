@@ -33,7 +33,7 @@
 
 <LocalStorageWatch key='login' {onFetch}/>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   <button  disabled={!loggedIn} on:click={logout} > Log Out </button>
   <button  disabled={loggedIn} on:click={login}> Log In </button>
   <br><br>

@@ -24,7 +24,7 @@
 
 <LocalStorageWatch key='login' {onFetch}/>
 
-<LibraryBlock title="Live:">
+<LibraryBlock title="Default:">
   {#if loggedIn && loginData?._id}
     <UserPortrait userId={loginData._id} />
     <UserPortrait userId={loginData._id} rounded/>

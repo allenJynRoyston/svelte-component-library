@@ -6,7 +6,10 @@
   import Channels from '../../components/Channels/Channels.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
   import SnackBar from '../../components/Snackbar/Snackbar.svelte'
-  import { createChannel } from '../../js/utility'
+  import ThemeWrapper from '../../components/ThemeWrapper/ThemeWrapper.svelte'
+  import Splash from '../../components/Splash/Splash.svelte'
+  import ThemeSwitcher from '../../components/ThemeSwitch/ThemeSwitch.svelte'
+  import { createChannel, capitalizeStr } from '../../js/utility'
 
   import ButtonAlias from './components/_button.svelte'
   import HeaderAlias from './components/_header.svelte'
@@ -29,63 +32,63 @@
   import SnackbarAlias from './components/_snackbar.svelte'
   import AccordionAlias from './components/_accordion.svelte'
   import CodeBlockAlias from './components/_codeblock.svelte'
+  import SplashAlias from './components/_splash.svelte'
+  import NavBarAlias from './components/_navBar.svelte'
+  import ThemeWrapperAlias from './components/_themewrapper.svelte'
 
-   //--------------------------- CHANNEL
-  const channel = createChannel({data: [
-    {content: HeaderAlias},
-    {content: FooterAlias},
-    {content: ButtonAlias},
-    {content: LoaderAlias},
-    {content: AccordionAlias},    
-    {content: ProductCard},
-    {content: LinkAlias},
-    {content: FormAlias},
-    {content: SearchAlias},
-    {content: HashWatchAlias},
-    {content: SVGAlias},
-    {content: ThreeSlotAlias},
-    {content: TwoSlotAlias},
-    {content: ChannelAlias},
-    {content: ChannelButtonAlias},
-    {content: GridLayoutAlias},
-    {content: ColumnLayoutAlias},
-    {content: ShoppingCartAlias},
-    {content: SnackbarAlias},
-    {content: IndexDBAlias},
-    {content: CodeBlockAlias},    
+  //---------------------------
+  let theme = 'light'
+  let refresh = true;
+  const toggleTheme= (_theme) => {
+    theme = _theme    
+    refresh = false;
+    setTimeout(() => {
+      refresh = true;
+    }, 1)
+  }
+  //---------------------------
+
+  //--------------------------- CHANNEL
+  const channel = createChannel({
+    sort: true,
+    sortBy: 'id',
+    data: [    
+    {content: HeaderAlias, id: 'header'},
+    {content: FooterAlias, id: 'footer'},
+    {content: ButtonAlias, id: 'button'},
+    {content: LoaderAlias, id: 'loader'},
+    {content: AccordionAlias, id: 'accordion'},    
+    {content: ProductCard, id: 'productcard'},
+    {content: LinkAlias, id: 'link'},
+    {content: FormAlias, id: 'form'},
+    {content: SearchAlias, id: 'search'},
+    {content: HashWatchAlias, id: 'hashwatch'},
+    {content: SVGAlias, id: 'svg'},
+    {content: ThreeSlotAlias, id: 'threeslot'},
+    {content: TwoSlotAlias, id: 'twoslot'},
+    {content: ChannelAlias, id: 'channels'},
+    {content: ChannelButtonAlias, id: 'channelbutton'},
+    {content: GridLayoutAlias, id: 'gridlayout'},
+    {content: ColumnLayoutAlias, id: 'columnlayout'},
+    {content: ShoppingCartAlias, id: 'shoppingcart'},
+    {content: SnackbarAlias, id: 'snackbar'},
+    {content: IndexDBAlias, id: 'indexdb'},
+    {content: CodeBlockAlias, id: 'codeblock'},  
+    {content: SplashAlias, id: 'splash'},    
+    {content: NavBarAlias, id: 'navbar'},    
+    {content: ThemeWrapperAlias, id: 'themewrapper'},    
   ]})   
 
-  const hrefroot = '#components?component'
 
-  const links = [
-    {title: 'Header', href: `${hrefroot}=header` },    
-    {title: 'Footer', href: `${hrefroot}=footer` },
-    {title: 'Button', href: `${hrefroot}=button` },
-    {title: 'Loader', href: `${hrefroot}=loader` },
-    {title: 'Accordion', href: `${hrefroot}=accordion` },        
-    {title: 'ProductCard', href: `${hrefroot}=productcard` },
-    {title: 'Link', href: `${hrefroot}=link` },
-    {title: 'Form', href: `${hrefroot}=form` },
-    {title: 'Search', href: `${hrefroot}=search` },
-    {title: 'HashWatch', href: `${hrefroot}=hashwatch` },
-    {title: 'SVG', href: `${hrefroot}=svg` },
-    {title: 'ThreeSlot', href: `${hrefroot}=threeslot` },
-    {title: 'TwoSlot', href: `${hrefroot}=twoslot` },
-    {title: 'Channels', href: `${hrefroot}=channels` },
-    {title: 'ChannelButton', href: `${hrefroot}=channelbutton` },
-    {title: 'GridLayout', href: `${hrefroot}=gridlayout` },
-    {title: 'ColumnLayout', href: `${hrefroot}=columnlayout` },
-    {title: 'ShoppingCart', href: `${hrefroot}=shoppingcart` },
-    {title: 'Snackbar', href: `${hrefroot}=snackbar`},
-    {title: 'IndexDB', href: `${hrefroot}=indexdb` },
-    {title: 'Codeblock', href: `${hrefroot}=codeblock` },
-  ]
+  const links = channel.data.map(({id}) => {
+    return {title: capitalizeStr(id), href: `#components?component=${id}`}
+  }).sort((a, b) => a?.title.localeCompare(b?.title))
+
 
   const onChange = ({params}) => {       
-    const index = links.findIndex(link => {
-      return link?.title.toLowerCase() === params?.component
+    const index = channel.data.findIndex(data => {
+      return data?.id.toLowerCase() === params?.component
     }) 
-    
     channel.current = index < 0 ? 0 : index
   }  
   //--------------------------- 
@@ -96,21 +99,53 @@
     snack = newSnack
   })
   //--------------------------- 
+
+  //--------------------------- 
+  let headerprops = {
+    logoSrc: './images/mock-logo-250x250.png',    
+    navEle: {
+      component: ThemeSwitcher,
+      props: {
+        onClick: toggleTheme
+      }
+    },
+    centerEle: {
+      component: Splash,
+      props: {
+        title: 'Welcome!',
+        buttonOne: {
+          text: 'Download',
+          type: 'hollow',
+          href: '#components?component=header&link=cta1',
+          size: 'large',
+          rounded: true,     
+        },
+        buttonTwo: {
+          text: 'Library',
+          type: 'primary',
+          href: '#components?component=header&link=cta2',
+          size: 'large',
+          rounded: true,          
+        }        
+      }
+    }
+  }  
+  //--------------------------- 
   
 </script>
 
 <HashWatch onChange={onChange}/>
 <SnackBar {snack} />
 
-<Header>
-  <h1>Svelte Component Library</h1>
-</Header>
 
-<ColumnLayout {links} currentIndex={channel.current} >
-  <Channels {...channel} />
-</ColumnLayout>
+<ThemeWrapper {theme} {refresh}>
+  <Header {...headerprops} expand={channel.current === 0} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1001' : '1082'}/1440/600`}>
+    <h1>Svelte Component Library</h1>
+  </Header>
 
+  <ColumnLayout {links} currentIndex={channel.current} >
+    <Channels {...channel} />
+  </ColumnLayout>
 
-<Footer />
-
-
+  <Footer />
+</ThemeWrapper>
