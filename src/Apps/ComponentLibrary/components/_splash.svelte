@@ -25,17 +25,17 @@
 <h2>Splash</h2>
 <hr>
 
-<div style='background: grey'>
-  <ThemeWrapper theme='light'>
+<ThemeWrapper theme='light' delay={1} lock>
+  <div style='background: white'>
     <Splash {...props} />
-  </ThemeWrapper>
-</div>
+  </div>
+</ThemeWrapper>
 
-<div style='background: grey; margin-top: 20px'>
-  <ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
+  <div style='background: #333; margin-top: 20px'>
     <Splash {...props} />
-  </ThemeWrapper>
-</div>
+  </div>
+</ThemeWrapper>
 
 
 <CodeBlock title='Properties:' snippet={

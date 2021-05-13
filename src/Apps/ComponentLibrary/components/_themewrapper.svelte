@@ -10,18 +10,16 @@
 <h2>Splash</h2>
 <hr>
 
-<LibraryBlock title="Light:">
-  <ThemeWrapper theme='light'>
+<LibraryBlock title="Light Theme:" >
+  <ThemeWrapper theme='light' delay={1} lock>
     <ExampleBlock />
-
   </ThemeWrapper> 
 </LibraryBlock>
 
 
-<LibraryBlock title="Dark Theme:">
-  <ThemeWrapper theme='dark' delay={1}>
+<LibraryBlock title="Dark Theme:" >
+  <ThemeWrapper theme='dark' delay={1} lock>
     <ExampleBlock />
-
   </ThemeWrapper> 
 </LibraryBlock>
 
@@ -29,7 +27,7 @@
 `} />
 
 <CodeBlock open title='Example:' snippet={`
-  <ThemeWrapper theme='light'>
+  <ThemeWrapper theme='light' lock delay={1}>
     <ExampleBlock />
   </ThemeWrapper> 
   

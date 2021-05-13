@@ -10,8 +10,8 @@
 <h2>Accordion</h2>
 <hr>
 
-<ThemeWrapper theme='light'>
-  <LibraryBlock title='Default:'>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title='Light theme:'>
     <Accordian rounded outline>
       <div slot='title'>
         <h3>Accordion</h3>
@@ -24,7 +24,7 @@
   </LibraryBlock>
 </ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title='Dark theme:'>
     <Accordian rounded outline>
       <div slot='title'>

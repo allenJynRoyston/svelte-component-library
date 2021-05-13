@@ -9,11 +9,13 @@
 <h1>Loader</h1>
 <hr>
 
-<LibraryBlock title="Default:">
-  <Loader show />
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <Loader show />
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <Loader show />
   </LibraryBlock>
@@ -26,6 +28,7 @@
 
 <CodeBlock open title='Example:' snippet={`
   <Loader show />
+
 `} />  
 
   

@@ -8,13 +8,15 @@
 <h2>Footer</h2>
 <hr>
 
-<LibraryBlock title="Default:">
-  <Footer >
-    Made with ❤️ Allen Royston 2021
-  </Footer>
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <Footer >
+      Made with ❤️ Allen Royston 2021
+    </Footer>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <Footer >
       Made with ❤️ Allen Royston 2021

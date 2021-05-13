@@ -1,11 +1,13 @@
-<script>
-  export let name = 'John Smith';
+<script lang='ts'>
+  export let name = '';
   export let image = null;
   export let bgColor = null;
-  export let textColor = 'white';
+  export let textColor = null;
   export let props = null;
+  export let index = null;
 
-  $: style = !!bgColor ? `background: ${bgColor}; color: ${textColor}` : null;
+
+  $: style = !!bgColor ? `background: ${bgColor}; color: var(${textColor})` : null;
 
 </script>
 
@@ -36,16 +38,5 @@
       // border: 1px solid white;
     }
 
-    // .image{      
-    //   width: 50px;
-    //   height: 50px;
-    //   border: 1px solid black;
-    //   border-radius: 50%;
-
-    //   @include desktop-and-up {
-    //     width: 100px;
-    //     height: 100px;
-    //   }      
-    // }
   }
 </style>

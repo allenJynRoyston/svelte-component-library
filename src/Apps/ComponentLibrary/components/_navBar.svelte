@@ -17,11 +17,13 @@
 <h2>NavBar</h2>
 <hr>
 
-<LibraryBlock title="Default:">
-  <NavBar {...props} />
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <NavBar {...props} />
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <NavBar {...props} />
   </LibraryBlock>

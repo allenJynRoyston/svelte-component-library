@@ -15,18 +15,19 @@
 <h2>GridLayout</h2>
 <hr>
 
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock  >
+    <div style='height: 300px'>
+      <ColumnLayout {links} currentIndex={1} >
+        <div style='padding: 0 10px'>
+          <h3>I am content!</h3>
+        </div>
+      </ColumnLayout>
+    </div>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<LibraryBlock  >
-  <div style='height: 300px'>
-    <ColumnLayout {links} currentIndex={1} >
-      <div style='padding: 0 10px'>
-        <h3>I am content!</h3>
-      </div>
-    </ColumnLayout>
-  </div>
-</LibraryBlock>
-
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title='Dark Theme:' >
     <div style='height: 300px'>
       <ColumnLayout {links} currentIndex={1} >

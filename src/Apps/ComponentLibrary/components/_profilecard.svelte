@@ -14,7 +14,7 @@
 <h1>ProfileCard</h1>
 <hr>
 
-<ThemeWrapper theme='light'>
+<ThemeWrapper theme='light' delay={1} lock>
   <LibraryBlock title="Light Theme:">
     <div style='display: flex; gap: 10px'>
       <ProfileCard {...props} />
@@ -24,7 +24,7 @@
   </LibraryBlock>
 </ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <div style='display: flex; gap: 10px'>
       <ProfileCard {...props} />

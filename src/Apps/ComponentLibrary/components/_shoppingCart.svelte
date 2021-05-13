@@ -20,11 +20,13 @@
 <h1>Shopping Cart</h1>
 <hr>
 
-<LibraryBlock title="Default:">
-  <ShoppingCart {items} {onClick} />
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <ShoppingCart {items} {onClick} />
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <ShoppingCart {items} {onClick} />
   </LibraryBlock>

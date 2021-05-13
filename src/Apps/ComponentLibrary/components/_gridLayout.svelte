@@ -20,11 +20,13 @@
 <h2>GridLayout</h2>
 <hr>
 
-<LibraryBlock >
-  <GridLayout outline {items} />
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title='Light Theme:'>
+    <GridLayout outline {items} />
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title='Dark Theme:' >
     <GridLayout outline {items} />
   </LibraryBlock>

@@ -36,10 +36,17 @@
   }
 
   for (const [key] of Object.entries(scales)) {
-    scales[key].forEach((x, index) => {
-      let name = `--${key}-${index}`
-      document.documentElement.style.setProperty(name, x)
-      colors[key].push({name, color: x})     
+    scales[key].forEach((color, index) => {
+      let colorName = `--${key}-${index}`
+      let textName = `--${key}-${index}-text`
+
+      const whiteContrast = chroma.contrast(color, 'white');
+      const blackContrast = chroma.contrast(color, 'black');
+
+      document.documentElement.style.setProperty(colorName, color)
+      document.documentElement.style.setProperty(textName, whiteContrast > blackContrast ? 'white' : '#333')
+
+      colors[key].push({name: colorName, textColor: textName, color})     
     })
   } 
 
@@ -75,23 +82,20 @@
 <SnackBar {snack} />
 
 <div id='app-wrapper'>
-  <ThemeWrapper {render} {theme}>
-    <HashWatch onChange={hashChange} />
+  <HashWatch onChange={hashChange} />
+  <div class='app-content'>
+    {#if view === 'components'}
+      <ComponentLibraryApp />
+    {/if}
 
-    <div class='app-content'>
-      {#if view === 'components'}
-        <ComponentLibraryApp />
-      {/if}
+    {#if view === 'component-db'}      
+      <ComponentDBLibrary />    
+    {/if}
 
-      {#if view === 'component-db'}      
-        <ComponentDBLibrary />    
-      {/if}
-
-      {#if view === 'strong-cookie'}
-        <StrongCookieApp />
-      {/if}      
-    </div>
-  </ThemeWrapper>
+    {#if view === 'strong-cookie'}
+      <StrongCookieApp />
+    {/if}      
+  </div>
 </div>
 
 

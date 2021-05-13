@@ -9,11 +9,13 @@
 <h1>Link</h1>
 <hr>
 
-<LibraryBlock section >
-  <Link href='/' >I am a link</Link>
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title='Light theme:' >
+    <Link href='/' >I am a link</Link>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title='Dark Theme:' section >
     <Link href='/' >I am a link</Link>
   </LibraryBlock>

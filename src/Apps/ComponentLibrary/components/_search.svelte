@@ -9,11 +9,13 @@
 <h1>Search</h1>
 <hr>
 
-<LibraryBlock title="Default:">
-  <Search />
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <Search />
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <Search />
   </LibraryBlock>

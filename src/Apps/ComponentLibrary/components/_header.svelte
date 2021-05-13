@@ -88,15 +88,17 @@
   </Header>
 </LibraryBlock>
 
-<LibraryBlock title="Expanded:">
-  <Header {...propsTwo} expand>
-    <h1>
-      Header Name
-    </h1>
-  </Header>
-</LibraryBlock>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <Header {...propsTwo} expand>
+      <h1>
+        Header Name
+      </h1>
+    </Header>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <Header {...propsOne} expand>
       <h1>

@@ -1,14 +1,11 @@
 <script lang='ts'>
   import {getContext, setContext} from 'svelte';
   import Header from '../../../components/Header/Header.svelte'
-  import Footer from '../../../components/Footer/Footer.svelte'  
   import ColumnLayout from '../../../components/Layout/ColumnLayout.svelte'
   import Channels from '../../../components/Channels/Channels.svelte'
   import HashWatch from '../../../components/URLWatcher/HashWatch.svelte'
   import SnackBar from '../../../components/Snackbar/Snackbar.svelte'
   import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
-  import Splash from '../../../components/Splash/Splash.svelte'
-  import ThemeSwitcher from '../../../components/ThemeSwitch/ThemeSwitch.svelte'
   import { createChannel, capitalizeStr } from '../../../js/utility'
 
   import ButtonAlias from '../components/_button.svelte'
@@ -39,7 +36,7 @@
 
   export let headerprops;
 
-  const theme = getContext('theme');
+  const theme:string = getContext('theme');
 
   //--------------------------- CHANNEL
   const channel = createChannel({    
@@ -97,14 +94,15 @@
   
 </script>
 
-<HashWatch onChange={onChange}/>
-<SnackBar {snack} />
+<ThemeWrapper {theme} delay={1} lock>
+  <HashWatch onChange={onChange}/>
+  <SnackBar {snack} />
 
-<Header {...headerprops} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
-  <h1>Svelte Component Library</h1>
-</Header>
+  <Header {...headerprops} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
+    <h1>Svelte Component Library</h1>
+  </Header>
 
-<ColumnLayout {links} currentIndex={channel.current} >
-  <Channels {...channel} animate />
-</ColumnLayout>
-
+  <ColumnLayout {links} currentIndex={channel.current} >
+    <Channels {...channel} animate />
+  </ColumnLayout>
+</ThemeWrapper>

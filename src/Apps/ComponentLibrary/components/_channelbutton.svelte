@@ -9,14 +9,15 @@
 <h2>Channel Button</h2>
 <hr>
 
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
+      <h3>Check it out!</h3>
+    </ChannelButton>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<LibraryBlock title="Default:">
-  <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
-    <h3>Check it out!</h3>
-  </ChannelButton>
-</LibraryBlock>
-
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
       <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
         <h3>Check it out!</h3>

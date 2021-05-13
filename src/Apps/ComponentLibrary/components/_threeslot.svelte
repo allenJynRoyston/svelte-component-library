@@ -8,23 +8,25 @@
 <h1>ThreeSlot</h1>
 <hr>
 
-<LibraryBlock title="Default:">
-  <ThreeSlot showLeft showRight outline rounded >
-    <div slot='left'>
-      <h2>Left</h2>
-    </div>
+<ThemeWrapper theme='light' delay={1} lock>
+  <LibraryBlock title="Light Theme:">
+    <ThreeSlot showLeft showRight outline rounded >
+      <div slot='left'>
+        <h2>Left</h2>
+      </div>
 
-    <div style='text-align: center'>
-      <p>Content that is placed inbetween.</p>
-    </div>
-    
-    <div slot='right'>
-      <button>Right</button>
-    </div>
-  </ThreeSlot>
-</LibraryBlock>
+      <div style='text-align: center'>
+        <p>Content that is placed inbetween.</p>
+      </div>
+      
+      <div slot='right'>
+        <button>Right</button>
+      </div>
+    </ThreeSlot>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark' delay={1}>
+<ThemeWrapper theme='dark' delay={1} lock>
   <LibraryBlock title="Dark Theme:">
     <ThreeSlot showLeft showRight outline rounded >
       <div slot='left'>

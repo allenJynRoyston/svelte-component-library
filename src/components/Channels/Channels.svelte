@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import {onMount, tick} from 'svelte'  
+  import {onMount} from 'svelte'  
   import Loader from '../Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -89,9 +89,7 @@
     current != currentChannel && goto(current)     
     topPos = ele?.getBoundingClientRect().top || 0
   }  
-
-  
-  
+ 
 </script>
 
 <div class:embedded={embedded}>
