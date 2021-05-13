@@ -19,7 +19,7 @@
 
 
 <LibraryBlock title="Dark Theme:">
-  <ThemeWrapper theme='dark'>
+  <ThemeWrapper theme='dark' delay={1}>
     <ExampleBlock />
 
   </ThemeWrapper> 

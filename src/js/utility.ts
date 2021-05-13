@@ -4,6 +4,7 @@ type ChannelDataType = {
   title?: string;
   render?: boolean;
   active?: boolean;
+  props?: any;
 };
 
 type CreateChannelType = {

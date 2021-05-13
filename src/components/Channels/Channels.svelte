@@ -15,6 +15,7 @@
   export let backtotop = false;
   export let animate = false;
   export let nopadding = false;
+  export let props = null;
   
 
   let ready = false
@@ -97,11 +98,11 @@
   <div class='channels' class:animate={animate} >
     {#if ready}
       <div class='channels-container' bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
-        {#each data as {content, render, active}}
+        {#each data as {content, render, active, props}}
           <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
             <div class='channel__inner' class:nopadding={nopadding} bind:this={ele} class:embedded={embedded} style={innerStyle} >
               {#if render}
-                <svelte:component this={content} />
+                <svelte:component this={content} {...props}/>
               {:else}
                 <Loader show />    
               {/if}

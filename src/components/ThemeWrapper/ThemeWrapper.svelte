@@ -5,8 +5,13 @@
   export let delay = 0;
   export let refresh = true;
   export let ele = null;
+  export let render = false;
 
   onMount(() => {
+    getChildren()
+  })
+
+  const getChildren = () => {
     setTimeout(() => {
       if(!!ele){
         for (let child of ele.querySelectorAll('.root-component')) {
@@ -18,8 +23,13 @@
           child.classList.add(`${theme}-theme`);
         }         
       } 
-    }, delay)
-  })
+    }, delay)    
+  }
+
+
+  $: {      
+    render && getChildren()
+  }  
 
 </script>
 

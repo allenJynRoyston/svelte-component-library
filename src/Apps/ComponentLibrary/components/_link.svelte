@@ -13,7 +13,7 @@
   <Link href='/' >I am a link</Link>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title='Dark Theme:' section >
     <Link href='/' >I am a link</Link>
   </LibraryBlock>

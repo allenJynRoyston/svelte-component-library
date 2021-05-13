@@ -14,7 +14,7 @@
   </Footer>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
     <Footer >
       Made with ❤️ Allen Royston 2021

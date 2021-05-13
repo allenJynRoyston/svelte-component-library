@@ -24,7 +24,7 @@
   </ThreeSlot>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
     <ThreeSlot showLeft showRight outline rounded >
       <div slot='left'>

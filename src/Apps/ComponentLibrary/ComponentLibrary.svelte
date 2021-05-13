@@ -1,44 +1,14 @@
 <script lang='ts'>
-  import {setContext} from 'svelte';
-  import Header from '../../components/Header/Header.svelte'
+  import {getContext, setContext} from 'svelte';
   import Channels from '../../components/Channels/Channels.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
-  import SnackBar from '../../components/Snackbar/Snackbar.svelte'
-  import ThemeWrapper from '../../components/ThemeWrapper/ThemeWrapper.svelte'
   import Splash from '../../components/Splash/Splash.svelte'
   import NavBar from '../../components/NavBar/NavBar.svelte'
   import { createChannel } from '../../js/utility'
-
-
   import Home from './pages/home.svelte';
   import Library from './pages/library.svelte';
 
-  //---------------------------
-  let theme = 'light'
-  setContext('theme', theme)
-  //---------------------------
-
-  //--------------------------- CHANNEL
-  const channel = createChannel({    
-    data: [    
-      {content: Home, id: 'home'},
-      {content: Library, id: 'library'},  
-  ]})   
-
-  const onChange = ({params}) => {       
-    const index = channel.data.findIndex(data => {
-      return data?.id.toLowerCase() === params?.page
-    }) 
-    channel.current = index < 0 ? 0 : index
-  }  
-  //--------------------------- 
-
-  //---------------------------  SNACKBAR CODE
-  let snack;
-  setContext('addSnack', (newSnack) => {
-    snack = newSnack
-  })
-  //--------------------------- 
+  const theme:string = getContext('theme')
 
   //--------------------------- 
   let headerprops = {
@@ -74,21 +44,26 @@
       }
     }
   }  
+  //---------------------------   
+
+  //--------------------------- CHANNEL
+  const channel = createChannel({    
+    data: [    
+      {content: Home, id: 'home', props: {headerprops}},
+      {content: Library, id: 'library', props: {headerprops}},  
+  ]})   
+
+  const onChange = ({params}) => {       
+    const index = channel.data.findIndex(data => {
+      return data?.id.toLowerCase() === params?.page
+    }) 
+    channel.current = index < 0 ? 0 : index
+  }  
   //--------------------------- 
+
 
 </script>
 
 <HashWatch onChange={onChange}/>
-<SnackBar {snack} />
+<Channels {...channel} nopadding />
 
-
-<ThemeWrapper {theme}>
-  
-    <Header {...headerprops} expand={channel.current === 0} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
-      <h1>Svelte Component Library</h1>
-    </Header>
-
-    <Channels {...channel} nopadding />
-
-
-</ThemeWrapper>

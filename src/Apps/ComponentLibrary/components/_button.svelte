@@ -13,17 +13,187 @@
 <h2>Button</h2>
 <hr>
 
-<LibraryBlock title="Default:">
-  <Button >
-    Click Me!
-  </Button>
-</LibraryBlock>
+<ThemeWrapper theme='light'>
+  <LibraryBlock title="Light Theme:">
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary'>
+        Primary
+      </Button>
 
-<ThemeWrapper theme='dark'>
-  <LibraryBlock title="Dark Theme:">    
-      <Button >
-        Click Me!
+      <Button type='secondary'>
+        Secondary
+      </Button>
+      
+      <Button type='success' >
+        Success
+      </Button>  
+
+      <Button type='warning' >
+        Warning
       </Button>    
+      
+      <Button type='danger' >
+        Danger
+      </Button>          
+    </div> 
+
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' disabled>
+        Primary
+      </Button>
+
+      <Button type='secondary' disabled>
+        Secondary
+      </Button>
+      
+      <Button type='success' disabled >
+        Success
+      </Button>  
+
+      <Button type='warning' disabled >
+        Warning
+      </Button>    
+      
+      <Button type='danger' disabled>
+        Danger
+      </Button>          
+    </div>     
+    
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' hollow >
+        Primary
+      </Button>
+
+      <Button type='secondary' hollow >
+        Secondary
+      </Button>
+      
+      <Button type='success' hollow >
+        Success
+      </Button>  
+
+      <Button type='warning' hollow >
+        Warning
+      </Button>    
+      
+      <Button type='danger' hollow >
+        Danger
+      </Button>          
+    </div> 
+    
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' hollow rounded>
+        Primary
+      </Button>
+
+      <Button type='secondary' rounded >
+        Secondary
+      </Button>
+      
+      <Button type='success' hollow rounded>
+        Success
+      </Button>  
+
+      <Button type='warning' rounded >
+        Warning
+      </Button>    
+      
+      <Button type='danger' hollow rounded >
+        Danger
+      </Button>          
+    </div>     
+  </LibraryBlock>
+</ThemeWrapper>
+
+<ThemeWrapper theme='dark' delay={1}>
+  <LibraryBlock title="Dark Theme:" >
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary'>
+        Primary
+      </Button>
+
+      <Button type='secondary'>
+        Secondary
+      </Button>
+      
+      <Button type='success' >
+        Success
+      </Button>  
+
+      <Button type='warning' >
+        Warning
+      </Button>    
+      
+      <Button type='danger' >
+        Danger
+      </Button>          
+    </div>  
+
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' disabled>
+        Primary
+      </Button>
+
+      <Button type='secondary' disabled>
+        Secondary
+      </Button>
+      
+      <Button type='success' disabled >
+        Success
+      </Button>  
+
+      <Button type='warning' disabled >
+        Warning
+      </Button>    
+      
+      <Button type='danger' disabled>
+        Danger
+      </Button>          
+    </div>        
+
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' hollow >
+        Primary
+      </Button>
+
+      <Button type='secondary' hollow >
+        Secondary
+      </Button>
+      
+      <Button type='success' hollow >
+        Success
+      </Button>  
+
+      <Button type='warning' hollow >
+        Warning
+      </Button>    
+      
+      <Button type='danger' hollow >
+        Danger
+      </Button>          
+    </div>     
+    
+    <div style='display: flex; gap: 20px; margin-bottom: 10px'>
+      <Button type='primary' hollow rounded>
+        Primary
+      </Button>
+
+      <Button type='secondary' rounded >
+        Secondary
+      </Button>
+      
+      <Button type='success' hollow rounded>
+        Success
+      </Button>  
+
+      <Button type='warning' rounded >
+        Warning
+      </Button>    
+      
+      <Button type='danger' hollow rounded >
+        Danger
+      </Button>          
+    </div>        
   </LibraryBlock>
 </ThemeWrapper>
 
@@ -40,11 +210,12 @@
   export let href = null;
   export let rounded = false;
   export let size = 'normal'
+  export let hollow = false;
   
   `} />
 
 <CodeBlock open title='Example:' snippet={`
-  <Button >
+  <Button hollow rounded type='primary'>
     Click Me!
   </Button>
   `} />  

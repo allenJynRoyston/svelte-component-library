@@ -18,7 +18,7 @@
   </TwoSlot>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
     <TwoSlot showLeft showRight outline rounded>
       <h2>Left</h2>

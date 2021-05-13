@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import {setContext} from 'svelte';
+  import {getContext, setContext} from 'svelte';
   import Header from '../../../components/Header/Header.svelte'
   import Footer from '../../../components/Footer/Footer.svelte'  
   import ColumnLayout from '../../../components/Layout/ColumnLayout.svelte'
@@ -35,19 +35,11 @@
   import SplashAlias from '../components/_splash.svelte'
   import NavBarAlias from '../components/_navBar.svelte'
   import ThemeWrapperAlias from '../components/_themewrapper.svelte'
+  import ProfileCardAlias from '../components/_profilecard.svelte'
 
-  //---------------------------
-  let theme = 'light'
-  let refresh = true;
-  const toggleTheme= (_theme) => {
-    theme = _theme    
-    refresh = false;
-    setTimeout(() => {
-      refresh = true;
-    }, 1)
-  }
-  setContext('theme', theme)
-  //---------------------------
+  export let headerprops;
+
+  const theme = getContext('theme');
 
   //--------------------------- CHANNEL
   const channel = createChannel({    
@@ -77,7 +69,8 @@
     {content: CodeBlockAlias, id: 'codeblock'},  
     {content: SplashAlias, id: 'splash'},    
     {content: NavBarAlias, id: 'navbar'},    
-    {content: ThemeWrapperAlias, id: 'themewrapper'},    
+    {content: ThemeWrapperAlias, id: 'themewrapper'}, 
+    {content: ProfileCardAlias, id: 'profilecard'},    
   ]})   
 
 
@@ -101,43 +94,15 @@
   })
   //--------------------------- 
 
-  //--------------------------- 
-  let headerprops = {
-    logoSrc: './images/mock-logo-250x250.png',    
-    navEle: {
-      component: ThemeSwitcher,
-      props: {
-        onClick: toggleTheme
-      }
-    },
-    centerEle: {
-      component: Splash,
-      props: {
-        title: 'Welcome!',
-        buttonOne: {
-          text: 'Download',
-          type: 'hollow',
-          href: '#components?component=header&link=cta1',
-          size: 'large',
-          rounded: true,     
-        },
-        buttonTwo: {
-          text: 'Library',
-          type: 'primary',
-          href: '#components?component=header&link=cta2',
-          size: 'large',
-          rounded: true,          
-        }        
-      }
-    }
-  }  
-  //--------------------------- 
   
 </script>
 
 <HashWatch onChange={onChange}/>
 <SnackBar {snack} />
 
+<Header {...headerprops} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
+  <h1>Svelte Component Library</h1>
+</Header>
 
 <ColumnLayout {links} currentIndex={channel.current} >
   <Channels {...channel} animate />

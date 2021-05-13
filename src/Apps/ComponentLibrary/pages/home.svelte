@@ -1,57 +1,51 @@
 <script lang='ts'>
-  import {onMount} from 'svelte';
+  import {getContext} from 'svelte';
   import InnerContainer from '../../../components/InnerContainer/InnerContainer.svelte'
   import Footer from '../../../components/Footer/Footer.svelte'
   import Header from '../../../components/Header/Header.svelte'
-  import Splash from '../../../components/Splash/Splash.svelte'
-  import NavBar from '../../../components/NavBar/NavBar.svelte'
+  import ColorBlock from '../../../components/ColorBlock/ColorBlock.svelte'
+  import GridLayout from '../../../components/Layout/GridLayout.svelte'
 
-  //--------------------------- 
-  let headerprops = {
-    logoSrc: './images/mock-logo-250x250.png',    
-    navEle: {
-      component: NavBar,
-      props: {
-        links: [
-          {title: 'Home', icon: 'icon', href: '#components?page=home'},
-          {title: 'Library', icon: 'icon', href: '#components?page=library'},
-          {title: 'Github', icon: 'icon', href: '#components?page=github'}
-        ]    
-      }
-    },
-    centerEle: {
-      component: Splash,
-      props: {
-        title: 'Welcome!',
-        buttonOne: {
-          text: 'Download',
-          type: 'hollow',
-          href: '#components?component=header&link=cta1',
-          size: 'large',
-          rounded: true,     
-        },
-        buttonTwo: {
-          text: 'Library',
-          type: 'primary',
-          href: '#components?component=header&link=cta2',
-          size: 'large',
-          rounded: true,          
-        }        
-      }
+  export let headerprops;
+
+  const theme = getContext('theme');
+  const colors = getContext('colors');
+
+  let colorBlocks:any = {}
+
+  for (const [key, value] of Object.entries(colors)) {
+    let items = []
+    value.forEach(x => {
+      const {name, color} = x;      
+      items = [...items, {component: ColorBlock, props: {name, bgColor: color}}]
+    })
+    colorBlocks[key] = {
+      items
     }
-  }  
-  //--------------------------- 
+  }
+
 
 </script>
 
 <div class='home-page'>
   <InnerContainer>
 
-   
+    <Header {...headerprops} expand bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
+      <h1>Svelte Component Library</h1>
+    </Header>
+
     <div class='home-section'>
       <h1>
-        Home
+        Colors:
       </h1>
+      
+      {#each Object.entries(colorBlocks) as [key]}
+        <div class='color-blocks'>
+          <h2>{key}:</h2>
+          <GridLayout outline items={colorBlocks[key].items} />
+        </div>
+      {/each}
+
     </div>
 
     <Footer />
@@ -65,14 +59,18 @@
   .home-page{
     display: flex;
     flex-direction: column;
+    background: var(--black-1);
+    color: var(--white-0)
   }
 
   .home-section{
     min-height: 100vh;
+    padding: 10px;
   }
 
-  .inner{    
-    overflow-y: auto
+  .color-blocks{
+    margin-bottom: 100px;
   }
+
 </style>
   

@@ -10,19 +10,21 @@
 <h2>Accordion</h2>
 <hr>
 
-<LibraryBlock title='Default:'>
-  <Accordian rounded outline>
-    <div slot='title'>
-      <h3>Accordion</h3>
-    </div>
+<ThemeWrapper theme='light'>
+  <LibraryBlock title='Default:'>
+    <Accordian rounded outline>
+      <div slot='title'>
+        <h3>Accordion</h3>
+      </div>
 
-    <div slot='content'>
-      <LoremBlock />
-    </div>
-  </Accordian>
-</LibraryBlock>
+      <div slot='content'>
+        <LoremBlock />
+      </div>
+    </Accordian>
+  </LibraryBlock>
+</ThemeWrapper>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title='Dark theme:'>
     <Accordian rounded outline>
       <div slot='title'>

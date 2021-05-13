@@ -1,6 +1,7 @@
 <script lang='ts'>
   import Link from '../Link/Link.svelte'
   import SVG from '../SVG/SVG.svelte'
+  import InnerContainer from '../InnerContainer/InnerContainer.svelte'
 
   export let links = []
   export let currentIndex = null;
@@ -22,13 +23,15 @@
           <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} size={16} />
         </button>
 
-        <div class='directory-inner' class:collapse={collapse}>
-          {#each links as { title, href }, i}
-            <Link inherit type='bar' active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
-              {title} 
-            </Link>        
-          {/each}  
-        </div>
+        <InnerContainer>
+          <div class='directory-inner' class:collapse={collapse}>
+            {#each links as { title, href }, i}
+              <Link inherit type='bar' active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
+                {title} 
+              </Link>        
+            {/each}  
+          </div>
+        </InnerContainer>
       </div>
 
       <div class='content' class:collapse={collapse}>
@@ -44,8 +47,7 @@
 
 .layout {
   width: 100%;
-  display: block;
-  overflow: auto;
+  display: block;  
 
   .layout-inner{
     display: flex;
@@ -57,8 +59,7 @@
     display: flex;
     flex-direction: row;     
     position: relative;
-    font-size: 12px;
-    overflow: hidden;
+    font-size: 12px;    
 
     &.collapse{
       width: 100%;
@@ -72,24 +73,23 @@
   }
 
   .directory-inner{
-    width: auto;
-    height: calc(100% - 90px);
     display: flex; 
     flex-direction: column;
     overflow-x: hidden;
-    overflow-y: auto;
-    padding: 10px;
     background: #999;
-    color: var(--white-0);;    
+    color: var(--white-0);
+    
+    height: calc(100% - 20px);
+    padding: 10px 50px 10px 10px; 
+
  
-    @include desktop-and-up {
-      padding: 10px 50px 10px 10px!important;   
+    @include desktop-and-up {     
+      width: auto!important;
       text-align: left!important;
     }    
 
     &.collapse{
-      width: 100%;
-      padding: 10px 0;   
+      width: 100vw;
       text-align: center;
     }
   }
@@ -98,10 +98,10 @@
     color: var(--black-1);
 
     &.dark-theme{
-      background: var(--black-1);
+      background: var(--black-5);
       color: var(--white-0);
       .directory-inner{
-        background: var(--black-0);
+        background: var(--black-3);
       }
     }  
 

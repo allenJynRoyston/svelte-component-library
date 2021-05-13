@@ -24,7 +24,7 @@
   <ShoppingCart {items} {onClick} />
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
     <ShoppingCart {items} {onClick} />
   </LibraryBlock>

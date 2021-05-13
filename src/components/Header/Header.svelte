@@ -54,6 +54,8 @@
     overflow: hidden;
     padding: 20px;
     background: var(--white-0);
+    box-shadow: 0 10px 10px -5px var(--black-6);
+
         
     .inner{
       display: flex;

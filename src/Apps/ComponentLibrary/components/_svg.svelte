@@ -92,7 +92,7 @@ export let items = svgs.map(svg =>{
   <GridLayout {items} size={50} gap={10} outline/>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
     <GridLayout {items} size={50} gap={10} outline/>
   </LibraryBlock>

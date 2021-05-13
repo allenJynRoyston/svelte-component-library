@@ -19,7 +19,7 @@
 
 <style lang='scss'>
   .inner-container{    
-    overflow-y: auto
+    overflow-y: auto;
   }
 </style>
   

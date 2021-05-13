@@ -32,7 +32,7 @@
 </div>
 
 <div style='background: grey; margin-top: 20px'>
-  <ThemeWrapper theme='dark'>
+  <ThemeWrapper theme='dark' delay={1}>
     <Splash {...props} />
   </ThemeWrapper>
 </div>

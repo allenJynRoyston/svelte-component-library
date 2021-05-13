@@ -16,7 +16,7 @@
   </ChannelButton>
 </LibraryBlock>
 
-<ThemeWrapper theme='dark'>
+<ThemeWrapper theme='dark' delay={1}>
   <LibraryBlock title="Dark Theme:">
       <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
         <h3>Check it out!</h3>
