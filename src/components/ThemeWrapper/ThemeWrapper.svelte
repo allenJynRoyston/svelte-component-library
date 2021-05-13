@@ -8,14 +8,16 @@
 
   onMount(() => {
     setTimeout(() => {
-      for (let child of ele.querySelectorAll('.root-component')) {
-        child.classList.remove("dark-theme");
-        child.classList.remove("light-theme");
-      }
+      if(!!ele){
+        for (let child of ele.querySelectorAll('.root-component')) {
+          child.classList.remove("dark-theme");
+          child.classList.remove("light-theme");
+        }
 
-      for (let child of ele.querySelectorAll('.root-component')) {
-        child.classList.add(`${theme}-theme`);
-      }          
+        for (let child of ele.querySelectorAll('.root-component')) {
+          child.classList.add(`${theme}-theme`);
+        }         
+      } 
     }, delay)
   })
 

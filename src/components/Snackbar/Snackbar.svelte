@@ -1,10 +1,8 @@
 <script lang="ts">
 //--------------------------- IMPORTS  
-import { onDestroy } from 'svelte';
-import { tweened } from 'svelte/motion';
-import { cubicOut } from 'svelte/easing';
-
+import { onMount, getContext, onDestroy } from 'svelte';
 import SVG from '../SVG/SVG.svelte'
+import Loader from '../Loader/Loader.svelte';
 
 export let snack = null;
 export let onComplete = () => {};
@@ -113,7 +111,17 @@ const returnIcon = (type) => {
   }  
 }
 
+const theme = getContext('theme')
+// const colors:any = getContext('colors');
+//   let isDark = false;
+//   let ele;
 
+//   onMount(async() => {
+//     setTimeout(() => {
+//       isDark = ele?.className.includes('dark-theme')
+//       console.log(isDark)
+//     }, 100) 
+//   })  
 
 //---------------------------
 $: {
@@ -123,10 +131,10 @@ $: {
 
 </script>
 
-<div class='snackbar'>
+<div class={`snackbar`} >
   {#each snacks as snack (snack.id)}
     <div 
-      class={`snack ${snack.type} ${snack?.closeOnClick && 'clickable'}`} 
+      class={`snack ${!!theme ? `${theme}-theme` : ''} ${snack?.type || ''} ${snack?.closeOnClick ? 'clickable' : ''}`} 
       class:animateIn={snack.animateIn} 
       class:animateOut={!snack.animateIn}
       class:btmpadding={snack?.duration}
@@ -151,7 +159,9 @@ $: {
       </div>
 
       {#if snack?.duration}
-        <progress class='progress-bar' />
+        <div class='progress-bar'>
+          <Loader show />
+        </div>
       {/if}
 
     </div>
@@ -164,15 +174,14 @@ $: {
   .snackbar{
     position: fixed;
     bottom: 10px;
-    right: 10px;
+    right: 30px;
     z-index: 100;  
     overflow: hidden;  
     display: flex;
     flex-direction: column-reverse
   }
 
-  .snack{
-    background: #0A0B0B;
+  .snack{    
     padding-left: 15px;
     display: flex;
     justify-content: center;
@@ -180,6 +189,7 @@ $: {
     border-radius: 5px;
     min-width: 150px;
     font-size: 12px;
+    background: var(--black-0);    
 
     &.btmpadding{
       padding-bottom: 4px;
@@ -190,7 +200,7 @@ $: {
     }
 
     &:hover{
-      background: #262B2A
+      background: var(--black-2);
     }
 
     &.primary{
@@ -208,6 +218,32 @@ $: {
     &.error{
       color: red;
     }    
+
+    &.dark-theme{
+      background: var(--black-0);    
+
+
+      &:hover{
+        background: var(--black-2);    
+      }
+
+      &.primary{
+        color: lightblue;
+      }
+
+      &.success{
+        color: green;
+      }
+
+      &.warning{
+        color: orange;
+      }   
+
+      &.error{
+        color: red;
+      }   
+    }
+
 
     &:not(:last-child){
       margin-top: 10px;

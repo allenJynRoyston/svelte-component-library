@@ -1,25 +1,22 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
+  import {onMount, getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   export let items = []
   export let onClick = (index) => {};
   //---------------------------
 
 
-  //--------------------------- COMPONENT PROPS  
-  //---------------------------
+  const colors:any = getContext('colors');
+  let isDark = false;
+  let ele;
 
-  //--------------------------- APP CONTEXT   
-  //---------------------------
-      
-  //--------------------------- VARS
-  //---------------------------
-
-  //--------------------------- ONMOUNT
-  //---------------------------     
-
-  //--------------------------- EVENT HANDLERS
-  //---------------------------
+  onMount(async() => {
+    setTimeout(() => {
+      isDark = ele?.className.includes('dark-theme')
+      console.log(isDark)
+    }, 100) 
+  }) 
 
   let renderItems = [...items]
 
@@ -56,44 +53,53 @@
 </script>
 
 {#if renderItems.length > 0}
-<table class='shopping-cart'>
-  <tbody>
-    <tr class='table-header'>
-      {#each header as {title, align, applyClass}}
-        <th class={applyClass} style={`text-align: ${align}`}>{title}</th>
-      {/each}      
-    </tr>
-
-    {#each renderItems as {name, price, quantity}, index}
-      <tr>
-        <td class={`${returnClass(0)}`} style={`${returnAlign(0)}`} >
-          <button on:click={() => {deleteItem(index)}}>
-            <SVG icon='bin' fill='inherit' />
-          </button>          
-        </td>        
-        <td class={`${returnClass(1)}`} style={`${returnAlign(1)}`}>
-          <button on:click={() => {onClick(index)}}>
-            {name}
-          </button>
-        </td>
-        <td class={`${returnClass(2)}`} style={`${returnAlign(2)}`}>{price}</td>
-        <td class={`${returnClass(3)}`} style={`${returnAlign(3)}; width: 50px`}>{quantity}</td>
-        <td class={`${returnClass(4)}`} style={`${returnAlign(4)}; width: 100px`}>{(Number(price) * Number(quantity)).toFixed(2)}</td>
+  <table class={`root-component shopping-cart`} bind:this={ele}>
+    <tbody>
+      <tr class='table-header'>
+        {#each header as {title, align, applyClass}}
+          <th class={applyClass} style={`text-align: ${align}`}>{title}</th>
+        {/each}      
       </tr>
-    {/each}   
-  </tbody>
-</table>
 
-<div class='shopping-cart-total'>
-  <p>Grand Total: <span class='grand-total bold'>{returnTotal()}</span></p>
-</div>
+      {#each renderItems as {name, price, quantity}, index}
+        <tr>
+          <td class={`${returnClass(0)}`} style={`${returnAlign(0)}`} >
+            <button on:click={() => {deleteItem(index)}}>
+              <SVG icon='bin' fill={!isDark ? colors.black[0].color : colors.white[0].color} />
+            </button>          
+          </td>        
+          <td class={`${returnClass(1)}`} style={`${returnAlign(1)}`}>
+            <button on:click={() => {onClick(index)}}>
+              {name}
+            </button>
+          </td>
+          <td class={`${returnClass(2)}`} style={`${returnAlign(2)}`}>{price}</td>
+          <td class={`${returnClass(3)}`} style={`${returnAlign(3)}; width: 50px`}>{quantity}</td>
+          <td class={`${returnClass(4)}`} style={`${returnAlign(4)}; width: 100px`}>{(Number(price) * Number(quantity)).toFixed(2)}</td>
+        </tr>
+      {/each}   
+    </tbody>
+  </table>
+
+  <div class='shopping-cart-total' >
+    <p>Grand Total: <span class='grand-total'>{returnTotal()}</span></p>
+  </div>
 {:else}
   <p>Nothing in shopping cart.</p>
 {/if}
 
 <style lang='scss' scoped>
   .shopping-cart{        
-    width: 100%;
+    width: calc(100% - 20px);
+    padding: 10px;
+    
+    background: var(--white-0);
+    color: var(--black-1);
+
+    &.dark-theme{
+      background: var(--black-1);
+      color: var(--white-0);      
+    }
 
     .small{
       width: 50px;
@@ -118,6 +124,7 @@
       background: none;
       border: none;
       outline: none;
+      color: inherit;
     }
   }  
   
@@ -127,6 +134,7 @@
   }
 
   .grand-total{
+    font-weight: 700;
     margin-left: 10px;
   }
 </style>

@@ -34,7 +34,7 @@
     &.outline{
       width: calc(100% - 20px);
       padding: 0 10px;
-      border: 3px solid #333;
+      border: 3px solid var(--black-1);
     }
 
     &.rounded{
@@ -43,7 +43,7 @@
 
     &.dark-theme{
       &.outline{
-        border: 3px solid white;
+        border: 3px solid var(--white-0);
       }
     }
 

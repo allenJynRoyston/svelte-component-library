@@ -19,7 +19,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock title="Default:">
+  <LibraryBlock title="Dark Theme:">
     <TwoSlot showLeft showRight outline rounded>
       <h2>Left</h2>
   

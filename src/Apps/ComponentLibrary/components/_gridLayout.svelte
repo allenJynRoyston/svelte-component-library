@@ -25,7 +25,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock >
+  <LibraryBlock title='Dark Theme:' >
     <GridLayout outline {items} />
   </LibraryBlock>
 </ThemeWrapper>

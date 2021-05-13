@@ -15,8 +15,8 @@
 
 
     &.dark-theme{
-      background: #555;
-      color: white;
+      background: var(--black-2);
+      color: var(--white-0);
     }
   }
 </style>

@@ -18,10 +18,10 @@
     display: flex;
     gap: 10px;
     font-weight: 700;
-    color: white;
+    color: var(--black-1);
 
     &.dark-theme{
-      color: #333;
+      color: var(--white-0);
     }
   }
 </style>

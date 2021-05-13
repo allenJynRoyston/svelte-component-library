@@ -34,29 +34,26 @@
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
-    color:white;
-
+    color: var(--black-1);
 
     &.inherit{
-      color: inherit!important
+      color: inherit!important; 
     }
-
-    
 
     &.active{
       font-weight: 700;
       
       &.underline{
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid var(--black-1);;
       }
     }
 
     &.dark-theme{
-      color: black;
+      color: var(--white-0);
       &.active{
 
         &.underline{
-          border-bottom: 2px solid black;
+          border-bottom: 2px solid var(--white-0);;
         }
       }
     }

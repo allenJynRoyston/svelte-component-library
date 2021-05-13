@@ -47,16 +47,16 @@
     }
 
     &.hollow {
-      border: 3px solid white;
+      border: 3px solid var(--black-1);
       background: none;
-      color: white;
+      color: var(--black-1);
 
       &.dark-theme{
-        border: 3px solid #333;
-        color: #333;
+        border: 3px solid var(--white-0);
+        color: var(--white-0);
 
         &:active{
-          background: black;
+          background: var(--white-1);
         }        
       }
 
@@ -72,12 +72,12 @@
       
 
       &.dark-theme{
-        border: 3px solid #555;
-        background:#555;
-        color: white;
+        border: 3px solid var(--black-2);
+        background:var(--black-2);
+        color: var(--white-0);
 
         &:active{
-          background: black;
+          background: var(--black-1);;
         }        
       }
     }

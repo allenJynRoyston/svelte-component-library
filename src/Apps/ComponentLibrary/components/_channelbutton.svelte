@@ -17,7 +17,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock title="Default:">
+  <LibraryBlock title="Dark Theme:">
       <ChannelButton leftIcon='globe' rightIcon='arrow-right' >
         <h3>Check it out!</h3>
       </ChannelButton>  

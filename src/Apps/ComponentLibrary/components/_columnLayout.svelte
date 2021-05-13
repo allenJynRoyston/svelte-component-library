@@ -16,7 +16,7 @@
 <hr>
 
 
-<LibraryBlock section >
+<LibraryBlock  >
   <div style='height: 300px'>
     <ColumnLayout {links} currentIndex={1} >
       <div style='padding: 0 10px'>
@@ -27,7 +27,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock section >
+  <LibraryBlock title='Dark Theme:' >
     <div style='height: 300px'>
       <ColumnLayout {links} currentIndex={1} >
         <div style='padding: 0 10px'>

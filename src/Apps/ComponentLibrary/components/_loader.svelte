@@ -14,7 +14,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock title="Default:">
+  <LibraryBlock title="Dark Theme:">
     <Loader show />
   </LibraryBlock>
 </ThemeWrapper>

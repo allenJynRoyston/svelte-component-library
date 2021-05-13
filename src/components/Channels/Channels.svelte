@@ -1,6 +1,5 @@
 <script lang='ts'>
   import {onMount, tick} from 'svelte'  
-  import HashWatch from '../URLWatcher/HashWatch.svelte'
   import Loader from '../Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -15,6 +14,7 @@
   export let embedded = false;
   export let backtotop = false;
   export let animate = false;
+  export let nopadding = false;
   
 
   let ready = false
@@ -22,6 +22,7 @@
   let currentChannel = current;  
   let ele; 
   let rootEle;
+  let topPos = 0;
 
   const createSizeTables = () => {
     const table = []
@@ -36,9 +37,10 @@
     const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
-      duration,
+      duration: animate ? duration : 0,
       easing: easing === 'cubicOut' ? cubicOut : cubicOut
     });   
+
 
     ready = true
     channelReady && channelReady(currentChannel)    
@@ -79,16 +81,12 @@
     return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
   }  
 
-  $: innerStyle = () => {
-    if(ele){
-      const top = ele.getBoundingClientRect().top
-      return `height: calc(100vh - ${top}px - ${embedded ? 10 : 20}px);`
-    }
-  }  
+  $: innerStyle = `height: calc(100vh - ${topPos}px - ${embedded ? 10 : nopadding ? 0 : 20}px);`
 
   $: {      
     backtotop && resetScrollTop()
     current != currentChannel && goto(current)     
+    topPos = ele?.getBoundingClientRect().top || 0
   }  
 
   
@@ -101,7 +99,7 @@
       <div class='channels-container' bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
         {#each data as {content, render, active}}
           <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-            <div class='channel__inner' bind:this={ele} class:embedded={embedded} style={innerStyle()} >
+            <div class='channel__inner' class:nopadding={nopadding} bind:this={ele} class:embedded={embedded} style={innerStyle} >
               {#if render}
                 <svelte:component this={content} />
               {:else}
@@ -158,6 +156,13 @@
       padding: var(--channels-padding);
       overflow-x: hidden;
       overflow-y: auto;
+
+      &.nopadding{
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+        overflow: hidden;
+      }
 
       &.embedded{
         width: calc(100% - var(--channels-padding));

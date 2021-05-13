@@ -25,7 +25,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock title="Default:">
+  <LibraryBlock title="Dark Theme:">
     <ThreeSlot showLeft showRight outline rounded >
       <div slot='left'>
         <h2>Left</h2>

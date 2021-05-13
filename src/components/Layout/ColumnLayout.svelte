@@ -80,7 +80,7 @@
     overflow-y: auto;
     padding: 10px;
     background: #999;
-    color: white;    
+    color: var(--white-0);;    
  
     @include desktop-and-up {
       padding: 10px 50px 10px 10px!important;   
@@ -94,14 +94,14 @@
     }
   }
   
-    background: white;
-    color: #333;
+    background: var(--white-0);;
+    color: var(--black-1);
 
     &.dark-theme{
-      background: #333;
-      color: white;
+      background: var(--black-1);
+      color: var(--white-0);
       .directory-inner{
-        background: #111;
+        background: var(--black-0);
       }
     }  
 
@@ -127,7 +127,7 @@
     }
 
     &:active{
-      background: black;
+      background: var(--black-0);
     }
 
     @include desktop-and-up {

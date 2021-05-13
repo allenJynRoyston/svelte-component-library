@@ -18,7 +18,7 @@
 </LibraryBlock>
 
 
-<LibraryBlock title="Dark:">
+<LibraryBlock title="Dark Theme:">
   <ThemeWrapper theme='dark'>
     <ExampleBlock />
 
@@ -29,6 +29,10 @@
 `} />
 
 <CodeBlock open title='Example:' snippet={`
+  <ThemeWrapper theme='light'>
+    <ExampleBlock />
+  </ThemeWrapper> 
+  
 `} />  
 
 

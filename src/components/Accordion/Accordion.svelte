@@ -19,8 +19,8 @@
 
   onMount(async() => {
     setTimeout(() => {
-      isDark = ele.className.includes('dark-theme')
-    }, 10)
+      isDark = ele?.className.includes('dark-theme')
+    }, 25)
   })
 
 </script>
@@ -63,22 +63,22 @@
 
     &.outline{
       width: calc(100% - 6px);
-      border: 3px solid #333;
+      border: 3px solid var(--black-1);
       &.dark-theme{
-        border: 3px solid #555;
+        border: 3px solid var(--white-0);
       }
     }
 
     
-    background: white;;
+    background: var(--white-0);
     button, .inner{
-      color: #333;
+      color: var(--black-0);
     }      
 
     &.dark-theme{
-      background: #333;   
+      background: var(--black-1);
       button, .inner{
-        color: white;
+        color: var(--white-0);
       }      
     }
 

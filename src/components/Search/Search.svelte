@@ -1,29 +1,25 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
+  import {getContext, onMount} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   import Input from '../FormComponents/Input/Input.svelte'
   //---------------------------
 
+  const colors:any = getContext('colors');
+  let isDark = false;
+  let ele;
 
-  //--------------------------- COMPONENT PROPS  
-  //---------------------------
-
-  //--------------------------- APP CONTEXT   
-  //---------------------------
-      
-  //--------------------------- VARS
-  //---------------------------
-
-  //--------------------------- ONMOUNT
-  //---------------------------     
-
-  //--------------------------- EVENT HANDLERS
-  //---------------------------
+  onMount(async() => {
+    setTimeout(() => {
+      isDark = ele?.className.includes('dark-theme')
+      console.log(isDark)
+    }, 100) 
+  })  
 
 </script>
 
-<div class='search'>
-  <SVG icon='search' />
+<div class={`root-component search`} bind:this={ele}>
+  <SVG icon='search' fill={!isDark ? colors.black[0].color : colors.white[0].color} />
   <Input noBottomMargin />
 </div>  
 

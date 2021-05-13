@@ -52,12 +52,12 @@
   overflow: hidden;
 
   &.outline{
-    outline: 2px solid #333;
+    outline: 2px solid var(--black-1);
   }  
 
   &.dark-theme{
     &.outline{
-      outline: 2px solid white;
+      outline: 2px solid var(--black-3);
     }  
   }
 

@@ -14,15 +14,16 @@
   let ele;
 
   onMount(async() => {
-    await tick()
-    isDark = ele.className.includes('dark-theme')
+    setTimeout(() => {
+      isDark = ele?.className.includes('dark-theme')
+    }, 25)
   })  
 
 </script>
 
 <button class={`root-component channel-button`} class:rounded={rounded} on:click={onClick} bind:this={ele}>
   <div class='icon' >
-    <SVG icon={leftIcon || 'globe'} fill={isDark ? 'white' : '#333'} size={iconSize} />
+    <SVG icon={leftIcon || 'globe'} fill={!isDark ? '#333' : 'white'} ignoreTheme size={iconSize} />
   </div>
   <div class='content' type='button' on:click={onClick}>
     <slot>
@@ -30,7 +31,7 @@
     </slot>
   </div>
   <div class='icon' >
-    <SVG icon={rightIcon || 'arrow-right'} fill={isDark ? 'white' : '#333'} size={iconSize} />
+    <SVG icon={rightIcon || 'arrow-right'} fill={!isDark ? '#333' : 'white'} ignoreTheme size={iconSize} />
   </div>
 </button>
 
@@ -48,19 +49,19 @@
     cursor: pointer;
     outline: none;
 
-    background: white;   
-    color: #333;
-    border: 3px solid #333;
-    &:active{
-      background: #555
+    background: var(--white-0);
+    color: var(--black-1);
+    border: 3px solid var(--black-1);
+    &:active{      
+      background: var(--white-1);
     }        
 
     &.dark-theme{
-      background: #333;   
-      color: white;
-      border: 3px solid #555;
+      background: var(--black-1);
+      color: var(--white-0);
+      border: 3px solid var(--black-2);
       &:active{
-        background: #555
+        background: var(--black-2);
       }      
     }
 

@@ -17,11 +17,11 @@
 </script>
 
 <div class={`root-component themeswitcher`} bind:this={ele}>
-  <Link type='underline' active={!isDark} onClick={() => {onClick && onClick('light')}}>
+  <Link type='underline' inherit active={!isDark} onClick={() => {onClick && onClick('light')}}>
     Light
   </Link>  
 
-  <Link type='underline' active={isDark} onClick={() => {onClick && onClick('dark')}}>
+  <Link type='underline' inherit active={isDark} onClick={() => {onClick && onClick('dark')}}>
     Dark
   </Link>    
 </div>
@@ -31,10 +31,10 @@
     display: flex;
     gap: 10px;
     font-weight: 700;
-    color: #333;
+    color: var(--black-1);
 
     &.dark-theme{
-      color: white;
+      color: var(--white-1);
     }
   }
 </style>

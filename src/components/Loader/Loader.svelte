@@ -1,37 +1,46 @@
 <script lang='ts'>
   export let show = false
+  export let rounded = false;
 </script>
 
 {#if show}
-  <div class={`root-component loader`}>
-    <div class="line" />
+  <div class={`root-component loader`} class:rounded={rounded}>
+    <div class="line" class:rounded={rounded} />
   </div>
 {/if}
 
 <style lang='scss' scoped>
 
 .loader {
-  background: #ccc;
+  background: var(--white-1);
   width: 100%;
   height: 10px;
-  border-radius: 10px;
+  
   position: relative;
 
-  .line {
-    background: #000;
+  &.rounded{
     border-radius: 10px;
+  }
+
+  .line {
+    background: var(--black-0);
+   
+    &.rounded{
+      border-radius: 10px;
+    }
+
     position: absolute;
     left: 0;
     z-index: 1;
     width: 100px;
     height: 10px;
-    animation: line-bounce 1s infinite;
+    animation: line-bounce 1.5s infinite;
   }  
 
   &.dark-theme{
-    background: #555;    
+    background: var(--black-4);
     .line{
-      background: #888;
+      background: var(--black-6);
     }
   }
 }

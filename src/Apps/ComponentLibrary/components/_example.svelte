@@ -1,17 +1,14 @@
 <script>
   import Button from '../../../components/Button/Button.svelte'
   import Accordion from '../../../components/Accordion/Accordion.svelte'
+  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte';
 
 </script>
 
 
 <div class={`example-block root-component`}>
 
-  <h4>Button</h4>
-  <Button >Test</Button>
-
-  <h4>Accordion</h4>
-  <Accordion />
+  <LoremBlock />
 
 </div>
 

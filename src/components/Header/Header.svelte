@@ -53,7 +53,7 @@
     height: auto;
     overflow: hidden;
     padding: 20px;
-    background: #666;
+    background: var(--white-0);
         
     .inner{
       display: flex;
@@ -69,13 +69,13 @@
     }
 
     .brand{
-      color: white;     
+      color: var(--black-1);     
     }
 
     &.dark-theme{
-      background: black;
+      background: var(--white-0);
       .brand{
-        color: black;
+        color: var(--white-0);
       }
     }
 

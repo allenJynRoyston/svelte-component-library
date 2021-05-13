@@ -38,9 +38,7 @@
   const onReady = async() => {
     allUsers = await db.getAll('user');
     allPlaces = await db.getAll('places');
-
-    query = await db.get('user', 'Person 2')
-    console.log(query)
+    query = await db.get('user', 'Person 2')    
   }
 
 </script>

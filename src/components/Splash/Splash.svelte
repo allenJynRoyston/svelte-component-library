@@ -1,6 +1,5 @@
 <script lang='ts'>
   import Button from '../Button/Button.svelte'
-  import ThemeWrapper from '../ThemeWrapper/ThemeWrapper.svelte'
 
   export let title = 'Splash Title';
   export let buttonOne = null;
@@ -27,9 +26,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    color: white;
+    flex-direction: column;    
     background: transparent;
+    color: var(--black-1);
+
+    &.dark-theme{
+      color: var(--white-0);
+    }    
 
     .title{
       font-size: 72px;
@@ -38,11 +41,6 @@
     .buttons{
       display: flex;
       gap: 10px;
-    }
-
-
-    &.dark-theme{
-      color: black;
     }    
 
   }

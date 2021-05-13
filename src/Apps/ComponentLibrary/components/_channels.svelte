@@ -45,7 +45,7 @@
     </div>
 
     <div style='height: 200px'>
-      <Channels {...channel} />
+      <Channels {...channel} animate />
     </div>
 </LibraryBlock>
 
@@ -87,7 +87,7 @@
   }    
   //---------------------------   
 
-  <Channels {...channel} />
+  <Channels {...channel} animate />
 `} />  
 
 

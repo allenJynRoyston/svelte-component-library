@@ -25,12 +25,18 @@
 <h2>Splash</h2>
 <hr>
 
-
-<ThemeWrapper theme='dark'>
-  <LibraryBlock title="Dark Theme:">
+<div style='background: grey'>
+  <ThemeWrapper theme='light'>
     <Splash {...props} />
-  </LibraryBlock>
-</ThemeWrapper>
+  </ThemeWrapper>
+</div>
+
+<div style='background: grey; margin-top: 20px'>
+  <ThemeWrapper theme='dark'>
+    <Splash {...props} />
+  </ThemeWrapper>
+</div>
+
 
 <CodeBlock title='Properties:' snippet={
   `

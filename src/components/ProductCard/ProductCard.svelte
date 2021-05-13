@@ -39,7 +39,7 @@
   .product-card{
     width: 100%;
     height: 100%;
-    color: black;
+    color: var(--black-1);
     background: slateblue;
     display: flex;
     flex-direction: column;
@@ -59,7 +59,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        color: white;
+        color: var(--white-0);
       }
     }
 

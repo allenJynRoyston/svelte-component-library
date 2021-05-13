@@ -1,7 +1,9 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
+  import {setContext} from 'svelte';
   import HashWatch from './components/URLWatcher/HashWatch.svelte'
   import Link from './components/Link/Link.svelte'
+  import chroma from "chroma-js";
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
@@ -9,7 +11,30 @@
 
   //--------------------------- 
 
-  //--------------------------- APP CONTEXT   
+  //--------------------------- APP CONTEXT 
+  console.log(  )
+  const colors = {
+    black: [],
+    white: []
+  }
+  
+  const blacks = ['#111', '#333', '#444', '#555', '#666', '#777', '#888', '#999']
+  const whites = ['white', '#eee']  
+  
+  blacks.forEach((color, index) => {
+    let name = `--black-${index}`
+    document.documentElement.style.setProperty(name, color)
+    colors.black.push({name, color})
+  })  
+
+  whites.forEach((color, index) => {
+    let name = `--white-${index}`
+    document.documentElement.style.setProperty(name, color)
+    colors.white.push({name, color})
+  })    
+ 
+
+  setContext('colors', colors)
   //---------------------------   
 
   //--------------------------- VARS  
@@ -18,6 +43,7 @@
   //---------------------------  
 
   //--------------------------- ONMOUNT
+
   //---------------------------
 
 
@@ -79,13 +105,13 @@
     bottom: 10px;
     left: 10px;
     padding: 10px;
-    background: black;
     border-radius: 10px;
-    color: white;
     display: flex;
     flex-direction: column;
     opacity: 0.1;
     transition: 0.3s;
+    background: var(--black-0);
+
     &:hover{
       opacity: 1;
     }

@@ -41,9 +41,4 @@
   </div>
 </Accordion>
 
-<style lang='scss'>
-  .code-block{
-    background: #333;
-  }
-</style>
 

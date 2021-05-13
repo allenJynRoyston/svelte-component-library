@@ -20,7 +20,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock title="Default:">    
+  <LibraryBlock title="Dark Theme:">    
       <Button >
         Click Me!
       </Button>    

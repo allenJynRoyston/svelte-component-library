@@ -14,7 +14,7 @@
 </LibraryBlock>
 
 <ThemeWrapper theme='dark'>
-  <LibraryBlock section >
+  <LibraryBlock title='Dark Theme:' section >
     <Link href='/' >I am a link</Link>
   </LibraryBlock>
 </ThemeWrapper>
