@@ -20,6 +20,8 @@
 </div>
 
 <style lang='scss'>
+  @import "../../scss/src/_media-queries.scss";
+
   .splash{
     width: 100%;
     padding: 50px 0;
@@ -28,14 +30,17 @@
     align-items: center;
     flex-direction: column;    
     background: transparent;
-    color: var(--black-1);
+    color: var(--white-0-text);
 
     &.dark-theme{
-      color: var(--white-0);
+      color: var(--black-0-text);
     }    
 
     .title{
-      font-size: 72px;
+      font-size: 32px;
+      @include desktop-and-up {
+        font-size: 72px;
+      }
     }
 
     .buttons{

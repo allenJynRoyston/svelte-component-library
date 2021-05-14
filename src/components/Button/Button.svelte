@@ -36,6 +36,7 @@
     width: 100%;
     padding: 5px;
     cursor: pointer;
+    font-weight: 700;
     
     &.disabled{
       opacity: 0.5;
@@ -51,14 +52,53 @@
       border-radius: 50px;
     }
 
-
-    border: 3px solid var(--black-1);      
-    background: var(--black-1);
-    color: white;
-
     &.hollow{
+      background: none!important;
+      color: var(--black-1);
+    }
+
+    &:active{
+      background: var(--black-3);
+    }           
+
+    &.white{      
+      border: 3px solid var(--white-1);      
+      background: var(--white-1);
+      color: var(--white-1-text);
+
+      &.hollow{
         background: none!important;
-        color: var(--black-1);
+        color: var(--white-1-text)!important;
+      }
+
+      &:active{
+        background: var(--white-3);
+      }           
+
+      &.dark-theme{
+        border: 3px solid var(--white-3);
+        background:var(--white-3);
+        color: var(--white-3-text);
+
+        &.hollow{
+          background: none!important;
+          color: var(--white-1)!important;
+        }        
+
+        &:active{
+          background: var(--white-6);;
+        }        
+      }
+    }   
+
+    &.black{      
+      border: 3px solid var(--black-1);      
+      background: var(--black-1);
+      color: var(--black-1-text);
+
+      &.hollow{
+        background: none!important;
+        color: var(--black-1)!important;
       }
 
       &:active{
@@ -70,15 +110,21 @@
         background:var(--black-3);
         color: var(--white-0);
 
+        &.hollow{
+          background: none!important;
+          color: var(--black-1-text)!important;
+        }        
+
         &:active{
           background: var(--black-6);;
         }        
       }
+    }    
 
     &.primary{      
       border: 3px solid var(--primary-1);      
       background: var(--primary-1);
-      color: white;
+      color: var(--primary-1-text);
 
       &.hollow{
         background: none!important;
@@ -92,7 +138,7 @@
       &.dark-theme{
         border: 3px solid var(--primary-3);
         background:var(--primary-3);
-        color: var(--white-0);
+        color: var(--primary-3-text);
 
         &:active{
           background: var(--primary-6);;
@@ -103,7 +149,7 @@
     &.secondary{
       border: 3px solid var(--secondary-1);      
       background: var(--secondary-1);
-      color: white;
+      color: var(--secondary-1-text);
 
       &.hollow{
         background: none!important;
@@ -128,7 +174,7 @@
     &.success{
       border: 3px solid var(--success-1);      
       background: var(--success-1);
-      color: white;
+      color: var(--success-1-text);
 
       &.hollow{
         background: none!important;
@@ -153,7 +199,7 @@
     &.warning{
       border: 3px solid var(--warning-1);      
       background: var(--warning-1);
-      color: white;
+      color: var(--warning-1-text);
 
       &.hollow{
         background: none!important;
@@ -178,7 +224,7 @@
     &.danger{
       border: 3px solid var(--danger-1);      
       background: var(--danger-1);
-      color: white;
+      color: var(--danger-1-text);
 
       &.hollow{
         background: none!important;

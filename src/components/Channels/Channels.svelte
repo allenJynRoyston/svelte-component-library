@@ -13,8 +13,9 @@
   export let easing = 'cubicOut'
   export let embedded = false;
   export let backtotop = false;
-  export let animate = false;
   export let nopadding = false;
+  export let animate = false;
+  export let exactfit = false;
   export let props = null;
   
 
@@ -82,7 +83,7 @@
     return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
   }  
 
-  $: innerStyle = `height: calc(100vh - ${topPos}px - ${embedded ? 10 : nopadding ? 0 : 20}px);`
+  $: innerStyle = `height: calc(100vh - ${topPos}px - ${embedded ? 10 : exactfit || nopadding ? 0 : 20}px);`
 
   $: {      
     backtotop && resetScrollTop()
@@ -98,7 +99,7 @@
       <div class='channels-container' bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
         {#each data as {content, render, active, props}}
           <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-            <div class='channel__inner' class:nopadding={nopadding} bind:this={ele} class:embedded={embedded} style={innerStyle} >
+            <div class='channel__inner' class:nopadding={nopadding} class:exactfit={exactfit} bind:this={ele} class:embedded={embedded} style={innerStyle} >
               {#if render}
                 <svelte:component this={content} {...props}/>
               {:else}
@@ -157,6 +158,10 @@
       overflow-y: auto;
 
       &.nopadding{
+        padding: 0;
+      }
+
+      &.exactfit{
         width: 100%;
         height: 100vh;
         padding: 0;

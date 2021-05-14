@@ -7,7 +7,7 @@
   export let text = null;
   export let inherit = false;
   
-  export let type = 'bar'
+  export let underline = false;
   //---------------------------
 
   //--------------------------- VARS    
@@ -24,7 +24,7 @@
 
 </script>
 
-<a {href} class={`root-component ${type}`} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a {href} class={`root-component`} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 

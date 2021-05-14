@@ -5,7 +5,7 @@
   export let delay = 1;
   export let refresh = true;
   export let ele = null;
-  export let render = false;
+  export let themeWatch = false;
   export let lock = false;
 
   onMount(() => {
@@ -38,7 +38,7 @@
 
 
   $: {      
-    render && getChildren()
+    themeWatch && getChildren()
   }  
 
 </script>

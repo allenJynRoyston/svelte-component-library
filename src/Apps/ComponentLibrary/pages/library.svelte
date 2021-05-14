@@ -33,11 +33,13 @@
   import NavBarAlias from '../components/_navBar.svelte'
   import ThemeWrapperAlias from '../components/_themewrapper.svelte'
   import ProfileCardAlias from '../components/_profilecard.svelte'
+  import ContainerAlias from '../components/_container.svelte'
+  import InnerContainerAlias from '../components/_innerContainer.svelte'
 
   export let headerprops;
 
   const theme:string = getContext('theme');
-
+  
   //--------------------------- CHANNEL
   const channel = createChannel({    
     sort: true,
@@ -67,7 +69,9 @@
     {content: SplashAlias, id: 'splash'},    
     {content: NavBarAlias, id: 'navbar'},    
     {content: ThemeWrapperAlias, id: 'themewrapper'}, 
-    {content: ProfileCardAlias, id: 'profilecard'},    
+    {content: ProfileCardAlias, id: 'profilecard'},  
+    {content: ContainerAlias, id: 'container'},
+    {content: InnerContainerAlias, id: 'innercontainer'}
   ]})   
 
 
@@ -76,11 +80,16 @@
   }).sort((a, b) => a?.title.localeCompare(b?.title))
 
 
+  let themeWatch = true;
   const onChange = ({params}) => {       
     const index = channel.data.findIndex(data => {
       return data?.id.toLowerCase() === params?.component
     }) 
     channel.current = index < 0 ? 0 : index
+    themeWatch = false;
+    setTimeout(() => {
+      themeWatch = true;
+    })
   }  
   //--------------------------- 
 
@@ -94,11 +103,11 @@
   
 </script>
 
-<ThemeWrapper {theme} delay={1} lock>
+<ThemeWrapper {theme} {themeWatch} lock>
   <HashWatch onChange={onChange}/>
   <SnackBar {snack} />
 
-  <Header {...headerprops} bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
+  <Header {...headerprops} showFooter bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
     <h1>Svelte Component Library</h1>
   </Header>
 

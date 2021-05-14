@@ -1,10 +1,15 @@
 <script lang='ts'>
+  import {getContext} from 'svelte';
   import Link from '../Link/Link.svelte'
   import SVG from '../SVG/SVG.svelte'
   import InnerContainer from '../InnerContainer/InnerContainer.svelte'
-
+  import Container from '../Container/Container.svelte'
+  
   export let links = []
   export let currentIndex = null;
+
+  const theme:string = getContext('theme');
+  const colors:any = getContext('colors');
 
   let collapse = false
 
@@ -19,26 +24,34 @@
     <div class='layout-inner'>
       <div class='directory' class:collapse={collapse}>
 
-        <button class='collapse-btn' class:collapse={collapse} on:click={() => {collapse = !collapse}}>
-          <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} size={16} />
+        <button class={`root-component collapse-btn`} class:collapse={collapse} on:click={() => {collapse = !collapse}}>
+          <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} fill={theme === 'light' ? colors.white[0].color : colors.black[1].color} size={16} />
         </button>
 
-        <InnerContainer>
+        <Container offset={3}>
           <div class='directory-inner' class:collapse={collapse}>
-            {#each links as { title, href }, i}
-              <Link inherit type='bar' active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
-                {title} 
-              </Link>        
-            {/each}  
+            <InnerContainer>
+              <div class='directory-links'>
+                {#each links as { title, href }, i}
+                  <Link inherit active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
+                    {title} 
+                  </Link>        
+                {/each}  
+              </div>  
+            </InnerContainer>
           </div>
-        </InnerContainer>
+        </Container>
       </div>
 
-      <div class='content' class:collapse={collapse}>
-        <slot>
-          <p>Content</p>
-        </slot>
-      </div>
+     
+        <div class='content' class:collapse={collapse}>
+          <Container>
+            <slot>
+              <p>Content</p>
+            </slot>
+          </Container>
+        </div>
+   
     </div>
 </div>
 
@@ -73,18 +86,12 @@
   }
 
   .directory-inner{
-    display: flex; 
-    flex-direction: column;
-    overflow-x: hidden;
-    background: #999;
-    color: var(--white-0);
-    
-    height: calc(100% - 20px);
-    padding: 10px 50px 10px 10px; 
-
+    overflow: hidden;
+    width: 0;   
  
     @include desktop-and-up {     
       width: auto!important;
+      height: 100%!important;
       text-align: left!important;
     }    
 
@@ -93,33 +100,33 @@
       text-align: center;
     }
   }
-  
-    background: var(--white-0);;
-    color: var(--black-1);
 
-    &.dark-theme{
-      background: var(--black-5);
-      color: var(--white-0);
-      .directory-inner{
-        background: var(--black-3);
-      }
-    }  
+  .directory-links{
+    display: flex; 
+    flex-direction: column;
+    padding: 20px 50px 20px 10px;    
+  }
 
 
   .collapse-btn{
     display: block;
     position: absolute;
-    top: calc(80% - 120px);
+    top: 75px;
     right: -40px;
     width: 40px;
-    height: 60px;
-    background: darkgrey;
+    height: 60px;    
     border-radius: 0 10px 10px 0;
     cursor: pointer;
     z-index: 1;
     border: none;
     outline: none;
-    box-shadow: -2px 5px 5px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);  
+    background: var(--black-1);
+
+    &.dark-theme{
+      background: var(--white-1);
+    }
+    
 
     &.collapse{
       border-radius: 10px 0 0 10px;      

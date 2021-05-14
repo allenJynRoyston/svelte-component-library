@@ -37,35 +37,48 @@
 <p>Note: Snackbar must be added at the root of your app.</p>
 
 <LibraryBlock title='Timers:'>
-  <button on:click={() => {addDurationSnack('primary')}}>Primary</button>
-  <button on:click={() => {addDurationSnack('success')}}>Success</button>
-  <button on:click={() => {addDurationSnack('warning')}}>Warning</button>
-  <button on:click={() => {addDurationSnack('error')}}>Error</button>
+  <div style='display: flex; gap: 10px'>
+    <Button type='primary' onClick={() => {addDurationSnack('primary')}}>Primary</Button>
+    <Button type='success' onClick={() => {addDurationSnack('success')}}>Success</Button>
+    <Button type='warning' onClick={() => {addDurationSnack('warning')}}>Warning</Button>
+    <Button type='danger' onClick={() => {addDurationSnack('error')}}>Error</Button>
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title='No Timers:'>  
-  <button on:click={() => {addStaticSnack('primary')}}>Primary (static)</button>
-  <button on:click={() => {addStaticSnack('success')}}>Success (static)</button>  
-  <button on:click={() => {addStaticSnack('warning')}}>Warning (static)</button>
-  <button on:click={() => {addStaticSnack('error')}}>Error (static)</button>  
+  <div style='display: flex; gap: 10px'>
+    <Button type='primary' onClick={() => {addStaticSnack('primary')}}>Primary</Button>
+    <Button type='success' onClick={() => {addStaticSnack('success')}}>Success</Button>
+    <Button type='warning' onClick={() => {addStaticSnack('warning')}}>Warning</Button>
+    <Button type='danger' onClick={() => {addStaticSnack('error')}}>Error</Button>
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title='With Components:'> 
-  <button on:click={() => {withLink('primary')}}>Primary</button>  
-  <button on:click={() => {withLink('success')}}>Success</button>  
-  <button on:click={() => {withLink('warning')}}>Warning</button>
-  <button on:click={() => {withLink('error')}}>Error</button>
+  <div style='display: flex; gap: 10px'>
+    <Button type='primary' onClick={() => {withLink('primary')}}>Primary</Button>
+    <Button type='success' onClick={() => {withLink('success')}}>Success</Button>
+    <Button type='warning' onClick={() => {withLink('warning')}}>Warning</Button>
+    <Button type='danger' onClick={() => {withLink('error')}}>Error</Button>
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title='With Components (Buttons):'> 
-  <button on:click={() => {withButton('primary')}}>Primary</button>
-  <button on:click={() => {withButton('success')}}>Success</button>
-  <button on:click={() => {withButton('warning')}}>Warning</button>
-  <button on:click={() => {withButton('error')}}>Error</button>
+  <div style='display: flex; gap: 10px'>
+    <Button type='primary' onClick={() => {withButton('primary')}}>Primary</Button>
+    <Button type='success' onClick={() => {withButton('success')}}>Success</Button>
+    <Button type='warning' onClick={() => {withButton('warning')}}>Warning</Button>
+    <Button type='danger' onClick={() => {withButton('error')}}>Error</Button>
+  </div>
 </LibraryBlock>
 
-<LibraryBlock title='Edge cases:'> 
-  <button on:click={() => {closeOnClick('primary')}}>Close on click</button>
+<LibraryBlock title='Close on click'> 
+  <div style='display: flex; gap: 10px'>
+    <Button type='primary' onClick={() => {closeOnClick('primary')}}>Primary</Button>
+    <Button type='success' onClick={() => {closeOnClick('success')}}>Success</Button>
+    <Button type='warning' onClick={() => {closeOnClick('warning')}}>Warning</Button>
+    <Button type='danger' onClick={() => {closeOnClick('error')}}>Error</Button>
+  </div>
 </LibraryBlock>
 
 

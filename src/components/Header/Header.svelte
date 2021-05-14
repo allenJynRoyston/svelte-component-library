@@ -8,7 +8,9 @@
 
   export let navEle = null;
   export let centerEle = null;  
-  export let expand = false;
+  export let footerEle = null;
+  export let showCenter = false;  
+  export let showFooter = false;
 
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
   
@@ -39,23 +41,29 @@
     </TwoSlot>
 
   {#if centerEle}
-    <div class='splash' class:expand={expand}>
+    <div class='splash' class:expand={showCenter}>
       <svelte:component this={centerEle.component} {...centerEle.props} />
+    </div>
+  {/if}
+
+  {#if footerEle}
+    <div class='footer' class:expand={showFooter}>
+      <svelte:component this={footerEle.component} {...footerEle.props} />
     </div>
   {/if}
 </nav>
 
 
 <style lang='scss' scoped>
+  @import "../../scss/src/_media-queries.scss";
 
   nav{
     width: calc(100% - 40px);
     height: auto;
     overflow: hidden;
     padding: 20px;
-    background: var(--white-0);
-    box-shadow: 0 10px 10px -5px var(--black-6);
-
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);  
+    
         
     .inner{
       display: flex;
@@ -70,14 +78,27 @@
       margin-right: 10px;
     }
 
+    background: var(--white-0);
     .brand{
-      color: var(--black-1);     
+      display: none;
+      @include desktop-and-up {     
+        display: block;
+        font-size: 23px;
+      }  
+
+      @include tablet-only {     
+        display: block;
+        font-size: 18px;
+      }         
+
+      font-size: 10px;
+      color: var(--white-0-text);     
     }
 
     &.dark-theme{
-      background: var(--white-0);
+      background: var(--black-1);
       .brand{
-        color: var(--white-0);
+        color: var(--black-1-text);
       }
     }
 
@@ -91,5 +112,12 @@
     }
   }
 
-  
+  .footer{
+    display: none;
+
+    &.expand{
+      display: flex;
+      flex-direction: flex-end;
+    }
+  }
 </style>

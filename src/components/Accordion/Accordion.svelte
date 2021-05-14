@@ -70,15 +70,15 @@
     }
 
     
-    background: var(--white-0);
+    background: var(--white-2);
     button, .inner{
-      color: var(--black-0);
+      color: var(--white-2-text);
     }      
 
     &.dark-theme{
       background: var(--black-1);
       button, .inner{
-        color: var(--white-0);
+        color: var(--black-1-text);
       }      
     }
 

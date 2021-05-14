@@ -10,6 +10,22 @@
    const channel = createChannel({
      current: 0,
      data: [
+        {content: LoremBlock, props: {content: 'Channel 1'}},
+        {content: LoremBlock, props: {content: 'Channel 2'}},
+        {content: LoremBlock, props: {content: 'Channel 3'}},
+        {content: LoremBlock, props: {content: 'Channel 4'}},
+        {content: LoremBlock, props: {content: 'Channel 5'}},
+        {content: LoremBlock, props: {content: 'Channel 6'}},
+        {content: LoremBlock, props: {content: 'Channel 7'}},
+        {content: LoremBlock, props: {content: 'Channel 8'}},
+        {content: LoremBlock, props: {content: 'Channel 9'}},
+        {content: LoremBlock, props: {content: 'Channel 10'}}
+    ]
+  })   
+  
+  const channelTwo = createChannel({
+     current: 0,
+     data: [
         {content: LoremBlock},
         {content: LoremBlock},
         {content: LoremBlock},
@@ -21,11 +37,7 @@
         {content: LoremBlock},
         {content: LoremBlock},
     ]
-  })   
-
-  const gotoChannel = (index) => {
-    channel.current = index
-  }    
+  })  
   //---------------------------   
   
 
@@ -33,21 +45,6 @@
 
 <h2>Channels</h2>
 <hr>
-
-
-
-
-<LibraryBlock title="Default:">
-    <div class='button-block'>
-      {#each channel.data as ch, index}
-        <button on:click={() => {gotoChannel(index)}}>{index}</button>    
-      {/each}
-    </div>
-
-    <div style='height: 200px'>
-      <Channels {...channel} animate />
-    </div>
-</LibraryBlock>
 
 <CodeBlock title='Properties:' snippet={`
   export let data = []
@@ -59,36 +56,70 @@
   export let embedded = false;
   export let backtotop = false;
   export let animate = false;
+  
 `} />
 
+
+<LibraryBlock title="Default:">
+    <div class='button-block'>
+      {#each channel.data as ch, index}
+        <button on:click={() => {channel.current = index}}>{index + 1}</button>    
+      {/each}
+    </div>
+
+    <div style='height: 200px'>
+      <Channels {...channel} />
+    </div>
+</LibraryBlock>
+
+
+
+
+
 <CodeBlock open title='Example:' snippet={`
-  //--------------------------- IMPORT
-  import {createChannel} from '....../js/utility'
+  import {createChannel} from '../../../js/utility'
 
   //--------------------------- CHANNEL
   const channel = createChannel({
-    current: 0,
-    data: [
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
-      {content: LoremBlock},
+     current: 0,
+     data: [
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock},
+        {content: LoremBlock}
     ]
-  })   
-
-  const gotoChannel = (index) => {
-    channel.current = index
-  }    
+  }) 
   //---------------------------   
 
-  <Channels {...channel} animate />
+  <Channels {...channel} />
+
 `} />  
+
+
+<LibraryBlock title="Animated:">
+  <div class='button-block'>
+    {#each channelTwo.data as ch, index}
+      <button on:click={() => {channelTwo.current = index}}>{index + 1}</button>    
+    {/each}
+  </div>
+
+  <div style='height: 200px'>
+    <Channels {...channelTwo} animate />
+  </div>
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+
+  <Channels {...channel} animted/>
+
+`} />  
+
 
 
 

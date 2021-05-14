@@ -1,10 +1,13 @@
 <script lang='ts'>
-  import {getContext, setContext} from 'svelte';
+  import {getContext} from 'svelte';
+  import { createChannel } from '../../js/utility'
+
   import Channels from '../../components/Channels/Channels.svelte'
   import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
   import Splash from '../../components/Splash/Splash.svelte'
   import NavBar from '../../components/NavBar/NavBar.svelte'
-  import { createChannel } from '../../js/utility'
+  import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch.svelte'
+  
   import Home from './pages/home.svelte';
   import Library from './pages/library.svelte';
 
@@ -16,6 +19,7 @@
     navEle: {
       component: NavBar,
       props: {
+        watchProp: 'page',
         links: [
           {title: 'Home', icon: 'icon', href: '#components?page=home'},
           {title: 'Library', icon: 'icon', href: '#components?page=library'},
@@ -29,19 +33,23 @@
         title: 'Welcome!',
         buttonOne: {
           text: 'Download',
-          type: 'hollow',
+          type: theme === 'dark' ? 'white' : 'black',
           href: '#components?component=header&link=cta1',
           size: 'large',
           rounded: true,     
+          hollow: true
         },
         buttonTwo: {
           text: 'Library',
           type: 'primary',
-          href: '#components?component=header&link=cta2',
+          href: '#components?page=library',
           size: 'large',
           rounded: true,          
         }        
       }
+    },
+    footerEle: {
+      component: ThemeSwitch     
     }
   }  
   //---------------------------   
@@ -64,5 +72,5 @@
 </script>
 
 <HashWatch onChange={onChange}/>
-<Channels {...channel} nopadding />
+<Channels {...channel} exactfit />
 

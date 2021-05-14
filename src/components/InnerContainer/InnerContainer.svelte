@@ -1,6 +1,8 @@
 <script>
   import {onMount} from 'svelte';
 
+  export let height = '100vh'
+
   let ele;
   let topPos = 0
 
@@ -8,7 +10,7 @@
     topPos = ele.getBoundingClientRect().top
   })
 
-  $: style = `height: calc(100vh - ${topPos}px)`
+  $: style = `height: calc(${height} - ${topPos}px)`
 </script>
 
 

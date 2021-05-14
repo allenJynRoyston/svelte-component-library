@@ -2,7 +2,6 @@
   import {onMount, tick} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
 
-
   export let onClick = () => {}
   export let leftIcon = null;
   export let rightIcon = null;
@@ -49,24 +48,24 @@
     cursor: pointer;
     outline: none;
 
+    &.rounded{
+      border-radius: 20px;
+    }    
+
     background: var(--white-0);
-    color: var(--black-1);
+    color: var(--white-0-text);
     border: 3px solid var(--black-1);
     &:active{      
-      background: var(--white-1);
+      background: var(--white-3);
     }        
 
     &.dark-theme{
       background: var(--black-1);
-      color: var(--white-0);
-      border: 3px solid var(--black-2);
+      color: var(--black-1-text);
+      border: 3px solid var(--black-5);
       &:active{
-        background: var(--black-2);
+        background: var(--black-3);
       }      
-    }
-
-    &.rounded{
-      border-radius: 20px;
     }
   }
 

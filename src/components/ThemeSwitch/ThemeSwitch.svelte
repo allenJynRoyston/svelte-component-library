@@ -1,35 +1,37 @@
 <script lang='ts'>
-  import {onMount} from 'svelte';
+  import {getContext} from 'svelte';
   import Link from "../Link/Link.svelte";
   
   export let links = ['dark', 'light']
-  export let onClick;
-  
-  let isDark = false;
-  let ele;
 
-  onMount(() => {
-    setTimeout(() => {
-      isDark = ele.className.includes('dark-theme')
-    }, 10)
-  })
+  const theme:string = getContext('theme')
+
+
+  const setTheme = (theme) => {
+    localStorage.setItem('theme', theme)
+    location.reload()
+  }
+
 
 </script>
 
-<div class={`root-component themeswitcher`} bind:this={ele}>
-  <Link type='underline' inherit active={!isDark} onClick={() => {onClick && onClick('light')}}>
+<div class='themeswitcher' class:dark-theme={theme === 'dark'}>
+  <Link underline inherit active={theme === 'light'} onClick={() => {setTheme('light')}}>
     Light
   </Link>  
 
-  <Link type='underline' inherit active={isDark} onClick={() => {onClick && onClick('dark')}}>
+  <Link underline inherit active={theme === 'dark'} onClick={() => {setTheme('dark')}}>
     Dark
   </Link>    
 </div>
 
 <style lang='scss'>
   .themeswitcher{
+    width: 100%;
+    justify-content: flex-start;
     display: flex;
     gap: 10px;
+    font-size: 10px;
     font-weight: 700;
     color: var(--black-1);
 

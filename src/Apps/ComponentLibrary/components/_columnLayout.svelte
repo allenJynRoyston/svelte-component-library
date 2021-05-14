@@ -2,7 +2,6 @@
   import ColumnLayout from '../../../components/Layout/ColumnLayout'
   import LibraryBlock from './__LibraryBlock'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 
   const links = [
     {title: 'Link_1', href: '#' },    
@@ -15,34 +14,20 @@
 <h2>GridLayout</h2>
 <hr>
 
-<ThemeWrapper theme='light' delay={1} lock>
-  <LibraryBlock  >
-    <div style='height: 300px'>
-      <ColumnLayout {links} currentIndex={1} >
-        <div style='padding: 0 10px'>
-          <h3>I am content!</h3>
-        </div>
-      </ColumnLayout>
-    </div>
-  </LibraryBlock>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <LibraryBlock title='Dark Theme:' >
-    <div style='height: 300px'>
-      <ColumnLayout {links} currentIndex={1} >
-        <div style='padding: 0 10px'>
-          <h3>I am content!</h3>
-        </div>
-      </ColumnLayout>
-    </div>
-  </LibraryBlock>
-</ThemeWrapper>
-
 <CodeBlock title='Properties:' snippet={`
   export let links = []
   export let currentIndex = null;
-`} />
+  `} />
+
+<LibraryBlock  >
+  <div style='height: 300px'>
+    <ColumnLayout {links} currentIndex={1} >
+      <div style='padding: 0 10px'>
+        <h3>I am content!</h3>
+      </div>
+    </ColumnLayout>
+  </div>
+</LibraryBlock>
 
 <CodeBlock open title='Example:' snippet={`
   const links = [
@@ -52,9 +37,9 @@
   ]
 
   <ColumnLayout {links} currentIndex={1} >
-      <div style='padding: 0 10px'>
-        <h3>I am content!</h3>
-      </div>
-    </ColumnLayout>
-`} />  
+    <div style='padding: 0 10px'>
+      <h3>I am content!</h3>
+    </div>
+  </ColumnLayout>
+    `} />  
 

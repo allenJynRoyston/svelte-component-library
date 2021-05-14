@@ -2,34 +2,46 @@
   import Link from '../../../components/Link/Link'
   import LibraryBlock from './__LibraryBlock'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
-
 </script>
 
 <h1>Link</h1>
 <hr>
 
-<ThemeWrapper theme='light' delay={1} lock>
-  <LibraryBlock title='Light theme:' >
-    <Link href='/' >I am a link</Link>
-  </LibraryBlock>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <LibraryBlock title='Dark Theme:' section >
-    <Link href='/' >I am a link</Link>
-  </LibraryBlock>
-</ThemeWrapper>
-
 <CodeBlock title='Properties:' snippet={
   `
-  export let href: string
-  export let active = false;
+  export let href: string|null = null;  
   export let onClick = null;
   export let text = null;
+  
+  export let active = false;
+  export let inherit = false;  
+  export let underline = false;
   `} />
+
+<LibraryBlock title='Default:' section >
+  <Link href='/' >I am a link</Link>
+</LibraryBlock>
 
 <CodeBlock title='Example' snippet={
   `
   <Link href='/' >I am a link</Link>
   `} />  
+
+<LibraryBlock title='Active:' section >
+  <Link active href='/' >I am a link</Link>
+</LibraryBlock>
+
+<CodeBlock title='Example' snippet={
+  `
+  <Link active href='/' >I am a link</Link>
+  `} />    
+
+
+<LibraryBlock title='Underline:' section >
+  <Link active underline href='/' >I am a link</Link>
+</LibraryBlock>
+
+<CodeBlock title='Example' snippet={
+  `
+  <Link active underline href='/' >I am a link</Link>
+  `} />      

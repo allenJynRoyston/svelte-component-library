@@ -18,8 +18,8 @@
 
 <style lang='scss'>
   .library-block{
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid grey;
+    // padding-bottom: 30px;
+    // margin-bottom: 30px;
+    // border-bottom: 1px solid grey;
   }
 </style>

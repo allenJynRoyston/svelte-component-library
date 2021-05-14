@@ -1,22 +1,24 @@
-<script>
-  import LibraryBlock from './__LibraryBlock'
+<script lang='ts'>
+  import {getContext} from 'svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'  
   import Splash from '../../../components/Splash/Splash.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
+  
+  const theme:string = getContext('theme')
 
   const props = {
     title: 'Splash Content',
     buttonOne: {
       text: 'CTA 1',
-      type: 'primary',
+      type: 'secondary',
       size: 'large',
       rounded: true,     
     },
     buttonTwo: {
       text: 'CTA 2',
-      type: 'hollow',
+      type: theme === 'dark' ? 'white' : 'black',
       size: 'large',
-      rounded: true,          
+      rounded: true,  
+      hollow: true        
     }       
   }
 
@@ -25,19 +27,6 @@
 <h2>Splash</h2>
 <hr>
 
-<ThemeWrapper theme='light' delay={1} lock>
-  <div style='background: white'>
-    <Splash {...props} />
-  </div>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <div style='background: #333; margin-top: 20px'>
-    <Splash {...props} />
-  </div>
-</ThemeWrapper>
-
-
 <CodeBlock title='Properties:' snippet={
   `
   export let title = 'Splash Title';
@@ -45,23 +34,29 @@
   export let buttonTwo = null;
   `} />
 
+
+<Splash {...props} />
+
+
+
 <CodeBlock open title='Example:' snippet={`
   const props = {
     title: 'Splash Content',
     buttonOne: {
       text: 'CTA 1',
-      type: 'primary',
+      type: 'secondary',
       size: 'large',
       rounded: true,     
     },
     buttonTwo: {
       text: 'CTA 2',
-      type: 'primary',
+      type: theme === 'dark' ? 'white' : 'black',
       size: 'large',
-      rounded: true,          
+      rounded: true,  
+      hollow: true        
     }       
   }
-
+  
   <Splash {...props} />
   `} />  
 

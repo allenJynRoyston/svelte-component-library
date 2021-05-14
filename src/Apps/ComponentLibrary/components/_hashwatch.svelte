@@ -5,14 +5,17 @@
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
 
   let hashWatchValue = null;
+
+  const currentHash = '#components?page=library&component=hashwatch'
+
 </script>
 
 <h2>HashWatch</h2>
 <hr>
 
-<Link href='#library?component=hashwatch&param1=foo'>Foo</Link>
-<Link href='#library?component=hashwatch&param1=bar'>Bar</Link>
-<Link href='#library?component=hashwatch&param1=foo&param2=bar'>FooBar</Link> 
+<Link href={`${currentHash}&param1=foo`}>Foo</Link>
+<Link href={`${currentHash}&param1=bar`}>Bar</Link>
+<Link href={`${currentHash}&param1=foobar`}>FooBar</Link> 
 <hr>
 
 <HashWatch onChange={(val) => {

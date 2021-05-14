@@ -6,17 +6,11 @@
   export let onClick = (index) => {};
   //---------------------------
 
-
   const colors:any = getContext('colors');
-  let isDark = false;
-  let ele;
+  const theme:string = getContext('theme');
 
-  onMount(async() => {
-    setTimeout(() => {
-      isDark = ele?.className.includes('dark-theme')
-      console.log(isDark)
-    }, 100) 
-  }) 
+  let isDark = theme === 'dark';
+  let ele;
 
   let renderItems = [...items]
 
@@ -92,13 +86,10 @@
   .shopping-cart{        
     width: calc(100% - 20px);
     padding: 10px;
-    
-    background: var(--white-0);
-    color: var(--black-1);
+    color: var(--white-0-text);
 
     &.dark-theme{
-      background: var(--black-1);
-      color: var(--white-0);      
+      color: var(--black-1-text);      
     }
 
     .small{

@@ -2,28 +2,10 @@
   import ProductCard from '../../../components/ProductCard/ProductCard'
   import LibraryBlock from './__LibraryBlock'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 </script>
 
 <h1>Loader</h1>
 <hr>
-
-<ThemeWrapper theme='light' delay={1} lock>
-  <LibraryBlock title="Light Theme:">
-    <div style='height: 400px'>
-      <ProductCard />
-    </div>
-  </LibraryBlock>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <LibraryBlock title="Dark Theme:">
-    <div style='height: 400px'>
-      <ProductCard />
-    </div>
-  </LibraryBlock>
-</ThemeWrapper>
-
 
 <CodeBlock title='Properties:' snippet={
   `
@@ -38,6 +20,16 @@
   export let onInfoBtn = () => {}
   export let onPurchaseBtn = () => {}
   `} />
+
+
+
+<LibraryBlock title="Default:">
+  <div style='height: 400px'>
+    <ProductCard />
+  </div>
+</LibraryBlock>
+
+
 
 <CodeBlock open title='Example:' snippet={`
   <div style='height: 400px'>

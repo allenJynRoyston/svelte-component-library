@@ -2,7 +2,6 @@
   import ShoppingCart from '../../../components/ShoppingCart/ShoppingCart.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte';
 
   const items = [
     {name: 'Product 1', price: 25.99, quantity: 1},
@@ -20,22 +19,16 @@
 <h1>Shopping Cart</h1>
 <hr>
 
-<ThemeWrapper theme='light' delay={1} lock>
-  <LibraryBlock title="Light Theme:">
-    <ShoppingCart {items} {onClick} />
-  </LibraryBlock>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <LibraryBlock title="Dark Theme:">
-    <ShoppingCart {items} {onClick} />
-  </LibraryBlock>
-</ThemeWrapper>
-
 <CodeBlock title='Properties:' snippet={`
   export let items = []
   export let onClick = (index) => {};
-`} />
+  `} />
+
+
+<LibraryBlock title="Default:">
+  <ShoppingCart {items} {onClick} />
+</LibraryBlock>
+
 
 <CodeBlock open title='Example:' snippet={`
   const items = [
@@ -49,7 +42,6 @@
     console.log(items[index])
   }
 
-
   <ShoppingCart {items} {onClick} />
-`} />  
+  `} />  
 

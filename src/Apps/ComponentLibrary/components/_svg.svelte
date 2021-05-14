@@ -3,7 +3,6 @@ import SVG from '../../../components/SVG/SVG.svelte'
 import LibraryBlock from './__LibraryBlock.svelte'
 import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
 import GridLayout from '../../../components/Layout/GridLayout.svelte'
-import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
 
 const svgs = [
   'dots',
@@ -79,7 +78,7 @@ const svgs = [
 
 
 export let items = svgs.map(svg =>{
-  return {component: SVG, props: {icon: svg}}
+  return {component: SVG, props: {icon: svg, title: svg}}
 })
 
 
@@ -88,30 +87,60 @@ export let items = svgs.map(svg =>{
 <h1>SVG</h1>
 <hr>
 
-<ThemeWrapper theme='light' delay={1} lock>
-  <LibraryBlock title="Light Theme:">
-    <GridLayout {items} size={50} gap={10} outline/>
-  </LibraryBlock>
-</ThemeWrapper>
-
-<ThemeWrapper theme='dark' delay={1} lock>
-  <LibraryBlock title="Dark Theme:">
-    <GridLayout {items} size={50} gap={10} outline/>
-  </LibraryBlock>
-</ThemeWrapper>
-
-
 <CodeBlock title='Properties:' snippet={
-    `
-    export let size:number = 14;
-    export let fill:string|null = null;
-    export let icon:IconTypes = null
-    export let index:number|null = null;
-    export let title:string|null = null;
-    export let style:string|null = null;
-    export let onClick:(index) => void|null = null;
-    `} />
+  `
+  export let size:number = 14;
+  export let fill:string|null = null;
+  export let icon:IconTypes = null
+  export let index:number|null = null;
+  export let title:string|null = null;
+  export let style:string|null = null;
+  export let onClick:(index) => void|null = null;
+  `} />
+
+<LibraryBlock title="Default">
+  <GridLayout {items} size={50} gap={10} outline/>
+</LibraryBlock>
+
 
 <CodeBlock open title='Example:' snippet={`
-    <SVG icon='home' size='14' />
+    <SVG icon='home' size={14} />
     `} />
+
+<LibraryBlock title="Size: ">
+  <SVG icon='home' size={50} />
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+  <SVG icon='home' size={50} />
+  `} />    
+
+<LibraryBlock title="Fill: ">
+  <SVG icon='home' size={50} fill='red' />
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+  <SVG icon='home' size={50} ignoreTheme fill='red' />
+  `} />  
+
+<LibraryBlock title="Ignore Theme: ">
+  <div style='background: white; padding: 20px'>
+    <SVG icon='home' size={50} ignoreTheme />
+  </div>
+</LibraryBlock>
+
+
+<CodeBlock open title='Example:' snippet={`
+  <div style='background: white; padding: 20px'>
+    <SVG icon='home' size={50} ignoreTheme />
+  </div>
+  `} />    
+
+<LibraryBlock title="Title (on hover): ">
+  <SVG icon='home' size={50} title='I am the title' />
+</LibraryBlock>
+
+
+<CodeBlock open title='Example:' snippet={`
+  <SVG icon='home' size={50} title='I am the title' />
+  `} />    

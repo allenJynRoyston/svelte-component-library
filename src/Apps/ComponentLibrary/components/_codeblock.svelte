@@ -7,6 +7,12 @@
 <h2>Code Block</h2>
 <hr>
 
+<CodeBlock title='Properties:' snippet={`
+  export let title = null;
+  export let open = false;
+  export let snippet = '';     
+  export let lang = 'typescript'
+  `} />
 
 <LibraryBlock title="Default:">
   <CodeBlock open title='Example:' snippet={`
@@ -15,17 +21,11 @@
   `} />  
 </LibraryBlock>
 
-<CodeBlock title='Properties:' snippet={`
-  export let title = null;
-  export let open = false;
-  export let snippet = '';     
-  export let lang = 'typescript'
-`} />
 
 <CodeBlock open title='Example:' snippet={`
   <CodeBlock open title='Example:' snippet={'
     const greeting = "hello world"
     <h1>{greeting}<h1>
   '} />  
-`} />  
+  `} />  
 

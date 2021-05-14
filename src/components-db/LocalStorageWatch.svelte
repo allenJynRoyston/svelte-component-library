@@ -1,26 +1,37 @@
 <script lang='ts'>
-  import {onMount} from 'svelte'
-
   export let key = null;
   export let type: 'localStorage' | 'sessionStorage' = 'localStorage'
   export let onFetch;
 
+  function IsJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
 
   //--------------------------- ONMOUNT
-  onMount(() => {
-    if(!!key){
-      try{
-        const data = JSON.parse(window[type].getItem(key) ) || null
+  if(!!key){
+    try{
+      const entry = window[type].getItem(key);
+      if(IsJsonString(entry)){
+        const data = JSON.parse(entry) || null
         onFetch && onFetch({success: !!data, data})
       }
-      catch(err){
-        onFetch && onFetch({success: false})
+      else{
+        onFetch && onFetch({success: true, data: entry})
       }
+
     }
-    else{
+    catch(err){
       onFetch && onFetch({success: false})
     }
-  })      
+  }
+  else{
+    onFetch && onFetch({success: false})
+  }  
   //---------------------------
 
 

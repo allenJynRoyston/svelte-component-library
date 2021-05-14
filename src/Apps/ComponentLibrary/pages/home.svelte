@@ -1,76 +1,72 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
+  import {createChannel} from '../../../js/utility'  
+  import Container from '../../../components/Container/Container.svelte';
   import InnerContainer from '../../../components/InnerContainer/InnerContainer.svelte'
-  import Footer from '../../../components/Footer/Footer.svelte'
   import Header from '../../../components/Header/Header.svelte'
-  import ColorBlock from '../../../components/ColorBlock/ColorBlock.svelte'
-  import GridLayout from '../../../components/Layout/GridLayout.svelte'
   import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
+  import Channels from '../../../components/Channels/Channels.svelte'
+  import Button from '../../../components/Button/Button.svelte'
+
+  import ColorPreview from '../pagecomponents/ColorPreview.svelte'
+  import TypographyPreview from '../pagecomponents/TypographyPreview.svelte'
 
   export let headerprops;
 
-  const theme = getContext('theme');
-  const colors = getContext('colors');
+  const theme:string = getContext('theme');
 
-  let colorBlocks:any = {}
-
-  for (const [key, value] of Object.entries(colors)) {
-    let items = []
-    value.forEach(x => {
-      const {name, color, textColor} = x;      
-      items = [...items, {component: ColorBlock, props: {name, bgColor: color, textColor}}]
-    })
-    colorBlocks[key] = {
-      items
-    }
-  }
-
+  //--------------------------- CHANNEL
+  const channel = createChannel({
+     current: 0,
+     data: [
+        {content: ColorPreview},
+        {content: TypographyPreview},
+        {content: ColorPreview},
+    ]
+  }) 
+  //---------------------------   
 
 </script>
 
 <ThemeWrapper {theme} delay={1} lock>
-  <div class='home-page'>
-    <InnerContainer>
+    <Container>
+      <InnerContainer>
 
-      <Header {...headerprops} expand bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
-        <h1>Svelte Component Library</h1>
-      </Header>
+        <div class='home-page'>
+          <Header {...headerprops} showCenter showFooter bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
+            <h1>Svelte Component Library</h1>
+          </Header>
 
-      <div class='home-section'>
-        <h1>
-          Colors:
-        </h1>
-        
-        {#each Object.entries(colorBlocks) as [key]}
-          <div class='color-blocks'>
-            <h2>{key}:</h2>
-            <GridLayout outline items={colorBlocks[key].items} />
+          <div class='home-section'>
+            <div class='button-nav'>
+              <Button type='primary' onClick={() => {channel.current = 0}}>Colors</Button>
+              <Button type='secondary' onClick={() => {channel.current = 1}}>Typgraphy</Button>
+              <Button type='success' onClick={() => {channel.current = 2}}>Utility</Button>
+            </div>
+            
+            <Channels nopadding animate {...channel} />              
           </div>
-        {/each}
+        </div>
 
-      </div>
-
-      <Footer />
-    
-    </InnerContainer>
-  </div>
+      </InnerContainer>
+    </Container>
 </ThemeWrapper>
 
 <style lang='scss'>
   .home-page{
     display: flex;
     flex-direction: column;
-    background: var(--black-1);
-    color: var(--white-0)
+    justify-content: center;
+    align-items: center;
   }
 
-  .home-section{
-    min-height: 100vh;
-    padding: 10px;
+  .home-section{    
+    width: 100%;
   }
 
-  .color-blocks{
-    margin-bottom: 100px;
+  .button-nav{
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);  
   }
 
 </style>

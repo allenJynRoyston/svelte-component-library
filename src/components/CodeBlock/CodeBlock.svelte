@@ -42,3 +42,9 @@
 </Accordion>
 
 
+<style lang='scss'>
+  :global(.hljs){        
+    padding-right: 50px;
+    overflow-x: auto
+  }
+</style>

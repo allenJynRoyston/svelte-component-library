@@ -11,12 +11,13 @@
     display: flex;
     align-content: center;
     justify-content: center;    
-    color: #333;
+    background: var(--white-0);
+    color: var(--white-0-text);
 
 
     &.dark-theme{
       background: var(--black-2);
-      color: var(--white-0);
+      color: var(--black-2-text);
     }
   }
 </style>
