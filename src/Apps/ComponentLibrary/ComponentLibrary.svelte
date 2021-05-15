@@ -2,11 +2,10 @@
   import {getContext} from 'svelte';
   import { createChannel } from '../../js/utility'
 
-  import Channels from '../../components/Channels/Channels.svelte'
-  import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
-  import Splash from '../../components/Splash/Splash.svelte'
-  import NavBar from '../../components/NavBar/NavBar.svelte'
-  import ThemeSwitch from '../../components/ThemeSwitch/ThemeSwitch.svelte'
+  import Channels from '@components/Channels/Channels.svelte'
+  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
+  import Splash from '@components/Splash/Splash.svelte'
+  import NavBar from '@components/NavBar/NavBar.svelte'
   
   import Home from './pages/home.svelte';
   import Library from './pages/library.svelte';
@@ -45,9 +44,6 @@
           rounded: true,          
         }        
       }
-    },
-    footerEle: {
-      component: ThemeSwitch     
     }
   }  
   //---------------------------   

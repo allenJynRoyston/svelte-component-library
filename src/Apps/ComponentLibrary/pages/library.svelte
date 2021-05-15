@@ -9,6 +9,7 @@
   import SnackBar from '@components/Snackbar/Snackbar.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
+  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
 
   import ButtonAlias from '@lib/_button.svelte'
   import HeaderAlias from '@lib/_header.svelte'
@@ -106,7 +107,6 @@
   })
   //--------------------------- 
 
-  // https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600
 </script>
 
 <ThemeWrapper {theme} {themeWatch} lock>
@@ -114,11 +114,12 @@
     <HashWatch onChange={onChange}/>
     <SnackBar {snack} />
 
-    <Header {...headerprops} showFooter bgSrc={`./bg/header-bg.jpg`}>
+    <Header {...headerprops} showFooter bgSrc={`./bg/header-${theme}-bg.jpg`}>
       <h1>Svelte Component Library</h1>
     </Header>
 
     <ColumnLayout {links} currentIndex={channel.current} >
+      <ThemeSwitch />
       <Channels {...channel} animate />
     </ColumnLayout>
   </Container>

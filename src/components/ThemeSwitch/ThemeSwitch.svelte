@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Link from "../Link/Link.svelte";
+  import Link from "@components/Link/Link.svelte";
   
   export let links = ['dark', 'light']
 
@@ -11,7 +11,6 @@
     localStorage.setItem('theme', theme)
     location.reload()
   }
-
 
 </script>
 
@@ -26,14 +25,15 @@
 </div>
 
 <style lang='scss'>
-  .themeswitcher{
-    width: 100%;
+  .themeswitcher{    
     justify-content: flex-start;
     display: flex;
     gap: 10px;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--black-1);
+    padding: 10px;
+    width: calc(100% - 40px);
 
     &.dark-theme{
       color: var(--white-1);

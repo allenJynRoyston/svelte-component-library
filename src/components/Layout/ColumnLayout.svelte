@@ -102,7 +102,12 @@
   .directory-links{
     display: flex; 
     flex-direction: column;
-    padding: 20px 50px 20px 10px;    
+    padding: 30px 50px 20px 10px;   
+    font-size: 24px;     
+
+    @include desktop-and-up {     
+      font-size: 16px; 
+    }     
   }
 
 

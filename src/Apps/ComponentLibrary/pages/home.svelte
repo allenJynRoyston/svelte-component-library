@@ -3,7 +3,7 @@
   import {createChannel} from '../../../js/utility'  
   
   import Container from '@components/Container/Container.svelte';
-  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
   import Header from '@components/Header/Header.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Channels from '@components/Channels/Channels.svelte'
@@ -66,7 +66,12 @@
               <Button type='black' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
             </div>
             
+            {#if channel.current !== 0}
+              <ThemeSwitch />
+            {/if}
+            
             <Channels nopadding {...channel} />              
+            
           </div>
         </div>
     </Container>
