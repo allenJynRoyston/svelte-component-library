@@ -8,10 +8,4 @@ app.register(fastifyStatic, { root: join(resolve(), "build") });
 const port = process.env.PORT || 3000;
 
 console.log(`Now serving on localhost: ${port}`);
-
-app.listen({ port: 3000, host: "0.0.0.0", backlog: 511 }, (err) => {
-  if (err) {
-    app.log.error(err);
-    process.exit(1);
-  }
-});
+app.listen(port, "0.0.0.0");
