@@ -33,10 +33,10 @@
       {start: 'white', end: '#bdc3c7'},
     primary: theme === 'light' ? 
       {start: '#0fbcf9', end: 'black'} : 
-      {start: '#0fbcf9', end: 'black'},
+      {start: '#4bcffa', end: 'black'},
     secondary: theme === 'light' ? 
       {start: '#3c40c6', end: 'black'} : 
-      {start: '#3c40c6', end: 'black'},
+      {start: '#FD7272', end: 'black'},
     magic: theme === 'light' ? 
       {start: '#9b59b6', end: 'black'} : 
       {start: '#9b59b6', end: 'black'},
@@ -50,7 +50,7 @@
       {start: '#ff073a', end: 'black'} : 
       {start: '#d63031', end: 'black'},
   }
-  setContext('colors', createColorPallete({colorSet, range: 10}))
+  setContext('colors', createColorPallete({colorSet, range: 10, theme}))
   //---------------------------     
   
   //---------------------------  SNACKBAR CODE

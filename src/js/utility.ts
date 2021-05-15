@@ -96,7 +96,11 @@ export const capitalizeStr = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const createColorPallete = ({ colorSet, range = 10 }) => {
+export const createColorPallete = ({
+  colorSet,
+  range = 10,
+  theme = "light",
+}) => {
   let colors = {};
   let scales = {};
 
@@ -108,6 +112,7 @@ export const createColorPallete = ({ colorSet, range = 10 }) => {
       .colors(range);
   }
 
+  // COLORS
   for (const [key] of Object.entries(scales)) {
     scales[key].forEach((color, index) => {
       let colorName = `--${key}-${index}`;
@@ -125,6 +130,12 @@ export const createColorPallete = ({ colorSet, range = 10 }) => {
       colors[key].push({ name: colorName, textColor: textName, color });
     });
   }
+
+  // HR
+  document.documentElement.style.setProperty(
+    "--hr",
+    scales[theme === "light" ? "black" : "black"][theme === "light" ? 2 : 5]
+  );
 
   return colors;
 };

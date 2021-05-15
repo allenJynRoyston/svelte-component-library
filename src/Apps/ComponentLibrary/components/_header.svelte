@@ -7,7 +7,7 @@
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
 
   let props = {
-    logoSrc: './images/mock-logo-250x250.png',
+    logoSrc: './logo/logo.png',
     bgSrc: 'https://picsum.photos/id/10/1440/600',
     navEle: {
       component: NavBar,
@@ -75,7 +75,7 @@
 <CodeBlock open title='Example:' snippet={`
   let props = {
     bgSrc: 'https://picsum.photos/id/10/1440/600',
-    logoSrc: './images/mock-logo-250x250.png',
+    logoSrc: './logo/logo.png',
     navEle: {
       component: NavBar,
       props: {

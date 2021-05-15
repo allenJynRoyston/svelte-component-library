@@ -53,8 +53,6 @@
 
 <ThemeWrapper {theme} {themeWatch} lock>
     <Container offset={theme === 'dark' ? 2 : 0}>
-      
-
         <div class='home-page'>
           <Header {...headerprops} showCenter={channel.current === 0} showFooter={channel.current === 0} bgSrc={`./bg/header-${theme}-bg.jpg`}>
             <h1>Svelte Component Library</h1>
@@ -71,8 +69,6 @@
             <Channels nopadding {...channel} />              
           </div>
         </div>
-
-     
     </Container>
 </ThemeWrapper>
 

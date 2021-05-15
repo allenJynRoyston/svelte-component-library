@@ -39,7 +39,7 @@
   
       <div slot='content'>
         <Section>
-          <GridLayout outline items={colorBlocks[key].items} />
+          <GridLayout size={125} outline items={colorBlocks[key].items} />
         </Section>           
       </div>
     </Accordian>

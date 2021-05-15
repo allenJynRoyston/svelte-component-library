@@ -1,7 +1,12 @@
 @import "./src/_normalize";
-@import "./src/_colors";
 @import "./src/_media-queries";
 @import "./src/_typography";
+
+// VISIBILITY
+:global(hr) {
+  border: none;
+  border-bottom: 2px solid var(--hr);
+}
 
 // VISIBILITY
 :global(.mobile-only) {
