@@ -1,6 +1,6 @@
 <script lang='ts'>
   import Highlight from "svelte-highlight";
-  import Accordion from '../Accordion/Accordion.svelte'
+  import Accordion from '@components/Accordion/Accordion.svelte'
   import agate from "svelte-highlight/src/styles/agate";
   import { typescript, css  } from "svelte-highlight/src/languages";
 
