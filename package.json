@@ -26,7 +26,6 @@
     "pug": "^3.0.2",
     "sass": "^1.30.0",
     "snowpack": "^2.7.0",
-    "svelte-highlight": "^2.0.0",
     "svelte-jester": "^1.1.5",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^4.6.1",

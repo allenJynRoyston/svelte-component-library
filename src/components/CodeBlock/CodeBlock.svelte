@@ -1,8 +1,7 @@
 <script lang='ts'>
-  import Highlight from "svelte-highlight";
+  // import Highlight from "svelte-highlight";
   import Accordion from '../Accordion/Accordion.svelte'
-  import agate from "svelte-highlight/src/styles/agate";
-  import { typescript, css  } from "svelte-highlight/src/languages";
+
 
   export let title = null;
   export let open = false;
@@ -14,21 +13,21 @@
 
   export let lang:'typescript' | 'css' = 'typescript'
 
-  $: getLang = () => {
-    switch(lang){
-      case 'typescript':
-        return typescript
-      case 'css':
-       return css
-    }
-  }
+  // $: getLang = () => {
+  //   switch(lang){
+  //     case 'typescript':
+  //       return typescript
+  //     case 'css':
+  //      return css
+  //   }
+  // }
 
 </script>
 
-
+<!-- 
 <svelte:head>
   {@html agate}
-</svelte:head>
+</svelte:head> -->
 
 <Accordion fill {open}>
   <div slot='title'>
@@ -37,7 +36,7 @@
 
 
   <div slot='content' class='code-block'>
-    <Highlight language={getLang()}  code={snippet} />
+    <!-- <Highlight language={getLang()}  code={snippet} /> -->
   </div>
 </Accordion>
 
