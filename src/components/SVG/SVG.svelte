@@ -1,5 +1,6 @@
 <script lang='ts'>  
   import {onMount, getContext} from 'svelte';
+import { get } from 'svelte/store';
 
   export let size:number = 14; 
   export let fill:string|null = null;
@@ -9,11 +10,11 @@
   export let style:string|null = null;
   export let onClick:(index) => void|null = null;
   export let ignoreTheme = false;
-
-  let isDark = false;
+  
+  const isDark = getContext('theme') === 'dark';
+  
   let ele;
   let colors:any = getContext('colors');
-  let theme:string = getContext('theme')
 
   type IconTypes =
     | null
@@ -87,14 +88,6 @@
     | 'hashtag'
     | 'refresh'
 
-  
-  onMount(async() => {
-    if(!ignoreTheme){
-      setTimeout(() => {
-        isDark = ele?.className.includes('dark-theme')
-      }, 100)
-    }      
-  })
 
 </script>
 

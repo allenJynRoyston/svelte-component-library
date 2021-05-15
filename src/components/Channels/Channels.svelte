@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {onMount} from 'svelte'  
-  import Loader from '../Loader/Loader.svelte'
+  import Loader from '@components/Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';

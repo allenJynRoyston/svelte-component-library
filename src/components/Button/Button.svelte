@@ -1,5 +1,5 @@
-<script>
-  import Link from '../Link/Link.svelte'
+<script lang='ts'>
+  import Link from '@components/Link/Link.svelte'
 
   export let onClick = null
   export let disabled = false

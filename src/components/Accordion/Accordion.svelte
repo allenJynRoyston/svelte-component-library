@@ -1,8 +1,8 @@
-<script>
-  import {onMount} from 'svelte';
+<script lang='ts'>
+  import {getContext} from 'svelte';
 
-  import TwoSlot from '../TwoSlot/TwoSlot.svelte'
-  import SVG from '../SVG/SVG.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
 
   export let open = false
   export let fill = false
@@ -11,17 +11,11 @@
   
   let isOpened = open;
   let ele;
-  let isDark = false;
 
+  const isDark = getContext('theme') === 'dark'
   const toggle = () => {
     isOpened = !isOpened
   }
-
-  onMount(async() => {
-    setTimeout(() => {
-      isDark = ele?.className.includes('dark-theme')
-    }, 25)
-  })
 
 </script>
 

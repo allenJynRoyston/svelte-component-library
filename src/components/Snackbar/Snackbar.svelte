@@ -1,6 +1,6 @@
 <script lang="ts">
 //--------------------------- IMPORTS  
-import { onMount, getContext, onDestroy } from 'svelte';
+import { getContext, onDestroy } from 'svelte';
 import SVG from '../SVG/SVG.svelte'
 import Loader from '../Loader/Loader.svelte';
 

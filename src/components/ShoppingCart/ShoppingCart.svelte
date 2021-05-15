@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {onMount, getContext} from 'svelte';
+  import {getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   export let items = []
   export let onClick = (index) => {};
@@ -8,10 +8,9 @@
 
   const colors:any = getContext('colors');
   const theme:string = getContext('theme');
-
-  let isDark = theme === 'dark';
+  const isDark = theme === 'dark'
+  
   let ele;
-
   let renderItems = [...items]
 
   const header = [

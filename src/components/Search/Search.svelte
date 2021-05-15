@@ -1,20 +1,14 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext, onMount} from 'svelte';
+  import {getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   import Input from '../FormComponents/Input/Input.svelte'
   //---------------------------
 
   const colors:any = getContext('colors');
-  let isDark = false;
+  const isDark = getContext('theme') === 'dark'
   let ele;
 
-  onMount(async() => {
-    setTimeout(() => {
-      isDark = ele?.className.includes('dark-theme')
-      console.log(isDark)
-    }, 100) 
-  })  
 
 </script>
 
