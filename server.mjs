@@ -7,5 +7,5 @@ app.register(fastifyStatic, { root: join(resolve(), "build") });
 
 const port = process.env.PORT || 3000;
 
-app.listen(port);
 console.log(`Now serving on localhost: ${port}`);
+app.listen(port, "0.0.0.0");
