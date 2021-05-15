@@ -1,15 +1,21 @@
 <script>
-  import FormExample from '../../../components/FormPremade/FormExample'
+  import FormExample from '@components/FormPremade/FormExample'
   import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
 </script>
 
 <h2>FormExample</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import FormExample from '@components/FormPremade/FormExample'
+  `} />
+
 <LibraryBlock title="Default:">
   <FormExample />       
 </LibraryBlock>
+
 
 
 <CodeBlock title='Properties:' snippet={

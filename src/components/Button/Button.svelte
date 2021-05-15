@@ -17,7 +17,7 @@
 </script>
 
 {#if !!href}
-  <Link {href} >
+  <Link fit {href} >
     <button class={`root-component button ${type} ${size} `} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
       <slot>{text || 'Button'}</slot>
     </button>    
@@ -34,18 +34,22 @@
     outline: none;
     border: none;
     width: 100%;
-    padding: 5px;
     cursor: pointer;
     font-weight: 700;
-    
+    padding: 5px 20px;
+        
     &.disabled{
       opacity: 0.5;
       cursor: not-allowed;
     }
 
+    &.small{
+      font-size: 12px;
+    }    
+
     &.large{
-      font-size: 18px;
-      min-width: 100px;      
+      font-size: 25px;
+      padding: 5px 30px 7px 30px;      
     }
     
     &.rounded{
@@ -170,6 +174,32 @@
         }        
       }
     }
+
+    &.magic{
+      border: 3px solid var(--magic-1);      
+      background: var(--magic-1);
+      color: var(--magic-1-text);
+
+      &.hollow{
+        background: none!important;
+        color: var(--magic-1);
+      }
+
+      &:active{
+        background: var(--magic-3);
+      }           
+
+      &.dark-theme{
+        border: 3px solid var(--magic-3);
+        background:var(--magic-3);
+        color: var(--white-0);
+
+        &:active{
+          background: var(--magic-6);;
+        }        
+      }
+    }
+
 
     &.success{
       border: 3px solid var(--success-1);      

@@ -1,12 +1,16 @@
 <script>
-  import Loader from '../../../components/Loader/Loader'
+  import Loader from '@components/Loader/Loader'
   import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
 </script>
 
 <h1>Loader</h1>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Loader from '@components/Loader/Loader'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

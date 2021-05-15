@@ -1,6 +1,6 @@
 <script lang='ts'>
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import IDB from '../../../components/Utility/IndexDBSetup.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import IDB from '@components/Utility/IndexDBSetup.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import {createDB} from '../../../js/utility'
 
@@ -47,6 +47,10 @@
 
 <h2>IndexDB</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import IDB from '@components/Utility/IndexDBSetup.svelte'
+  `} />
 
 <LibraryBlock title="Default:">
   <p>Check application/database</p>

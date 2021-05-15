@@ -1,7 +1,7 @@
 <script lang='ts'>
-  import Accordian from '../../../components/Accordion/Accordion.svelte'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import Accordian from '@components/Accordion/Accordion.svelte'
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
 
 </script>
@@ -9,7 +9,12 @@
 <h2>Accordion</h2>
 <hr>
 
-<CodeBlock  title='Properties:' snippet={
+<CodeBlock open title='Import:' snippet={`
+  import Accordian from '@components/Accordion/Accordion.svelte'
+  `} />
+
+
+<CodeBlock open title='Properties:' snippet={
   `
   export let open = false
   export let fill = false

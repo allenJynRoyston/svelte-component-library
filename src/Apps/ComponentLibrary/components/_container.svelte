@@ -1,12 +1,16 @@
 <script lang='ts'>
-  import Container from '../../../components/Container/Container.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import Container from '@components/Container/Container.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
 
 </script>
 
 <h2>Container</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Container from '@components/Container/Container.svelte'
+  `} />
 
 <CodeBlock  title='Properties:' snippet={
   `

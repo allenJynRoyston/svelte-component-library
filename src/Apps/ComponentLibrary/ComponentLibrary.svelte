@@ -35,7 +35,6 @@
           text: 'Download',
           type: theme === 'dark' ? 'white' : 'black',
           href: '#components?component=header&link=cta1',
-          size: 'large',
           rounded: true,     
           hollow: true
         },
@@ -43,7 +42,6 @@
           text: 'Library',
           type: 'primary',
           href: '#components?page=library',
-          size: 'large',
           rounded: true,          
         }        
       }

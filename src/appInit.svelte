@@ -4,14 +4,16 @@
   import HashWatch from './components/URLWatcher/HashWatch.svelte'
   import Link from './components/Link/Link.svelte'  
   import SnackBar from './components/Snackbar/Snackbar.svelte'
-  import {createColorPallete} from './js/utility'
+  import {createColorPallete, assignFonts} from './js/utility'
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
   import StrongCookieApp from './Apps/StrongCookie/StrongCookie.svelte'
 
-  //--------------------------- COLORS
-  setContext('colors', createColorPallete(10))
+  //--------------------------- FONTS
+  const fonts = ['Noto Sans JP', 'IBM Plex Sans Condensed'] // also assign in scss file below
+  assignFonts(fonts)
+  setContext('fonts', fonts)
   //---------------------------   
 
   //---------------------------  THEME
@@ -20,6 +22,36 @@
   localStorage.setItem('theme', theme)
   setContext('theme', theme)
   //---------------------------   
+
+  //--------------------------- COLORS
+  const colorSet = {
+    black: theme === 'light' ? 
+      {start: '#111', end: '#eee'} : 
+      {start: '#111', end: '#eee'},
+    white: theme === 'light' ? 
+      {start: 'white', end: '#bdc3c7'} : 
+      {start: 'white', end: '#bdc3c7'},
+    primary: theme === 'light' ? 
+      {start: '#0fbcf9', end: 'black'} : 
+      {start: '#0fbcf9', end: 'black'},
+    secondary: theme === 'light' ? 
+      {start: '#3c40c6', end: 'black'} : 
+      {start: '#3c40c6', end: 'black'},
+    magic: theme === 'light' ? 
+      {start: '#9b59b6', end: 'black'} : 
+      {start: '#9b59b6', end: 'black'},
+    success: theme === 'light' ? 
+      {start: '#4cd137', end: 'black'} : 
+      {start: '#4cd137', end: 'black'},
+    warning: theme === 'light' ? 
+      {start: '#e67e22', end: 'black'} : 
+      {start: '#e67e22', end: 'black'},
+    danger: theme === 'light' ? 
+      {start: '#ff073a', end: 'black'} : 
+      {start: '#d63031', end: 'black'},
+  }
+  setContext('colors', createColorPallete({colorSet, range: 10}))
+  //---------------------------     
   
   //---------------------------  SNACKBAR CODE
   let snack;
@@ -62,6 +94,13 @@
 
 
 <style lang='scss'>
+  // Assign fonts here, must be placed before global import
+  $fontOne: "Noto Sans JP";
+  $fontTwo: "IBM Plex Sans Condensed";
+
+  /* note:  any changes must have a hard refresh.  
+     Comment out global.scss import, save, refresh, then uncomment and save again.  
+  */
   @import './scss/global.scss';
 
   #app-selector{
@@ -74,8 +113,8 @@
     flex-direction: column;
     opacity: 0.1;
     transition: 0.3s;
-    background: var(--black-0);
-    color: white;
+    background: var(--primary-0);
+    color: var(--primary-0-text);
 
     &:hover{
       opacity: 1;

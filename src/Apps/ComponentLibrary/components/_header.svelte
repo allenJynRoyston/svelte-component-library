@@ -1,10 +1,10 @@
 <script lang='ts'>
-  import Header from '../../../components/Header/Header.svelte'
+  import Header from '@components/Header/Header.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import NavBar from '../../../components/NavBar/NavBar.svelte';
-  import Splash from '../../../components/Splash/Splash.svelte'
-  import ThemeSwitch from '../../../components/ThemeSwitch/ThemeSwitch.svelte';
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import NavBar from '@components/NavBar/NavBar.svelte';
+  import Splash from '@components/Splash/Splash.svelte'
+  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
 
   let props = {
     logoSrc: './images/mock-logo-250x250.png',
@@ -48,6 +48,10 @@
 
 <h2>Header</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Header from '@components/Header/Header.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let logoSrc = null;

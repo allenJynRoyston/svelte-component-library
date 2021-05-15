@@ -1,8 +1,8 @@
 <script lang="ts">
-import SVG from '../../../components/SVG/SVG.svelte'
+import SVG from '@components/SVG/SVG.svelte'
 import LibraryBlock from './__LibraryBlock.svelte'
-import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-import GridLayout from '../../../components/Layout/GridLayout.svelte'
+import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+import GridLayout from '@components/Layout/GridLayout.svelte'
 
 const svgs = [
   'dots',
@@ -86,6 +86,10 @@ export let items = svgs.map(svg =>{
 
 <h1>SVG</h1>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import SVG from '@components/SVG/SVG.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

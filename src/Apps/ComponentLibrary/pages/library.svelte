@@ -1,40 +1,44 @@
 <script lang='ts'>
   import {getContext, setContext} from 'svelte';
-  import Header from '../../../components/Header/Header.svelte'
-  import ColumnLayout from '../../../components/Layout/ColumnLayout.svelte'
-  import Channels from '../../../components/Channels/Channels.svelte'
-  import HashWatch from '../../../components/URLWatcher/HashWatch.svelte'
-  import SnackBar from '../../../components/Snackbar/Snackbar.svelte'
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
   import { createChannel, capitalizeStr } from '../../../js/utility'
 
-  import ButtonAlias from '../components/_button.svelte'
-  import HeaderAlias from '../components/_header.svelte'
-  import FooterAlias from '../components/_footer.svelte'
-  import LoaderAlias from '../components/_loader.svelte'
-  import ProductCard from '../components/_productcard.svelte'
-  import LinkAlias from '../components/_link.svelte'
-  import FormAlias from '../components/_formExample.svelte'
-  import SearchAlias from '../components/_search.svelte'
-  import HashWatchAlias from '../components/_hashwatch.svelte'
-  import SVGAlias from '../components/_svg.svelte'
-  import ThreeSlotAlias from '../components/_threeslot.svelte'
-  import TwoSlotAlias from '../components/_twoslot.svelte'
-  import ChannelAlias from '../components/_channels.svelte'
-  import ChannelButtonAlias from '../components/_channelbutton.svelte'
-  import GridLayoutAlias from '../components/_gridLayout.svelte'
-  import ColumnLayoutAlias from '../components/_columnLayout.svelte'
-  import ShoppingCartAlias from '../components/_shoppingCart.svelte'
-  import IndexDBAlias from '../components/_idb.svelte'
-  import SnackbarAlias from '../components/_snackbar.svelte'
-  import AccordionAlias from '../components/_accordion.svelte'
-  import CodeBlockAlias from '../components/_codeblock.svelte'
-  import SplashAlias from '../components/_splash.svelte'
-  import NavBarAlias from '../components/_navBar.svelte'
-  import ThemeWrapperAlias from '../components/_themewrapper.svelte'
-  import ProfileCardAlias from '../components/_profilecard.svelte'
-  import ContainerAlias from '../components/_container.svelte'
-  import InnerContainerAlias from '../components/_innerContainer.svelte'
+  import Header from '@components/Header/Header.svelte'
+  import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
+  import Channels from '@components/Channels/Channels.svelte'
+  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
+  import SnackBar from '@components/Snackbar/Snackbar.svelte'
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
+  import Container from '@components/Container/Container.svelte'
+
+  import ButtonAlias from '@lib/_button.svelte'
+  import HeaderAlias from '@lib/_header.svelte'
+  import FooterAlias from '@lib/_footer.svelte'
+  import LoaderAlias from '@lib/_loader.svelte'
+  import ProductCard from '@lib/_productcard.svelte'
+  import LinkAlias from '@lib/_link.svelte'
+  import FormAlias from '@lib/_formExample.svelte'
+  import SearchAlias from '@lib/_search.svelte'
+  import HashWatchAlias from '@lib/_hashwatch.svelte'
+  import SVGAlias from '@lib/_svg.svelte'
+  import ThreeSlotAlias from '@lib/_threeslot.svelte'
+  import TwoSlotAlias from '@lib/_twoslot.svelte'
+  import ChannelAlias from '@lib/_channels.svelte'
+  import ChannelButtonAlias from '@lib/_channelbutton.svelte'
+  import GridLayoutAlias from '@lib/_gridLayout.svelte'
+  import ColumnLayoutAlias from '@lib/_columnLayout.svelte'
+  import ShoppingCartAlias from '@lib/_shoppingCart.svelte'
+  import IndexDBAlias from '@lib/_idb.svelte'
+  import SnackbarAlias from '@lib/_snackbar.svelte'
+  import AccordionAlias from '@lib/_accordion.svelte'
+  import CodeBlockAlias from '@lib/_codeblock.svelte'
+  import SplashAlias from '@lib/_splash.svelte'
+  import NavBarAlias from '@lib/_navBar.svelte'
+  import ThemeWrapperAlias from '@lib/_themewrapper.svelte'
+  import ProfileCardAlias from '@lib/_profilecard.svelte'
+  import ContainerAlias from '@lib/_container.svelte'
+  import InnerContainerAlias from '@lib/_innerContainer.svelte'
+  import SectionAlias from '@lib/_section.svelte'
+  import ColorTextAlias from '@lib/_colortext.svelte'
 
   export let headerprops;
 
@@ -71,7 +75,9 @@
     {content: ThemeWrapperAlias, id: 'themewrapper'}, 
     {content: ProfileCardAlias, id: 'profilecard'},  
     {content: ContainerAlias, id: 'container'},
-    {content: InnerContainerAlias, id: 'innercontainer'}
+    {content: InnerContainerAlias, id: 'innercontainer'},
+    {content: SectionAlias, id: 'section'},
+    {content: ColorTextAlias, id: 'colortext'}
   ]})   
 
 
@@ -100,18 +106,20 @@
   })
   //--------------------------- 
 
-  
+  // https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600
 </script>
 
 <ThemeWrapper {theme} {themeWatch} lock>
-  <HashWatch onChange={onChange}/>
-  <SnackBar {snack} />
+  <Container offset={1}>
+    <HashWatch onChange={onChange}/>
+    <SnackBar {snack} />
 
-  <Header {...headerprops} showFooter bgSrc={`https://picsum.photos/id/${theme === 'dark' ? '1082' : '1001'}/1440/600`}>
-    <h1>Svelte Component Library</h1>
-  </Header>
+    <Header {...headerprops} showFooter bgSrc={`./bg/header-bg.jpg`}>
+      <h1>Svelte Component Library</h1>
+    </Header>
 
-  <ColumnLayout {links} currentIndex={channel.current} >
-    <Channels {...channel} animate />
-  </ColumnLayout>
+    <ColumnLayout {links} currentIndex={channel.current} >
+      <Channels {...channel} animate />
+    </ColumnLayout>
+  </Container>
 </ThemeWrapper>

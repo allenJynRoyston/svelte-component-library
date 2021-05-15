@@ -35,6 +35,9 @@ module.exports = {
     /* ... */
   },
   alias: {
-    /* ... */
+    "@lib": "./src/Apps/ComponentLibrary/components",
+    "@components": "./src/components",
+    "@scripts": "./src/js",
+    "@scss": "./src/scss/src",
   },
 };

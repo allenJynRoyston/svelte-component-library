@@ -2,8 +2,8 @@
   "dependencies": {
     "fastify": "^3.9.1",
     "fastify-static": "^3.3.0",
-    "ts-jest": "^26.4.4",
-    "svelte": "^3.38.2"
+    "svelte": "^3.38.2",
+    "ts-jest": "^26.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

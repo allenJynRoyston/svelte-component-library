@@ -1,44 +1,209 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Footer from '../../../components/Footer/Footer.svelte'
-  import ColorBlock from '../../../components/ColorBlock/ColorBlock.svelte'
-  import GridLayout from '../../../components/Layout/GridLayout.svelte'
-  const colors = getContext('colors');
+  import Footer from '@components/Footer/Footer.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Section from '@components/Section/Section.svelte'
+  import ColorText from '@components/ColorText/ColorText.svelte'
+  import Accordian from '@components/Accordion/Accordion.svelte'
 
-  let colorBlocks:any = {}
+  const fonts:any = getContext('fonts');
 
-  for (const [key, value] of Object.entries(colors)) {
-    let items = []
-    value.forEach(x => {
-      const {name, color, textColor} = x;      
-      items = [...items, {component: ColorBlock, props: {name, bgColor: color, textColor}}]
-    })
-    colorBlocks[key] = {
-      items
-    }
-  }
+  const phrase = 'The quick brown fox jumps over the lazy dog.'
+
+  const classes = ['primary', 'secondary', 'magic', 'success', 'warning', 'danger']
 
 </script>
 
-<div class='typography-preview'>
+<Section paddingTop>
   <h1>
     Typography:
   </h1>
+  <hr>
+  <br><br>
 
-  {#each Object.entries(colorBlocks) as [key]}
-    <div class='color-blocks'>
-      <h2>{key}:</h2>
-      <GridLayout outline items={colorBlocks[key].items} />
+  <Accordian open fill>
+    <div slot='title'>
+      <h2>Font Family:</h2>                   
     </div>
-  {/each}
-</div>
+
+    <div slot='content'>
+      <Section>
+        {#each fonts as font, index}
+          <TwoSlot showLeft showRight>
+            <div class='title'>{font}</div>
+            <div slot='right'>
+              <span class={index === 0 ? 'font-one' : 'font-two'}>
+                {phrase} 
+              </span>
+            </div>
+          </TwoSlot>
+          {#if index < fonts.length - 1}
+            <hr>
+          {/if}      
+        {/each}  
+      </Section>      
+    </div>
+  </Accordian> 
+
+  <Accordian open fill>
+    <div slot='title'>
+      <h2>Colors:</h2>                   
+    </div>
+
+    <div slot='content'>
+      <Section>
+        {#each classes as _class, index}
+          <TwoSlot showLeft showRight>
+            <div class='title'>
+              <ColorText type={_class}>
+                {_class} 
+              </ColorText>
+
+            </div>
+            <div slot='right'>
+              <ColorText type={_class}>
+                {phrase} 
+              </ColorText>
+              <ColorText type={_class}>
+                <h3>{phrase} </h3>
+              </ColorText>          
+            </div>
+          </TwoSlot>
+          {#if index < classes.length - 1}
+            <hr>
+          {/if}      
+        {/each}       
+      </Section>
+    </div>
+  </Accordian> 
+
+  <Accordian open fill>
+    <div slot='title'>
+      <h2>h1-h5:</h2>                   
+    </div>
+
+    <div slot='content'>
+      <Section>
+        <TwoSlot showLeft showRight>
+          <div class='title'>h1:</div>
+          <div slot='right'>
+            <h1 class='font-one'>
+              {phrase}
+            </h1>
+          </div>
+        </TwoSlot>
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>h2:</div>
+          <div slot='right'>
+            <h2>
+              {phrase}
+            </h2>
+          </div>
+        </TwoSlot>
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>h3:</div>
+          <div slot='right'>
+            <h3>
+              {phrase}
+            </h3>
+          </div>
+        </TwoSlot> 
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>h4:</div>
+          <div slot='right'>
+            <h4>
+              {phrase}
+            </h4>
+          </div>
+        </TwoSlot> 
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>h5:</div>
+          <div slot='right'>
+            <h5>
+              {phrase}
+            </h5>
+          </div>
+        </TwoSlot>     
+      </Section>    
+    </div>
+  </Accordian> 
+
+  <Accordian open fill>
+    <div slot='title'>
+      <h2>p, span, a, body, em, strong:</h2>                   
+    </div>
+
+    <div slot='content'>
+      <Section>
+        <TwoSlot showLeft showRight>
+          <div class='title'>p:</div>
+          <div slot='right'>
+            <p>
+              {phrase}
+            </p>
+          </div>
+        </TwoSlot>  
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>span:</div>
+          <div slot='right'>
+            <span>
+              {phrase}
+            </span>
+          </div>
+        </TwoSlot>  
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>a:</div>
+          <div slot='right'>
+            <a href={`${location.hash}`}>
+              {phrase}
+            </a>
+          </div>
+        </TwoSlot>  
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>body:</div>
+          <div slot='right'>        
+            {phrase}        
+          </div>
+        </TwoSlot>  
+        <hr>
+        <TwoSlot showLeft showRight>
+          <div class='title'>em:</div>
+          <div slot='right'>      
+            <em>
+              {phrase}        
+            </em>  
+          </div>
+        </TwoSlot>      
+        <hr> 
+        <TwoSlot showLeft showRight>
+          <div class='title'>strong:</div>
+          <div slot='right'>      
+            <strong>
+              {phrase}        
+            </strong>  
+          </div>
+        </TwoSlot> 
+      </Section>             
+    </div>
+  </Accordian> 
+
+
+</Section>
 
 <Footer />
 
 
 
 <style lang='scss'>
-  .typography-preview{
-    padding: 20px;
+  .title{
+    font-weight: 700;
+    font-size: 16px;    
   }
 </style>

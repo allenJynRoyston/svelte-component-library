@@ -1,9 +1,9 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
   import LibraryBlock from './__LibraryBlock.svelte'
-  import Link from '../../../components/Link/Link.svelte'  
-  import Button from '../../../components/Button/Button.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import Link from '@components/Link/Link.svelte'  
+  import Button from '@components/Button/Button.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   const addSnack:any =getContext('addSnack')
   
@@ -35,6 +35,10 @@
 <h2>Snackbar</h2>
 <hr>
 <p>Note: Snackbar must be added at the root of your app.</p>
+
+<CodeBlock open title='Import:' snippet={`
+  import ShoppingCart from '@components/Snackbar/Snackbar.svelte'
+  `} />
 
 <LibraryBlock title='Timers:'>
   <div style='display: flex; gap: 10px'>

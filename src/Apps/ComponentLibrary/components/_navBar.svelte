@@ -1,7 +1,7 @@
 <script lang='ts'>
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'  
-  import NavBar from '../../../components/NavBar/NavBar.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'  
+  import NavBar from '@components/NavBar/NavBar.svelte'
 
   const currentUrl = '#components?page=library&component=navbar&'
 
@@ -18,6 +18,10 @@
 
 <h2>NavBar</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import NavBar from '@components/NavBar/NavBar.svelte'
+  `} />
 
 <LibraryBlock title="Default:">
   <NavBar {...props} />

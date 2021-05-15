@@ -1,11 +1,15 @@
 <script>
-  import Button from '../../../components/Button/Button'
+  import Button from '@components/Button/Button'
   import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 </script>
 
 <h2>Button</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Button from '@components/Button/Button'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `
@@ -84,6 +88,36 @@
       <Button type='white'>
         White
       </Button>          
+`} />  
+
+<LibraryBlock title="Sizes: ">
+  <div style='display: flex; gap: 20px'>          
+    <Button size='small'>
+      Small
+    </Button>
+
+    <Button>
+      Default
+    </Button>
+
+    <Button size='large'>
+      Large
+    </Button>       
+  </div>     
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+    <Button size='small'>
+      Small
+    </Button>
+
+    <Button>
+      Default
+    </Button>
+
+    <Button size='large'>
+      Large
+    </Button>          
 `} />  
 
 

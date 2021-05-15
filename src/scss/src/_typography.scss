@@ -1,29 +1,38 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans|IBM+Plex+Sans+Condensed&display=swap");
 @charset "utf-8";
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+  @return $string;
+}
 
-$font-one: "IBM Plex Sans Condensed", "Segoe UI Light", "Segoe", Tahoma,
-  Helvetica, Arial, sans-serif;
-$font-two: "IBM Plex Sans", "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial,
+$fontOneString: str-replace($fontOne, " ", "+");
+$fontTwoString: str-replace($fontTwo, " ", "+");
+
+$importPath: "https://fonts.googleapis.com/css?family=" + $fontOneString + "|" +
+  $fontTwoString + "&display=swap";
+
+@import url($importPath);
+
+$font-one: $fontOne, "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial,
+  sans-serif;
+$font-two: $fontTwo, "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial,
   sans-serif;
 $font-system: "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial, sans-serif;
 
 :global(.font-one) {
   font-family: $font-one;
-  // font-weight: 400;
-  margin: 0;
-  padding: 0;
-  letter-spacing: 1px;
-  // text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   text-rendering: optimizeLegibility;
-  @supports (-webkit-touch-callout: none) {
-    -webkit-text-stroke: 0.5px;
-  }
 }
 
 :global(.font-two) {
   font-family: $font-two;
-  margin: 0;
-  padding: 0;
   text-rendering: optimizeLegibility;
 }
 

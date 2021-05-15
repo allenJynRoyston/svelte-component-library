@@ -1,8 +1,8 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'  
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'  
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
 
   import ExampleBlock from './_example.svelte'
 
@@ -10,8 +10,12 @@
 
 </script>
 
-<h2>Splash</h2>
+<h2>ThemeWrapper</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let theme = 'light'

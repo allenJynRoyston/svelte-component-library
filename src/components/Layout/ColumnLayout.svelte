@@ -28,7 +28,7 @@
           <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} fill={theme === 'light' ? colors.white[0].color : colors.black[1].color} size={16} />
         </button>
 
-        <Container offset={3}>
+        <Container offset={2}>
           <div class='directory-inner' class:collapse={collapse}>
             <InnerContainer>
               <div class='directory-links'>
@@ -45,11 +45,9 @@
 
      
         <div class='content' class:collapse={collapse}>
-          <Container>
             <slot>
               <p>Content</p>
             </slot>
-          </Container>
         </div>
    
     </div>

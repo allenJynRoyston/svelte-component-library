@@ -1,12 +1,15 @@
 <script lang='ts'>
-  import ChannelButton from '../../../components/ChannelButton/ChannelButton.svelte'
+  import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 </script>
 
 <h2>Channel Button</h2>
 <hr>
 
+<CodeBlock open title='Import:' snippet={`
+  import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
+  `} />
 
 <LibraryBlock title="Default">
   <ChannelButton leftIcon='globe' rightIcon='arrow-right' >

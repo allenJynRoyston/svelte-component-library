@@ -1,8 +1,7 @@
 <script>
-  import Link from '../../../components/Link/Link'
-  import HashWatch from '../../../components/URLWatcher/HashWatch'
-  import LibraryBlock from './__LibraryBlock'  
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import Link from '@components/Link/Link'
+  import HashWatch from '@components/URLWatcher/HashWatch'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   let hashWatchValue = null;
 
@@ -12,6 +11,10 @@
 
 <h2>HashWatch</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import HashWatch from '@components/URLWatcher/HashWatch'
+  `} />
 
 <Link href={`${currentHash}&param1=foo`}>Foo</Link>
 <Link href={`${currentHash}&param1=bar`}>Bar</Link>
@@ -29,10 +32,11 @@
 
 <CodeBlock open title='Example:' snippet={`
   let hashWatchValue = null;
+  const hashWatch = ({hash, params}) => {
+    hashWatchValue = params?.paramName || null;
+  }
 
-  <HashWatch onChange={(val) => {
-    hashWatchValue = val      
-  }} />
+  <HashWatch onChange={hashWatch} />
 
   {JSON.stringify(hashWatchValue, null, 4)}     
   `} />  

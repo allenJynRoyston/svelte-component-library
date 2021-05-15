@@ -1,7 +1,7 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'  
-  import Splash from '../../../components/Splash/Splash.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'  
+  import Splash from '@components/Splash/Splash.svelte'
   
   const theme:string = getContext('theme')
 
@@ -26,6 +26,10 @@
 
 <h2>Splash</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Splash from '@components/Splash/Splash.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

@@ -1,7 +1,7 @@
 <script>
-  import ColumnLayout from '../../../components/Layout/ColumnLayout'
+  import ColumnLayout from '@components/Layout/ColumnLayout'
   import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   const links = [
     {title: 'Link_1', href: '#' },    
@@ -13,6 +13,10 @@
 
 <h2>GridLayout</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import ColumnLayout from '@components/Layout/ColumnLayout'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let links = []

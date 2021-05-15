@@ -1,8 +1,11 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Footer from '../../../components/Footer/Footer.svelte'
-  import ColorBlock from '../../../components/ColorBlock/ColorBlock.svelte'
-  import GridLayout from '../../../components/Layout/GridLayout.svelte'
+  import Footer from '@components/Footer/Footer.svelte'
+  import ColorBlock from '@components/ColorBlock/ColorBlock.svelte'
+  import GridLayout from '@components/Layout/GridLayout.svelte'
+  import Section from '@components/Section/Section.svelte'
+  import Accordian from '@components/Accordion/Accordion.svelte'
+
   const colors = getContext('colors');
 
   let colorBlocks:any = {}
@@ -20,30 +23,38 @@
 
 </script>
 
-<div class='color-preview'>
+<Section paddingTop>
   <h1>
     Colors:
   </h1>
-
+  <hr>
+  <br><br>
+  
   {#each Object.entries(colorBlocks) as [key]}
-    <div class='color-blocks'>
-      <h2>{key}:</h2>
-      <GridLayout outline items={colorBlocks[key].items} />
-    </div>
+    <Accordian fill open>
+
+      <div slot='title'>
+        <h2 class='color-title'>{key}:</h2>                   
+      </div>
+  
+      <div slot='content'>
+        <Section>
+          <GridLayout outline items={colorBlocks[key].items} />
+        </Section>           
+      </div>
+    </Accordian>
   {/each}
-</div>
+
+</Section>
 
 <Footer />
 
 
 
 <style lang='scss'>
-  .color-preview{
-    padding: 20px;
-  }
 
-  .color-blocks{
-    margin-bottom: 100px;
+  .color-title{
+    text-transform: capitalize
   }
 
 </style>

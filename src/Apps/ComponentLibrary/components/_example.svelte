@@ -1,7 +1,7 @@
 <script>
-  import Button from '../../../components/Button/Button.svelte'
-  import Accordion from '../../../components/Accordion/Accordion.svelte'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte';
+  import Button from '@components/Button/Button.svelte'
+  import Accordion from '@components/Accordion/Accordion.svelte'
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte';
 
 </script>
 

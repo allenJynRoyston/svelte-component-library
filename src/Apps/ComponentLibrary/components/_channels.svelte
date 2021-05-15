@@ -1,8 +1,8 @@
 <script lang='ts'>
-  import Channels from '../../../components/Channels/Channels.svelte'
+  import Channels from '@components/Channels/Channels.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import {createChannel} from '../../../js/utility'
 
 
@@ -46,6 +46,10 @@
 <h2>Channels</h2>
 <hr>
 
+<CodeBlock open title='Import:' snippet={`
+  import Channels from '@components/Channels/Channels.svelte'
+  `} />
+
 <CodeBlock title='Properties:' snippet={`
   export let data = []
   export let current;
@@ -81,7 +85,7 @@
 
   //--------------------------- CHANNEL
   const channel = createChannel({
-     current: 0,
+     current: 0,  // set as default, or remove if you don't want a default transistion
      data: [
         {content: LoremBlock},
         {content: LoremBlock},

@@ -1,5 +1,5 @@
 {
-  "include": ["src", "stories"],
+  "include": ["type", "src", "stories"],
   "exclude": [
     "node_modules/**",
     "dist/**",

@@ -1,7 +1,7 @@
 <script lang='ts'>
-  import ProfileCard from '../../../components/ProfileCard/ProfileCard.svelte'
+  import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   let props = {
     name: 'John Smith',
@@ -12,6 +12,10 @@
 
 <h1>ProfileCard</h1>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

@@ -1,13 +1,17 @@
 <script lant='ts'>  
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
 
-  import InnerContainer from '../../../components/InnerContainer/InnerContainer.svelte'
+  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
 </script>
 
 <h2>Footer</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

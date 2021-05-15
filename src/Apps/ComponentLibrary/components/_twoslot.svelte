@@ -1,11 +1,15 @@
 <script lang='ts'>
-  import TwoSlot from '../../../components/TwoSlot/TwoSlot.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 </script>
 
-<h1>ThreeSlot</h1>
+<h1>TwoSlot</h1>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let style = null;

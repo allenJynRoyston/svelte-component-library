@@ -1,8 +1,6 @@
 <script>
   import Accordion from '../../../components/Accordion/Accordion'
-
   export let title = null;
-  
 </script>
 
 <div class='library-block'>
@@ -15,11 +13,3 @@
     </div>   
   </Accordion>
 </div>
-
-<style lang='scss'>
-  .library-block{
-    // padding-bottom: 30px;
-    // margin-bottom: 30px;
-    // border-bottom: 1px solid grey;
-  }
-</style>

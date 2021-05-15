@@ -1,11 +1,15 @@
 <script lant='ts'>
-  import Footer from '../../../components/Footer/Footer.svelte'
+  import Footer from '@components/Footer/Footer.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 </script>
 
 <h2>Footer</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import Footer from '@components/Footer/Footer.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

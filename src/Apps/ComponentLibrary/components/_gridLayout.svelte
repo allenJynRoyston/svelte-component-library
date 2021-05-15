@@ -1,8 +1,8 @@
 <script>
-  import GridLayout from '../../../components/Layout/GridLayout'
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock'
+  import GridLayout from '@components/Layout/GridLayout'
+  import LoremBlock from '@components/LoremBlock/LoremBlock'
   import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   export let items = [
     {component: LoremBlock, row: 2, column: 2, props:{content: 'A'}}, 
@@ -22,6 +22,10 @@
 
 <h2>GridLayout</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import GridLayout from '@components/Layout/GridLayout'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let size:number = 150;

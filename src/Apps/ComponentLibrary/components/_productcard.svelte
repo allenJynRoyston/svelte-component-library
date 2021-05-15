@@ -1,11 +1,15 @@
 <script lang='ts'>
-  import ProductCard from '../../../components/ProductCard/ProductCard'
-  import LibraryBlock from './__LibraryBlock'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import ProductCard from '@components/ProductCard/ProductCard.svelte'
+  import LibraryBlock from './__LibraryBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 </script>
 
 <h1>Loader</h1>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import ProductCard from '@components/ProductCard/ProductCard'
+  `} />
 
 <CodeBlock title='Properties:' snippet={
   `

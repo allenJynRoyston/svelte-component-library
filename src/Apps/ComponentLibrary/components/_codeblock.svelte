@@ -1,11 +1,15 @@
 <script lang='ts'>  
   import LibraryBlock from './__LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
 </script>
 
 <h2>Code Block</h2>
 <hr>
+
+<CodeBlock open title='Import:' snippet={`
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  `} />
 
 <CodeBlock title='Properties:' snippet={`
   export let title = null;

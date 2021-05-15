@@ -14,8 +14,8 @@
     color: var(--white-0-text);
 
     &.dark-theme{
-      background: var(--black-4);
-      color: var(--black-4-text);
+      background: var(--black-0);
+      color: var(--black-0-text);
     }
 
     &.offset-1{
@@ -23,8 +23,8 @@
       color: var(--white-1-text);
 
       &.dark-theme{
-        background: var(--black-5);
-        color: var(--black-5-text);
+        background: var(--black-1);
+        color: var(--black-1-text);
       }
     }
 
@@ -33,18 +33,8 @@
       color: var(--white-2-text);
 
       &.dark-theme{
-        background: var(--black-6);
-        color: var(--black-6-text);
-      }
-    }
-
-    &.offset-1{
-      background: var(--white-1);
-      color: var(--white-1-text);
-
-      &.dark-theme{
-        background: var(--black-5);
-        color: var(--black-5-text);
+        background: var(--black-2);
+        color: var(--black-2-text);
       }
     }
 
@@ -53,8 +43,8 @@
       color: var(--white-3-text);
 
       &.dark-theme{
-        background: var(--black-7);
-        color: var(--black-7-text);
+        background: var(--black-3);
+        color: var(--black-3-text);
       }
     }  
 
@@ -63,9 +53,29 @@
       color: var(--white-4-text);
 
       &.dark-theme{
-        background: var(--black-8);
-        color: var(--black-8-text);
+        background: var(--black-4);
+        color: var(--black-4-text);
       }
-    }            
+    }   
+    
+    &.offset-5{
+      background: var(--white-5);
+      color: var(--white-5-text);
+
+      &.dark-theme{
+        background: var(--black-5);
+        color: var(--black-5-text);
+      }
+    } 
+    
+    &.offset-6{
+      background: var(--white-6);
+      color: var(--white-6-text);
+
+      &.dark-theme{
+        background: var(--black-6);
+        color: var(--black-6-text);
+      }
+    }     
   }
 </style>
