@@ -9,5 +9,8 @@
   "lang": "en-US",
   "start_url": "/",
   "scope": ".",
-  "icons": []
+  "icons": [],
+  "url": "https://svelte-component-library.herokuapp.com/",
+  "manifestUrl": "https://svelte-component-library.herokuapp.com/manifest.json",
+  "screenshots": []
 }
