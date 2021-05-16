@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 
 app.register(fastifyCompression, {
   global: true,
+  encodings: ["gzip", "deflate"],
 });
 
 app.register(fastifyStatic, {

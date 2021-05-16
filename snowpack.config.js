@@ -14,7 +14,7 @@ module.exports = {
         entrypoints: "build/index.js",
       },
     ],
-    // COPY ASSET FOLDERS
+    // COPY ASSET FOLDERS *find a better method for this*
     [
       "snowpack-plugin-copy",
       {
