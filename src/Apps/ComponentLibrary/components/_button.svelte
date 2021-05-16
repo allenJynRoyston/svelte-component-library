@@ -29,7 +29,7 @@
 `} />
 
 <LibraryBlock title="Default: ">
-    <div style='display: flex; gap: 20px'>          
+    <div class='button-wrap'>          
       <Button type='primary'>
         Primary
       </Button>
@@ -91,7 +91,7 @@
 `} />  
 
 <LibraryBlock title="Sizes: ">
-  <div style='display: flex; gap: 20px'>          
+  <div class='button-wrap'>          
     <Button size='small'>
       Small
     </Button>
@@ -122,7 +122,7 @@
 
 
 <LibraryBlock title="Disabled: ">
-  <div style='display: flex; gap: 20px'>
+  <div class='button-wrap'>
     <Button type='primary' disabled>
       Primary
     </Button>
@@ -160,7 +160,7 @@
     `} />  
 
 <LibraryBlock title="Hollow: ">
-  <div style='display: flex; gap: 20px'>
+  <div class='button-wrap'>
     <Button type='primary' hollow >
       Primary
     </Button>
@@ -198,7 +198,7 @@
   `} />  
 
 <LibraryBlock title="Rounded: ">
-  <div style='display: flex; gap: 20px'>
+  <div class='button-wrap'>
     <Button type='primary' rounded>
       Primary
     </Button>
@@ -236,7 +236,7 @@
   `} />  
 
 <LibraryBlock title="Rounded and Hollow: ">
-  <div style='display: flex; gap: 20px'>
+  <div class='button-wrap'>
     <Button type='primary' rounded hollow>
       Primary
     </Button>
@@ -276,3 +276,15 @@
 
 
 
+<style lang='scss'>
+  @import "../../../scss/src/_media-queries.scss";
+
+  .button-wrap{
+    display: flex; 
+    gap: 20px;
+    @include tablet-landscape-and-below  {
+      flex-wrap: wrap
+    }
+              
+  }
+</style>
