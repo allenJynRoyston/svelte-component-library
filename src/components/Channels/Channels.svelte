@@ -144,11 +144,11 @@
     width: 100%;   
     
     &.inactive{
-      opacity: 0;
+      animation: ChannelFadeOut 500ms;
     }
 
     &.active{
-      opacity: 1
+      animation: ChannelFadeIn 500ms;
     }     
     
     &__inner{   
@@ -174,5 +174,30 @@
       }
     }
   }
+
+
+  @keyframes ChannelFadeIn {
+    0%{
+      opacity: 0
+    }
+    75%{
+      opacity: 0
+    }
+    100%{
+      opacity: 1
+    }
+  }
+
+  @keyframes ChannelFadeOut {
+    0%{
+      opacity: 1
+    }
+    75%{
+      opacity: 1
+    }
+    100%{
+      opacity: 0
+    }
+  }  
 </style>
 

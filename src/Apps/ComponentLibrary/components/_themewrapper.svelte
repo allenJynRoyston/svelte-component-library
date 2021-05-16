@@ -27,14 +27,12 @@
   `} />
 
 <LibraryBlock title="Light Theme:" >
-  <ThemeWrapper theme='light' delay={theme === 'light' ? 1 : 100} lock>
     <ExampleBlock />
-  </ThemeWrapper> 
 </LibraryBlock>
 
 
 <LibraryBlock title="Dark Theme:" >
-  <ThemeWrapper theme='dark' delay={theme === 'dark' ? 1 : 100} lock>
+  <ThemeWrapper theme='dark' delay={theme === 'dark' ? 1 : 100} alwaysdark>
     <ExampleBlock />
   </ThemeWrapper> 
 </LibraryBlock>
