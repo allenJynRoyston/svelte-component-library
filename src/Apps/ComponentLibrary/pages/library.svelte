@@ -10,6 +10,7 @@
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
+  import Search from '@components/Search/Search.svelte'
 
   import ButtonAlias from '@lib/_button.svelte'
   import HeaderAlias from '@lib/_header.svelte'
@@ -119,8 +120,24 @@
     </Header>
 
     <ColumnLayout {links} currentIndex={channel.current} >
-      <ThemeSwitch />
+
+      <div class='panel'>
+        <ThemeSwitch />
+        <Search />
+      </div>
+
+
       <Channels {...channel} animate />
     </ColumnLayout>
   </Container>
 </ThemeWrapper>
+
+<style lang='scss'>
+  .panel{
+    width: calc(100% - 40px);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }  
+</style>

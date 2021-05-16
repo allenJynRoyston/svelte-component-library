@@ -9,6 +9,7 @@
   import Channels from '@components/Channels/Channels.svelte'
   import Button from '@components/Button/Button.svelte'
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
+  import Search from '@components/Search/Search.svelte'
 
   import AboutPreview from '../pagecomponents/AboutPreview.svelte'
   import ColorPreview from '../pagecomponents/ColorPreview.svelte'
@@ -68,7 +69,10 @@
             </div>
             
             {#if channel.current !== 0}
-              <ThemeSwitch />
+              <div class='panel'>
+                <ThemeSwitch />
+                <Search />
+              </div>
             {/if}
             
             <Channels nopadding {...channel} />              
@@ -88,6 +92,14 @@
 
   .home-section{    
     width: 100%;
+  }
+
+  .panel{
+    width: calc(100% - 40px);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .button-nav{

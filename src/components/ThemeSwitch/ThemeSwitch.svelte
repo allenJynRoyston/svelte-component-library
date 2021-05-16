@@ -33,7 +33,6 @@
     font-weight: 700;
     color: var(--black-1);
     padding: 10px;
-    width: calc(100% - 40px);
 
     &.dark-theme{
       color: var(--white-1);
