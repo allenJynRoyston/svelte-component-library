@@ -7,7 +7,9 @@ const app = fastify({ logger: false });
 const port = process.env.PORT || 3000;
 
 app.register(fastifyCompression, { threshold: 2048 });
-app.register(fastifyStatic, { root: join(resolve(), "build") });
+app.register(fastifyStatic, {
+  root: join(resolve(), "build"),
+});
 
 app.listen(port, "0.0.0.0");
 console.log(`Now serving on localhost: ${port}`);

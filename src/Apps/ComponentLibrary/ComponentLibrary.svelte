@@ -14,7 +14,7 @@
 
   //--------------------------- 
   let headerprops = {
-    logoSrc: './logo/logo.png',    
+    logoSrc: './images/logo/logo.png',    
     navEle: {
       component: NavBar,
       props: {
