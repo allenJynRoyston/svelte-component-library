@@ -1,3 +1,11 @@
+<script context="module">
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('pwabuilder-sw.js');
+      });  
+    }
+</script>
+
 <script lang='ts'>
   //--------------------------- IMPORTS  
   import {setContext} from 'svelte';

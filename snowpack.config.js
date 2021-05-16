@@ -49,6 +49,10 @@ module.exports = {
                 source: "public/manifest.json",
                 destination: "build/",
               },
+              {
+                source: "public/pwabuilder-sw.js",
+                destination: "build/",
+              },
             ],
           },
         ],
