@@ -41,6 +41,7 @@
       @include desktop-and-up {
         font-size: 72px;
       }
+      margin-bottom: 10px;
     }
 
     .buttons{

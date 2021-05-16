@@ -1,6 +1,7 @@
 <script lang='ts'>
   import {getContext, setContext} from 'svelte';
   import { createChannel, capitalizeStr } from '../../../js/utility'
+  import { openSidebar } from '../../../stores/store';
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
@@ -11,6 +12,7 @@
   import Container from '@components/Container/Container.svelte'
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
   import Search from '@components/Search/Search.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
 
   import ButtonAlias from '@lib/_button.svelte'
   import HeaderAlias from '@lib/_header.svelte'
@@ -116,12 +118,17 @@
     <SnackBar {snack} />
 
     <Header {...headerprops} showFooter bgSrc={`./bg/header-${theme}-bg.jpg`}>
-      <h1>Svelte Component Library</h1>
+      <h1>Svelte Tip</h1>
     </Header>
 
-    <ColumnLayout {links} currentIndex={channel.current} >
+    <ColumnLayout {links} currentIndex={channel.current} hidebtn >
 
-      <div class='panel'>
+      <div class='panel '>
+        <span class='tablet-landscape-and-below'>
+          <SVG icon='grid-large' size={35} onClick={() => {
+            $openSidebar = !$openSidebar
+          }}/>        
+        </span>
         <ThemeSwitch />
         <Search />
       </div>
@@ -133,6 +140,9 @@
 </ThemeWrapper>
 
 <style lang='scss'>
+  @import "../../../scss/src/_media-queries.scss";
+
+
   .panel{
     width: calc(100% - 40px);
     padding: 10px;
@@ -140,4 +150,7 @@
     justify-content: center;
     align-items: center;
   }  
+
+
+
 </style>

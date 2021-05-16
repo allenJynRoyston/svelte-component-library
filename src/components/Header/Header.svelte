@@ -27,7 +27,7 @@
 
           <div class='brand'>
             <slot>
-              <h1>Svelte Component Library</h1>
+              
             </slot>
           </div>
         </div>
@@ -80,19 +80,12 @@
 
     background: var(--white-0);
     .brand{
-      display: none;
-      @include desktop-and-up {     
-        display: block;
-        font-size: 23px;
-      }  
-
-      @include tablet-only {     
-        display: block;
-        font-size: 18px;
-      }         
-
       font-size: 10px;
-      color: var(--white-0-text);     
+      color: var(--white-0-text);    
+
+      @include desktop-and-up {     
+        font-size: 12px;
+      }  
     }
 
     &.dark-theme{

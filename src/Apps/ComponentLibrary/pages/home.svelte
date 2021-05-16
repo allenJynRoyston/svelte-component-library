@@ -57,7 +57,7 @@
         <div class='home-page'>
           
           <Header {...headerprops} showCenter={channel.current === 0} showFooter={channel.current === 0} bgSrc={`./images/bg/header-${theme}-bg.jpg`}>
-            <h1>Svelte Component Library</h1>
+            <h1>Svelte Tip</h1>
           </Header>
 
           <div class='home-section'>

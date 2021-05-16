@@ -32,6 +32,8 @@
 
 <style lang='scss'>
   .code-block{
+    overflow-x: auto;
+    overflow-y: hidden;
     background: var(--black-0);
     color: var(--primary-1);
 

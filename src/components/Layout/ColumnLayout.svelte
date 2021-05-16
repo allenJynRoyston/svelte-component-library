@@ -1,35 +1,37 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Link from '../Link/Link.svelte'
-  import SVG from '../SVG/SVG.svelte'
-  import InnerContainer from '../InnerContainer/InnerContainer.svelte'
-  import Container from '../Container/Container.svelte'
-  
+  import Link from '@components/Link/Link.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
+  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+  import Container from '@components/Container/Container.svelte'
+  import { openSidebar } from '../../stores/store';
+
   export let links = []
   export let currentIndex = null;
+  export let hidebtn:boolean = false;
 
   const theme:string = getContext('theme');
   const colors:any = getContext('colors');
 
-  let collapse = false
-
   const toggleCollapse = (state = null) => {
-    collapse = !!state || !collapse
+     $openSidebar = !!state || !$openSidebar
   }
+
+  $:opened = $openSidebar
 
 </script>
 
 <div class={`root-component layout`} >
-
     <div class='layout-inner'>
-      <div class='directory' class:collapse={collapse}>
-
-        <button class={`root-component collapse-btn`} class:collapse={collapse} on:click={() => {collapse = !collapse}}>
-          <SVG icon={collapse ? 'arrow-left' : 'arrow-right'} fill={theme === 'light' ? colors.white[0].color : colors.black[1].color} size={16} />
-        </button>
+      <div class='directory' class:collapse={opened}>
+        {#if !hidebtn || opened}
+          <button class={`root-component collapse-btn`} class:collapse={opened} on:click={() => {toggleCollapse(false)}}>
+            <SVG icon={opened ? 'arrow-left' : 'arrow-right'} fill={colors.white[0].color} size={16} />
+          </button>
+        {/if}
 
         <Container offset={2}>
-          <div class='directory-inner' class:collapse={collapse}>
+          <div class='directory-inner' class:collapse={opened} >
             <InnerContainer>
               <div class='directory-links'>
                 {#each links as { title, href }, i}
@@ -44,7 +46,7 @@
       </div>
 
      
-        <div class='content' class:collapse={collapse}>
+        <div class='content' class:collapse={opened}>
             <slot>
               <p>Content</p>
             </slot>
