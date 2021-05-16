@@ -1,11 +1,13 @@
 import { resolve, join } from "path";
 import fastify from "fastify";
 import fastifyStatic from "fastify-static";
+import fastifyCompression from "fastify-compress";
 
 const app = fastify({ logger: false });
-app.register(fastifyStatic, { root: join(resolve(), "build") });
-
 const port = process.env.PORT || 3000;
 
-console.log(`Now serving on localhost: ${port}`);
+app.register(fastifyCompression, { threshold: 2048 });
+app.register(fastifyStatic, { root: join(resolve(), "build") });
+
 app.listen(port, "0.0.0.0");
+console.log(`Now serving on localhost: ${port}`);
