@@ -1,21 +1,14 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext, onMount} from 'svelte';
+  import {getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   import Input from '../FormComponents/Input/Input.svelte'
   //---------------------------
 
+  const theme:string = getContext('theme')
   const colors:any = getContext('colors');
-  let isDark = false;
+  let isDark = theme === 'dark';
   let ele;
-
-  onMount(async() => {
-    setTimeout(() => {
-      isDark = ele?.className.includes('dark-theme')
-      console.log(isDark)
-    }, 100) 
-  })  
-
 </script>
 
 <div class={`root-component search`} bind:this={ele}>

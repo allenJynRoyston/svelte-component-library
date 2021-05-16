@@ -112,16 +112,6 @@ const returnIcon = (type) => {
 }
 
 const theme = getContext('theme')
-// const colors:any = getContext('colors');
-//   let isDark = false;
-//   let ele;
-
-//   onMount(async() => {
-//     setTimeout(() => {
-//       isDark = ele?.className.includes('dark-theme')
-//       console.log(isDark)
-//     }, 100) 
-//   })  
 
 //---------------------------
 $: {

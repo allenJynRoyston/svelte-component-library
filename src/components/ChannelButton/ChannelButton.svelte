@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import {onMount, tick} from 'svelte';
+  import {getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
 
   export let onClick = () => {}
@@ -9,14 +9,12 @@
   export let iconSize = 18;
   export let rounded = false;
 
-  let isDark = false;
+  const theme:string = getContext('theme')
+
+  let isDark = theme === 'dark';
   let ele;
 
-  onMount(async() => {
-    setTimeout(() => {
-      isDark = ele?.className.includes('dark-theme')
-    }, 25)
-  })  
+  
 
 </script>
 

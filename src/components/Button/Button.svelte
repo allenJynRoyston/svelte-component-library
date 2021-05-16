@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
   import Link from '../Link/Link.svelte'
 
   export let onClick = null
