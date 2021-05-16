@@ -5,6 +5,7 @@ module.exports = {
     src: "/_dist_",
   },
   plugins: [
+    // FIRST, BUNDLE THE PROJECT WITH ROLLUP
     [
       "snowpack-plugin-rollup-bundle",
       {
@@ -13,7 +14,7 @@ module.exports = {
         entrypoints: "build/index.js",
       },
     ],
-    // ["snowpack-plugin-optimize"],
+    // COPY ASSET FOLDERS
     [
       "snowpack-plugin-copy",
       {
@@ -38,6 +39,24 @@ module.exports = {
             source: "public/images/profile/**",
             destination: "build/images/profile/",
           },
+          {
+            source: "public/manifest.json",
+            destination: "build/",
+          },
+        ],
+      },
+    ],
+    // OPTIMIZE FILES/FOLDERS
+    ["snowpack-plugin-optimize"],
+    // OPTIMIZE IMAGES
+    [
+      "snowpack-plugin-imagemin",
+      {
+        /* see "Plugin Options" below */
+        include: ["**/*.jpg", "**/*.png"],
+        plugins: [
+          require("imagemin-mozjpeg")({ quality: 90, progressive: true }),
+          require("imagemin-optipng")({ optimizationLevel: 7 }),
         ],
       },
     ],

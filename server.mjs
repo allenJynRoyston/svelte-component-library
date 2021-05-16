@@ -6,7 +6,10 @@ import fastifyCompression from "fastify-compress";
 const app = fastify({ logger: false });
 const port = process.env.PORT || 3000;
 
-app.register(fastifyCompression, { threshold: 2048 });
+app.register(fastifyCompression, {
+  global: true,
+});
+
 app.register(fastifyStatic, {
   root: join(resolve(), "build"),
 });
