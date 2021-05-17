@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import { createChannel } from '../../js/utility'
+  import { createChannel, readTextFile } from '../../js/utility'
 
   import SearchThemeNotch from './pagecomponents/SearchThemeNotch.svelte'
 
@@ -14,10 +14,11 @@
   import Documentation from './pages/documentation.svelte';
 
   const theme:string = getContext('theme')
+  let version = '0.7.2';
 
   //--------------------------- 
   let headerprops = {
-    title: 'Svelte-Tip',
+    title: 'Svelte-Tip',    
     bgSrc: `./images/bg/header-${theme}-bg.jpg`,
     logoSrc: './images/logo/logo.png',    
     navEle: {
@@ -35,6 +36,7 @@
       component: Splash,
       props: {
         title: 'Welcome!',
+        version,
         buttonOne: {
           text: 'Github',
           type: theme === 'dark' ? 'white' : 'black',

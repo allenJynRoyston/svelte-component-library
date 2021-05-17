@@ -26,6 +26,14 @@ module.exports = {
 					{
 						patterns: [
 							{
+								source: 'package.json',
+								destination: 'build/',
+							},
+							{
+								source: 'package.json',
+								destination: 'public/',
+							},
+							{
 								source: 'public/images/bg/**',
 								destination: 'build/images/bg/',
 							},

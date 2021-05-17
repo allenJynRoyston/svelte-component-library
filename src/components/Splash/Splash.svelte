@@ -2,13 +2,20 @@
   import Button from '../Button/Button.svelte'
 
   export let title = 'Splash Title';
+  export let version = null;
   export let buttonOne = null;
   export let buttonTwo = null;
-
 </script>
 
 <div class={`root-component splash`}>
-  <h5 class='title'>{title}</h5>  
+  <h5 class='title'>
+    {title}
+  </h5>  
+  {#if !!version}
+    <h5 class='version'>
+      v{version}
+    </h5>
+  {/if}
   <div class='buttons'>
     {#if buttonOne}
       <Button size='small' {...buttonOne} />
@@ -45,12 +52,23 @@
       @include desktop-and-up {
         font-size: 72px;
       }
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
+    }
+
+    .version{
+      margin-bottom: 5px;
+      @include desktop-and-up {
+        margin-bottom: 10px;
+      }      
     }
 
     .buttons{
       display: flex;
       gap: 10px;
+      margin-bottom: 5px;
+      @include desktop-and-up {
+        margin-bottom: 10px;
+      }        
     }    
 
   }

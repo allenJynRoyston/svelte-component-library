@@ -61,6 +61,25 @@
     <Section>
       <section class='section-wrap'>
         <h2 class='about-title'>
+          Optimized for Production
+        </h2>
+        <p>
+          Everything about Svelte-Tip is about production optimization.  When you're ready to go, a simple <ColorText type='success' bold>$npm run build</ColorText> 
+          will bundle your project and optimize your images.  In fact, this entire site's initial load is only 477kb!
+        </p>    
+        <p>
+          Everything about Svelte-Tip components are meant to be easily styled.  In fact, this entire site is built using only the components in the Svelte-Tip library!
+        </p>            
+      </section> 
+    </Section>
+  </Container>
+</ThemeWrapper>
+
+<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
+  <Container offset={2}>
+    <Section>
+      <section class='section-wrap'>
+        <h2 class='about-title'>
           Svelte-Tip is Non-opinionated (kinda)
         </h2>
         <p>
@@ -68,7 +87,8 @@
           While there is a recommended structure Svelte-tip prefers for it's root app, nothing says you have to use it.  Or any of it.            
         </p>    
         <p>
-          Everything about Svelte-Tip components are meant to be easily styled.  In fact, this entire site is built using only the components in the Svelte-Tip library!
+          Everything in Svelte-Tip is meant to be easily customizable, including the colors, typography and component styles.  
+          In fact, this entire site is built using only the components in the Svelte-Tip library!
         </p>            
       </section> 
     </Section>
