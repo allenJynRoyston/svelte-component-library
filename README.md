@@ -1,6 +1,6 @@
 # Svelte Component Library
 
-Svelte + Snowpack + Jest
+[https://svelte-component-library.herokuapp.com/](Visit the website to learn more!)
 
 # Tools available
 
