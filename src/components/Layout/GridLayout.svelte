@@ -57,7 +57,7 @@
 
   &.dark-theme{
     &.outline{
-      outline: 2px solid var(--black-3);
+      outline: 2px solid var(--white-0);
     }  
   }
 

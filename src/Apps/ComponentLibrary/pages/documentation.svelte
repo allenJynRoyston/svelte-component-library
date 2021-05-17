@@ -49,10 +49,10 @@
           <Section style='height: 100vh'>
             <section class='section-wrap'>
               <h2>
-                Sorry, this is currently unavailable!
+                Under construction...
               </h2>
               <p>
-                But will be updated soon!
+                Documentation coming soon!
               </p>        
          
             </section> 

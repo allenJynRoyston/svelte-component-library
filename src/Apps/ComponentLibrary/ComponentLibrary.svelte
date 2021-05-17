@@ -26,9 +26,9 @@
       props: {
         watchProp: 'page',
         links: [
-          {title: 'Home', icon: 'icon', href: '#components?page=home'},
-          {title: 'Library', icon: 'icon', href: '#components?page=library'},
-          {title: 'Documentation', icon: 'icon', href: '#components?page=documentation'}
+          {title: 'Home', icon: 'home', href: '#components?page=home'},
+          {title: 'Library', icon: 'list', href: '#components?page=library'},
+          {title: 'Documentation', icon: 'file-text', href: '#components?page=documentation'}
         ]    
       }
     },

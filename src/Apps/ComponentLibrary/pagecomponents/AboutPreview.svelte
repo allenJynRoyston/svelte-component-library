@@ -8,6 +8,7 @@
   import ColorText from '@components/ColorText/ColorText.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Link from '@components/Link/Link.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   const theme:string = getContext('theme');
 
@@ -64,18 +65,21 @@
           Optimized for Production
         </h2>
         <p>
-          Everything about Svelte-Tip is about production optimization.  When you're ready to go, a simple <ColorText type='success' bold>$npm run build</ColorText> 
-          will bundle your project and optimize your images.  In fact, this entire site's initial load is only 477kb!
-        </p>    
-        <p>
-          Everything about Svelte-Tip components are meant to be easily styled.  In fact, this entire site is built using only the components in the Svelte-Tip library!
-        </p>            
+          Everything about Svelte-Tip is about production optimization.  When you're ready to go, a simple:  
+          <CodeBlock nowrap snippet={`            
+  $npm run build
+          `} />
+          
+          
+          ... and your app will be bundled, images optimized, and everything ready to go without any messy configurations.  
+          And because this is <ColorText type='secondary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> the compiled size is going to be vastly smaller then it's React or Vue counterparts.          
+        </p>     
       </section> 
     </Section>
   </Container>
 </ThemeWrapper>
 
-<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
+<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -84,7 +88,8 @@
         </h2>
         <p>
           Do you like Typescript?  Great, you can use it if you want.  SCSS or SASS?  Less or Stylus?  Build components how you want to bulid them.  
-          While there is a recommended structure Svelte-tip prefers for it's root app, nothing says you have to use it.  Or any of it.            
+          While there is a recommended structure Svelte-tip prefers for it's root app, nothing says you have to use it.  Or any of it.  It's as non-commital 
+          as your last failed relationship, presumably.            
         </p>    
         <p>
           Everything in Svelte-Tip is meant to be easily customizable, including the colors, typography and component styles.  
@@ -96,7 +101,7 @@
 </ThemeWrapper>
 
 
-<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
+<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -107,8 +112,24 @@
           Svelte-Tip is working towards a 1.0 release soon, but feel free to check it out now!            
         </p>        
         <div style='max-width: 200px; margin: auto'>
-          <Button href='https://github.com/allenRoyston/svelte-component-library' target="_blank" type={theme ==='light' ? 'primary' : 'magic'} hollow rounded>Github</Button>  
+          <Button href='https://github.com/allenRoyston/svelte-component-library' target="_blank" type={theme ==='light' ? 'magic' : 'primary'} hollow rounded>Github</Button>  
         </div>    
+      </section> 
+    </Section>
+  </Container>
+</ThemeWrapper>
+
+
+<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
+  <Container offset={2}>
+    <Section>
+      <section class='section-wrap'>
+        <h2 class='about-title'>
+          Built using Svelte-Tip!
+        </h2>
+        <p>
+          Nothing yet, but let's try and change that around shall we!           
+        </p>                
       </section> 
     </Section>
   </Container>

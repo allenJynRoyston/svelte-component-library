@@ -31,26 +31,30 @@
 
 
 <style lang='scss' scoped>
+
+  @import "../../scss/src/_media-queries.scss";
+
+
   button{
     outline: none;
     border: none;
     width: 100%;
     cursor: pointer;
     font-weight: 700;
-    padding: 5px 20px;
-        
+    padding: 5px 0px;
+
     &.disabled{
       opacity: 0.5;
       cursor: not-allowed;
     }
 
     &.small{
-      font-size: 12px;
+      font-size: 10px;
       padding: 4px 10px 6px 10px;
     }    
 
     &.large{
-      font-size: 25px;
+      font-size: 18px;
       padding: 5px 30px 7px 30px;      
     }
     
@@ -65,7 +69,19 @@
 
     &:active{
       background: var(--black-3);
-    }           
+    }    
+
+    @include tablet-portrait-and-up {
+      &.small{
+        font-size: 12px;
+        padding: 4px 10px 6px 10px;
+      }    
+
+      &.large{
+        font-size: 25px;
+      }
+    }    
+                   
 
     &.white{      
       border: 3px solid var(--white-1);      
