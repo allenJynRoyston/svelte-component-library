@@ -13,11 +13,12 @@
   export let rounded = false;
   export let size = 'normal'
   export let hollow = false;
+  export let target = null;
 
 </script>
 
 {#if !!href}
-  <Link fit {href} >
+  <Link fit {href} {target} >
     <button class={`root-component button ${type} ${size} `} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
       <slot>{text || 'Button'}</slot>
     </button>    
@@ -45,6 +46,7 @@
 
     &.small{
       font-size: 12px;
+      padding: 4px 10px 6px 10px;
     }    
 
     &.large{

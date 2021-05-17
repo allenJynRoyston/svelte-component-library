@@ -18,31 +18,44 @@
     setTimeout(() => {
       if(!!ele){
 
-        const isLocked =  Boolean(ele?.getAttribute('theme-lock')) || false
+        const isLocked =  Boolean(ele?.getAttribute('theme-lock') === 'true') || false
+        const isAlwaysLight = Boolean(ele?.getAttribute('data-alwayslight') === 'true') || false
 
         if(isLocked){
           for (let child of ele.querySelectorAll('.root-component')) {
             child.classList.remove("dark-theme");
             child.classList.remove("light-theme");
             child.classList.add(`${theme}-theme`);
-          }
+          }        
         }
-
         if(lock){
           ele.setAttribute('theme-lock', true)
-        }          
+        }            
+               
+        if(isAlwaysLight){
+          for (let child of ele.querySelectorAll('.root-component')) {
+            child.classList.remove('root-component')
+            child.classList.remove("dark-theme");
+            child.classList.remove("light-theme");
+            child.classList.add(`light-theme`);
+          }
+          ele.setAttribute('theme-lock', true)
+        }
+
+        if(alwaysdark){
+          for (let child of ele.querySelectorAll('.root-component')) {
+            child.classList.remove('root-component')
+            child.classList.remove("dark-theme");
+            child.classList.remove("light-theme");
+            child.classList.add(`dark-theme`);
+          }
+          ele.setAttribute('theme-lock', true)
+        }        
+
+
       } 
 
-      // if(alwayslight){
-      //   for (let child of ele.querySelectorAll('.root-component')) {
-      //     child.classList.remove("dark-theme");
-      //     child.classList.remove("light-theme");
-      //     child.classList.add(`light-theme`);
-      //     child.setAttribute('theme-lock', true)
-      //   }        
-      // }
-
-    }, delay)    
+    }, 1)    
   }
 
 
@@ -53,7 +66,7 @@
 </script>
 
 
-<div data-theme={theme} bind:this={ele}>
+<div data-theme={theme} data-alwayslight={alwayslight} bind:this={ele}>
   <slot />
 </div>
 

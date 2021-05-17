@@ -11,10 +11,10 @@
   <h5 class='title'>{title}</h5>  
   <div class='buttons'>
     {#if buttonOne}
-      <Button {...buttonOne} />
+      <Button size='small' {...buttonOne} />
     {/if}
     {#if buttonTwo}
-      <Button {...buttonTwo} />
+      <Button size='small' {...buttonTwo} />
     {/if}      
   </div>
 </div>
@@ -24,7 +24,7 @@
 
   .splash{
     width: 100%;
-    padding: 50px 0;
+    padding: 10px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,12 +32,16 @@
     background: transparent;
     color: var(--white-0-text);
 
+    @include desktop-and-up {
+      padding: 50px 0;
+    }    
+
     &.dark-theme{
       color: var(--black-0-text);
     }    
 
     .title{
-      font-size: 32px;
+      font-size: 24px;
       @include desktop-and-up {
         font-size: 72px;
       }

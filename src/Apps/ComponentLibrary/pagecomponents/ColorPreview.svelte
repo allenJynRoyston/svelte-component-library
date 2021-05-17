@@ -24,26 +24,29 @@
 </script>
 
 <Section paddingTop>
-  <h1>
-    Colors:
-  </h1>
-  <hr>
-  <br><br>
-  
-  {#each Object.entries(colorBlocks) as [key]}
-    <Accordian fill open>
+  <section>
 
-      <div slot='title'>
-        <h2 class='color-title'>{key}:</h2>                   
-      </div>
-  
-      <div slot='content'>
-        <Section>
-          <GridLayout size={125} outline items={colorBlocks[key].items} />
-        </Section>           
-      </div>
-    </Accordian>
-  {/each}
+    <h1>
+      Colors:
+    </h1>
+    <hr>
+    <br><br>
+    
+    {#each Object.entries(colorBlocks) as [key]}
+      <Accordian fill open>
+
+        <div slot='title'>
+          <h2 class='color-title'>{key}:</h2>                   
+        </div>
+    
+        <div slot='content'>
+          <Section>
+              <GridLayout size={125} outline items={colorBlocks[key].items} />
+          </Section>           
+        </div>
+      </Accordian>
+    {/each}
+  </section>
 
 </Section>
 
@@ -52,9 +55,21 @@
 
 
 <style lang='scss'>
+  @import "../../../scss/src/_media-queries.scss";
 
   .color-title{
     text-transform: capitalize
   }
+
+  section{
+    padding: 50px 0;
+    max-width: 600px;
+    margin: auto;
+
+    @include tablet-landscape-and-below {
+      padding: 20px 0;
+    }
+
+  }  
 
 </style>

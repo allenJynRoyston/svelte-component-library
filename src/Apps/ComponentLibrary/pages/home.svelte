@@ -18,6 +18,11 @@
 
   export let headerprops;
 
+  const headercopy:any = {...headerprops}
+  if(!!headercopy?.notchEle){
+    headercopy.notchEle.show = false;
+  }
+
   const theme:string = getContext('theme');
   const rootUrl = `#components?page=home&section=`
   
@@ -54,31 +59,25 @@
 
 <ThemeWrapper {theme} {themeWatch} lock>
     <Container offset={theme === 'dark' ? 2 : 0}>
-        <div class='home-page'>
-          
-          <Header {...headerprops} showCenter={channel.current === 0} showFooter={channel.current === 0} bgSrc={`./images/bg/header-${theme}-bg.jpg`}>
-            <h1>Svelte Tip</h1>
-          </Header>
+      <div class='home-page'>
+        
+        <Header {...headercopy} showCenter={channel.current === 0} showFooter={channel.current === 0} />
 
-          <div class='home-section'>
-            <div class='button-nav'>
-              <Button type='magic' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
-              <Button type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
-              <Button type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
-              <Button type='black' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
-            </div>
-            
-            {#if channel.current !== 0}
-              <div class='panel'>
-                <ThemeSwitch />
-                <Search />
-              </div>
-            {/if}
-            
-            <Channels nopadding {...channel} />              
-            
+        
+
+        <div class='home-section'>
+          <div class='button-nav'>
+            <Button type='magic' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
+            <Button type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
+            <Button type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
+            <Button type='black' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
           </div>
+          
+          
+          <Channels nopadding {...channel} />              
+          
         </div>
+      </div>
     </Container>
 </ThemeWrapper>
 
@@ -94,13 +93,6 @@
     width: 100%;
   }
 
-  .panel{
-    width: calc(100% - 40px);
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
   .button-nav{
     display: flex;

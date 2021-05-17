@@ -94,9 +94,9 @@
 </script>
 
 <div class:embedded={embedded}>
-  <div class='channels' class:animate={animate} >
+  <div class='channels'  >
     {#if ready}
-      <div class='channels-container' bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
+      <div class='channels-container' class:animate={animate} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
         {#each data as {content, render, active, props}}
           <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
             <div class='channel__inner' class:nopadding={nopadding} class:exactfit={exactfit} bind:this={ele} class:embedded={embedded} style={innerStyle} >
@@ -144,11 +144,17 @@
     width: 100%;   
     
     &.inactive{
-      animation: ChannelFadeOut 500ms;
+      opacity: 0;
+      &.animate{
+        animation: ChannelFadeOut 500ms;
+      }
     }
 
     &.active{
-      animation: ChannelFadeIn 500ms;
+      opacity: 1;
+      &.animate{
+        animation: ChannelFadeIn 500ms;
+      }
     }     
     
     &__inner{   

@@ -2,6 +2,8 @@
   import {getContext} from 'svelte';
   import { createChannel } from '../../js/utility'
 
+  import SearchThemeNotch from './pagecomponents/SearchThemeNotch.svelte'
+
   import Channels from '@components/Channels/Channels.svelte'
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
   import Splash from '@components/Splash/Splash.svelte'
@@ -9,11 +11,14 @@
   
   import Home from './pages/home.svelte';
   import Library from './pages/library.svelte';
+  import Documentation from './pages/documentation.svelte';
 
   const theme:string = getContext('theme')
 
   //--------------------------- 
   let headerprops = {
+    title: 'Svelte-Tip',
+    bgSrc: `./images/bg/header-${theme}-bg.jpg`,
     logoSrc: './images/logo/logo.png',    
     navEle: {
       component: NavBar,
@@ -22,7 +27,7 @@
         links: [
           {title: 'Home', icon: 'icon', href: '#components?page=home'},
           {title: 'Library', icon: 'icon', href: '#components?page=library'},
-          {title: 'Github', icon: 'icon', href: '#components?page=github'}
+          {title: 'Documentation', icon: 'icon', href: '#components?page=documentation'}
         ]    
       }
     },
@@ -31,9 +36,9 @@
       props: {
         title: 'Welcome!',
         buttonOne: {
-          text: 'Download',
+          text: 'Github',
           type: theme === 'dark' ? 'white' : 'black',
-          href: '#components?component=header&link=cta1',
+          href: 'https://github.com/allenRoyston/svelte-component-library',
           rounded: true,     
           hollow: true
         },
@@ -44,6 +49,9 @@
           rounded: true,          
         }        
       }
+    },
+    notchEle: {      
+      component: SearchThemeNotch,       
     }
   }  
   //---------------------------   
@@ -53,6 +61,7 @@
     data: [    
       {content: Home, id: 'home', props: {headerprops}},
       {content: Library, id: 'library', props: {headerprops}},  
+      {content: Documentation, id: 'documentation', props: {headerprops}}
   ]})   
 
   const onChange = ({params}) => {       
@@ -68,3 +77,19 @@
 <HashWatch onChange={onChange}/>
 <Channels {...channel} exactfit />
 
+<style lang='scss'>
+  @import "../../scss/src/_media-queries.scss";
+
+  :global(.section-wrap){
+    padding: 20px 0;
+    max-width: 600px;
+    margin: auto;
+    text-align: justify;
+
+    @include desktop-and-up {
+      padding: 50px 0;
+    }
+
+  }
+
+</style>

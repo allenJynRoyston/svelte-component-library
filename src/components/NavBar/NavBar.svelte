@@ -32,6 +32,7 @@
     gap: 10px;
     font-weight: 700;
     color: var(--white-0-text);
+    transform: translateY(3px);
 
     &.dark-theme{
       color: var(--black-0-text);

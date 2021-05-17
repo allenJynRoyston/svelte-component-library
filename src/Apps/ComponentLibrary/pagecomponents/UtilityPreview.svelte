@@ -18,42 +18,43 @@
 </script>
 
 <Section paddingTop>
-  <h1>
-    Utility:
-  </h1>
-  <hr>
-  <br><br> 
+  <section>
+    <h1>
+      Utility:
+    </h1>
+    <hr>
+    <br><br> 
 
-  <Accordian open fill>
-    <div slot='title'>
-      <h2>SCSS Media Queries:</h2>
-    </div>
-    
-    <div slot='content'>
-      <CodeBlock open title='Import:' snippet={`
-        @import "[root]/src/_media-queries.scss";
-        `} />  
-              
-      {#each classes as _class}     
-        <Accordian fill>
-          <div slot='title'>
-            <div class={`utility-block vis-${_class}`}>       
-              <h3>.{_class}</h3>                      
-            </div>
-          </div>
+    <Accordian open fill>
+      <div slot='title'>
+        <h2>Media Queries:</h2>
+      </div>
       
-          <div slot='content'>
-            <CodeBlock open title='Example:' snippet={`
-              @include ${_class} {
-                color: green
-              }
-              `} />  
-          </div>
-        </Accordian>  
-      {/each}
-    </div>
-  </Accordian>
-
+      <div slot='content'>
+        <CodeBlock open title='Import:' snippet={`
+          @import "[root]/src/_media-queries.scss";
+          `} />  
+                
+        {#each classes as _class}     
+          <Accordian fill>
+            <div slot='title'>
+              <div class={`utility-block vis-${_class}`}>       
+                <h3>.{_class}</h3>                      
+              </div>
+            </div>
+        
+            <div slot='content'>
+              <CodeBlock open title='Example:' snippet={`
+                @include ${_class} {
+                  color: green
+                }
+                `} />  
+            </div>
+          </Accordian>  
+        {/each}
+      </div>
+    </Accordian>
+  </section>
 </Section>
 
 <Footer />
@@ -62,6 +63,18 @@
 
 <style lang='scss'>
   @import "../../../scss/src/_media-queries.scss";
+
+
+  section{
+    padding: 50px 0;
+    max-width: 600px;
+    margin: auto;
+
+    @include tablet-landscape-and-below {
+      padding: 20px 0;
+    }
+
+  }  
 
   .utility-block{ 
     opacity: 0.4;

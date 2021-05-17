@@ -5,9 +5,11 @@
   import NavBar from '@components/NavBar/NavBar.svelte';
   import Splash from '@components/Splash/Splash.svelte'
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
+  import Search from '@components/Search/Search.svelte';
 
   let props = {
-    logoSrc: './logo/logo.png',
+    title: "Brand Name",
+    logoSrc: './images/logo/logo.png',
     bgSrc: 'https://picsum.photos/id/10/1440/600',
     navEle: {
       component: NavBar,
@@ -40,7 +42,15 @@
     },
     footerEle: {
       component: ThemeSwitch
-    },    
+    }
+  }
+
+  const notchEle = {
+    component: Search,
+    show: true,
+    props:{
+      title: 'I '
+    }
   }
 
 
@@ -54,20 +64,23 @@
   `} />
 
 <CodeBlock title='Properties:' snippet={`
+  export let title = null;
   export let logoSrc = null;
   export let bgSrc = null;
   export let logoLink = '/';
 
   export let navEle = null;
   export let centerEle = null;  
-  export let expand = false;
+  export let footerEle = null;
+  export let notchEle = null;
+  export let showCenter = false;  
+  export let showFooter = false;
+
   `} />
 
 <LibraryBlock title="Default:">
   <Header {...props} >
-    <h1>
-      Header Name
-    </h1>
+
   </Header>
 </LibraryBlock>
 
@@ -104,7 +117,17 @@
           rounded: true,          
         }        
       }
-    }
+    },
+    footerEle: {
+      component: ThemeSwitch
+    },    
+    notchEle: {
+      component: Search,
+      show: false,
+      props:{
+        title: 'I '
+      }
+    },     
   }
 
   <Header >
@@ -120,9 +143,7 @@
 
 <LibraryBlock title="Show Center:">
   <Header {...props} showCenter>
-    <h1>
-      Header Name
-    </h1>
+
   </Header>
 </LibraryBlock>
 
@@ -138,15 +159,41 @@
 
 <LibraryBlock title="Show Footer:">
   <Header {...props} showFooter>
-    <h1>
-      Header Name
-    </h1>
+
   </Header>
 </LibraryBlock>
 
 <CodeBlock open title='Example:' snippet={`
   <Header >
     <Header {...props} showCenter >
+      <h1>
+        Header Name
+      </h1>
+    </Header>
+  </Header>
+  `} />  
+
+
+
+<LibraryBlock title="Notch Component:">
+  <Header {...props}  {notchEle} >
+
+  </Header>
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+  import Search from '@components/Search/Search.svelte';
+
+  const notchEle = {
+    component: Search,
+    show: false,
+    props:{
+      title: 'I '
+    }
+  }
+
+  <Header >
+    <Header {...props} {notchEle} showCenter >
       <h1>
         Header Name
       </h1>

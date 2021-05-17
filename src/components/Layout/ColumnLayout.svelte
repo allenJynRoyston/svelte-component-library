@@ -46,11 +46,11 @@
       </div>
 
      
-        <div class='content' class:collapse={opened}>
-            <slot>
-              <p>Content</p>
-            </slot>
-        </div>
+      <div class='content' class:collapse={opened}>
+          <slot>
+            <p>Content</p>
+          </slot>
+      </div>
    
     </div>
 </div>

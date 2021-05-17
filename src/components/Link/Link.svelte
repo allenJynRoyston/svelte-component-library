@@ -7,6 +7,7 @@
   export let text = null;
   export let inherit = false;
   export let type = 'default'
+  export let target = null
   
   export let underline = false;
   export let fit = false;
@@ -26,7 +27,7 @@
 
 </script>
 
-<a {href} class={`link root-component ${type}`} class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a {target} {href} class={`link root-component ${type}`} class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 

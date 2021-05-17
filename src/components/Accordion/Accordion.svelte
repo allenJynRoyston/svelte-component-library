@@ -70,9 +70,9 @@
     }      
 
     &.dark-theme{
-      background: var(--black-1);
+      background: var(--black-3);
       button, .inner{
-        color: var(--black-1-text);
+        color: var(--black-3-text);
       }      
     }
 

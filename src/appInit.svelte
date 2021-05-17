@@ -13,6 +13,7 @@
   import Link from './components/Link/Link.svelte'  
   import SnackBar from './components/Snackbar/Snackbar.svelte'
   import {createColorPallete, assignFonts} from './js/utility'
+  import {isLocalDev} from './stores/store';
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
@@ -25,8 +26,9 @@
   //---------------------------   
 
   //---------------------------  THEME
+  let defaultTheme = 'dark'
   let theme = localStorage.getItem('theme')
-  theme = theme === 'dark' || theme === 'light' ? theme : 'light'
+  theme = theme === 'dark' || theme === 'light' ? theme : defaultTheme
   localStorage.setItem('theme', theme)
   setContext('theme', theme)
   //---------------------------   
@@ -94,7 +96,7 @@
   {/if}      
 </div>
 
-<div id='app-selector'>
+<div id='app-selector' class:show={$isLocalDev}>  
   <Link inherit href='#components' active={view === 'components'} onClick={() => {view = 'components'}}>Components</Link>
   <Link inherit href='#component-db' active={view === 'component-db'} onClick={() => {view = 'component-db'}}>ComponentsDB</Link>
   <Link inherit href='#strong-cookie' active={view === 'strong-cookie'} onClick={() => {view = 'strong-cookie'}}>StrongCookie</Link>
@@ -112,17 +114,21 @@
   @import './scss/global.scss';
 
   #app-selector{
+    display: none;
     position: fixed;
     bottom: 10px;
     left: 10px;
     padding: 10px;
     border-radius: 10px;
-    display: flex;
     flex-direction: column;
     opacity: 0.1;
     transition: 0.3s;
     background: var(--primary-0);
     color: var(--primary-0-text);
+
+    &.show{
+      display: flex;
+    }
 
     &:hover{
       opacity: 1;

@@ -1,7 +1,6 @@
 <script lang='ts'>
   import {getContext, setContext} from 'svelte';
   import { createChannel, capitalizeStr } from '../../../js/utility'
-  import { openSidebar } from '../../../stores/store';
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
@@ -10,9 +9,6 @@
   import SnackBar from '@components/Snackbar/Snackbar.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
-  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
-  import Search from '@components/Search/Search.svelte'
-  import SVG from '@components/SVG/SVG.svelte'
 
   import ButtonAlias from '@lib/_button.svelte'
   import HeaderAlias from '@lib/_header.svelte'
@@ -45,9 +41,18 @@
   import ColorTextAlias from '@lib/_colortext.svelte'
 
   export let headerprops;
+  const headercopy:any = {...headerprops}
+  if(!!headercopy?.notchEle){
+    headercopy.notchEle.show = true;
+    headercopy.notchEle.props = {
+      showSidebarButton: true,
+      showSearch: true,
+    }
+  }
+
 
   const theme:string = getContext('theme');
-  
+
   //--------------------------- CHANNEL
   const channel = createChannel({    
     sort: true,
@@ -117,40 +122,11 @@
     <HashWatch onChange={onChange}/>
     <SnackBar {snack} />
 
-    <Header {...headerprops} showFooter bgSrc={`./bg/header-${theme}-bg.jpg`}>
-      <h1>Svelte Tip</h1>
-    </Header>
+    <Header {...headercopy} showFooter />
 
     <ColumnLayout {links} currentIndex={channel.current} hidebtn >
-
-      <div class='panel '>
-        <span class='tablet-landscape-and-below'>
-          <SVG icon='grid-large' size={35} onClick={() => {
-            $openSidebar = !$openSidebar
-          }}/>        
-        </span>
-        <ThemeSwitch />
-        <Search />
-      </div>
-
-
       <Channels {...channel} animate />
     </ColumnLayout>
   </Container>
 </ThemeWrapper>
 
-<style lang='scss'>
-  @import "../../../scss/src/_media-queries.scss";
-
-
-  .panel{
-    width: calc(100% - 40px);
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }  
-
-
-
-</style>

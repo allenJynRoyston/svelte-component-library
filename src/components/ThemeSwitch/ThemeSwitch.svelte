@@ -1,11 +1,10 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Link from "@components/Link/Link.svelte";
+  import Button from "@components/Button/Button.svelte";
   
   export let links = ['dark', 'light']
 
   const theme:string = getContext('theme')
-
 
   const setTheme = (theme) => {
     localStorage.setItem('theme', theme)
@@ -15,16 +14,17 @@
 </script>
 
 <div class='themeswitcher' class:dark-theme={theme === 'dark'}>
-  <Link underline inherit active={theme === 'light'} onClick={() => {setTheme('light')}}>
+  <Button type='white' size='small' disabled={theme === 'light'} hollow={theme === 'light'} onClick={() => {setTheme('light')}}>
     Light
-  </Link>  
+  </Button>  
 
-  <Link underline inherit active={theme === 'dark'} onClick={() => {setTheme('dark')}}>
+  <Button type='white' size='small' disabled={theme === 'dark'} hollow={theme === 'dark'} onClick={() => {setTheme('dark')}}>
     Dark
-  </Link>    
+  </Button>    
 </div>
 
 <style lang='scss'>
+
   .themeswitcher{    
     justify-content: flex-start;
     display: flex;
@@ -32,8 +32,7 @@
     font-size: 12px;
     font-weight: 700;
     color: var(--black-1);
-    padding: 10px;
-    transform: translateY(2px);
+    padding: 10px;   
 
     &.dark-theme{
       color: var(--white-1);

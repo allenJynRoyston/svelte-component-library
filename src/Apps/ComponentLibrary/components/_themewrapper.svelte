@@ -26,26 +26,29 @@
   export let lock = false;
   `} />
 
+
+
 <LibraryBlock title="Light Theme:" >
-    <ExampleBlock />
-</LibraryBlock>
-
-
-<LibraryBlock title="Dark Theme:" >
-  <ThemeWrapper theme='dark' delay={theme === 'dark' ? 1 : 100} alwaysdark>
+  <ThemeWrapper  alwayslight>
     <ExampleBlock />
   </ThemeWrapper> 
+</LibraryBlock>
+
+<LibraryBlock title="Dark Theme:" >
+  <ThemeWrapper alwaysdark>
+    <ExampleBlock />
+  </ThemeWrapper>   
 </LibraryBlock>
 
 
 
 <CodeBlock open title='Example:' snippet={`
-  <ThemeWrapper theme='light' delay={100} lock>
+  <ThemeWrapper  alwayslight>
     <ExampleBlock />
   </ThemeWrapper> 
 
 
-  <ThemeWrapper theme='dark' delay={100} lock>
+  <ThemeWrapper alwaysdark>
     <ExampleBlock />
   </ThemeWrapper>   
   `} />  

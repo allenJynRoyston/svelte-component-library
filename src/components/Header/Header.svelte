@@ -1,7 +1,9 @@
 <script lang='ts'>  
-  import TwoSlot from '../TwoSlot/TwoSlot.svelte'
-  import Link from '../Link/Link.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Link from '@components/Link/Link.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
 
+  export let title = null;
   export let logoSrc = null;
   export let bgSrc = null;
   export let logoLink = '/';
@@ -9,11 +11,14 @@
   export let navEle = null;
   export let centerEle = null;  
   export let footerEle = null;
+  export let notchEle = null;
   export let showCenter = false;  
   export let showFooter = false;
 
+  let showNotch:boolean = notchEle?.show === undefined ? true : !!notchEle?.show
+
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
-  
+
 </script>
 
 <nav class={`root-component`} style={!!bgSrc ? imageStyle: null}>
@@ -27,15 +32,19 @@
 
           <div class='brand'>
             <slot>
-              
+              <h1>{title}</h1>
             </slot>
           </div>
         </div>
       </Link>
       
-      <div slot='right'>
+      <div class='navcontainer' slot='right'>
         {#if !!navEle}
           <svelte:component this={navEle.component} {...navEle.props} />
+        {/if}
+
+        {#if !!notchEle}
+         <SVG icon={showNotch ? 'cross' : 'search'} onClick={() => {showNotch = !showNotch}} />
         {/if}
       </div>
     </TwoSlot>
@@ -51,19 +60,29 @@
       <svelte:component this={footerEle.component} {...footerEle.props} />
     </div>
   {/if}
+
+  {#if !!notchEle}
+    <div class='header-notch' class:show={showNotch} >      
+      <svelte:component this={notchEle.component} {...notchEle.props} />
+    </div>
+  {/if}
+
 </nav>
+
+
 
 
 <style lang='scss' scoped>
   @import "../../scss/src/_media-queries.scss";
 
   nav{
+    position: relative;
     width: calc(100% - 40px);
     height: auto;
     overflow: hidden;
     padding: 20px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);  
-    
+    z-index: 1;
         
     .inner{
       display: flex;
@@ -94,7 +113,13 @@
         color: var(--black-1-text);
       }
     }
-
+  }
+  
+  .navcontainer{
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
   }
 
   .splash{
@@ -111,6 +136,18 @@
     &.expand{
       display: flex;
       flex-direction: flex-end;
+    }
+  }
+
+  .header-notch{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    margin-top: 5px;
+
+    &.show{
+      display: flex
     }
   }
 </style>
