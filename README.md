@@ -1,6 +1,6 @@
 # Svelte Component Library
 
-[https://svelte-component-library.herokuapp.com/](Visit the website to learn more!)
+[Visit the official Svelte-Tip website to learn more!](https://svelte-component-library.herokuapp.com/)
 
 # Tools available
 
