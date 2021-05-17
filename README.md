@@ -9,13 +9,16 @@
 - npm run dev
 
 # Install 
+````
 $ git clone https://github.com/allenRoyston/svelte-component-library
 $ cd svelte-component-library
 $ npm install
 $ npm run
-
+````
 # Build
+````
 $ npm run build
+````
 
 # Still in active development
 Update coming soon!
