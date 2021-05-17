@@ -5,8 +5,8 @@
 # How to use
 
 - clone this repo
-- npm install
-- npm run dev
+- npm install && npn run dev
+- ... more instructions coming soon
 
 # Install 
 ````
