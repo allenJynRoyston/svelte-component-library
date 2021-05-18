@@ -1,14 +1,11 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
   import {openModal, modalBusy, modalProps} from '../../stores/store'
-  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte';
+  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'  
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte';
   import SVG from '@components/SVG/SVG.svelte';
   import Button from '@components/Button/Button.svelte';
-  import FormExample from '../FormPremade/FormExample.svelte';
-import AboutPreview from '../../Apps/ComponentLibrary/pagecomponents/AboutPreview.svelte';
-
+    
   export let show = false;
   export let closeOnBackdrop = false;
 
@@ -158,8 +155,8 @@ import AboutPreview from '../../Apps/ComponentLibrary/pagecomponents/AboutPrevie
       box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);  
       display: flex;
       flex-direction: column;
-      background: var(--black-3);
-      color: var(--black-3-text);     
+      background: var(--black-2);
+      color: var(--black-2-text);     
 
       @include desktop-and-up {     
         border-radius: 10px;
@@ -201,6 +198,8 @@ import AboutPreview from '../../Apps/ComponentLibrary/pagecomponents/AboutPrevie
         height: 100vh;
         max-height: calc(100vh - 70px);        
         overflow-y: auto;   
+        background: var(--black-1);
+        color: var(--black-1-text);           
 
         &.hasFooter{
           max-height: calc(100vh - 130px);        
