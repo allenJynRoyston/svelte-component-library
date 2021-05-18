@@ -1,14 +1,14 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
-  import {getContext, setContext} from 'svelte';
+  import {setContext} from 'svelte';
+  import {createColorPallete, assignFonts} from './js/utility'
+  import {openModal, isLocalDev, appWidth} from './stores/store';
+
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
   import Link from '@components/Link/Link.svelte'  
   import SnackBar from '@components/Snackbar/Snackbar.svelte'
   import Loader from '@components/Loader/Loader.svelte'
   import Modal from '@components/Modal/Modal.svelte'
-
-  import {createColorPallete, assignFonts} from './js/utility'
-  import {openModal, isLocalDev} from './stores/store';
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
@@ -79,15 +79,13 @@
   }
   //---------------------------
 
-
-
 </script>
 
 <SnackBar {snack} />
 <HashWatch onChange={hashChange} />
 <Modal show={$openModal} />
 
-<div id='app-root'>
+<div id='app-root' bind:clientWidth={$appWidth}>
   <div id='app-loader'>
     <Loader skinny show={showLoader} nobg fade />
   </div>

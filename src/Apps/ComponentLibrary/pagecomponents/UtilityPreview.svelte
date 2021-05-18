@@ -1,4 +1,5 @@
 <script lang='ts'>
+  import {appWidth, isMobile, isTablet, isDesktop} from '../../../stores/store'
   import Footer from '@components/Footer/Footer.svelte'
   import Section from '@components/Section/Section.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
@@ -24,6 +25,42 @@
     </h1>
     <hr>
     <br><br> 
+
+    <Accordian open fill>
+      <div slot='title'>
+        <h2>Realtime Detection:</h2>
+      </div>
+      <div slot='content'>
+        <CodeBlock open title='Import:' snippet={`
+          import {appWidth, isMobile, isTablet, isDesktop} from '../../../stores/store'
+  
+          <p>
+            Width: {$appWidth} 
+          </p>
+          <p class:active={$isMobile}>
+            IsMobile: {$isMobile} 
+          </p>
+          <p class:active={$isTablet}>
+            IsTablet: {$isTablet} 
+          </p>
+          <p class:active={$isDesktop}>
+            isDesktop: {$isDesktop}
+          </p>
+          `} />              
+        <p>
+          Width: {$appWidth} 
+        </p>
+        <p class:active={$isMobile}>
+          IsMobile: {$isMobile} 
+        </p>
+        <p class:active={$isTablet}>
+          IsTablet: {$isTablet} 
+        </p>
+        <p class:active={$isDesktop}>
+          isDesktop: {$isDesktop}
+        </p>
+      </div>
+    </Accordian>    
 
     <Accordian open fill>
       <div slot='title'>
@@ -67,14 +104,17 @@
 
   section{
     padding: 50px 0;
-    max-width: 600px;
+    max-width: 900px;
     margin: auto;
 
     @include tablet-landscape-and-below {
       padding: 20px 0;
     }
-
   }  
+
+  p.active{
+    color: var(--success-0);
+  }
 
   .utility-block{ 
     opacity: 0.4;

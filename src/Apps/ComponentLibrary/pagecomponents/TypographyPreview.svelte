@@ -212,7 +212,7 @@
 
   section{
     padding: 50px 0;
-    max-width: 600px;
+    max-width: 900px;
     margin: auto;
 
     @include tablet-landscape-and-below {
