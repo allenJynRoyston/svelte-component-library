@@ -14,17 +14,18 @@
   export let size = 'normal'
   export let hollow = false;
   export let target = null;
+  export let exactfit = false;
 
 </script>
 
 {#if !!href}
   <Link fit {href} {target} >
-    <button class={`root-component button ${type} ${size} `} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+    <button class={`root-component button ${type} ${size} `} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
       <slot>{text || 'Button'}</slot>
     </button>    
   </Link>
 {:else}
-  <button class={`root-component button ${type} ${size}`} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+  <button class={`root-component button ${type} ${size}`} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <slot>{text || 'Button'}</slot>
   </button>
 {/if}
@@ -43,6 +44,11 @@
     font-weight: 700;
     padding: 5px 0px;
 
+    &.exactfit{
+      height: auto;
+      width: auto;
+    }
+
     &.disabled{
       opacity: 0.5;
       cursor: not-allowed;
@@ -50,12 +56,10 @@
 
     &.small{
       font-size: 10px;
-      padding: 4px 10px 6px 10px;
     }    
 
     &.large{
       font-size: 18px;
-      padding: 5px 30px 7px 30px;      
     }
     
     &.rounded{
@@ -72,13 +76,20 @@
     }    
 
     @include tablet-portrait-and-up {
+      font-size: 14px;
+      padding: 0px 10px 2px 10px;
+      height: 40px;       
+
       &.small{
-        font-size: 12px;
-        padding: 4px 10px 6px 10px;
+        font-size: 10px;
+        padding: 0 10px 2px 10px;
+        height: 30px;
       }    
 
       &.large{
         font-size: 25px;
+        padding: 0 10px 2px 10px;
+        height: 65px;        
       }
     }    
                    
@@ -86,56 +97,60 @@
     &.white{      
       border: 3px solid var(--white-1);      
       background: var(--white-1);
-      color: var(--white-1-text);
+      color: var(--black-1);
 
       &.hollow{
         background: none!important;
-        color: var(--white-1-text)!important;
+        color: var(--black-1);
+        &:active{
+          color: var(--white-4);
+          border: 3px solid var(--white-4);     
+        }           
       }
 
       &:active{
-        background: var(--white-3);
+        color: var(--white-4);
+        border: 3px solid var(--white-4);     
       }           
 
       &.dark-theme{
         border: 3px solid var(--white-3);
         background:var(--white-3);
-        color: var(--white-3-text);
+        color: var(--black-3);
 
         &.hollow{
-          background: none!important;
-          color: var(--white-1)!important;
+          color: var(--white-1-text);      
         }        
 
         &:active{
           background: var(--white-6);;
         }        
       }
-    }   
+    }  
 
     &.black{      
-      border: 3px solid var(--black-1);      
+      border: 3px solid var(--black-0);      
       background: var(--black-1);
       color: var(--black-1-text);
 
       &.hollow{
         background: none!important;
-        color: var(--black-1)!important;
+        color: var(--black-1);
+        &:active{
+          color: var(--black-4);
+          border: 3px solid var(--black-4);     
+        }           
       }
 
       &:active{
-        background: var(--black-3);
+        color: var(--black-4);
+        border: 3px solid var(--black-4);     
       }           
 
       &.dark-theme{
-        border: 3px solid var(--black-3);
+        border: 3px solid var(--black-0);   
         background:var(--black-3);
-        color: var(--white-0);
-
-        &.hollow{
-          background: none!important;
-          color: var(--black-1-text)!important;
-        }        
+        color: var(--black-3-text);
 
         &:active{
           background: var(--black-6);;
@@ -151,10 +166,15 @@
       &.hollow{
         background: none!important;
         color: var(--primary-1);
+        &:active{
+          color: var(--primary-4);
+          border: 3px solid var(--primary-4);     
+        }           
       }
 
       &:active{
-        background: var(--primary-3);
+        color: var(--primary-4);
+        border: 3px solid var(--primary-4);     
       }           
 
       &.dark-theme{
@@ -176,11 +196,16 @@
       &.hollow{
         background: none!important;
         color: var(--secondary-1);
+        &:active{
+          color: var(--secondary-4);
+          border: 3px solid var(--secondary-4);     
+        }              
       }
 
       &:active{
-        background: var(--secondary-3);
-      }           
+        color: var(--secondary-4);
+        border: 3px solid var(--secondary-4);     
+      }            
 
       &.dark-theme{
         border: 3px solid var(--secondary-3);
@@ -201,11 +226,16 @@
       &.hollow{
         background: none!important;
         color: var(--magic-1);
+        &:active{
+          color: var(--magic-4);
+          border: 3px solid var(--magic-4);     
+        }              
       }
 
       &:active{
-        background: var(--magic-3);
-      }           
+        color: var(--magic-4);
+        border: 3px solid var(--magic-4);     
+      }       
 
       &.dark-theme{
         border: 3px solid var(--magic-3);
@@ -227,11 +257,16 @@
       &.hollow{
         background: none!important;
         color: var(--success-1);
+        &:active{
+          color: var(--success-4);
+          border: 3px solid var(--success-4);     
+        }          
       }
 
       &:active{
-        background: var(--success-3);
-      }           
+        color: var(--success-4);
+        border: 3px solid var(--success-4);     
+      }    
 
       &.dark-theme{
         border: 3px solid var(--success-3);
@@ -252,10 +287,15 @@
       &.hollow{
         background: none!important;
         color: var(--warning-1);
+        &:active{
+          color: var(--warning-4);
+          border: 3px solid var(--warning-4);     
+        }              
       }
 
       &:active{
-        background: var(--warning-3);
+        color: var(--warning-4);
+        border: 3px solid var(--warning-4);     
       }           
 
       &.dark-theme{
@@ -277,6 +317,10 @@
       &.hollow{
         background: none!important;
         color: var(--danger-1);
+        &:active{
+          color: var(--danger-4);
+          border: 3px solid var(--danger-4);     
+        }         
       }
 
       &:active{

@@ -19,13 +19,38 @@
   `} />
 
 <LibraryBlock title="Default:">
-  <Loader show />
+    <Loader show/>
 </LibraryBlock>
 
 
 <CodeBlock open title='Example:' snippet={`
   <Loader show />
   `} />  
+
+
+<LibraryBlock title="Type:">
+  <Loader show type='secondary'/>
+  <Loader show type='magic' />
+  <Loader show type='success'/>
+  <Loader show type='warning'/>
+  <Loader show type='danger'/>
+  <Loader show type='black'/>
+  <Loader show type='white'/>
+</LibraryBlock>
+
+
+<CodeBlock open title='Example:' snippet={`
+  <Loader show type='secondary'/>
+  <Loader show type='magic' />
+  <Loader show type='success'/>
+  <Loader show type='warning'/>
+  <Loader show type='danger'/>
+  <Loader show type='black'/>
+  <Loader show type='white'/>
+`} />  
+
+
+
 
 <LibraryBlock title="Rounded:">
   <Loader show rounded />
@@ -34,3 +59,11 @@
 <CodeBlock open title='Example:' snippet={`
   <Loader show rounded />
   `} />  
+
+<LibraryBlock title="Skinny:">
+  <Loader show skinny />
+</LibraryBlock>
+
+<CodeBlock open title='Example:' snippet={`
+  <Loader show skinny />
+  `} />    

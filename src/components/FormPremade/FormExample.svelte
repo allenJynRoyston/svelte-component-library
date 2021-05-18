@@ -1,18 +1,26 @@
-<script>  
-  import Form from '../Form/Form.svelte'
+<script lang='ts'>  
+  import {onModalSubmit} from '../../stores/store'
+  import Form from '@components/Form/Form.svelte'
 
   export let onSubmit = (e) => {
-    isBusy = true
-    console.log(e)
-    setTimeout(() => {
-      alert('submitted')
-      isBusy = false
-    }, 2000)
+    console.log($onModalSubmit)
+    if(!!$onModalSubmit){
+      $onModalSubmit(e)
+    }
+    else{
+      isBusy = true
+      console.log(e)
+      setTimeout(() => {
+        alert('submitted')
+        isBusy = false
+      }, 2000)
+    }
   };
 
   export let localStorageKey = null;
   export let idModifier = null;
   export let clearLocalStorage = true;
+  export let busy = false;
 
   let isBusy = false
 
@@ -232,5 +240,5 @@
 </script>
 
 <div style='background: white; overflow: hidden; border-radius: 10px'>
-  <Form {...props} {isBusy} showButton clearLocalStorage />
+  <Form {...props} {isBusy} clearLocalStorage showButton />
 </div>

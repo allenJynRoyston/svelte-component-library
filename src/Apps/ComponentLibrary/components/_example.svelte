@@ -9,18 +9,21 @@
 <div class={`example-block root-component`}>
 
   <LoremBlock />
+  <LoremBlock />
+  <LoremBlock />
+  <LoremBlock />
 
 </div>
 
 <style lang='scss' scoped>
   .example-block{
     padding: 20px;
-    background:white;
-    color: #333;
+    background:var(--white-1);
+    color: var(--white-1-text);
 
     &.dark-theme{
-      background: #333;
-      color: white;
+      background: var(--black-2);
+      color: var(--black-2-text);
     }
 
     h4{
