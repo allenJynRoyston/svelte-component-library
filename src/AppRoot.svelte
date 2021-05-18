@@ -1,19 +1,14 @@
-<script context="module">
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('pwabuilder-sw.js');
-      });  
-    }
-</script>
-
 <script lang='ts'>
   //--------------------------- IMPORTS  
   import {setContext} from 'svelte';
-  import HashWatch from './components/URLWatcher/HashWatch.svelte'
-  import Link from './components/Link/Link.svelte'  
-  import SnackBar from './components/Snackbar/Snackbar.svelte'
   import {createColorPallete, assignFonts} from './js/utility'
-  import {isLocalDev} from './stores/store';
+  import {openModal, isLocalDev, appWidth} from './stores/store';
+
+  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
+  import Link from '@components/Link/Link.svelte'  
+  import SnackBar from '@components/Snackbar/Snackbar.svelte'
+  import Loader from '@components/Loader/Loader.svelte'
+  import Modal from '@components/Modal/Modal.svelte'
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
@@ -72,8 +67,15 @@
 
   //--------------------------- HASHCHANGE  
   let view = null;
+  let showLoader = false;
+  let timer = null;
   const hashChange = async({hash}) => {
     view = hash || 'components';
+    showLoader = true;
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      showLoader = false;
+    }, 1000)
   }
   //---------------------------
 
@@ -81,8 +83,12 @@
 
 <SnackBar {snack} />
 <HashWatch onChange={hashChange} />
+<Modal show={$openModal} />
 
-<div id='app-root'>
+<div id='app-root' bind:clientWidth={$appWidth}>
+  <div id='app-loader'>
+    <Loader skinny show={showLoader} nobg fade />
+  </div>
   {#if view === 'components'}
     <ComponentLibraryApp />
   {/if}
@@ -133,6 +139,14 @@
     &:hover{
       opacity: 1;
     }
+  }
+
+  #app-loader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
   }
 </style>
 

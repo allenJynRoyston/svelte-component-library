@@ -2,6 +2,7 @@
   import {onMount, onDestroy} from 'svelte';
 
   export let height = '100vh'
+  export let adjustPx = 0
 
   let ele;
   let topPos = 0
@@ -25,7 +26,6 @@
     topPos = ele?.getBoundingClientRect().top || 0
   }, 100)
 
-
   onMount(() => {
     setTimeout(() => {
       resizeEvent()
@@ -37,7 +37,7 @@
     window.removeEventListener('resize', resizeEvent)
   })
 
-  $: style = `height: calc(${height} - ${topPos}px)`
+  $: style = `height: calc(${height} - ${Math.abs(topPos)}px - ${adjustPx}px)`
 </script>
 
 

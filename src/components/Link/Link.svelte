@@ -27,7 +27,7 @@
 
 </script>
 
-<a {target} {href} class={`link root-component ${type}`} class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a {target} {href} rel="noreferrer" class={`link root-component ${type}`} class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 

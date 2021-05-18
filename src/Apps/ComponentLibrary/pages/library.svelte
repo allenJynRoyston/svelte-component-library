@@ -1,12 +1,11 @@
 <script lang='ts'>
-  import {getContext, setContext} from 'svelte';
+  import {getContext} from 'svelte';
   import { createChannel, capitalizeStr } from '../../../js/utility'
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
   import Channels from '@components/Channels/Channels.svelte'
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import SnackBar from '@components/Snackbar/Snackbar.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
 
@@ -39,6 +38,7 @@
   import InnerContainerAlias from '@lib/_innerContainer.svelte'
   import SectionAlias from '@lib/_section.svelte'
   import ColorTextAlias from '@lib/_colortext.svelte'
+  import ModalAlias from '@lib/_modal.svelte'
 
   export let headerprops;
   const headercopy:any = {...headerprops}
@@ -49,7 +49,6 @@
       showSearch: true,
     }
   }
-
 
   const theme:string = getContext('theme');
 
@@ -86,7 +85,8 @@
     {content: ContainerAlias, id: 'container'},
     {content: InnerContainerAlias, id: 'innercontainer'},
     {content: SectionAlias, id: 'section'},
-    {content: ColorTextAlias, id: 'colortext'}
+    {content: ColorTextAlias, id: 'colortext'},
+    {content: ModalAlias, id: 'modal'},
   ]})   
 
 
@@ -108,19 +108,12 @@
   }  
   //--------------------------- 
 
-  //---------------------------  SNACKBAR CODE
-  let snack;
-  setContext('addSnack', (newSnack) => {
-    snack = newSnack
-  })
-  //--------------------------- 
 
 </script>
 
 <ThemeWrapper {theme} {themeWatch} lock>
   <Container offset={1}>
     <HashWatch onChange={onChange}/>
-    <SnackBar {snack} />
 
     <Header {...headercopy} showFooter />
 

@@ -7,7 +7,7 @@
 
   const addSnack:any =getContext('addSnack')
   
-  const addDurationSnack = (type) => {
+  const addDurationSnack = (type) => {    
     addSnack({message: 'I disappear after 4 seconds...', duration: 4000, type})
   }
 

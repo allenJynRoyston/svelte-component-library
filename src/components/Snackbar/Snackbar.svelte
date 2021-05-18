@@ -8,6 +8,8 @@ export let snack = null;
 export let onComplete = () => {};
 export let onClick = () => {}
 
+const colors:any = getContext('colors')
+
 let currentSnack = null;
 let eventTimers = [];
 let removeTimers = [];
@@ -88,13 +90,13 @@ const newSnack = async() => {
 const returnIconColor = (type) => {
   switch(type){
     case 'primary': 
-    return 'lightblue'    
+    return colors.primary[0].color
     case 'success': 
-    return 'green'
+    return colors.success[0].color
     case 'warning': 
-    return 'orange'
+    return colors.warning[0].color
     case 'error': 
-    return 'red'
+    return colors.danger[0].color
   }  
 }
 
@@ -155,7 +157,7 @@ $: {
       </div>
     
       <div class='close-btn' on:click={() => {animateOutSnack(snack, true)}}>
-        <SVG icon={snack?.duration ? 'unlocked' : 'cross' } fill='white' size={12} />
+        <SVG icon={snack?.duration ? 'unlocked' : 'cross' } fill={returnIconColor(snack.type)} size={12} />
       </div>
 
       {#if snack?.duration}
@@ -189,7 +191,7 @@ $: {
     border-radius: 5px;
     min-width: 150px;
     font-size: 12px;
-    background: var(--black-0);    
+    background: var(--black-1);    
 
     &.btmpadding{
       padding-bottom: 4px;
@@ -204,19 +206,19 @@ $: {
     }
 
     &.primary{
-      color: lightblue;
+      color: var(--primary-0);
     }
 
     &.success{
-      color: green;
+      color: var(--success-0);
     }
 
     &.warning{
-      color: orange;
+      color: var(--warning-0);
     }   
 
     &.error{
-      color: red;
+      color: var(--danger-0);
     }    
 
     &.dark-theme{
@@ -228,19 +230,19 @@ $: {
       }
 
       &.primary{
-        color: lightblue;
+        color: var(--primary-0);
       }
 
       &.success{
-        color: green;
+        color: var(--success-0);
       }
 
       &.warning{
-        color: orange;
+        color: var(--warning-0);
       }   
 
       &.error{
-        color: red;
+        color: var(--danger-0);
       }   
     }
 
