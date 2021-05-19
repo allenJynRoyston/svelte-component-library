@@ -9,8 +9,8 @@
   export let links = []
   export let currentIndex = null;
   export let hidebtn:boolean = false;
+  export let side = 'left'
 
-  const theme:string = getContext('theme');
   const colors:any = getContext('colors');
   const {openSidebar} = SiteStore;
 
@@ -20,11 +20,12 @@
 
   $:opened = $openSidebar
 
+
 </script>
 
 <div class={`root-component column-layout`} >
     <div class='layout-inner'>
-      <div class='directory' class:collapse={opened}>
+      <div class={`directory ${side}`} class:collapse={opened}>
         {#if !hidebtn || opened}
           <button class={`root-component collapse-btn`} class:collapse={opened} on:click={() => {toggleCollapse(false)}}>
             <SVG icon={opened ? 'arrow-left' : 'arrow-right'} fill={colors.white[0].color} size={16} />
@@ -47,7 +48,7 @@
       </div>
 
      
-      <div class='content' class:collapse={opened}>
+      <div class={`content ${side}`} class:collapse={opened}>
           <slot>
             <p>Content</p>
           </slot>
@@ -57,109 +58,117 @@
 </div>
 
 <style lang="scss">
-@import "../../scss/src/_media-queries.scss";
+  @import "../../scss/src/_media-queries.scss";
 
-.column-layout {
-  width: 100%;
-  display: block;  
+  .column-layout {
+    width: 100%;
+    display: block;  
 
-  .layout-inner{
-    display: flex;
-  }
-
-  .directory {
-    width: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;     
-    position: relative;
-    font-size: 12px;    
-
-    &.collapse{
-      width: 100%;
+    .layout-inner{
+      display: flex;
     }
 
-    @include desktop-and-up {
-      font-size: 14px!important;
-      width: auto!important;
+    .directory {
+      width: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;     
+      position: relative;
+      font-size: 12px;    
+
+      &.right{
+        order: 1;
+      }      
+
+      &.collapse{
+        width: 100%;
+      }
+
+      @include desktop-and-up {
+        font-size: 14px!important;
+        width: auto!important;
+        display: block;
+      }
+    }
+
+    .directory-inner{
+      overflow: hidden;
+      width: 0;   
+  
+      @include desktop-and-up {     
+        width: auto!important;
+        height: 100%!important;
+        text-align: left!important;
+      }    
+
+      &.collapse{
+        width: 100vw;
+        text-align: center;
+      }
+    }
+
+    .directory-links{
+      display: flex; 
+      flex-direction: column;
+      padding: 30px 50px 20px 10px;   
+      font-size: 24px;     
+
+      @include desktop-and-up {     
+        font-size: 12px; 
+      }     
+    }
+
+
+    .collapse-btn{
       display: block;
-    }
-  }
+      position: absolute;
+      top: 75px;
+      right: -40px;
+      width: 40px;
+      height: 60px;    
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      z-index: 1;
+      border: none;
+      outline: none;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);  
+      background: var(--black-1);
 
-  .directory-inner{
-    overflow: hidden;
-    width: 0;   
- 
-    @include desktop-and-up {     
-      width: auto!important;
-      height: 100%!important;
-      text-align: left!important;
-    }    
+      &.dark-theme{
+        background: var(--white-1);
+      }
+      
 
-    &.collapse{
-      width: 100vw;
-      text-align: center;
-    }
-  }
+      &.collapse{
+        border-radius: 10px 0 0 10px;      
+        right: 0px;
+      }
 
-  .directory-links{
-    display: flex; 
-    flex-direction: column;
-    padding: 30px 50px 20px 10px;   
-    font-size: 24px;     
+      &:active{
+        background: var(--black-0);
+      }
 
-    @include desktop-and-up {     
-      font-size: 12px; 
-    }     
-  }
-
-
-  .collapse-btn{
-    display: block;
-    position: absolute;
-    top: 75px;
-    right: -40px;
-    width: 40px;
-    height: 60px;    
-    border-radius: 0 10px 10px 0;
-    cursor: pointer;
-    z-index: 1;
-    border: none;
-    outline: none;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);  
-    background: var(--black-1);
-
-    &.dark-theme{
-      background: var(--white-1);
+      @include desktop-and-up {
+        display: none;      
+      }    
     }
     
+    .content {      
+      width: 100%;
+      overflow: hidden;
 
-    &.collapse{
-      border-radius: 10px 0 0 10px;      
-      right: 0px;
+      &.right{
+        order: 0;
+      }
+
+      &.collapse{
+        width: 0;
+        padding: 0;
+      }      
+
+      @include desktop-and-up {
+        width: 100%!important;
+      }          
     }
-
-    &:active{
-      background: var(--black-0);
-    }
-
-    @include desktop-and-up {
-      display: none;      
-    }    
   }
-  
-  .content {
-    width: 100%;
-    overflow: hidden;
-
-    &.collapse{
-      width: 0;
-      padding: 0;
-    }      
-
-    @include desktop-and-up {
-      width: 100%!important;
-    }          
-  }
-}
 </style>
