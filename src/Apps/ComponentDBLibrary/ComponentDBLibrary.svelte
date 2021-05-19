@@ -1,8 +1,8 @@
 <script lang='ts'>
   import {onMount, setContext} from 'svelte';
-  import {IndexDBStore} from '../../js/index'
-  import { capitalizeStr, createChannel, createDB } from '../../js/utility'  
-  import {createTestData} from '../../js/testutility'
+  import {IndexDBStore} from '@js/index'
+  import { capitalizeStr, createChannel, createDB } from '@js/utility'  
+  import {createTestData} from '@js/testutility'
 
   import Header from '@components/Header/Header.svelte'
   import Footer from '@components/Footer/Footer.svelte'  

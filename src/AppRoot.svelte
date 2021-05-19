@@ -1,7 +1,7 @@
 <script lang='ts'>
   //--------------------------- IMPORTS  
   import {setContext} from 'svelte';
-  import {createColorPallete, assignFonts} from './js/utility'
+  import {createColorPallete, assignFonts} from '@js/utility'
   import {DeviceStore, ModalStore} from '@store/store';
 
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'

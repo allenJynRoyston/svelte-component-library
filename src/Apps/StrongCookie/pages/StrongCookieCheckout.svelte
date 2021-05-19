@@ -1,7 +1,7 @@
 <script>
   import Channels from '../../../components/Channels/Channels'
   import HashWatch from '../../../components/URLWatcher/HashWatch'
-  import { createChannel } from '../../../js/utility'
+  import { createChannel } from '@js/utility'
 
   import Checkout from '../components/Checkout'
   import ProductDetails from '../components/ProductDetails'

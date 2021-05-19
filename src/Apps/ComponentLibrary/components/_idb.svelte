@@ -2,10 +2,10 @@
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import IDB from '@components/Utility/IndexDBSetup.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import {createDB} from '../../../js/utility'
+  import {createDB} from '@js/utility'
 
   import {setContext} from 'svelte'
-  import {IndexDBStore} from '../../../js/index'
+  import {IndexDBStore} from '@js/index'
 
   const db = new IndexDBStore('example', 1); 
   // set context so it can be referenced in children components

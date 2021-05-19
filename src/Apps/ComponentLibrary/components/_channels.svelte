@@ -3,7 +3,7 @@
   import LibraryBlock from './__LibraryBlock.svelte'
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  import {createChannel} from '../../../js/utility'
+  import {createChannel} from '@js/utility'
 
 
    //--------------------------- CHANNEL
@@ -81,7 +81,7 @@
 
 
 <CodeBlock open title='Example:' snippet={`
-  import {createChannel} from '../../../js/utility'
+  import {createChannel} from '@js/utility'
 
   //--------------------------- CHANNEL
   const channel = createChannel({

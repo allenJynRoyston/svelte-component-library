@@ -1,6 +1,6 @@
 <script lang='ts'>
     import {getContext} from 'svelte';
-    import {createChannel} from '../../../js/utility'  
+    import {createChannel} from '@js/utility'  
     
     import Container from '@components/Container/Container.svelte';
     import Header from '@components/Header/Header.svelte'

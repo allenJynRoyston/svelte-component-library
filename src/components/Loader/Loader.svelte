@@ -71,7 +71,7 @@
     z-index: 1;
     width: 300px;
     height: 10px;
-    animation: line-bounce-fade 1500ms infinite;
+    animation: line-bounce 1500ms infinite;
 
     &.fade{
       animation: fade-out 1000ms infinite;

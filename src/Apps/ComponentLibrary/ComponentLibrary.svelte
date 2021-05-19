@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import { createChannel, readTextFile } from '../../js/utility'
+  import { createChannel } from '@js/utility'
 
   import SearchThemeNotch from './pagecomponents/SearchThemeNotch.svelte'
 

@@ -4,6 +4,7 @@ const modalIsOpen = writable(false);
 const modalProps = writable(null);
 const modalIsBusy = writable(false);
 const onModalSubmit = writable(null);
+
 const setModalState = (active: boolean) => {
 	if (active) {
 		location.hash = `${

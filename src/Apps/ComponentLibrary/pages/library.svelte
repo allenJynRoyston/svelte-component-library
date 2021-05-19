@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import { createChannel, capitalizeStr } from '../../../js/utility'
+  import { createChannel, capitalizeStr } from '@js/utility'
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'

@@ -5,7 +5,7 @@
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import Accordian from '@components/Accordion/Accordion.svelte'
 
-  const {appWidth, isMobile, isTablet, isDesktop} = DeviceStore;
+  const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop} = DeviceStore;
 
   const classes = [
     'mobile-only', 'mobile-portrait-and-below', 'mobile-portrait-and-up',
@@ -35,17 +35,24 @@
       </div>
       <div slot='content'>
         <CodeBlock open title='Import:' snippet={`
-          import {appWidth, isMobile, isTablet, isDesktop} from '../../../stores/store'
+          import {DeviceStore} from '@store/store'
+          const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop} = DeviceStore;
   
           <p>
             Width: {$appWidth} 
           </p>
           <p class:active={$isMobile}>
-            IsMobile: {$isMobile} 
+            isMobile: {$isMobile} 
           </p>
           <p class:active={$isTablet}>
-            IsTablet: {$isTablet} 
+            isTablet: {$isTablet} 
           </p>
+          <p class:active={$isTabletAndBelow}>
+            isTabletAndBelow: {$isTabletAndBelow} 
+          </p>          
+          <p class:active={$isDesktop}>
+            isDesktop: {$isDesktop}
+          </p>          
           <p class:active={$isDesktop}>
             isDesktop: {$isDesktop}
           </p>
@@ -56,6 +63,9 @@
         <p class:active={$isMobile}>
           IsMobile: {$isMobile} 
         </p>
+        <p class:active={$isTabletAndBelow}>
+          isTabletAndBelow: {$isTabletAndBelow} 
+        </p>           
         <p class:active={$isTablet}>
           IsTablet: {$isTablet} 
         </p>
