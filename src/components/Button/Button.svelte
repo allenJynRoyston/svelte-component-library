@@ -42,7 +42,7 @@
     width: 100%;
     cursor: pointer;
     font-weight: 700;
-    padding: 5px 0px;
+    padding: 0px 10px 2px 10px;
 
     &.exactfit{
       height: auto;
@@ -77,18 +77,15 @@
 
     @include tablet-portrait-and-up {
       font-size: 14px;
-      padding: 0px 10px 2px 10px;
       height: 40px;       
 
       &.small{
         font-size: 10px;
-        padding: 0 10px 2px 10px;
         height: 30px;
       }    
 
       &.large{
         font-size: 25px;
-        padding: 0 10px 2px 10px;
         height: 65px;        
       }
     }    
@@ -119,7 +116,7 @@
         color: var(--black-3);
 
         &.hollow{
-          color: var(--white-1-text);      
+          color: var(--white-1);      
         }        
 
         &:active{

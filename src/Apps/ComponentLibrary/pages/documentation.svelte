@@ -14,9 +14,6 @@
     const headercopy:any = {...headerprops}
     if(!!headercopy?.notchEle){
       headercopy.notchEle.show = false;
-      headercopy.notchEle.props = {
-        showSidebarButton: false
-      }
     }
   
     const theme:string = getContext('theme');

@@ -49,9 +49,8 @@
     }
 
     &.active{
-      font-weight: 700;
-      text-indent: 5px;
-      
+      font-weight: 700;     
+            
       &.underline{
         text-indent: 0!important;
       }

@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
-  import {openModal, modalBusy, modalProps} from '../../stores/store'
+  import {ModalStore} from '@store/store'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'  
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte';
   import SVG from '@components/SVG/SVG.svelte';
@@ -12,6 +12,9 @@
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
 
+  const {modalIsOpen, modalIsBusy, modalProps, setModalState} = ModalStore
+
+
   let w = 0;
   let h = 0;
   let ih = 0;
@@ -22,10 +25,10 @@
   let animateInTimer = null;
 
   const closeBtn = () => {
-    $openModal = false;
+    setModalState(false)
   }
 
-  const hasAButton = $modalProps?.onConfirm || $modalProps?.onCancel
+  // const hasAButton = $modalProps?.onConfirm || $modalProps?.onCancel
 
   $: style = `top: calc(50% - ${h/2}px); left: calc(50% - ${w/2}px);`
 
@@ -44,7 +47,6 @@
       clearInterval(animateInTimer);
       animateInTimer = setTimeout(() => {
         animateIn = false;
-        $modalProps = null
       }, 300)      
     }
   }
@@ -54,21 +56,27 @@
 <div class={`modal`}  class:show={animateIn}>
   <div class='inner'>
 
-    <div class={`backdrop ${theme}-theme`} on:click={() => {!$modalBusy && ($openModal = false)}} class:animateIn={show} />
+    <div class={`backdrop ${theme}-theme`} on:click={closeBtn} class:animateIn={show} />
 
     <div class={`container ${theme}-theme`} {style} class:freezeAnimation={freezeAnimation}  class:animateIn={show} bind:clientWidth={w} bind:clientHeight={h} >
 
-      <div class='header'  class:busy={$modalBusy}>
+      <div class='header'  class:busy={$modalIsBusy}>
         <TwoSlot showLeft showRight>
-          <h2>{$modalProps?.title}</h2>        
+          <h2>{$modalProps?.title || 'Unavailable'}</h2>        
           <div slot='right'>
-            <SVG onClick={() => {!$modalBusy && closeBtn()}} icon={$modalBusy ? 'save' : 'cross'} fill={colors.white[0].color}/>
+            <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors.white[0].color}/>
           </div>
         </TwoSlot>
       </div>    
-
-      <div class='container-inner' class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalBusy}>
-        <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
+      
+      <div class='container-inner' class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalIsBusy}>
+        {#if !!$modalProps?.content.component}
+          <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
+        {:else}
+          <div style='text-align: center; padding: 20px 0;'>
+            ¯\_(ツ)_/¯
+          </div>
+        {/if}
       </div>
 
       {#if $modalProps?.onConfirm || $modalProps?.onCancel}
@@ -76,13 +84,13 @@
           <slot name='footer'>
             <div class='default-footer'>
               {#if $modalProps?.onCancel}
-                <Button disabled={$modalBusy} type={$modalProps?.cancelBtn?.type || 'primary'} size="small" onClick={() => {!$modalBusy && $modalProps?.onCancel()}}>
+                <Button disabled={$modalIsBusy} type={$modalProps?.cancelBtn?.type || 'primary'} size="small" onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
                   {$modalProps?.cancelBtn?.text || 'Cancel'}
                 </Button>
               {/if}
 
               {#if $modalProps?.onConfirm}
-                <Button disabled={$modalBusy} type={$modalProps?.confirmBtn?.type || 'primary'} hollow size="small" onClick={() => {!$modalBusy && $modalProps?.onConfirm()}}>
+                <Button disabled={$modalIsBusy} type={$modalProps?.confirmBtn?.type || 'primary'} hollow size="small" onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
                   {$modalProps?.confirmBtn?.text || 'Confirm'}
                 </Button>
               {/if}              

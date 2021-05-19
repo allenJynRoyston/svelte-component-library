@@ -2,7 +2,7 @@
   //--------------------------- IMPORTS  
   import {setContext} from 'svelte';
   import {createColorPallete, assignFonts} from './js/utility'
-  import {openModal, isLocalDev, appWidth} from './stores/store';
+  import {DeviceStore, ModalStore} from '@store/store';
 
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
   import Link from '@components/Link/Link.svelte'  
@@ -13,6 +13,10 @@
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'
   import StrongCookieApp from './Apps/StrongCookie/StrongCookie.svelte'
+
+  //--------------------------- STORES
+  const { appWidth, isLocalDev } = DeviceStore;
+  const { modalIsOpen } = ModalStore;  
 
   //--------------------------- FONTS
   const fonts = ['Noto Sans JP', 'Farro'] // also assign in scss file below
@@ -55,6 +59,7 @@
       {start: '#ff073a', end: 'black'} : 
       {start: '#d63031', end: 'black'},
   }
+
   setContext('colors', createColorPallete({colorSet, range: 10, theme}))
   //---------------------------     
   
@@ -65,17 +70,27 @@
   })
   //--------------------------- 
 
+
   //--------------------------- HASHCHANGE  
   let view = null;
   let showLoader = false;
   let timer = null;
-  const hashChange = async({hash}) => {
+  let modalOpen:boolean = false;
+
+  const hashChange = async({hash, params}) => {
+    // set current page
     view = hash || 'components';
+    
+    // manages show loader
     showLoader = true;
     clearTimeout(timer)
     timer = setTimeout(() => {
       showLoader = false;
     }, 1000)
+    
+    // monitors modal
+    modalOpen = params?.modalisopen ? params.modalisopen === 'true' : false
+    
   }
   //---------------------------
 
@@ -83,7 +98,7 @@
 
 <SnackBar {snack} />
 <HashWatch onChange={hashChange} />
-<Modal show={$openModal} />
+<Modal show={modalOpen} />
 
 <div id='app-root' bind:clientWidth={$appWidth}>
   <div id='app-loader'>

@@ -1,9 +1,11 @@
 <script lang='ts'>
-  import {appWidth, isMobile, isTablet, isDesktop} from '../../../stores/store'
+  import {DeviceStore} from '@store/store'
   import Footer from '@components/Footer/Footer.svelte'
   import Section from '@components/Section/Section.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import Accordian from '@components/Accordion/Accordion.svelte'
+
+  const {appWidth, isMobile, isTablet, isDesktop} = DeviceStore;
 
   const classes = [
     'mobile-only', 'mobile-portrait-and-below', 'mobile-portrait-and-up',
@@ -15,6 +17,7 @@
     'retina']
 
 
+  
 
 </script>
 

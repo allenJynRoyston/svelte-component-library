@@ -42,13 +42,7 @@
 
   export let headerprops;
   const headercopy:any = {...headerprops}
-  if(!!headercopy?.notchEle){
-    headercopy.notchEle.show = true;
-    headercopy.notchEle.props = {
-      showSidebarButton: true,
-      showSearch: true,
-    }
-  }
+
 
   const theme:string = getContext('theme');
 
@@ -115,7 +109,7 @@
   <Container offset={1}>
     <HashWatch onChange={onChange}/>
 
-    <Header {...headercopy} showFooter />
+    <Header {...headercopy} showFooter showLayoutButton />
 
     <ColumnLayout {links} currentIndex={channel.current} hidebtn >
       <Channels {...channel} animate />

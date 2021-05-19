@@ -1,4 +1,5 @@
 <script lang='ts'>  
+  import { SiteStore } from '@store/store';
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
@@ -14,8 +15,12 @@
   export let notchEle = null;
   export let showCenter = false;  
   export let showFooter = false;
+  export let showLayoutButton = false;
 
   let showNotch:boolean = notchEle?.show === undefined ? true : !!notchEle?.show
+
+  const {openSidebar} = SiteStore;
+
 
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
 
@@ -24,8 +29,15 @@
 <nav class={`root-component`} style={!!bgSrc ? imageStyle: null}>
   
     <TwoSlot showLeft showRight>
+      {#if showLayoutButton}
+        <span class='tablet-landscape-and-below' style='transform: translateY(-3px) translateX(-10px)'>
+          <SVG icon={$openSidebar ? 'menu' : 'circleup'} size={24} onClick={() => {$openSidebar = !$openSidebar}} />        
+        </span>
+      {/if}
+
       <Link href={logoLink} >
         <div class='inner'>
+
           {#if !!logoSrc}
             <img class='logo' src={logoSrc} alt='logo' />
           {/if}
@@ -83,7 +95,7 @@
     padding: 20px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);  
     z-index: 1;
-        
+
     .inner{
       display: flex;
       align-items: center;

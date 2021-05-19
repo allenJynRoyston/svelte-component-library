@@ -4,7 +4,7 @@
   import SVG from '@components/SVG/SVG.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
   import Container from '@components/Container/Container.svelte'
-  import { openSidebar } from '../../stores/store';
+  import { SiteStore } from '@store/store';
 
   export let links = []
   export let currentIndex = null;
@@ -12,6 +12,7 @@
 
   const theme:string = getContext('theme');
   const colors:any = getContext('colors');
+  const {openSidebar} = SiteStore;
 
   const toggleCollapse = (state = null) => {
      $openSidebar = !!state || !$openSidebar
@@ -21,7 +22,7 @@
 
 </script>
 
-<div class={`root-component layout`} >
+<div class={`root-component column-layout`} >
     <div class='layout-inner'>
       <div class='directory' class:collapse={opened}>
         {#if !hidebtn || opened}
@@ -58,7 +59,7 @@
 <style lang="scss">
 @import "../../scss/src/_media-queries.scss";
 
-.layout {
+.column-layout {
   width: 100%;
   display: block;  
 
@@ -108,7 +109,7 @@
     font-size: 24px;     
 
     @include desktop-and-up {     
-      font-size: 16px; 
+      font-size: 12px; 
     }     
   }
 

@@ -1,10 +1,14 @@
 <script lang='ts'>
+  import {DeviceStore} from '@store/store'
   import Button from '../Button/Button.svelte'
 
   export let title = 'Splash Title';
   export let version = null;
   export let buttonOne = null;
   export let buttonTwo = null;
+
+  const {isTabletAndBelow} = DeviceStore;
+
 </script>
 
 <div class={`root-component splash`}>
@@ -18,10 +22,10 @@
   {/if}
   <div class='buttons'>
     {#if buttonOne}
-      <Button size='small' {...buttonOne} />
+      <Button size={$isTabletAndBelow ? 'small' : null} {...buttonOne} />
     {/if}
     {#if buttonTwo}
-      <Button size='small' {...buttonTwo} />
+      <Button size={$isTabletAndBelow ? 'small' : null}  {...buttonTwo} />
     {/if}      
   </div>
 </div>
@@ -65,10 +69,10 @@
     .buttons{
       display: flex;
       gap: 10px;
-      margin-bottom: 5px;
-      @include desktop-and-up {
-        margin-bottom: 10px;
-      }        
+      // margin-bottom: 5px;
+      // @include desktop-and-up {
+      //   margin-bottom: 10px;
+      // }        
     }    
 
   }

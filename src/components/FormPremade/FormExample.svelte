@@ -1,9 +1,10 @@
 <script lang='ts'>  
-  import {onModalSubmit} from '../../stores/store'
+  import {ModalStore} from '@store/store'
   import Form from '@components/Form/Form.svelte'
 
+  const {onModalSubmit} = ModalStore;
+
   export let onSubmit = (e) => {
-    console.log($onModalSubmit)
     if(!!$onModalSubmit){
       $onModalSubmit(e)
     }
