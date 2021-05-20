@@ -1,9 +1,8 @@
 <script lang='ts'>
   import {SiteStore} from '@store/store'
   import Link from '@components/Link/Link.svelte'
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
 
-  const {urlHash, urlParams}  = SiteStore;
+  const {urlParams}  = SiteStore;
 
   export let tabRoot = 'tab';
   export let tabs = []
