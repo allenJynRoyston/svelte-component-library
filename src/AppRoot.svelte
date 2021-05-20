@@ -2,7 +2,7 @@
   //--------------------------- IMPORTS  
   import {setContext} from 'svelte';
   import {createColorPallete, assignFonts} from '@js/utility'
-  import {DeviceStore, ModalStore} from '@store/store';
+  import {DeviceStore, ModalStore, SiteStore} from '@store/store';
 
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
   import Link from '@components/Link/Link.svelte'  
@@ -17,6 +17,7 @@
   //--------------------------- STORES
   const { appWidth, isLocalDev } = DeviceStore;
   const { modalIsOpen } = ModalStore;  
+  const { urlHash, urlParams } = SiteStore;
 
   //--------------------------- FONTS
   const fonts = ['Noto Sans JP', 'Farro'] // also assign in scss file below
@@ -77,7 +78,11 @@
   let timer = null;
   let modalOpen:boolean = false;
 
-  const hashChange = async({hash, params}) => {
+  const hashChange = async({hash, params}) => {    
+    // make available in store
+    $urlHash = hash;
+    $urlParams = params;
+
     // set current page
     view = hash || 'components';
     

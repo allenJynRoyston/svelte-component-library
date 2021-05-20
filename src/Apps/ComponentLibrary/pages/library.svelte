@@ -39,10 +39,13 @@
   import SectionAlias from '@lib/_section.svelte'
   import ColorTextAlias from '@lib/_colortext.svelte'
   import ModalAlias from '@lib/_modal.svelte'
+  import TabsAlias from '@lib/_tabs.svelte'
 
   export let headerprops;
   const headercopy:any = {...headerprops}
-
+  if(!!headercopy?.notchEle){
+    headerprops.notchEle.props = {showSearch: true}
+  }
 
   const theme:string = getContext('theme');
 
@@ -81,6 +84,7 @@
     {content: SectionAlias, id: 'section'},
     {content: ColorTextAlias, id: 'colortext'},
     {content: ModalAlias, id: 'modal'},
+    {content: TabsAlias, id: 'tabs'}
   ]})   
 
 

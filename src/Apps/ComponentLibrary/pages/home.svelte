@@ -22,7 +22,7 @@
 
   const headercopy:any = {...headerprops}
   if(!!headercopy?.notchEle){
-    headercopy.notchEle.show = false;
+    headerprops.notchEle.props = {showSearch: false}
   }
 
   const theme:string = getContext('theme');

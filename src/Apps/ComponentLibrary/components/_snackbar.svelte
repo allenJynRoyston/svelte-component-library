@@ -20,7 +20,7 @@
   }
 
   const withButton = (type) => {
-    addSnack({component: Button, props: {text: "I'm a button component - click me!", onClick: () => {
+    addSnack({component: Button, props: {text: "I'm a button component - click me!", inherit: true, onClick: () => {
       alert('do something...')
     }}, type})
   }  
@@ -37,7 +37,7 @@
 <p>Note: Snackbar must be added at the root of your app.</p>
 
 <CodeBlock open title='Import:' snippet={`
-  import ShoppingCart from '@components/Snackbar/Snackbar.svelte'
+  import Snackbar from '@components/Snackbar/Snackbar.svelte'
   `} />
 
 <LibraryBlock title='Timers:'>

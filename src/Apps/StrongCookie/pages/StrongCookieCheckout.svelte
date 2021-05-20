@@ -1,6 +1,6 @@
 <script>
-  import Channels from '../../../components/Channels/Channels'
-  import HashWatch from '../../../components/URLWatcher/HashWatch'
+  import Channels from '@components/Channels/Channels'
+  import HashWatch from '@components/URLWatcher/HashWatch'
   import { createChannel } from '@js/utility'
 
   import Checkout from '../components/Checkout'
