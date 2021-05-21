@@ -1,6 +1,11 @@
+<script lang='ts'>
+  import Link from '@components/Link/Link.svelte'
+  import ColorText from '@components/ColorText/ColorText.svelte'
+</script>
+
 <footer class={`root-component footer`}>
   <slot>
-    <p>Developed by Allen Royston | 2021</p>
+    <p>Developed by <ColorText type='secondary'><Link inherit href='https://github.com/allenRoyston' target="_blank">Allen Royston</Link></ColorText> | 2021</p>
   </slot>
 </footer>
 

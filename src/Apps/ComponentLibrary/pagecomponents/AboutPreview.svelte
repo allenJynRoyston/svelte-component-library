@@ -47,7 +47,7 @@
         </h2>
         <p>
           Svelte-Tip prides itself on it's growing library of useful pre-made components that have been specifically engineered to work just as well on your phone as it would your desktop, 
-          thus taking web developers one proverbial step forward their <em>alchemical magnum opus</em> of just "building it once", regardless of platform.
+          thus taking web developers one proverbial step forward their own <em>alchemical magnum opus</em> of just "building it once", regardless of platform.
           
           If you know a little bit of <ColorText type='primary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, functionality can be extended with ease.
         </p>

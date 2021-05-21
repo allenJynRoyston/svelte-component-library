@@ -133,6 +133,7 @@
       @include desktop-and-up {
         font-size: 14px!important;
         width: auto!important;
+        min-width: 225px;
         display: block;
       }
     }
