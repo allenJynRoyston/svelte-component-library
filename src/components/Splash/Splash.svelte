@@ -43,7 +43,7 @@
     background: transparent;
     color: var(--white-0-text);
 
-    @include desktop-and-up {
+    @include tablet-landscape-and-up {
       padding: 50px 0;
     }    
 
@@ -52,8 +52,8 @@
     }    
 
     .title{
-      font-size: 24px;
-      @include desktop-and-up {
+      font-size: 32px;
+      @include tablet-landscape-and-up {
         font-size: 72px;
       }
       // margin-bottom: 10px;
@@ -61,18 +61,14 @@
 
     .version{
       margin-bottom: 5px;
-      @include desktop-and-up {
+      @include tablet-landscape-and-up {
         margin-bottom: 10px;
       }      
     }
 
     .buttons{
       display: flex;
-      gap: 10px;
-      // margin-bottom: 5px;
-      // @include desktop-and-up {
-      //   margin-bottom: 10px;
-      // }        
+      gap: 10px;    
     }    
 
   }

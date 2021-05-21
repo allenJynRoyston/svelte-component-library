@@ -1,171 +1,195 @@
 @charset "utf-8";
-@function str-replace($string, $search, $replace: "") {
-  $index: str-index($string, $search);
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace +
-      str-replace(
-        str-slice($string, $index + str-length($search)),
-        $search,
-        $replace
-      );
-  }
-  @return $string;
+@function str-replace($string, $search, $replace: '') {
+	$index: str-index($string, $search);
+	@if $index {
+		@return str-slice($string, 1, $index - 1) + $replace +
+			str-replace(
+				str-slice($string, $index + str-length($search)),
+				$search,
+				$replace
+			);
+	}
+	@return $string;
 }
 
-$fontOneString: str-replace($fontOne, " ", "+");
-$fontTwoString: str-replace($fontTwo, " ", "+");
+$fontOneString: str-replace($fontOne, ' ', '+');
+$fontTwoString: str-replace($fontTwo, ' ', '+');
 
-$importPath: "https://fonts.googleapis.com/css?family=" + $fontOneString + "|" +
-  $fontTwoString + "&display=swap";
+$importPath: 'https://fonts.googleapis.com/css?family=' + $fontOneString + '|' +
+	$fontTwoString + '&display=swap';
 
 @import url($importPath);
 
-$font-one: $fontOne, "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial,
-  sans-serif;
-$font-two: $fontTwo, "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial,
-  sans-serif;
-$font-system: "Segoe UI Light", "Segoe", Tahoma, Helvetica, Arial, sans-serif;
+$font-one: $fontOne, 'Segoe UI Light', 'Segoe', Tahoma, Helvetica, Arial,
+	sans-serif;
+$font-two: $fontTwo, 'Segoe UI Light', 'Segoe', Tahoma, Helvetica, Arial,
+	sans-serif;
+$font-system: 'Segoe UI Light', 'Segoe', Tahoma, Helvetica, Arial, sans-serif;
 
 :global(.font-one) {
-  font-family: $font-one;
-  text-rendering: optimizeLegibility;
+	font-family: $font-one;
+	text-rendering: optimizeLegibility;
 }
 
 :global(.font-two) {
-  font-family: $font-two;
-  text-rendering: optimizeLegibility;
+	font-family: $font-two;
+	text-rendering: optimizeLegibility;
 }
 
 :global(body) {
-  font-family: $font-two;
-  margin: 0;
-  padding: 0;
-  text-rendering: optimizeLegibility;
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+	font-family: $font-two;
+	margin: 0;
+	padding: 0;
+	text-rendering: optimizeLegibility;
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
 }
 
 :global(h1, h2, h3, h4, h5, h6) {
-  font-family: $font-one;
-  // font-weight: 400;
-  margin: 0;
-  padding: 0;
-  letter-spacing: 1px;
-  // text-shadow : 3px 3px 3px rgba(0, 0, 0, 0.3);
-  text-rendering: optimizeLegibility;
-  @supports (-webkit-touch-callout: none) {
-    -webkit-text-stroke: 0.5px;
-  }
+	font-family: $font-one;
+	// font-weight: 400;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 1px;
+	// text-shadow : 3px 3px 3px rgba(0, 0, 0, 0.3);
+	text-rendering: optimizeLegibility;
+	@supports (-webkit-touch-callout: none) {
+		-webkit-text-stroke: 0.5px;
+	}
+}
+
+:global(h1) {
+	font-size: 2em;
+}
+
+:global(h2) {
+	font-size: 1.8em;
+}
+
+:global(h3) {
+	font-size: 1.6em;
+}
+
+:global(h3) {
+	font-size: 1.4em;
+}
+
+:global(h4) {
+	font-size: 1.2em;
+}
+
+:global(h5) {
+	font-size: 1em;
 }
 
 :global(button) {
-  font-family: $font-one;
+	font-family: $font-one;
 }
 
 :global(input, textarea) {
-  font-family: $font-two;
-  color: inherit;
-  border: inherit;
-  text-rendering: optimizeLegibility;
+	font-family: $font-two;
+	color: inherit;
+	border: inherit;
+	text-rendering: optimizeLegibility;
 }
 
 :global(body, p, span) {
-  font-family: $font-two;
-  text-rendering: optimizeLegibility;
+	font-family: $font-two;
+	text-rendering: optimizeLegibility;
 }
 
 :global(a) {
-  font-family: $font-two;
-  text-decoration: none;
-  color: inherit;
-  text-rendering: optimizeLegibility;
+	font-family: $font-two;
+	text-decoration: none;
+	color: inherit;
+	text-rendering: optimizeLegibility;
 
-  &:visited {
-    color: inherit;
-  }
+	&:visited {
+		color: inherit;
+	}
 }
 
 :global(li) {
-  color: inherit;
+	color: inherit;
 }
 
 :global(input) {
-  /*** iPhone and iOS Form Input Zoom Fixes ***/
-  /* Fix Input Zoom on devices older than iPhone 5: */
-  @media screen and (device-aspect-ratio: 2/3) {
-    select,
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"] {
-      font-size: 16px;
-    }
-  }
+	/*** iPhone and iOS Form Input Zoom Fixes ***/
+	/* Fix Input Zoom on devices older than iPhone 5: */
+	@media screen and (device-aspect-ratio: 2/3) {
+		select,
+		textarea,
+		input[type='text'],
+		input[type='password'],
+		input[type='datetime'],
+		input[type='datetime-local'],
+		input[type='date'],
+		input[type='month'],
+		input[type='time'],
+		input[type='week'],
+		input[type='number'],
+		input[type='email'],
+		input[type='url'] {
+			font-size: 16px;
+		}
+	}
 
-  /* Fix Input Zoom on iPhone 5, 5C, 5S, iPod Touch 5g */
-  @media screen and (device-aspect-ratio: 40/71) {
-    select,
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"] {
-      font-size: 16px;
-    }
-  }
+	/* Fix Input Zoom on iPhone 5, 5C, 5S, iPod Touch 5g */
+	@media screen and (device-aspect-ratio: 40/71) {
+		select,
+		textarea,
+		input[type='text'],
+		input[type='password'],
+		input[type='datetime'],
+		input[type='datetime-local'],
+		input[type='date'],
+		input[type='month'],
+		input[type='time'],
+		input[type='week'],
+		input[type='number'],
+		input[type='email'],
+		input[type='url'] {
+			font-size: 16px;
+		}
+	}
 
-  /* Fix Input Zoom on iPhone 6, iPhone 6s, iPhone 7  */
-  @media screen and (device-aspect-ratio: 375/667) {
-    select,
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"] {
-      font-size: 16px;
-    }
-  }
+	/* Fix Input Zoom on iPhone 6, iPhone 6s, iPhone 7  */
+	@media screen and (device-aspect-ratio: 375/667) {
+		select,
+		textarea,
+		input[type='text'],
+		input[type='password'],
+		input[type='datetime'],
+		input[type='datetime-local'],
+		input[type='date'],
+		input[type='month'],
+		input[type='time'],
+		input[type='week'],
+		input[type='number'],
+		input[type='email'],
+		input[type='url'] {
+			font-size: 16px;
+		}
+	}
 
-  /* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
-  @media screen and (device-aspect-ratio: 9/16) {
-    select,
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"] {
-      font-size: 16px;
-    }
-  }
+	/* Fix Input Zoom on iPhone 6 Plus, iPhone 6s Plus, iPhone 7 Plus, iPhone 8, iPhone X, XS, XS Max  */
+	@media screen and (device-aspect-ratio: 9/16) {
+		select,
+		textarea,
+		input[type='text'],
+		input[type='password'],
+		input[type='datetime'],
+		input[type='datetime-local'],
+		input[type='date'],
+		input[type='month'],
+		input[type='time'],
+		input[type='week'],
+		input[type='number'],
+		input[type='email'],
+		input[type='url'] {
+			font-size: 16px;
+		}
+	}
 }

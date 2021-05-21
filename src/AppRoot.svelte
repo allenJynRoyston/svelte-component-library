@@ -20,7 +20,7 @@
   const { urlHash, urlParams } = SiteStore;
 
   //--------------------------- FONTS
-  const fonts = ['Noto Sans JP', 'Farro'] // also assign in scss file below
+  const fonts = ['Palanquin Dark', 'Sen'] // also assign in scss file below
   assignFonts(fonts)
   setContext('fonts', fonts)
   //---------------------------   
@@ -131,8 +131,8 @@
 
 <style lang='scss'>
   // Assign fonts here, must be placed before global import
-  $fontOne: "Noto Sans JP";
-  $fontTwo: "Farro";
+  $fontOne: "Palanquin Dark";
+  $fontTwo: "Sen";
 
   /* note:  any changes must have a hard refresh.  
      Comment out global.scss import, save, refresh, then uncomment and save again.  

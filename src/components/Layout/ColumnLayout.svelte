@@ -1,24 +1,56 @@
-<script lang='ts'>
+<script lang='ts'>  
   import {getContext} from 'svelte';
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
   import Container from '@components/Container/Container.svelte'
+  import Accordion from '@components/Accordion/Accordion.svelte'
   import { SiteStore } from '@store/store';
 
   export let links = []
   export let currentIndex = null;
   export let hidebtn:boolean = false;
   export let side = 'left'
+  export let disableSearch = false;
 
-  const colors:any = getContext('colors');
-  const {openSidebar} = SiteStore;
+  const colors:any = getContext('colors')
+  const {openSidebar, urlParams, searchValue} = SiteStore;
 
   const toggleCollapse = (state = null) => {
      $openSidebar = !!state || !$openSidebar
   }
 
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+
+  const partialMatch = (str1, str2) => {
+    return new RegExp(str1).test(str2)
+  }  
+
+  let linkList = {};
+
   $:opened = $openSidebar
+
+  const buildList = () => {
+    let _list = {};
+    links.forEach(x => {
+      const {section, title} = x;         
+      _list[section] = []      
+    })
+
+    for (const key in _list) {
+      _list[key] = links.filter(x => x.section === key)
+    }
+    
+    linkList = _list;
+  }
+  
+
+  $: {
+    buildList()
+  }
 
 
 </script>
@@ -32,15 +64,29 @@
           </button>
         {/if}
 
-        <Container offset={2}>
+        <Container offset={5}>
           <div class='directory-inner' class:collapse={opened} >
             <InnerContainer>
-              <div class='directory-links'>
-                {#each links as { title, href }, i}
-                  <Link inherit active={currentIndex === i} {href} onClick={() => {toggleCollapse(false)}} >
-                    {title} 
-                  </Link>        
-                {/each}  
+              <div class='directory-links-container'>
+                {#each Object.entries(linkList) as [key, pairs], index}
+                  <Accordion listform fill open={index === 0}>
+                    <span class='directory-key' slot='title'>
+                      {capitalize(key)} 
+                    </span>
+
+                    
+                    <ul class='directory-links' slot='content'>
+                      {#each pairs as {href, title}}
+                        {#if $searchValue === null || partialMatch($searchValue, title)}
+                          <Link classes='font-one' inherit {href} active={$urlParams.component === title} onClick={() => {toggleCollapse(false)}} >
+                            {capitalize(title)} 
+                          </Link>
+                        {/if}        
+                      {/each}    
+                    </ul>
+                  </Accordion>
+                {/each}
+
               </div>  
             </InnerContainer>
           </div>
@@ -107,16 +153,24 @@
       }
     }
 
+    .directory-links-container{
+      display: flex; 
+      flex-direction: column;
+      padding: 10px;
+      
+      .directory-key{
+        font-size: 16px;
+      }
+
+    }
+
     .directory-links{
       display: flex; 
       flex-direction: column;
-      padding: 30px 50px 20px 10px;   
-      font-size: 24px;     
-
-      @include desktop-and-up {     
-        font-size: 12px; 
-      }     
+      padding: 0 10px;
+      font-size: 14px;     
     }
+
 
 
     .collapse-btn{

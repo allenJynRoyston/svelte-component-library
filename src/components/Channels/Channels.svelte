@@ -1,5 +1,6 @@
 <script lang='ts'>
-  import {onMount} from 'svelte'  
+  import {onMount, tick} from 'svelte'  
+  import {SiteStore} from '@store/store'
   import Loader from '@components/Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -17,7 +18,6 @@
   export let animate = false;
   export let exactfit = false;
   export let props = null;
-  
 
   let ready = false
   let xpos;
@@ -25,6 +25,16 @@
   let ele; 
   let rootEle;
   let topPos = 0;
+  let h = 0;
+  let topDifference = 0
+  let topOffset = 0;
+
+  // watches for changes in offsetHeight
+	SiteStore.openNotch.subscribe(async(value) => {
+    setTimeout(() => {
+      topOffset = topDifference - (ele?.getBoundingClientRect().top || 0)      
+    })
+	});  
 
   const createSizeTables = () => {
     const table = []
@@ -46,6 +56,9 @@
 
     ready = true
     channelReady && channelReady(currentChannel)    
+
+    await tick() 
+    topDifference = ele?.getBoundingClientRect().top
   })
 
   const goto = async (channel) => {
@@ -83,15 +96,17 @@
     return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
   }  
 
-  $: innerStyle = `height: calc(100vh - ${topPos}px - ${embedded ? 10 : exactfit || nopadding ? 0 : 20}px);`
+  $: innerStyle = `height: calc(100vh - ${topPos}px + ${topOffset}px - ${embedded ? 10 : exactfit || nopadding ? 0 : 20}px);`
 
   $: {      
     backtotop && resetScrollTop()
     current != currentChannel && goto(current)     
     topPos = ele?.getBoundingClientRect().top || 0
   }  
- 
+
+
 </script>
+
 
 <div class:embedded={embedded}>
   <div class='channels'  >

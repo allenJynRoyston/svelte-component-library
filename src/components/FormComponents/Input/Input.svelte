@@ -150,6 +150,8 @@
       height: 30px;
       width: calc(100% - 20px);
       padding: 0 10px;
+      border: none;
+      outline: none;
 
       &::placeholder{
         color: lightgrey;
@@ -159,38 +161,36 @@
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
       input{
-        color: black;
-        border: 1px solid black;
+        color: var(--black-2)
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
       input{
-        color: red;
-        border: 1px solid red;
+        color: var(--danger-0);
+        border: 1px solid var(--danger-0)
       }
     }    
 
     &.dark-theme{
       input{
-        background: #555;
+        background: var(--black-5);
         // border: 2px solid #666;
       }
 
 
       &.valid{
         label{
-          color: black
+          color:  var(--black-5-text);
         }
         input{
-          color: black;
-          border: 1px solid #555;
+          color: var(--black-5-text);          
         }
       }
     }    

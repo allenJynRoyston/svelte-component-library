@@ -13,6 +13,9 @@
 
 <CodeBlock title='Properties:' snippet={
   `
+  export let debounceTime = 0;
+  export let hideClear = false;
+  export let onSearch = () => {}  
   `} />
 
 <LibraryBlock title="Default">

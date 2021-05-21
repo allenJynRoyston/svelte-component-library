@@ -17,10 +17,9 @@
   export let showFooter = false;
   export let showLayoutButton = false;
 
-  let showNotch:boolean = notchEle?.show === undefined ? true : !!notchEle?.show
+  const {openSidebar, openNotch} = SiteStore;
 
-  const {openSidebar} = SiteStore;
-
+  $openNotch = notchEle?.show === undefined ? true : !!notchEle?.show
 
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
 
@@ -56,7 +55,7 @@
         {/if}
 
         {#if !!notchEle}
-         <SVG icon={showNotch ? 'cross' : 'search'} onClick={() => {showNotch = !showNotch}} />
+         <SVG icon={$openNotch ? 'cross' : 'search'} onClick={() => {$openNotch = !$openNotch}} />
         {/if}
       </div>
     </TwoSlot>
@@ -74,7 +73,7 @@
   {/if}
 
   {#if !!notchEle}
-    <div class='header-notch' class:show={showNotch} >      
+    <div class='header-notch' class:show={$openNotch} >      
       <svelte:component this={notchEle.component} {...notchEle.props} />
     </div>
   {/if}

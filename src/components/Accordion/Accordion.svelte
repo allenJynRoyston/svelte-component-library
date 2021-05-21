@@ -8,6 +8,7 @@
   export let fill = false
   export let rounded = false;
   export let outline = false;
+  export let listform = false;
   
   let isOpened = open;
   let ele;
@@ -30,14 +31,14 @@
       </button>  
 
       <div slot='right'>
-        <SVG icon={isOpened ? 'minus' : 'plus'} onClick={toggle} fill={isDark ? 'white' : '#333'}/>
+        <SVG icon={isOpened ? 'minus' : 'plus'} size={10} onClick={toggle} fill={isDark ? 'white' : '#333'}/>
       </div>
     </TwoSlot>
   </div>
 
 
   <div class='accordion-content' class:opened={isOpened} class:fill={fill}>
-    <div class='inner'>
+    <div class='inner' class:listform={listform}>
       <slot name='content'>
         Accordion content... 
       </slot>
@@ -110,6 +111,9 @@
     .inner{
       width: calc(100% - 40px);
       padding: 20px;
+      &.listform{
+        padding: 0 5px;
+      }      
     }
     
   }

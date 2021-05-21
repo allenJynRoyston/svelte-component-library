@@ -1,26 +1,12 @@
 <script>
   import {onMount, onDestroy} from 'svelte';
+  import {debounce} from '@js/utility'
 
   export let height = '100vh'
   export let adjustPx = 0
 
   let ele;
   let topPos = 0
-
-  const debounce = (func, wait, immediate) => {
-    var timeout;
-    return function() {
-      var context = this, args = arguments;
-      var later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      var callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
-    };
-  };
 
   const resizeEvent = debounce(() => {
     topPos = ele?.getBoundingClientRect().top || 0

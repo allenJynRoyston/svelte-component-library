@@ -126,11 +126,12 @@
     }  
 
     &.black{      
-      border: 3px solid var(--black-0);      
+      border: 3px solid var(--black-1);     
       background: var(--black-1);
       color: var(--black-1-text);
 
       &.hollow{
+        border: 3px solid var(--black-0);   
         background: none!important;
         color: var(--black-1);
         &:active{
@@ -145,9 +146,9 @@
       }           
 
       &.dark-theme{
-        border: 3px solid var(--black-0);   
-        background:var(--black-3);
-        color: var(--black-3-text);
+        border: 3px solid var(--black-2);     
+        background:var(--black-2);
+        color: var(--black-2-text);
 
         &:active{
           background: var(--black-6);;

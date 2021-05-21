@@ -54,6 +54,9 @@
     sort: true,
     sortBy: 'id',
     data: [    
+    {content: HashWatchAlias, id: 'hashwatch', section: 'root'},
+    {content: IndexDBAlias, id: 'indexdb', section: 'root'},
+
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
     {content: ButtonAlias, id: 'button'},
@@ -63,7 +66,6 @@
     {content: LinkAlias, id: 'link'},
     {content: FormAlias, id: 'form'},
     {content: SearchAlias, id: 'search'},
-    {content: HashWatchAlias, id: 'hashwatch'},
     {content: SVGAlias, id: 'svg'},
     {content: ThreeSlotAlias, id: 'threeslot'},
     {content: TwoSlotAlias, id: 'twoslot'},
@@ -73,7 +75,6 @@
     {content: ColumnLayoutAlias, id: 'columnlayout'},
     {content: ShoppingCartAlias, id: 'shoppingcart'},
     {content: SnackbarAlias, id: 'snackbar'},
-    {content: IndexDBAlias, id: 'indexdb'},
     {content: CodeBlockAlias, id: 'codeblock'},  
     {content: SplashAlias, id: 'splash'},    
     {content: NavBarAlias, id: 'navbar'},    
@@ -88,8 +89,8 @@
   ]})   
 
 
-  const links = channel.data.map(({id}) => {
-    return {title: capitalizeStr(id), href: `#components?page=library&component=${id}`}
+  const links = channel.data.map(({id, section = 'components'}) => {
+    return {section, title: id, href: `${location.hash}&component=${id}`}
   }).sort((a, b) => a?.title.localeCompare(b?.title))
 
 

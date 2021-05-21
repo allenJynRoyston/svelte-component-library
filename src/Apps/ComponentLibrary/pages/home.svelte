@@ -68,10 +68,10 @@
 
         <div class='home-section'>
           <div class='button-nav'>
-            <Button size={$isMobile ? 'small' : null} type='magic' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
+            <Button size={$isMobile ? 'small' : null} type='primary' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
             <Button size={$isMobile ? 'small' : null} type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
             <Button size={$isMobile ? 'small' : null} type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
-            <Button size={$isMobile ? 'small' : null} type='black' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
+            <Button size={$isMobile ? 'small' : null} type='warning' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
             <Button size={$isMobile ? 'small' : null} type='danger' disabled={channel.current === 4}  href={`${rootUrl}store`} onClick={() => {channel.current = 4}}>Stores</Button>
           </div>
           
