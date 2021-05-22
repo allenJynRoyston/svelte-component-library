@@ -41,8 +41,9 @@
     border: none;
     width: 100%;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
     padding: 0px 10px 2px 10px;
+    margin: 2px 0;
 
     &.exactfit{
       height: auto;

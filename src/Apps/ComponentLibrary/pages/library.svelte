@@ -40,6 +40,8 @@
   import ColorTextAlias from '@lib/_colortext.svelte'
   import ModalAlias from '@lib/_modal.svelte'
   import TabsAlias from '@lib/_tabs.svelte'
+  import PromptAlias from '@lib/_prompt.svelte'
+  import LoremBlockAlias from '@lib/_loremBlock.svelte'
 
   export let headerprops;
   const headercopy:any = {...headerprops}
@@ -54,8 +56,9 @@
     sort: true,
     sortBy: 'id',
     data: [    
-    {content: HashWatchAlias, id: 'hashwatch', section: 'root'},
-    {content: IndexDBAlias, id: 'indexdb', section: 'root'},
+    {content: HashWatchAlias, id: 'hashwatch', section: 'installed'},
+    {content: IndexDBAlias, id: 'indexdb', section: 'installed'},
+    {content: ModalAlias, id: 'modal', section: 'installed'},
 
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
@@ -83,9 +86,10 @@
     {content: ContainerAlias, id: 'container'},
     {content: InnerContainerAlias, id: 'innercontainer'},
     {content: SectionAlias, id: 'section'},
-    {content: ColorTextAlias, id: 'colortext'},
-    {content: ModalAlias, id: 'modal'},
-    {content: TabsAlias, id: 'tabs'}
+    {content: ColorTextAlias, id: 'colortext'},    
+    {content: TabsAlias, id: 'tabs'},
+    {content: PromptAlias, id: 'prompt'},
+    {content: LoremBlockAlias, id: 'loremblock'}
   ]})   
 
 

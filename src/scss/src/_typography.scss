@@ -15,8 +15,8 @@
 $fontOneString: str-replace($fontOne, ' ', '+');
 $fontTwoString: str-replace($fontTwo, ' ', '+');
 
-$importPath: 'https://fonts.googleapis.com/css?family=' + $fontOneString + '|' +
-	$fontTwoString + '&display=swap';
+
+$importPath: 'https://fonts.googleapis.com/css2?family=' + $fontOneString + ':wght@600;700&family=' + $fontTwoString + ':wght@600;700&display=swap';
 
 @import url($importPath);
 

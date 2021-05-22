@@ -120,14 +120,16 @@ export const createColorPallete = ({
 
 			const whiteContrast = chroma.contrast(color, '#eee');
 			const blackContrast = chroma.contrast(color, '#333');
+      const textFriendlyColor = whiteContrast > blackContrast ? '#eee' : '#333'
+
 
 			document.documentElement.style.setProperty(colorName, color);
 			document.documentElement.style.setProperty(
 				textName,
-				whiteContrast > blackContrast ? '#eee' : '#333'
+				textFriendlyColor
 			);
 
-			colors[key].push({ name: colorName, textColor: textName, color });
+			colors[key].push({ name: colorName, textColor: textName, color, textFriendlyColor });
 		});
 	}
 
