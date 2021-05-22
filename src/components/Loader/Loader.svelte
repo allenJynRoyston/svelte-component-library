@@ -5,11 +5,12 @@
   export let skinny = false;
   export let nobg = false;
   export let fade = false;
+  export let nomargin = false;
 
 </script>
 
 {#if show}
-  <div class={`root-component loader`}  class:nobg={nobg} class:rounded={rounded} class:skinny={skinny}>
+  <div class={`root-component loader`} class:nomargin={nomargin}  class:nobg={nobg} class:rounded={rounded} class:skinny={skinny}>
     <div class={`line ${type}`} class:fade={fade} class:rounded={rounded} />
   </div>
 {/if}
@@ -22,6 +23,7 @@
   height: 10px;
   overflow: hidden;
   position: relative;
+  margin: 2px 0;
 
   &.nobg{
     background: transparent;
@@ -33,6 +35,10 @@
 
   &.rounded{
     border-radius: 10px;
+  }
+
+  &.nomargin{
+    margin: 0;
   }
 
   .line {

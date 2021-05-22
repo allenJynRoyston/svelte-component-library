@@ -1,11 +1,18 @@
 <script lang='ts'>
-  import Container from '@components/Container/Container.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
+  import Container from '@components/Container/Container.svelte'
 </script>
 
-<h2>Container</h2>
+<TwoSlot showLeft showRight>
+  <h2>GridLayout</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`

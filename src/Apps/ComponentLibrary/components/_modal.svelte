@@ -1,14 +1,16 @@
 <script lang='ts'>
+    import {getContext} from 'svelte'
+    import Button from '@components/Button/Button.svelte'
+    import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+    import LibraryBlock from './__LibraryBlock.svelte'
+    import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
     import {ModalStore} from '@store/store'
 
-    import LibraryBlock from './__LibraryBlock.svelte'
     import ExampleBlock from './_example.svelte'
-
-    import Button from '@components/Button/Button.svelte'
     import FormExample from '@components/FormPremade/FormExample.svelte'
-    import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
     const {setModalState, modalIsBusy, modalProps} = ModalStore
+    const theme:string = getContext('theme')
 
     let rounded = false;
     let nopadding = false;
@@ -143,17 +145,17 @@
 
 </script>
   
-<h1>Modal</h1>
-<p>Best to avoid use of modals on mobile, as they have no way to retain state.</p>
-<p>Use Channels instead.</p>
+<TwoSlot showLeft showRight>
+  <h2>Modal</h2>
+  <div slot='right' style='display: flex: 10px'>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={rounded} hollow={!rounded} exactfit onClick={() => {rounded = !rounded}} >Rounded</Button>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={nopadding} hollow={!nopadding} exactfit onClick={() => {nopadding = !nopadding}} >No Padding</Button>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={shadow} hollow={!shadow} exactfit onClick={() => {shadow = !shadow}} >Shadow</Button>
+  </div>
+</TwoSlot>
 <hr>
 
 
-<LibraryBlock title="Settings:">
-  <Button size='small' type='black' hollow={!rounded} exactfit onClick={() => {rounded = !rounded}} >Rounded</Button>
-  <Button size='small' type='black' hollow={!nopadding} exactfit onClick={() => {nopadding = !nopadding}} >No Padding</Button>
-  <Button size='small' type='black' hollow={!shadow} exactfit onClick={() => {shadow = !shadow}} >Shadow</Button>
-</LibraryBlock>
 
 <LibraryBlock title="Examples:">
   <Button exactfit onClick={openExampleBasic} >Basic</Button>

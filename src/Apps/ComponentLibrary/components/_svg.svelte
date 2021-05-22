@@ -1,90 +1,98 @@
 <script lang="ts">
-import SVG from '@components/SVG/SVG.svelte'
-import LibraryBlock from './__LibraryBlock.svelte'
-import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-import GridLayout from '@components/Layout/GridLayout.svelte'
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import LibraryBlock from './__LibraryBlock.svelte'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
-const svgs = [
-  'dots',
-  'home',
-  'spinner',
-  'cogs',
-  'fire',
-  'usertie',
-  'search',
-  'cross',
-  'globe',
-  'image',
-  'star-full',
-  'star-empty',
-  'comments',
-  'chain',
-  'chainbroken',
-  'plus',
-  'minus',
-  'checkbox-unchecked',
-  'checkbox-checked',
-  'locked',
-  'unlocked',
-  'file-text',
-  'youtube',
-  'like',
-  'dislike',
-  'love',
-  'camera',
-  'save',
-  'grid-small',
-  'grid-large',
-  'showcase',
-  'arrow-left',
-  'arrow-right',
-  'edit',
-  'bin',
-  'display',
-  'play',
-  'friend',
-  'list',
-  'bell',
-  'people',
-  'shield',
-  'edit',
-  'link',
-  'flag',
-  'post',
-  'checkmark',
-  'happy',
-  'sad',
-  'angry',
-  'wink',
-  'shocked',
-  'crying',
-  'baffled',
-  'bullhorn',
-  'circleup',
-  'warning',
-  'notification',
-  'email',
-  'instagram',
-  'linkedin',
-  'conversation',
-  'globe2',
-  'share',
-  'stats',
-  'upload',
-  'menu',
-  'hashtag',
-  'refresh'
-]
+  import SVG from '@components/SVG/SVG.svelte'
+  import GridLayout from '@components/Layout/GridLayout.svelte'
+
+  const svgs = [
+    'dots',
+    'home',
+    'spinner',
+    'cogs',
+    'fire',
+    'usertie',
+    'search',
+    'cross',
+    'globe',
+    'image',
+    'star-full',
+    'star-empty',
+    'comments',
+    'chain',
+    'chainbroken',
+    'plus',
+    'minus',
+    'checkbox-unchecked',
+    'checkbox-checked',
+    'locked',
+    'unlocked',
+    'file-text',
+    'youtube',
+    'like',
+    'dislike',
+    'love',
+    'camera',
+    'save',
+    'grid-small',
+    'grid-large',
+    'showcase',
+    'arrow-left',
+    'arrow-right',
+    'edit',
+    'bin',
+    'display',
+    'play',
+    'friend',
+    'list',
+    'bell',
+    'people',
+    'shield',
+    'edit',
+    'link',
+    'flag',
+    'post',
+    'checkmark',
+    'happy',
+    'sad',
+    'angry',
+    'wink',
+    'shocked',
+    'crying',
+    'baffled',
+    'bullhorn',
+    'circleup',
+    'warning',
+    'notification',
+    'email',
+    'instagram',
+    'linkedin',
+    'conversation',
+    'globe2',
+    'share',
+    'stats',
+    'upload',
+    'menu',
+    'hashtag',
+    'refresh'
+  ]
 
 
-export let items = svgs.map(svg =>{
-  return {component: SVG, props: {icon: svg, title: svg}}
-})
+  export let items = svgs.map(svg =>{
+    return {component: SVG, props: {icon: svg, title: svg}}
+  })
 
 
 </script>
 
-<h1>SVG</h1>
+<TwoSlot showLeft showRight>
+  <h2>SVG</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`

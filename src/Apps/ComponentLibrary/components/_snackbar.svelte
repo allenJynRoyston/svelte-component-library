@@ -1,9 +1,11 @@
 <script lang='ts'>
-  import {getContext} from 'svelte';
-  import LibraryBlock from './__LibraryBlock.svelte'
-  import Link from '@components/Link/Link.svelte'  
+  import {getContext} from 'svelte'
   import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  import Link from '@components/Link/Link.svelte'  
 
   const addSnack:any =getContext('addSnack')
   
@@ -32,9 +34,13 @@
 
 </script>
 
-<h2>Snackbar</h2>
+<TwoSlot showLeft showRight>
+  <h2>Snackbar</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
-<p>Note: Snackbar must be added at the root of your app.</p>
+
 
 <CodeBlock open title='Import:' snippet={`
   import Snackbar from '@components/Snackbar/Snackbar.svelte'

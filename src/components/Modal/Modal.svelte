@@ -316,13 +316,12 @@
 
       .footer{
         display: flex;        
-        height: 40px;        
+        height: 50px;        
         box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.25);  
         display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 10px;
-        padding: 10px;
       }
 
       .default-footer{
@@ -345,6 +344,7 @@
         height: 100vh;
         max-height: calc(100vh - 70px);        
         overflow-y: auto;   
+        
 
         &.black{
           background: var(--black-6);
@@ -396,7 +396,7 @@
         }                  
 
         &.hasFooter{
-          max-height: calc(100vh - 130px);        
+          max-height: calc(100vh - 120px);        
         }
 
 
@@ -404,11 +404,11 @@
           height: auto;
           max-height: calc(600px - 100px);
           &.hasFooter{
-            max-height: calc(600px - 130px);        
+            max-height: calc(600px - 120px);        
           }     
           &.full{
             height: 100vh;
-            max-height: 100vh;
+            max-height: calc(100vh - 120px);  
           }               
         }     
 

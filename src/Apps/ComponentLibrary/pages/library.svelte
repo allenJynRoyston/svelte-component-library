@@ -56,9 +56,10 @@
     sort: true,
     sortBy: 'id',
     data: [    
-    {content: HashWatchAlias, id: 'hashwatch', section: 'installed'},
-    {content: IndexDBAlias, id: 'indexdb', section: 'installed'},
-    {content: ModalAlias, id: 'modal', section: 'installed'},
+    {content: HashWatchAlias, id: 'hashwatch', section: 'RootComponents'},
+    {content: IndexDBAlias, id: 'indexdb', section: 'RootComponents'},
+    {content: ModalAlias, id: 'modal', section: 'RootComponents'},
+    {content: SnackbarAlias, id: 'snackbar', section: 'RootComponents'},
 
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
@@ -77,7 +78,6 @@
     {content: GridLayoutAlias, id: 'gridlayout'},
     {content: ColumnLayoutAlias, id: 'columnlayout'},
     {content: ShoppingCartAlias, id: 'shoppingcart'},
-    {content: SnackbarAlias, id: 'snackbar'},
     {content: CodeBlockAlias, id: 'codeblock'},  
     {content: SplashAlias, id: 'splash'},    
     {content: NavBarAlias, id: 'navbar'},    

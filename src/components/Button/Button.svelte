@@ -1,5 +1,7 @@
 <script lang='ts'>
+  import {getContext} from 'svelte'
   import Link from '@components/Link/Link.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
 
   export let onClick = null
   export let disabled = false
@@ -15,18 +17,36 @@
   export let hollow = false;
   export let target = null;
   export let exactfit = false;
+  export let nomargin = false;
+
+  export let useToggle = false;
+  export let toggled = false;
+
+  const theme:string = getContext('theme')
+  const colors = getContext('colors')
+
 
 </script>
 
 {#if !!href}
   <Link fit {href} {target} >
-    <button class={`root-component button ${type} ${size} `} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
-      <slot>{text || 'Button'}</slot>
+    <button class={`root-component button ${type} ${size} `} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+      <span class='inner'>
+        <slot>{text || 'Button'}</slot>
+        {#if useToggle}
+          <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={12} />
+        {/if}
+      </span>
     </button>    
   </Link>
 {:else}
-  <button class={`root-component button ${type} ${size}`} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
-    <slot>{text || 'Button'}</slot>
+  <button class={`root-component button ${type} ${size}`} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+    <span class='inner'>
+      <slot>{text || 'Button'}</slot>
+      {#if useToggle}
+        <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={12} />
+      {/if}
+    </span>
   </button>
 {/if}
 
@@ -43,9 +63,22 @@
     cursor: pointer;
     font-weight: 600;
     padding: 0px 10px 2px 10px;
-    margin: 2px 0;
+    margin: 2px;
+
+    .inner{
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      gap: 10px;
+      transform: translateY(1px)
+    }
+
+    &.nomargin{
+      margin: 0;
+    }
 
     &.exactfit{
+      margin: 0;
       height: auto;
       width: auto;
     }

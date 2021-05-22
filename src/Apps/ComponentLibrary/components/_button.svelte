@@ -1,10 +1,28 @@
-<script>
-  import Button from '@components/Button/Button'
-  import LibraryBlock from './__LibraryBlock'
+<script lang='ts'>
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  let rounded = false;
+  let hollow = false;
+  let disabled = false;
+
+  let isToggled = false;
+
+  const theme:string = getContext('theme')
+
 </script>
 
-<h2>Button</h2>
+<TwoSlot showLeft showRight>
+  <h2>Button</h2>
+  <div slot='right' style='display: flex: 10px'>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={rounded} hollow={!rounded} exactfit onClick={() => {rounded = !rounded}} >Rounded</Button>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={hollow} hollow={!hollow} exactfit onClick={() => {hollow = !hollow}} >Hollow</Button>
+    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={disabled} hollow={!disabled} exactfit onClick={() => {disabled = !disabled}} >Disabled</Button>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`
@@ -30,31 +48,31 @@
 
 <LibraryBlock title="Default: ">
     <div class='button-wrap'>          
-      <Button type='primary'>
+      <Button type='primary' {rounded} {hollow} {disabled}>
         Primary
       </Button>
 
-      <Button type='secondary'>
+      <Button type='secondary' {rounded} {hollow} {disabled}>
         Secondary
       </Button>
       
-      <Button type='success' >
+      <Button type='success' {rounded} {hollow} {disabled}>
         Success
       </Button>  
 
-      <Button type='warning' >
+      <Button type='warning' {rounded} {hollow} {disabled}>
         Warning
       </Button>    
       
-      <Button type='danger' >
+      <Button type='danger' {rounded} {hollow} {disabled}>
         Danger
       </Button>         
       
-      <Button type='black'>
+      <Button type='black' {rounded} {hollow} {disabled}>
         Black
       </Button>    
       
-      <Button type='white'>
+      <Button type='white' {rounded} {hollow} {disabled}>
         White
       </Button>          
     </div>     
@@ -92,15 +110,15 @@
 
 <LibraryBlock title="Sizes: ">
   <div class='button-wrap'>          
-    <Button size='small'>
+    <Button size='small' {rounded} {hollow} {disabled}>
       Small
     </Button>
 
-    <Button>
+    <Button {rounded} {hollow} {disabled}>
       Default
     </Button>
 
-    <Button size='large'>
+    <Button size='large' {rounded} {hollow} {disabled}>
       Large
     </Button>       
   </div>     
@@ -121,158 +139,21 @@
 `} />  
 
 
-<LibraryBlock title="Disabled: ">
-  <div class='button-wrap'>
-    <Button type='primary' disabled>
-      Primary
+<LibraryBlock title="Toggle: ">
+  <div class='button-wrap' style='max-width: 200px'>          
+    <Button  type={theme === 'dark' ? 'white' : 'black'} useToggle toggled={isToggled} {rounded} {hollow} {disabled} onClick={() => {isToggled = !isToggled}}>
+      Toggle
     </Button>
-
-    <Button type='secondary' disabled>
-      Secondary
-    </Button>
-    
-    <Button type='success' disabled >
-      Success
-    </Button>  
-
-    <Button type='warning' disabled >
-      Warning
-    </Button>    
-    
-    <Button type='danger' disabled>
-      Danger
-    </Button>      
-    
-    <Button type='black' disabled>
-      Black
-    </Button>    
-    
-    <Button type='white' disabled>
-      White
-    </Button>        
+   
   </div>     
 </LibraryBlock>
 
 <CodeBlock open title='Example:' snippet={`
-    <Button type='primary' disabled>
-      Primary
-    </Button> 
-    `} />  
+    <Button  toggled={isToggled} onClick={() => {isToggled = !isToggled}}>
+      Toggle
+    </Button>     
+`} />  
 
-<LibraryBlock title="Hollow: ">
-  <div class='button-wrap'>
-    <Button type='primary' hollow >
-      Primary
-    </Button>
-  
-    <Button type='secondary' hollow >
-      Secondary
-    </Button>
-    
-    <Button type='success' hollow >
-      Success
-    </Button>  
-  
-    <Button type='warning' hollow >
-      Warning
-    </Button>    
-    
-    <Button type='danger' hollow >
-      Danger
-    </Button>   
-    
-    <Button type='black' hollow>
-      Black
-    </Button>    
-    
-    <Button type='white' hollow>
-      White
-    </Button>      
-  </div>     
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  <Button type='primary' rounded>
-    Primary
-  </Button>
-  `} />  
-
-<LibraryBlock title="Rounded: ">
-  <div class='button-wrap'>
-    <Button type='primary' rounded>
-      Primary
-    </Button>
-  
-    <Button type='secondary' rounded >
-      Secondary
-    </Button>
-    
-    <Button type='success' rounded>
-      Success
-    </Button>  
-  
-    <Button type='warning' rounded >
-      Warning
-    </Button>    
-    
-    <Button type='danger' rounded >
-      Danger
-    </Button>    
-    
-    <Button type='black' rounded>
-      Black
-    </Button>    
-    
-    <Button type='white' rounded>
-      White
-    </Button>      
-  </div>       
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-    <Button type='primary' rounded>
-      Primary
-    </Button>
-  `} />  
-
-<LibraryBlock title="Rounded and Hollow: ">
-  <div class='button-wrap'>
-    <Button type='primary' rounded hollow>
-      Primary
-    </Button>
-  
-    <Button type='secondary' rounded hollow>
-      Secondary
-    </Button>
-    
-    <Button type='success' rounded hollow>
-      Success
-    </Button>  
-  
-    <Button type='warning' rounded hollow>
-      Warning
-    </Button>    
-    
-    <Button type='danger' rounded hollow>
-      Danger
-    </Button>   
-    
-    
-    <Button type='black' rounded hollow>
-      Black
-    </Button>    
-    
-    <Button type='white' rounded hollow>
-      White
-    </Button>       
-  </div>      
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  <Button type='primary' rounded hollow>
-    Primary
-  </Button>
-  `} />  
 
 
 

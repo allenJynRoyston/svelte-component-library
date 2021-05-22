@@ -1,10 +1,12 @@
 <script lang='ts'>
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  import IDB from '@components/Utility/IndexDBSetup.svelte'
+  import {getContext, setContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
-  import {createDB} from '@js/utility'
+  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
-  import {setContext} from 'svelte'
+  import IDB from '@components/Utility/IndexDBSetup.svelte'
+  import {createDB} from '@js/utility'
   import {IndexDBStore} from '@js/index'
 
   const db = new IndexDBStore('example', 1); 
@@ -45,7 +47,11 @@
 
 <IDB {...idb} {onReady} />
 
-<h2>IndexDB</h2>
+<TwoSlot showLeft showRight>
+  <h2>IndexDB</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`

@@ -1,12 +1,19 @@
 <script lant='ts'>  
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
 
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
 </script>
 
-<h2>Footer</h2>
+<TwoSlot showLeft showRight>
+  <h2>InnerContainer</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`
@@ -18,7 +25,7 @@
   export let height = '100vh'
   `} />
 
-<LibraryBlock title="Light Theme:">
+<LibraryBlock title="Default:">
   <div style='height: 100px'>
     <InnerContainer height='50vh'>
       <strong>

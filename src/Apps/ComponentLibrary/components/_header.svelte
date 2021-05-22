@@ -1,7 +1,11 @@
 <script lang='ts'>
-  import Header from '@components/Header/Header.svelte'
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  import Header from '@components/Header/Header.svelte'
   import NavBar from '@components/NavBar/NavBar.svelte';
   import Splash from '@components/Splash/Splash.svelte'
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
@@ -56,7 +60,11 @@
 
 </script>
 
-<h2>Header</h2>
+<TwoSlot showLeft showRight>
+  <h2>Header</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`

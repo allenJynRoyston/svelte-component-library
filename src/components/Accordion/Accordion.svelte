@@ -53,7 +53,7 @@
     background: transparent;
 
     &.rounded{
-      border-radius: 20px
+      border-radius: 10px
     }
 
     &.outline{
@@ -78,7 +78,7 @@
     }
 
      
-    border-radius: 10px; 
+    border-radius: 0px; 
     margin-bottom: 10px;   
 
     button{

@@ -1,10 +1,18 @@
 <script lang='ts'>
-  import Search from '@components/Search/Search.svelte'
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  import Search from '@components/Search/Search.svelte'
 </script>
 
-<h1>Search</h1>
+<TwoSlot showLeft showRight>
+  <h2>Search</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
 
 <CodeBlock open title='Import:' snippet={`

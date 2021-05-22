@@ -1,7 +1,11 @@
 <script lang='ts'>
-  import ShoppingCart from '@components/ShoppingCart/ShoppingCart.svelte'
+  import {getContext} from 'svelte'
+  import Button from '@components/Button/Button.svelte'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from './__LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  
+  import ShoppingCart from '@components/ShoppingCart/ShoppingCart.svelte'
 
   const items = [
     {name: 'Product 1', price: 25.99, quantity: 1},
@@ -16,8 +20,13 @@
 
 </script>
 
-<h1>Shopping Cart</h1>
+<TwoSlot showLeft showRight>
+  <h2>ShoppingCart</h2>
+  <div slot='right' style='display: flex: 10px'>
+  </div>
+</TwoSlot>
 <hr>
+
 
 <CodeBlock open title='Import:' snippet={`
   import ShoppingCart from '@components/ShoppingCart/ShoppingCart.svelte'
