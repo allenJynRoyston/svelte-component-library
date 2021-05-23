@@ -18,7 +18,7 @@
   }  
 
   const withLink = (type) => {
-    addSnack({component: Link, props: {text: "I'm a link component", href: '#library?component=snackbar&link=clicked', type, active: true}})
+    addSnack({component: Link, props: {text: "I'm a link component", href: '#library?component=snackbar&link=clicked', type, active: true}, type})
   }
 
   const withButton = (type) => {
