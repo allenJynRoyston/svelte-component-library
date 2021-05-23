@@ -1,5 +1,6 @@
 <script>
   import {onMount, onDestroy} from 'svelte';
+  import {SiteStore} from '@store/store'
   import {debounce} from '@js/utility'
 
   export let height = '100vh'
@@ -11,6 +12,13 @@
   const resizeEvent = debounce(() => {
     topPos = ele?.getBoundingClientRect().top || 0
   }, 100)
+
+  // watches for changes in offsetHeight
+	SiteStore.openNotch.subscribe(async(value) => {
+    setTimeout(() => {
+      resizeEvent()
+    })
+	});    
 
   onMount(() => {
     setTimeout(() => {

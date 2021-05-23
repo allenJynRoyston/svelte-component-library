@@ -1,6 +1,6 @@
 <script lang='ts'>
   import {onMount, tick} from 'svelte'  
-  import {SiteStore} from '@store/store'
+  import {SiteStore, DeviceStore} from '@store/store'
   import Loader from '@components/Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -18,6 +18,7 @@
   export let animate = false;
   export let exactfit = false;
   export let props = null;
+  export let disableAnimationOnMobile = false;
 
   let ready = false
   let xpos;
@@ -28,6 +29,8 @@
   let h = 0;
   let topDifference = 0
   let topOffset = 0;
+
+  const {isNativeMobile} = DeviceStore;
 
   // watches for changes in offsetHeight
 	SiteStore.openNotch.subscribe(async(value) => {
@@ -49,10 +52,11 @@
     const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
-      duration: animate ? duration : 0,
+      duration: (disableAnimationOnMobile && $isNativeMobile) ? 0 : (animate ? duration : 0),
       easing: easing === 'cubicOut' ? cubicOut : cubicOut
     });   
 
+    console.log( disableAnimationOnMobile && $isNativeMobile )
 
     ready = true
     channelReady && channelReady(currentChannel)    
@@ -111,7 +115,7 @@
 <div class:embedded={embedded}>
   <div class='channels'  >
     {#if ready}
-      <div class='channels-container' class:animate={animate} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
+      <div class='channels-container' class:animate={animate} class:disableAnimationOnMobile={disableAnimationOnMobile} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
         {#each data as {content, render, active, props}}
           <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
             <div class='channel__inner' class:nopadding={nopadding} class:exactfit={exactfit} bind:this={ele} class:embedded={embedded} style={innerStyle} >
@@ -163,12 +167,20 @@
       &.animate{
         animation: ChannelFadeOut 500ms;
       }
+
+      &.disableAnimationOnMobile{
+        animation: none!important;
+      }
     }
 
     &.active{
       opacity: 1;
       &.animate{
         animation: ChannelFadeIn 500ms;
+      }
+
+      &.disableAnimationOnMobile{
+        animation: none!important;
       }
     }     
     

@@ -5,9 +5,9 @@
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import Accordian from '@components/Accordion/Accordion.svelte'
 
-  const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop} = DeviceStore;
-  const {openSidebar} = SiteStore
-  const {modalIsOpen, modalIsBusy, modalProps, onModalSubmit, setModalState} = ModalStore
+  const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop, isLocalDev, isNativeMobile} = DeviceStore;
+  const {		urlHash, urlParams, openSidebar, openNotch, searchValue } = SiteStore
+  const {modalIsOpen, modalIsBusy, modalProps} = ModalStore
   
 
 </script>
@@ -61,6 +61,12 @@
           <p class:active={$isDesktop}>
             isDesktop: {$isDesktop}
           </p>     
+          <p>
+            isLocalDev: {$isLocalDev}
+          </p>
+          <p>
+            isNativeMobile: {$isNativeMobile}
+          </p>
     </Accordian>   
     
     
@@ -71,16 +77,40 @@
       <div slot='content'>
         <CodeBlock open title='Import:' snippet={`
           import {SiteStore} from '@store/store'
-          const {openSidebar} = DeviceStore;
+          const {urlHash, urlParams, openSidebar, openNotch, searchValue} = DeviceStore;
 
           <p>
             openSidebar: {$openSidebar} 
-          </p>            
+          </p> 
+          <p>
+            openNotch: {$openNotch} 
+          </p> 
+          <p>
+            searchValue: {$searchValue} 
+          </p> 
+          <p>
+            urlHash: {JSON.stringify($urlHash, 4)} 
+          </p> 
+          <p>
+            urlParams: {JSON.stringify($urlParams, 4)} 
+          </p>             
           `} />  
           
           <p>
             openSidebar: {$openSidebar} 
-          </p>   
+          </p> 
+          <p>
+            openNotch: {$openNotch} 
+          </p> 
+          <p>
+            searchValue: {$searchValue} 
+          </p> 
+          <p>
+            urlHash: {JSON.stringify($urlHash, 4)} 
+          </p> 
+          <p>
+            urlParams: {JSON.stringify($urlParams, 4)} 
+          </p>                                                
     </Accordian>     
     
     <Accordian fill>

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import {getContext} from 'svelte';
+  import {getContext} from 'svelte';  
   import { createChannel, capitalizeStr } from '@js/utility'
 
   import Header from '@components/Header/Header.svelte'
@@ -145,7 +145,7 @@
     <Header {...headercopy} showFooter showLayoutButton />
 
     <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
-      <Channels {...channel} animate />
+      <Channels {...channel} animate disableAnimationOnMobile />
     </ColumnLayout>
   </Container>
 </ThemeWrapper>

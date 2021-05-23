@@ -18,6 +18,12 @@ function deviceStoreInit() {
 		isDesktop: derived(appWidth, ($appWidth) => {
 			return $appWidth >= 768;
 		}),
+		isNativeMobile: readable(
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+				navigator.userAgent
+			),
+			() => {}
+		),
 		isLocalDev: readable(location.host.includes('localhost'), () => {}),
 	};
 }
