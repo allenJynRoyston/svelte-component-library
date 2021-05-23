@@ -133,7 +133,7 @@ $: {
 
 </script>
 
-<div class={`snackbar`} >
+<div class={`root-component snackbar`} >
   {#each snacks as snack (snack.id)}
     <div 
       class={`snack ${!!theme ? `${theme}-theme` : ''} ${snack?.type || ''} ${snack?.closeOnClick ? 'clickable' : ''}`} 
@@ -180,7 +180,7 @@ $: {
     z-index: 100;  
     overflow: hidden;  
     display: flex;
-    flex-direction: column-reverse
+    flex-direction: column-reverse;
   }
 
   .snack{    
@@ -191,8 +191,8 @@ $: {
     border-radius: 5px;
     min-width: 150px;
     font-size: 12px;
-    background: var(--black-1);    
     overflow: hidden;
+    background: var(--black-1);    
 
     &.btmpadding{
       padding-bottom: 4px;
