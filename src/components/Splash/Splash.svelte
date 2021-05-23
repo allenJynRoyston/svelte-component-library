@@ -22,10 +22,10 @@
   {/if}
   <div class='buttons'>
     {#if buttonOne}
-      <Button size={$isTabletAndBelow ? 'small' : null} {...buttonOne} />
+      <Button style={'min-width: 100px'} size={$isTabletAndBelow ? 'small' : null} {...buttonOne} />
     {/if}
     {#if buttonTwo}
-      <Button size={$isTabletAndBelow ? 'small' : null}  {...buttonTwo} />
+      <Button style={'min-width: 100px'} size={$isTabletAndBelow ? 'small' : null}  {...buttonTwo} />
     {/if}      
   </div>
 </div>
@@ -43,7 +43,7 @@
     background: transparent;
     color: var(--white-0-text);
 
-    @include tablet-landscape-and-up {
+    @include desktop-and-up {
       padding: 50px 0;
     }    
 
@@ -53,7 +53,7 @@
 
     .title{
       font-size: 32px;
-      @include tablet-landscape-and-up {
+      @include desktop-and-up {
         font-size: 72px;
       }
       // margin-bottom: 10px;
@@ -61,7 +61,7 @@
 
     .version{
       margin-bottom: 5px;
-      @include tablet-landscape-and-up {
+      @include desktop-and-up {
         margin-bottom: 10px;
       }      
     }

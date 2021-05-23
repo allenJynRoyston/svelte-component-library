@@ -4,53 +4,17 @@
   import { validateSelect } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
-  export let onKeypress = null
-  /**
-   * updateForm event
-  */  
+  export let onKeypress = null 
   export let updateForm = null;    
-  /**
-   * 
-  */  
   export let placeholder = null
-  /**
-   * 
-  */  
   export let value = null
-  /**
-   * 
-  */  
   export let key = null
-  /**
-   * 
-  */
   export let label = null;
-  /**
-   * 
-  */  
-  export let defaultOption = null;  
-  /**
-   * 
-  */  
+  export let defaultOption = null;   
   export let required = null;
-  /**
-   * 
-  */  
-  export let options = []
-  /**
-   * 
-  */    
+  export let options = []  
   export let onInitFilter = null;
-  /**
-   * 
-  */  
   export let onChangeFilter = null  
   //---------------------------
 
@@ -96,7 +60,7 @@
   //---------------------------
 </script>
 
-<div class='select-container' data-testid='select-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component select-container`} data-testid='select-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -124,29 +88,70 @@
     }
 
     select{      
+      height: 30px;
       width: 100%;      
       padding-left: 10px;
+      padding: 0 10px;
+      border: none;
+      border-bottom: 2px solid transparent;
+      outline: none;
+      
+
+
+      
+      &::placeholder{
+        color: var(--black-6-text);
+      }
     }
+
+    option{
+      border: none;
+      outline: none;
+    }
+
+    option:disabled {
+      color: var(--black-6-text);
+    }
+
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
       select{
-        color: black;
-        border: 1px solid black;
+        background: var(--white-0);
+        color: var(--black-2)
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
       select{
-        color: black;
-        border: 1px solid red;
+        color: var(--danger-0);
+        border-bottom: 2px solid var(--danger-0);
       }
-    }
+    }    
+
+    &.dark-theme{
+      option:disabled {
+        color: var(--white-8);
+      }      
+
+      select{
+        background: var(--black-5);
+      }
+            
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+        select{
+          color: var(--white-2)
+        }
+      }
+    } 
 
   }
   

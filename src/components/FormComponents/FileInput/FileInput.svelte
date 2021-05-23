@@ -1,7 +1,8 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, tick } from 'svelte';
-  import Button from '../../Button/Button.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
+  import Button from '@components/Button/Button.svelte'
   import { validateInputFile } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -89,24 +90,29 @@
 
 </script>
 
-<div class='fileinput-container' data-testid='fileinput-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component fileinput-container`} data-testid='fileinput-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
   
-  {#if render}
-    <input type='file' {accept} {...props} on:change={onChangeEventHandler} bind:value  />  
-  {/if}
-
-  {#if hasFormData}
-    <Button onClick={clearInput}>X</Button>
-  {/if}
+  <div class='inner'>
+    {#if hasFormData}
+      <Button size='small' style='width: 50px' onClick={clearInput}><SVG icon='bin'/></Button>
+    {/if}    
+    {#if render}
+      <input type='file' {accept} {...props} on:change={onChangeEventHandler} bind:value  />  
+    {/if}
+  </div>
 </div>
 
 <style lang="scss">
-  .fileinput-container {    
-    margin-bottom: 10px;
+  .fileinput-container {        
     width: 100%;
+
+    .inner{
+      display: flex;
+      gap: 5px;
+    }
     
     label{
       font-size: 10px;
@@ -115,23 +121,37 @@
     }
 
     input{
-      height: 30px;
       border: none;
+      border-bottom: 2px solid transparent;
 
       &::placeholder{
-        color: lightgrey;
+        color: var(--black-6);
       }
     }
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
+      }
+      input{
+        color: var(--black-2);
+        border-bottom: 2px solid var(--success-0);
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
+      }
+      input{
+        color: var(--danger-0);
+        border-bottom: 2px solid var(--danger-0);
+      }
+    }    
+
+    &.dark-theme{
+      label{
+        color: var(--white-2)
       }
     }
 

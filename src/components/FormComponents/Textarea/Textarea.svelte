@@ -4,58 +4,19 @@
   import { validate } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
   export let onKeypress = null
-  /**
-   * updateForm event
-  */  
   export let updateForm = null;    
 
-  /**
-   * 
-  */  
   export let placeholder = null
-  /**
-   * 
-  */  
-  export let value = ''
-  /**
-   * 
-  */  
+  export let value = '' 
   export let key = null
-  /**
-   * 
-  */
-  export let label = null;
-  /**
-   * 
-  */  
+  export let label = null; 
   export let regex = null;
-  /**
-   * 
-  */  
-  export let required = null;
-  /**
-   * 
-  */  
-  export let minLength = null;
-  /**
-   * 
-  */  
+  export let required = null; 
+  export let minLength = null;  
   export let maxLength = null;
-  /*
-  *
-  */
   export let contentEdit = false
-  /*
-  *
-  */
   export let hasSubmitted = false  
   //---------------------------
 
@@ -120,7 +81,7 @@
 
 </script>
 
-<div class='input-container' test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component input-container`} test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -133,10 +94,9 @@
 
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .input-container {
     width: 100%;
-    margin-bottom: 10px;    
 
 
     label{
@@ -151,31 +111,49 @@
       max-width: calc(100% - 20px);
       padding: 10px;      
       min-height: 50px;
-      border: 1px solid black;
+      outline: none;
+      border: none;
       word-wrap: break-word;
       overflow-wrap: break-word;
       white-space: normal;
+      background: var(--white-0);
     }
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
       .textarea{
-        color: black;
+        color: var(--black-0);
+        border-bottom: 2px solid transparent;
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
       .textarea{
-        color: red;
-        border: 1px solid red;
+        color: var(--danger-0);
+        border-bottom: 2px solid var(--danger-0);
       }
-    }
+    }    
+
+    &.dark-theme{
+      .textarea{    
+        background: var(--black-5);
+      }
+
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+        .textarea{
+          background: var(--black-5);          
+          color: var(--black-2-text)
+        }
+      }
+    } 
 
   }
-  
 </style>

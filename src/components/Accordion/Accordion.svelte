@@ -10,7 +10,7 @@
   export let outline = false;
   export let listform = false;
   
-  let isOpened = open;
+  $: isOpened = open;
   let ele;
 
   const isDark = getContext('theme') === 'dark'

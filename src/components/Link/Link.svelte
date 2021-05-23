@@ -28,7 +28,7 @@
 
 </script>
 
-<a {target} {href} rel="noreferrer" class={`link root-component ${type} ${classes}`} class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a class={`link root-component ${type} ${classes}`} {target} {href} rel="noreferrer"  class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 
@@ -68,8 +68,8 @@
 
     
     &.primary{
-      color: var(--primary-0)!important;
       &.active{
+        color: var(--primary-0)!important;
         &.underline{
           border-bottom: 2px solid var(--primary-1)!important;
         }
@@ -77,17 +77,26 @@
     }
 
     &.secondary{
-      color: var(--secondary-0)!important;
       &.active{
+        color: var(--secondary-0)!important;
         &.underline{
           border-bottom: 2px solid var(--secondary-1)!important;
         }
       }      
     }  
+
+    &.magic{      
+      &.active{
+        color: var(--magic-0)!important;
+        &.underline{
+          border-bottom: 2px solid var(--primary-1)!important;
+        }
+      }      
+    }    
     
     &.success{
-      color: var(--success-0)!important;
       &.active{
+        color: var(--success-0)!important;
         &.underline{
           border-bottom: 2px solid var(--success-1)!important;
         }
@@ -95,8 +104,8 @@
     }     
     
     &.warning{
-      color: var(--warning-0)!important;
       &.active{
+        color: var(--warning-0)!important;
         &.underline{
           border-bottom: 2px solid var(--warning-1)!important;
         }
@@ -104,8 +113,8 @@
     }     
     
     &.danger{
-      color: var(--danger-0)!important;
       &.active{
+        color: var(--danger-0)!important;
         &.underline{
           border-bottom: 2px solid var(--danger-1)!important;
         }
@@ -113,8 +122,8 @@
     }    
     
     &.black{
-      color: var(--black-1)!important;
       &.active{
+        color: var(--black-1)!important;
         &.underline{
           border-bottom: 2px solid var(--black-2)!important;
         }
@@ -122,8 +131,8 @@
     }   
     
     &.white{
-      color: var(--white-0)!important;
       &.active{
+        color: var(--white-0)!important;
         &.underline{
           border-bottom: 2px solid var(--white-1)!important;
         }
@@ -131,9 +140,8 @@
     }       
 
     &.dark-theme{
-      color: var(--white-0);
       &.active{
-
+        color: var(--white-0);
         &.underline{
           border-bottom: 2px solid var(--white-0);;
         }

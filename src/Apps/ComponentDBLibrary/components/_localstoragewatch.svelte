@@ -1,5 +1,5 @@
 <script>
-  import LibraryBlock from '../../ComponentLibrary/components/__LibraryBlock.svelte'
+  import LibraryBlock from '../../ComponentLibrary/components/LibraryBlock.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
 
   import LocalStorageWatch from '../../../components-db/LocalStorageWatch.svelte'

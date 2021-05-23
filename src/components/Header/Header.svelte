@@ -55,7 +55,7 @@
         {/if}
 
         {#if !!notchEle}
-         <SVG icon={$openNotch ? 'cross' : 'search'} onClick={() => {$openNotch = !$openNotch}} />
+         <SVG icon={$openNotch ? 'cross' : 'dots'} onClick={() => {$openNotch = !$openNotch}} />
         {/if}
       </div>
     </TwoSlot>

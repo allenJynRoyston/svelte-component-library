@@ -5,46 +5,16 @@
   import * as dayjs from "dayjs";
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
   export let onKeypress = null
-  /**
-   * updateForm event
-  */  
   export let updateForm = null;    
   
-  /**
-   * 
-  */  
   export let placeholder = null
-  /**
-   * 
-  */  
   export let value = ''
-  /**
-   * 
-  */  
   export let key = null
-  /**
-   * 
-  */
-  export let label = null;
-  /**
-   * 
-  */  
+  export let label = null; 
   export let minDate = null;
-  /**
-   * 
-  */  
   export let maxDate = null;    
-  /**
-   * 
-  */  
   export let required = null;
   //---------------------------
 
@@ -88,7 +58,7 @@
 
 </script>
 
-<div class='inputdate-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component inputdate-container`} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -99,7 +69,6 @@
 
 <style lang="scss">
   .inputdate-container {    
-    margin-bottom: 10px;
     width: 100%;
     
     label{
@@ -112,26 +81,53 @@
       height: 30px;
       width: calc(100% - 20px);
       padding: 0 10px;
+      border-bottom: 2px solid transparent;
+      outline: none;
+      &::placeholder{
+        color: var(--black-6);
+      }     
     }
+
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
       input{
-        color: black;
-        border: 1px solid black;
+        background: var(--white-0);
+        color: var(--black-2)
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
       input{
-        color: red;
-        border: 1px solid red;
+        color: var(--danger-0);
+        border-bottom: 2px solid var(--danger-0);
       }
-    }
+    }    
+
+    &.dark-theme{
+      input{
+        background: var(--black-5);
+        &::placeholder{
+          color: var(--black-6);
+        }
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+        }             
+      }
+            
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+        input{
+          color: var(--white-2)
+        }
+      }
+    }   
   }  
 </style>

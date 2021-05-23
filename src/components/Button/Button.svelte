@@ -13,11 +13,11 @@
   export let type = 'primary';
   export let href = null;
   export let rounded = false;
-  export let size = 'normal'
+  export let size = ''
   export let hollow = false;
   export let target = null;
   export let exactfit = false;
-  export let nomargin = false;
+  export let nomargin = false;  
 
   export let useToggle = false;
   export let toggled = false;
@@ -25,18 +25,29 @@
   const theme:string = getContext('theme')
   const colors = getContext('colors')
 
+  $: iconSize = () => {
+    switch(size){
+      case 'small': 
+      return 10      
+      case 'normal': 
+      return 12
+      case 'large': 
+      return 16
+    }  
+  }
+
 
 </script>
 
 {#if !!href}
   <Link fit {href} {target} >
     <button class={`root-component button ${type} ${size} `} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
-      <span class='inner'>
-        <slot>{text || 'Button'}</slot>
-        {#if useToggle}
-          <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={12} />
-        {/if}
-      </span>
+    <span class='inner'>
+      <slot>{text || 'Button'}</slot>
+      {#if useToggle}
+        <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={iconSize()} />
+      {/if}
+    </span>
     </button>    
   </Link>
 {:else}
@@ -44,7 +55,7 @@
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}
-        <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={12} />
+        <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={iconSize()} />
       {/if}
     </span>
   </button>
@@ -55,7 +66,6 @@
 
   @import "../../scss/src/_media-queries.scss";
 
-
   button{
     outline: none;
     border: none;
@@ -64,6 +74,8 @@
     font-weight: 600;
     padding: 0px 10px 2px 10px;
     margin: 2px;
+    font-size: 12px;
+    height: 30px;    
 
     .inner{
       display: flex;
@@ -78,9 +90,9 @@
     }
 
     &.exactfit{
-      margin: 0;
-      height: auto;
-      width: auto;
+      margin: 0;   
+      width: auto!important;
+      height: auto!important;   
     }
 
     &.disabled{
@@ -89,11 +101,15 @@
     }
 
     &.small{
-      font-size: 10px;
+      font-size: 9px;
+      height: 25px;
     }    
 
+
+
     &.large{
-      font-size: 18px;
+      font-size: 14px;
+      height: 40px;
     }
     
     &.rounded{
@@ -111,16 +127,16 @@
 
     @include tablet-portrait-and-up {
       font-size: 14px;
-      height: 40px;       
-
+      height: 40px;
+            
       &.small{
         font-size: 10px;
         height: 30px;
       }    
 
       &.large{
-        font-size: 25px;
-        height: 65px;        
+        font-size: 18px;
+        height: 50px;
       }
     }    
                    
@@ -128,7 +144,7 @@
     &.white{      
       border: 3px solid var(--white-1);      
       background: var(--white-1);
-      color: var(--black-1);
+      color: var(--white-1-text);
 
       &.hollow{
         background: none!important;
@@ -147,7 +163,7 @@
       &.dark-theme{
         border: 3px solid var(--white-3);
         background:var(--white-3);
-        color: var(--black-3);
+        color: var(--white-3-text);
 
         &.hollow{
           color: var(--white-1);      
@@ -208,16 +224,6 @@
         color: var(--primary-4);
         border: 3px solid var(--primary-4);     
       }           
-
-      &.dark-theme{
-        border: 3px solid var(--primary-3);
-        background:var(--primary-3);
-        color: var(--primary-3-text);
-
-        &:active{
-          background: var(--primary-6);;
-        }        
-      }
     }
 
     &.secondary{
@@ -238,16 +244,6 @@
         color: var(--secondary-4);
         border: 3px solid var(--secondary-4);     
       }            
-
-      &.dark-theme{
-        border: 3px solid var(--secondary-3);
-        background:var(--secondary-3);
-        color: var(--white-0);
-
-        &:active{
-          background: var(--secondary-6);;
-        }        
-      }
     }
 
     &.magic{
@@ -269,15 +265,6 @@
         border: 3px solid var(--magic-4);     
       }       
 
-      &.dark-theme{
-        border: 3px solid var(--magic-3);
-        background:var(--magic-3);
-        color: var(--white-0);
-
-        &:active{
-          background: var(--magic-6);;
-        }        
-      }
     }
 
 
@@ -300,15 +287,6 @@
         border: 3px solid var(--success-4);     
       }    
 
-      &.dark-theme{
-        border: 3px solid var(--success-3);
-        background:var(--success-3);
-        color: var(--white-0);
-
-        &:active{
-          background: var(--success-6);;
-        }        
-      }
     }
 
     &.warning{
@@ -329,16 +307,6 @@
         color: var(--warning-4);
         border: 3px solid var(--warning-4);     
       }           
-
-      &.dark-theme{
-        border: 3px solid var(--warning-3);
-        background:var(--warning-3);
-        color: var(--white-0);
-
-        &:active{
-          background: var(--warning-6);;
-        }        
-      }
     }  
 
     &.danger{
@@ -359,15 +327,6 @@
         background: var(--danger-6);
       }           
 
-      &.dark-theme{
-        border: 3px solid var(--danger-3);
-        background:var(--danger-3);
-        color: var(--white-0);
-
-        &:active{
-          background: var(--danger-6);;
-        }        
-      }
     }    
 
   }

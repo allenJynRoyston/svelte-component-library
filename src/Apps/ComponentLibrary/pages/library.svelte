@@ -9,6 +9,7 @@
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
 
+  import AccordionAlias from '@lib/_accordion.svelte'  
   import ButtonAlias from '@lib/_button.svelte'
   import HeaderAlias from '@lib/_header.svelte'
   import FooterAlias from '@lib/_footer.svelte'
@@ -28,7 +29,7 @@
   import ShoppingCartAlias from '@lib/_shoppingCart.svelte'
   import IndexDBAlias from '@lib/_idb.svelte'
   import SnackbarAlias from '@lib/_snackbar.svelte'
-  import AccordionAlias from '@lib/_accordion.svelte'
+  
   import CodeBlockAlias from '@lib/_codeblock.svelte'
   import SplashAlias from '@lib/_splash.svelte'
   import NavBarAlias from '@lib/_navBar.svelte'
@@ -42,6 +43,17 @@
   import TabsAlias from '@lib/_tabs.svelte'
   import PromptAlias from '@lib/_prompt.svelte'
   import LoremBlockAlias from '@lib/_loremBlock.svelte'
+
+  import ExampleForm from '@lib/_formExample.svelte'
+  import InputAlias from '@lib/_input.svelte'  
+  import FileInputAlias from '@lib/_fileInput.svelte'  
+  import InputCheckboxAlias from '@lib/_inputCheckbox.svelte'  
+  import TextareaAlias from '@lib/_textarea.svelte'  
+  import InputDateAlias from '@lib/_inputDate.svelte'  
+  import InputTimeAlias from '@lib/_inputTime.svelte'  
+  import RatingAlias from '@lib/_rating.svelte'  
+  import SelectAlias from '@lib/_select.svelte'  
+  import SelectMultiAlias from '@lib/_selectMulti.svelte'    
 
   export let headerprops;
   const headercopy:any = {...headerprops}
@@ -60,6 +72,18 @@
     {content: IndexDBAlias, id: 'indexdb', section: 'RootComponents'},
     {content: ModalAlias, id: 'modal', section: 'RootComponents'},
     {content: SnackbarAlias, id: 'snackbar', section: 'RootComponents'},
+
+    {content: ExampleForm, id: 'exampleform', section: 'Form'},
+    {content: InputAlias, id: 'input', section: 'Form'},
+    {content: FileInputAlias, id: 'fileinput', section: 'Form'},
+    {content: InputCheckboxAlias, id: 'inputcheckbox', section: 'Form'},
+    {content: TextareaAlias, id: 'textarea', section: 'Form'},
+    {content: InputDateAlias, id: 'inputdate', section: 'Form'},
+    {content: InputTimeAlias, id: 'inputtime', section: 'Form'},
+    {content: RatingAlias, id: 'rating', section: 'Form'},
+    {content: SelectAlias, id: 'select', section: 'Form'},
+    {content: SelectMultiAlias, id: 'selectmulti', section: 'Form'},    
+
 
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
@@ -94,7 +118,7 @@
 
 
   const links = channel.data.map(({id, section = 'components'}) => {
-    return {section, title: id, href: `${location.hash}&component=${id}`}
+    return {section, title: id, href: `${location.hash}&component=${id}&section=${section.toLowerCase()}`}
   }).sort((a, b) => a?.title.localeCompare(b?.title))
 
 
@@ -120,7 +144,7 @@
 
     <Header {...headercopy} showFooter showLayoutButton />
 
-    <ColumnLayout {links} currentIndex={channel.current} hidebtn >
+    <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
       <Channels {...channel} animate />
     </ColumnLayout>
   </Container>

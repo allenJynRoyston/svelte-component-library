@@ -106,7 +106,7 @@
   //---------------------------
 </script>
 
-<div class='selectmulti-container' data-testid='selectmulti-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component selectmulti-container`} data-testid='selectmulti-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
@@ -124,7 +124,6 @@
 
 <style lang="scss">
   .selectmulti-container {    
-    margin-bottom: 10px;
     width: 100%;
     
     label{
@@ -144,17 +143,17 @@
 
     .selectmulti-option{
       padding: 2px 0;
-      font-size: 14px;
+      font-size: 12px;
       cursor: pointer;
       display: flex;
-      color: black;
+      color: var(--black-2);
 
       input{
         cursor: pointer;
       }
 
       &:hover{
-        color: blue
+        color: var(--primary-0)
       }        
 
       .cb{
@@ -164,16 +163,27 @@
 
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
+    }    
+
+    &.dark-theme{
+      .selectmulti-option{
+        color: var(--white-2);
+      }
+
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+      }  
     }
 
-  }
-  
+  }  
 </style>

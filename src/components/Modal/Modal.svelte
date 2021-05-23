@@ -242,8 +242,6 @@
         background: var(--danger-4);
         color: var(--danger-4-text);       
       }         
-                       
-
 
 
       &.shadow{
@@ -295,6 +293,39 @@
         }           
       }
 
+      &.freezeAnimation{
+        transition: 0s;
+      }
+
+      &.animateIn{
+        opacity: 1;  
+      }
+
+      &.animateOut{
+        &.center{
+          opacity: 0;
+          transform: translateY(100%);
+        }
+
+        &.right{
+          opacity: 0.8;
+          transform: translateX(100%);
+        }
+        &.left{
+          opacity: 0.8;
+          transform: translateX(-100%);
+        }
+
+        &.corner-left{
+          opacity: 0.8;
+          transform: translateY(100%);
+        }
+        &.corner-right{
+          opacity: 0.8;
+          transform: translateY(100%);
+        }        
+      }      
+
       @include desktop-and-up {
         width: calc(50% - 20px);     
         max-height: 600px;
@@ -306,9 +337,10 @@
 
       .header{
         display: flex;
-        height: 50px;
-        padding: 0 10px;        
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);  
+        min-height: 50px; 
+        max-height: 50px;
+        padding: 0 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);          
         &.busy{
           opacity: 0.5;
         }           
@@ -316,7 +348,8 @@
 
       .footer{
         display: flex;        
-        height: 50px;        
+        min-height: 50px; 
+        max-height: 50px;    
         box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.25);  
         display: flex;
         justify-content: flex-end;
@@ -342,7 +375,6 @@
       .container-inner{
         padding: 10px;
         height: 100vh;
-        max-height: calc(100vh - 70px);        
         overflow-y: auto;   
         
 
@@ -397,9 +429,19 @@
 
         &.hasFooter{
           max-height: calc(100vh - 120px);        
+          &.nopadding{
+            max-height: calc(100vh - 100px);    
+          }               
         }
 
+   
+        
 
+        &.busy{
+          opacity: 0.5;
+          overflow-y: hidden;
+        }    
+        
         @include desktop-and-up {     
           height: auto;
           max-height: calc(600px - 100px);
@@ -412,45 +454,11 @@
           }               
         }     
 
-        &.busy{
-          opacity: 0.5;
-          overflow-y: hidden;
-        }        
+    
       }
 
 
-      &.freezeAnimation{
-        transition: 0s;
-      }
 
-      &.animateIn{
-        opacity: 1;  
-      }
-
-      &.animateOut{
-        &.center{
-          opacity: 0;
-          transform: translateY(100%);
-        }
-
-        &.right{
-          opacity: 0.8;
-          transform: translateX(100%);
-        }
-        &.left{
-          opacity: 0.8;
-          transform: translateX(-100%);
-        }
-
-        &.corner-left{
-          opacity: 0.8;
-          transform: translateY(100%);
-        }
-        &.corner-right{
-          opacity: 0.8;
-          transform: translateY(100%);
-        }        
-      }
 
     }
 

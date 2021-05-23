@@ -24,7 +24,7 @@
         </h2>
         <p>
           Svelte-Tip is a rapid development boilerplate project built using the 
-          <ColorText type='secondary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> framework and 
+          <ColorText type='warning' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> framework and 
           <ColorText type='magic' bold><Link target="_blank" href='https://www.snowpack.dev/' inherit>Snowpack</Link></ColorText> build tool.            
           Svelte-Tip takes advantage of both of these amazing technologies to specialize on ease of use, tiny compile size, and component centric development that makes building 
           large apps just as seamless as small ones.  Regardless of the size or complexity of your SPA project, you'll find that using Svelte-Tip 
@@ -46,10 +46,10 @@
           Build it Once
         </h2>
         <p>
-          Svelte-Tip prides itself on it's growing library of useful pre-made components that have been specifically engineered to work just as well on your phone as it would your desktop, 
-          thus taking web developers one proverbial step forward their own <em>alchemical magnum opus</em> of just "building it once", regardless of platform.
+          Svelte-Tip prides itself on it's growing library of useful pre-made components that have been specifically engineered to work just as well on your phone as it would your desktop.  
+          The goal, ultimately, is to move towards a "just build it once" web ecosystem that avoids costly mobile app development.
           
-          If you know a little bit of <ColorText type='primary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, functionality can be extended with ease.
+          If you know a little bit of <ColorText type='warning' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, functionality can be extended with ease.
         </p>
         <p>
           New things will be added to the Svelte-Tip library over time, so check back often to see if there's a component you can use for your project!
@@ -74,13 +74,13 @@
           `} />
           
           <br>
-          ... and your app will be bundled, images optimized, and everything ready to go without any messy configurations.  
-          And because this is <ColorText type='secondary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, the entire app will be compiled into pure untainted Javascript, 
+          ... will bundle your app, optimized your images, and gets you coffee while you wait (update pending).
+          And because this is <ColorText type='warning' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, the entire app will be compiled into pure untainted Javascript, 
           meaning a <Link target='_blank' active href='https://dev.to/hanna/why-svelte-is-revolutionary-415e'>faster and smaller app then if buit with Vue or React.</Link>
         </p>     
 
         <p>
-          And on a personal note, while I love and adore React and Vue for their own merits, developing with <ColorText type='secondary' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> is just a much better experience.
+          And on a personal note, while I love and adore React and Vue for their own merits, developing with <ColorText type='warning' bold><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> is just a much better experience.
         </p>
       </section> 
     </Section>

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import LibraryBlock from '../../ComponentLibrary/components/__LibraryBlock.svelte'
+  import LibraryBlock from '../../ComponentLibrary/components/LibraryBlock.svelte'
   import UserFetcher from '../../../components-db/Fetcher/UserFetcher.svelte'
   import LocalStorageWatch from '../../../components-db/LocalStorageWatch.svelte'
   import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'

@@ -68,11 +68,11 @@
 
         <div class='home-section'>
           <div class='button-nav'>
-            <Button nomargin size={$isMobile ? 'small' : null} type='primary' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
-            <Button nomargin size={$isMobile ? 'small' : null} type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
-            <Button nomargin size={$isMobile ? 'small' : null} type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
-            <Button nomargin size={$isMobile ? 'small' : null} type='warning' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
-            <Button nomargin size={$isMobile ? 'small' : null} type='danger' disabled={channel.current === 4}  href={`${rootUrl}store`} onClick={() => {channel.current = 4}}>Stores</Button>
+            <Button nomargin size={$isMobile ? 'small' : 'normal'} type='primary' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
+            <Button nomargin size={$isMobile ? 'small' : 'normal'} type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
+            <Button nomargin size={$isMobile ? 'small' : 'normal'} type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
+            <Button nomargin size={$isMobile ? 'small' : 'normal'} type='warning' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
+            <Button nomargin size={$isMobile ? 'small' : 'normal'} type='danger' disabled={channel.current === 4}  href={`${rootUrl}store`} onClick={() => {channel.current = 4}}>Stores</Button>
           </div>
           
           

@@ -1,17 +1,20 @@
 <script lang='ts'>  
   import {getContext} from 'svelte';
+  import { SiteStore } from '@store/store';
+    
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
   import Container from '@components/Container/Container.svelte'
   import Accordion from '@components/Accordion/Accordion.svelte'
-  import { SiteStore } from '@store/store';
 
   export let links = []
   export let currentIndex = null;
   export let hidebtn:boolean = false;
   export let side = 'left'
   export let disableSearch = false;
+  export let watchParam = null
+  export let activeTheme = 'primary'
 
   const colors:any = getContext('colors')
   const {openSidebar, urlParams, searchValue} = SiteStore;
@@ -46,7 +49,9 @@
     
     linkList = _list;
   }
+
   
+  $: isOpened = (key, index) => $urlParams[watchParam] ? ($urlParams[watchParam] || null) === key.toLowerCase() : index === 0
 
   $: {
     buildList()
@@ -69,16 +74,16 @@
             <InnerContainer>
               <div class='directory-links-container'>
                 {#each Object.entries(linkList) as [key, pairs], index}
-                  <Accordion listform fill open={index === 0}>
+                  <Accordion listform fill open={isOpened(key, index)}>
                     <span class='directory-key' slot='title'>
                       {capitalize(key)} 
                     </span>
 
                     
                     <ul class='directory-links' slot='content'>
-                      {#each pairs as {href, title}}
+                      {#each pairs as {href, title}, index}
                         {#if $searchValue === null || partialMatch($searchValue, title)}
-                          <Link classes='font-one' inherit {href} active={$urlParams.component === title} onClick={() => {toggleCollapse(false)}} >
+                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component ? $urlParams.component === title : index === 0} onClick={() => {toggleCollapse(false)}} >
                             {capitalize(title)} 
                           </Link>
                         {/if}        

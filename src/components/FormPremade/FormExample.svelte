@@ -207,17 +207,15 @@
     },   
     {
       renderAs: 'rating',    
-      type: 'star',
       label: 'Ratings',
       key: 'rating',      
       value: 2,                
       required: true,
       maxLength: 10,  
       slots: {
-        selected: '❤',
-        notSelected: '♡'
-      },
-      fixedWidth: '40px'       
+        selected: 'star-full',
+        notSelected: 'star-empty'
+      }      
     },    
     {
       renderAs: 'checkbox', 
@@ -240,6 +238,5 @@
 
 </script>
 
-<div style='background: white; overflow: hidden; border-radius: 10px'>
-  <Form {...props} {isBusy} clearLocalStorage showButton />
-</div>
+<Form {...props} {isBusy} clearLocalStorage showButton />
+

@@ -4,42 +4,14 @@
   import { validateCheckbox } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
   export let onKeypress = null
-  /**
-   * updateForm event
-  */  
-  export let updateForm = null;    
-  
-  /**
-   * 
-  */  
-  export let placeholder = null
-  /**
-   * 
-  */  
+  export let updateForm = null;     
+  export let placeholder = null 
   export let value = false
-  /**
-   * 
-  */ 
-  export let text = null;
-  /**
-   * 
-  */   
+  export let text = null;  
   export let key = null
-  /**
-   * 
-  */
   export let label = null; 
-  /**
-   * 
-  */  
   export let required = null;
   //---------------------------
 
@@ -85,7 +57,7 @@
 
 </script>
 
-<div class='inputcheckbox-container' class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component inputcheckbox-container`} class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
 
   {#if label}
     <label for={key} >{label}</label>
@@ -130,14 +102,23 @@
 
     &.valid{
       .cb-text{
-        color: black;
-      }
+        color: var(--black-2)
+      }  
     }
 
     &.invalid{
       .cb-text{
-        color: red;
+        color: var(--danger-0)
       }
+    }    
+
+
+    &.dark-theme{
+      .cb-text{
+        color: var(--white-2)
+      }  
     }
+
+
   }  
 </style>

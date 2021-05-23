@@ -1,58 +1,24 @@
 <script lang='ts'>  
-  //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  //--------------------------- IMPORTS 
+  import { getContext, onMount }  from 'svelte'
   import { validateRating } from '../../../js'
+  import SVG from '@components/SVG/SVG.svelte'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
   export let onKeypress = null
-  /**
-   * updateForm event
-  */  
   export let updateForm = null;    
 
-  /**
-   * 
-  */  
-  export let type = null  
-  /**
-   * 
-  */  
+  export let type = null;  
   export let placeholder = null
-  /**
-   * 
-  */  
   export let value = 0
-  /**
-   * 
-  */  
   export let key = null
-  /**
-   * 
-  */
   export let label = null;
-  /**
-   * 
-  */  
   export let required = null;
-  /**
-   * 
-  */  
   export let maxLength = 5;  
-  /**
-   * 
-  */  
-  export let slots = null
-  /**
-   * 
-  */  
-  export let fixedWidth = 'auto';
+  export let slots = null 
+
+  const colors:any = getContext('colors')
   //---------------------------
 
   //--------------------------- VARS
@@ -68,9 +34,14 @@
   }
 
   const inSlots = {
-    selected: slots?.selected || '⭐',
-    notSelected: slots?.notSelected || '☆',
+    selected: slots?.selected || 'star-full',
+    notSelected: slots?.notSelected || 'star-empty'
   }  
+
+  const fill = () => {
+    return !!type ? colors[type][0].color : null
+  }
+
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent()
@@ -99,18 +70,17 @@
 
 </script>
 
-<div class='rating-container' data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`root-component rating-container`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
   
-  <div class='rating-icons'>
+  <div class={`rating-icons`}>
     {#each ratings as {selected, i}, index}    
-      <button role='button' 
-        style={`width: ${!!fixedWidth ? fixedWidth : '100%'}`}             
+      <button role='button'        
         data-testid={`rating-btn-${i}`}
         on:click|preventDefault={() => {toggle(index)}} >
-          {@html selected ? inSlots.selected : inSlots.notSelected }
+          <SVG fill={selected ? fill() : null} icon={selected ? inSlots.selected : inSlots.notSelected}/>          
       </button>
     {/each}
   </div>
@@ -118,7 +88,6 @@
 
 <style lang="scss">
   .rating-container {    
-    margin-bottom: 10px;
     width: 100%;    
 
     .rating-icons{
@@ -139,18 +108,25 @@
       outline: none;
     }
 
-
     &.valid{
       label{
-        color: black
+        color: var(--black-2)
       }
     }
 
     &.invalid{
       label{
-        color: red
+        color: var(--danger-0)
       }
-    }
+    }    
+
+    &.dark-theme{
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+      }
+    } 
 
   }
   

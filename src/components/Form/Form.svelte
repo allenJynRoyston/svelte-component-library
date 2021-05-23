@@ -1,18 +1,21 @@
 <script lang='ts'>
   //--------------------------- IMPORTS
-  import { onMount, onDestroy, tick } from 'svelte';  
+  import { onMount, onDestroy, getContext } from 'svelte';  
+  import { DeviceStore } from '@store/store'
 
-  import Button from '../Button/Button.svelte'
-  import Input from '../FormComponents/Input/Input.svelte'
-  import InputDate from '../FormComponents/InputDate/InputDate.svelte'
-  import Textarea from '../FormComponents/Textarea/Textarea.svelte'
-  import FileInput from '../FormComponents/FileInput/FileInput.svelte'
-  import SVG from '../SVG/SVG.svelte'
-  import InputTime from '../FormComponents/InputTime/InputTime.svelte'
-  import Select from '../FormComponents/Select/Select.svelte'
-  import SelectMulti from '../FormComponents/SelectMulti/SelectMulti.svelte'
-  import Rating from '../FormComponents/Rating/Rating.svelte'
-  import InputCheckbox from '../FormComponents/InputCheckbox/InputCheckbox.svelte'
+  import Button from '@components/Button/Button.svelte'
+  import Input from '@components/FormComponents/Input/Input.svelte'
+  import InputDate from '@components/FormComponents/InputDate/InputDate.svelte'
+  import Textarea from '@components/FormComponents/Textarea/Textarea.svelte'
+  import FileInput from '@components/FormComponents/FileInput/FileInput.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
+  import InputTime from '@components/FormComponents/InputTime/InputTime.svelte'
+  import Select from '@components/FormComponents/Select/Select.svelte'
+  import SelectMulti from '@components/FormComponents/SelectMulti/SelectMulti.svelte'
+  import Rating from '@components/FormComponents/Rating/Rating.svelte'
+  import InputCheckbox from '@components/FormComponents/InputCheckbox/InputCheckbox.svelte'
+  import Container from '@components/Container/Container.svelte'
+
   import FormErrors from './FormErrors/FormErrors.svelte'
   import FormPreview from './FormPreview/FormPreview.svelte'
   //---------------------------
@@ -24,12 +27,16 @@
   let onBeforeUnload;  
   let hasError = false 
   let hasSubmitted = false
+
+  const theme:string = getContext('theme')
+  const colors:any = getContext('colors')
+  const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop} = DeviceStore;
   //---------------------------
 
   //--------------------------- PROPS
   export let formData = []
   export let onSubmit = null;  
-  export let padding = 10
+  export let padding = 5
   export let breakpoints = {
     mobile: 480,
     tablet: 800,
@@ -226,79 +233,79 @@
 
 
 {#if isReady}
-  <form class='form-container' class:isBusy={isBusy} data-testid='form-container' style={formStyling} autocomplete="on">
+  <Container offset={theme === 'dark' ? 4 : 5}>
+    <form class='form-container' class:isBusy={isBusy} data-testid='form-container' style={formStyling} autocomplete="on">
 
-    <div class='form-container__overlay' data-testid='busy' class:show={isBusy}>
-      <SVG icon='save' />
-    </div>
-
-    {#if formData.length > 0}
-      {#each formData as data, i}
-
-        <div style={layoutSize === 'mobile' ? applyStyles(data.sizing, 'mobile') : applyStyles(data.sizing, 'desktop') } >
-          {#if data.renderAs === 'input'}
-            <Input {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
-          {/if}
-          {#if data.renderAs === 'textarea'}
-            <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
-          {/if}      
-          {#if data.renderAs === 'date'}
-            <InputDate {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}    
-          {#if data.renderAs === 'time'}
-            <InputTime {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}       
-          {#if data.renderAs === 'checkbox'}
-            <InputCheckbox {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}   
-          {#if data.renderAs === 'select'}
-            <Select {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}   
-          {#if data.renderAs === 'selectmulti'}
-            <SelectMulti {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}   
-          {#if data.renderAs === 'rating'}
-            <Rating {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}
-          {#if data.renderAs === 'fileinput'}
-            <FileInput {...stripUnusedProperties(data)} updateForm={updateForm} />
-          {/if}          
-        </div>                                                            
-      {/each}
-
-      
-      <section>        
-        {#if showPreview}
-          <div class='preview-container'>
-            <FormPreview data={completedFormData} />
-          </div>
-
-          <div class='error-container'>
-            <FormErrors errors={getErrorData} />
-          </div> 
-        {/if}
-       
-        {#if showButton}
-          <div class='button-container'>
-            <slot name='options' />
-            <Button onClick={!disabled && onSubmitHandler} {disabled} dataTestid={'submit-btn'} style={'padding: 5px 10px'}>
-              <slot>
-                {isBusy ? 'Saving...' : 'Save'}
-              </slot>
-            </Button>
-
-           
-          </div>
-        {/if}
-      </section>
-    {:else}
-      <div data-testid='empty-form'>
-        <slot name='empty'>
-          <p>No form data</p>
-        </slot>
+      <div class='overlay' data-testid='busy' class:show={isBusy}>
+        <SVG icon='save' size={40} fill={colors.white[0].color}/>
       </div>
-    {/if}
-  </form>
+
+      {#if formData.length > 0}
+        {#each formData as data, i}
+
+          <div style={layoutSize === 'mobile' ? applyStyles(data.sizing, 'mobile') : applyStyles(data.sizing, 'desktop') } >
+            {#if data.renderAs === 'input'}
+              <Input {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
+            {/if}
+            {#if data.renderAs === 'textarea'}
+              <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
+            {/if}      
+            {#if data.renderAs === 'date'}
+              <InputDate {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}    
+            {#if data.renderAs === 'time'}
+              <InputTime {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}       
+            {#if data.renderAs === 'checkbox'}
+              <InputCheckbox {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}   
+            {#if data.renderAs === 'select'}
+              <Select {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}   
+            {#if data.renderAs === 'selectmulti'}
+              <SelectMulti {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}   
+            {#if data.renderAs === 'rating'}
+              <Rating {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}
+            {#if data.renderAs === 'fileinput'}
+              <FileInput {...stripUnusedProperties(data)} updateForm={updateForm} />
+            {/if}          
+          </div>                                                            
+        {/each}
+
+        
+        <section>        
+          {#if showPreview}
+            <div class='preview-container'>
+              <FormPreview data={completedFormData} />
+            </div>
+
+            <div class='error-container'>
+              <FormErrors errors={getErrorData} />
+            </div> 
+          {/if}
+        
+          {#if showButton}
+            <div class='button-container'>
+              <slot name='options' />
+              <Button  onClick={!disabled && onSubmitHandler} {disabled} dataTestid={'submit-btn'} style={$isMobile ? '' : 'max-width: 200px'}>
+                <slot>
+                  {isBusy ? 'Saving...' : 'Save'}
+                </slot>
+              </Button>
+            </div>
+          {/if}
+        </section>
+      {:else}
+        <div data-testid='empty-form'>
+          <slot name='empty'>
+            <p>No form data</p>
+          </slot>
+        </div>
+      {/if}
+    </form>
+  </Container>  
 {:else}
   <div />
 {/if}
@@ -310,16 +317,18 @@
     flex-wrap: wrap;
     opacity: 1;
     position: relative;
+    row-gap: 10px;
     
 
     section{
       width: 100%
     }    
 
-    &__overlay{
+    .overlay{
       width: 100%;
       height: 100%;      
       position: absolute;
+      background: rgba(0, 0, 0, .6);
       top: 0;
       left: 0;
       display: none;
@@ -344,7 +353,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between
+      justify-content: flex-end;
     }
 
   }
