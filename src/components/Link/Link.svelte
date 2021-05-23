@@ -12,6 +12,8 @@
   
   export let underline = false;
   export let fit = false;
+
+  console.log(type)
   //---------------------------
 
   //--------------------------- VARS    

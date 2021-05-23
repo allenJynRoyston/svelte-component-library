@@ -18,11 +18,11 @@
   }  
 
   const withLink = (type) => {
-    addSnack({component: Link, props: {text: "I'm a link component", href: '#library?component=snackbar&link=clicked'}, type})
+    addSnack({component: Link, props: {text: "I'm a link component", href: '#library?component=snackbar&link=clicked', type, active: true}})
   }
 
   const withButton = (type) => {
-    addSnack({component: Button, props: {text: "I'm a button component - click me!", inherit: true, onClick: () => {
+    addSnack({component: Button, props: {text: "I'm a button component - click me!", type, onClick: () => {
       alert('do something...')
     }}, type})
   }  
@@ -51,7 +51,7 @@
     <Button type='primary' onClick={() => {addDurationSnack('primary')}}>Primary</Button>
     <Button type='success' onClick={() => {addDurationSnack('success')}}>Success</Button>
     <Button type='warning' onClick={() => {addDurationSnack('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {addDurationSnack('error')}}>Error</Button>
+    <Button type='danger' onClick={() => {addDurationSnack('danger')}}>Danger</Button>
   </div>
 </LibraryBlock>
 
@@ -60,7 +60,7 @@
     <Button type='primary' onClick={() => {addStaticSnack('primary')}}>Primary</Button>
     <Button type='success' onClick={() => {addStaticSnack('success')}}>Success</Button>
     <Button type='warning' onClick={() => {addStaticSnack('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {addStaticSnack('error')}}>Error</Button>
+    <Button type='danger' onClick={() => {addStaticSnack('danger')}}>Danger</Button>
   </div>
 </LibraryBlock>
 
@@ -69,7 +69,7 @@
     <Button type='primary' onClick={() => {withLink('primary')}}>Primary</Button>
     <Button type='success' onClick={() => {withLink('success')}}>Success</Button>
     <Button type='warning' onClick={() => {withLink('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {withLink('error')}}>Error</Button>
+    <Button type='danger' onClick={() => {withLink('danger')}}>Danger</Button>
   </div>
 </LibraryBlock>
 
@@ -78,7 +78,7 @@
     <Button type='primary' onClick={() => {withButton('primary')}}>Primary</Button>
     <Button type='success' onClick={() => {withButton('success')}}>Success</Button>
     <Button type='warning' onClick={() => {withButton('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {withButton('error')}}>Error</Button>
+    <Button type='danger' onClick={() => {withButton('danger')}}>Danger</Button>
   </div>
 </LibraryBlock>
 
@@ -87,7 +87,7 @@
     <Button type='primary' onClick={() => {closeOnClick('primary')}}>Primary</Button>
     <Button type='success' onClick={() => {closeOnClick('success')}}>Success</Button>
     <Button type='warning' onClick={() => {closeOnClick('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {closeOnClick('error')}}>Error</Button>
+    <Button type='danger' onClick={() => {closeOnClick('danger')}}>Danger</Button>
   </div>
 </LibraryBlock>
 

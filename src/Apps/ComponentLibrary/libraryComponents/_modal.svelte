@@ -147,7 +147,7 @@
   
 <TwoSlot showLeft showRight>
   <h2>Modal</h2>
-  <div slot='right' style='display: flex; gap 10px'>
+  <div slot='right' style='display: flex; gap: 10px'>
     <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={rounded} hollow={!rounded} nomargin onClick={() => {rounded = !rounded}} >Rounded</Button>
     <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={nopadding} hollow={!nopadding} nomargin onClick={() => {nopadding = !nopadding}} >No Padding</Button>
     <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={shadow} hollow={!shadow} nomargin onClick={() => {shadow = !shadow}} >Shadow</Button>

@@ -95,7 +95,7 @@ const returnIconColor = (type) => {
     return colors.success[0].color
     case 'warning': 
     return colors.warning[0].color
-    case 'error': 
+    case 'danger': 
     return colors.danger[0].color
   }  
 }
@@ -108,7 +108,7 @@ const returnIcon = (type) => {
     return 'like'
     case 'warning': 
     return 'warning'
-    case 'error': 
+    case 'danger': 
     return 'sad'
   }  
 }
@@ -162,7 +162,7 @@ $: {
 
       {#if snack?.duration}
         <div class='progress-bar'>
-          <Loader show />
+          <Loader show type={snack.type} />
         </div>
       {/if}
 
@@ -192,6 +192,7 @@ $: {
     min-width: 150px;
     font-size: 12px;
     background: var(--black-1);    
+    overflow: hidden;
 
     &.btmpadding{
       padding-bottom: 4px;
@@ -217,7 +218,7 @@ $: {
       color: var(--warning-0);
     }   
 
-    &.error{
+    &.danger{
       color: var(--danger-0);
     }    
 
@@ -241,7 +242,7 @@ $: {
         color: var(--warning-0);
       }   
 
-      &.error{
+      &.danger{
         color: var(--danger-0);
       }   
     }
@@ -264,10 +265,10 @@ $: {
 
     .progress-bar{
       position: absolute;
-      bottom: -2px;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 8px;
+      height: 5px;
 
       &.close{
         opacity: 0

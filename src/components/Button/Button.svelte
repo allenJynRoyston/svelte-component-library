@@ -76,6 +76,8 @@
     margin: 2px;
     font-size: 12px;
     height: 30px;    
+    white-space: nowrap;
+
 
     .inner{
       display: flex;
