@@ -94,7 +94,6 @@
     &.exactfit{
       margin: 0;   
       width: auto!important;
-      height: auto!important;   
     }
 
     &.disabled{

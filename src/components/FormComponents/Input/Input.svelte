@@ -111,7 +111,7 @@
     }
 
     input{
-      height: 30px;
+      height: calc(30px - 2px);
       width: calc(100% - 20px);
       padding: 0 10px;
       border-bottom: 2px solid transparent;

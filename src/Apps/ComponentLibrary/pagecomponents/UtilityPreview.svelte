@@ -29,7 +29,7 @@
     <hr>
     <br><br> 
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>Realtime Detection:</h2>
       </div>
@@ -75,7 +75,7 @@
       </div>
     </Accordian>    
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>Media Queries:</h2>
       </div>
@@ -86,7 +86,7 @@
           `} />  
                 
         {#each classes as _class}     
-          <Accordian fill>
+          <Accordian full>
             <div slot='title'>
               <div class={`utility-block vis-${_class}`}>       
                 <h3>.{_class}</h3>                      

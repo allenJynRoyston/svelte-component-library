@@ -91,7 +91,7 @@
   <Link active underline href='/' >I am a link</Link>
   `} />      
 
-<LibraryBlock title='Fit:' >
+<LibraryBlock title='Fit: (Button wrapped in Link)' >
   <h3>With Fit</h3>
   <div style='display: flex'>
     <Link fit href='/' >

@@ -74,7 +74,7 @@
             <InnerContainer>
               <div class='directory-links-container'>
                 {#each Object.entries(linkList) as [key, pairs], index}
-                  <Accordion listform fill open={isOpened(key, index)}>
+                  <Accordion listform full open={isOpened(key, index)}>
                     <span class='directory-key' slot='title'>
                       {capitalize(key)} 
                     </span>

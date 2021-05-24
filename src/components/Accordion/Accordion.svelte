@@ -5,7 +5,7 @@
   import SVG from '@components/SVG/SVG.svelte'
 
   export let open = false
-  export let fill = false
+  export let full = false
   export let rounded = false;
   export let outline = false;
   export let listform = false;
@@ -37,7 +37,7 @@
   </div>
 
 
-  <div class='accordion-content' class:opened={isOpened} class:fill={fill}>
+  <div class='accordion-content' class:opened={isOpened} class:full={full}>
     <div class='inner' class:listform={listform}>
       <slot name='content'>
         Accordion content... 
@@ -103,7 +103,7 @@
       height: auto
     }
 
-    &.fill{
+    &.full{
       max-height: 1000vh;
     }
 

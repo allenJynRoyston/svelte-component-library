@@ -1,12 +1,11 @@
 <script lang="ts">
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import LibraryBlock from '../components/LibraryBlock.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
   import SVG from '@components/SVG/SVG.svelte'
   import GridLayout from '@components/Layout/GridLayout.svelte'
+  import SVGPreview from '../components/SVGPreview.svelte'
 
   const svgs = [
     'dots',
@@ -80,11 +79,9 @@
     'refresh'
   ]
 
-
   export let items = svgs.map(svg =>{
-    return {component: SVG, props: {icon: svg, title: svg}}
+    return {component: SVGPreview, props: {icon: svg, title: svg}}
   })
-
 
 </script>
 
@@ -111,7 +108,7 @@
   `} />
 
 <LibraryBlock title="Default">
-  <GridLayout {items} size={50} gap={10} outline/>
+  <GridLayout {items} size={125} gap={10} outline/>
 </LibraryBlock>
 
 

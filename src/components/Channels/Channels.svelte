@@ -55,9 +55,7 @@
       duration: (disableAnimationOnMobile && $isNativeMobile) ? 0 : (animate ? duration : 0),
       easing: easing === 'cubicOut' ? cubicOut : cubicOut
     });   
-
-    console.log( disableAnimationOnMobile && $isNativeMobile )
-
+    
     ready = true
     channelReady && channelReady(currentChannel)    
 

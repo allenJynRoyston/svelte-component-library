@@ -141,8 +141,10 @@
     }       
 
     &.dark-theme{
+      color: var(--white-0);      
+      
       &.active{
-        color: var(--white-0);
+        color: var(--white-2);
         &.underline{
           border-bottom: 2px solid var(--white-0);;
         }

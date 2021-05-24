@@ -16,6 +16,9 @@
   export let options = []  
   export let onInitFilter = null;
   export let onChangeFilter = null  
+  export let exactfit = false;
+
+  console.log(exactfit)
   //---------------------------
 
   //--------------------------- VARS
@@ -66,7 +69,7 @@
   {/if}
 
   <!-- svelte-ignore a11y-no-onchange -->
-  <select data-testid='select' bind:value={selected} on:change={onChangeEventHandler} on:keydown={onKeypressHandler}>
+  <select data-testid='select' class:exactfit={exactfit} bind:value={selected} on:change={onChangeEventHandler} on:keydown={onKeypressHandler}>
     {#if defaultOption}
       <option disabled selected value>{defaultOption}</option>
     {/if}
@@ -96,9 +99,10 @@
       border-bottom: 2px solid transparent;
       outline: none;
       
+      &.exactfit{
+        width: auto;
+      }
 
-
-      
       &::placeholder{
         color: var(--black-6-text);
       }

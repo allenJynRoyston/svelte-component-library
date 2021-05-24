@@ -15,11 +15,11 @@
 
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
-  const useType = (type === null ? (theme === 'dark' ? 'black' : 'white') : type)
- 
+  $: useType = (type === null ? (theme === 'dark' ? 'black' : 'white') : type)
+  
 
 
-  $: fill = colors[useType][4].textFriendlyColor 
+  $: fill = !!useType ? colors[useType][4].textFriendlyColor : (theme === 'dark' ? 'black' : 'white')
 
  
 </script>
