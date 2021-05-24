@@ -1,47 +1,21 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount, tick } from 'svelte';
+  import { onMount, tick, getContext } from 'svelte';  
+
   import SVG from '@components/SVG/SVG.svelte'
   import Button from '@components/Button/Button.svelte'
   import { validateInputFile } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * updateForm event
-  */  
   export let updateForm = null;    
 
-  /**
-   * 
-  */  
   export let type = null  
-  /**
-   * 
-  */  
   export let placeholder = null
-  /**
-   * 
-  */  
   export let value = ''
-  /**
-   * 
-  */  
   export let key = null
-  /**
-   * 
-  */
   export let label = null;
-  /**
-   * 
-  */  
   export let required = null;
-  /**
-   * 
-  */    
   export let accept = null
 
   //---------------------------
@@ -55,6 +29,13 @@
   let render = true;
   let hasFormData = false
 
+	let w;
+	let h;  
+  let val = null;
+
+  const colors:any = getContext('colors')
+  const theme:string = getContext('theme')
+
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(null)
@@ -67,14 +48,16 @@
     let formData = new FormData();    
     formData.append(`file`, e.target.value)
     onChange && onChange(formData)
+    val = e.target.value
     updateParent(formData)
   }
 
   const clearInput = async() => {
-    render = false;
-    await tick();
-    render = true;
+    // render = false;
+    // await tick();
+    // render = true;
     hasFormData = false;
+    val = null;
     updateParent(null)
   }
   //---------------------------
@@ -92,16 +75,24 @@
 
 <div class={`root-component fileinput-container`} data-testid='fileinput-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
-    <label for={key} >{label}</label>
+    <label>{label}</label>
   {/if}
   
-  <div class='inner'>
-    {#if hasFormData}
-      <Button size='small' style='width: 50px' onClick={clearInput}><SVG icon='bin'/></Button>
-    {/if}    
-    {#if render}
-      <input type='file' {accept} {...props} on:change={onChangeEventHandler} bind:value  />  
-    {/if}
+  <div class='inner'> 
+      <div class='masked-btn' bind:clientWidth={w} bind:clientHeight={h}>
+
+          <span class:hide={val !== null} class:show={val === null}>
+            <Button size='small' type='white' hollow >Select File...</Button> 
+            <input type='file' id="file-upload" style={`width: ${w}px; height: ${h}px`} {accept} {...props} on:change={onChangeEventHandler} bind:value  />  
+          </span>
+
+          <span class:hide={val === null} class:show={val !== null}>
+            <Button size='small' type='danger' onClick={clearInput}><SVG icon='bin' fill={colors.danger[0].textFriendlyColor} size={10} /></Button>                   
+            <Button size='small' type='white' hollow >{val}</Button>             
+          </span>
+       
+      </div>
+      
   </div>
 </div>
 
@@ -113,39 +104,54 @@
       display: flex;
       gap: 5px;
     }
+
+    span{
+      display: flex;
+    }
+
+    .show{
+      pointer-events: all;
+      opacity: 1;
+      width: auto;
+      height: auto;
+    }
+
+    .hide{
+      pointer-events: none;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
     
+
     label{
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;
     }
 
-    input{
-      border: none;
-      border-bottom: 2px solid transparent;
-
-      &::placeholder{
-        color: var(--black-6);
-      }
+    .masked-btn{
+      position: relative;
+      display: flex;
+      cursor: pointer;
     }
+
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      opacity: 0;
+      cursor: pointer;
+    }       
 
     &.valid{
       label{
         color: var(--black-2)
-      }
-      input{
-        color: var(--black-2);
-        border-bottom: 2px solid var(--success-0);
       }
     }
 
     &.invalid{
       label{
         color: var(--danger-0)
-      }
-      input{
-        color: var(--danger-0);
-        border-bottom: 2px solid var(--danger-0);
       }
     }    
 
