@@ -9,6 +9,7 @@ export let onComplete = () => {};
 export let onClick = () => {}
 
 const colors:any = getContext('colors')
+const theme:string = getContext('theme');
 
 let currentSnack = null;
 let eventTimers = [];
@@ -113,17 +114,6 @@ const returnIcon = (type) => {
   }  
 }
 
-const theme = getContext('theme')
-// const colors:any = getContext('colors');
-//   let isDark = false;
-//   let ele;
-
-//   onMount(async() => {
-//     setTimeout(() => {
-//       isDark = ele?.className.includes('dark-theme')
-//       console.log(isDark)
-//     }, 100) 
-//   })  
 
 //---------------------------
 $: {
@@ -133,7 +123,7 @@ $: {
 
 </script>
 
-<div class={`root-component snackbar`} >
+<div class={`snackbar`} >
   {#each snacks as snack (snack.id)}
     <div 
       class={`snack ${!!theme ? `${theme}-theme` : ''} ${snack?.type || ''} ${snack?.closeOnClick ? 'clickable' : ''}`} 
@@ -170,60 +160,41 @@ $: {
   {/each}
 </div>
 
-<!-- .snackbar{
-  width: auto;
-  position: fixed;
-  bottom: 10px;
-  right: -20px;
-  z-index: 100;  
-  overflow: hidden;  
-  display: flex;
-  flex-direction: column-reverse;
-
-  @include desktop-and-up {  
-    width: 100%;
-    right: 30px;
-  }    
-}
-
-.snack{    
-  width: calc(100% - 60px);
-  padding-left: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;    
-  font-size: 12px;
-  overflow: hidden;
-  background: var(--black-1);    
-
-  @include desktop-and-up {  
-    width: 300px;
-    min-width: 150px;
-  }       -->
 
 <style lang='scss'>
   @import '../../scss/src/_media-queries.scss';
+
   .snackbar{
     position: fixed;
     bottom: 10px;
-    right: 30px;
+    right: 10px;
     z-index: 100;  
     overflow: hidden;  
     display: flex;
     flex-direction: column-reverse;    
+    padding: 0 20px;
+    width: calc(100% - 40px);
+
+    @include desktop-and-up {  
+      width: auto;
+    }    
+
   }
 
   .snack{    
     padding-left: 15px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     border-radius: 5px;
     min-width: 150px;
     font-size: 12px;
     overflow: hidden;
-    background: var(--black-1);    
+    background: var(--black-1);   
+
+    @include desktop-and-up {  
+      width: auto;
+    }         
 
     &.btmpadding{
       padding-bottom: 4px;
@@ -312,9 +283,13 @@ $: {
 
     .content{
       flex: 1 1 auto;
-      text-align: left;
+      text-align: center;
       font-weight: bold;
       padding: 15px 0;
+
+      @include desktop-and-up {  
+        text-align: left;
+      }          
 
       &.content-padding{
         padding: 10px 0;

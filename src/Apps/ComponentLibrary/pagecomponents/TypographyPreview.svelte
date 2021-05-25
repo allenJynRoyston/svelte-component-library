@@ -22,7 +22,7 @@
     <hr>
     <br><br>
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>Font Family:</h2>                   
       </div>
@@ -46,7 +46,7 @@
       </div>
     </Accordian> 
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>Colors:</h2>                   
       </div>
@@ -78,7 +78,7 @@
       </div>
     </Accordian> 
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>h1-h5:</h2>                   
       </div>
@@ -133,7 +133,7 @@
       </div>
     </Accordian> 
 
-    <Accordian open fill>
+    <Accordian open full>
       <div slot='title'>
         <h2>p, span, a, body, em, strong:</h2>                   
       </div>

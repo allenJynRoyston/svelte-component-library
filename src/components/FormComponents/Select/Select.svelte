@@ -16,9 +16,7 @@
   export let options = []  
   export let onInitFilter = null;
   export let onChangeFilter = null  
-  export let exactfit = false;
-
-  console.log(exactfit)
+  export let exactfit = false;  
   //---------------------------
 
   //--------------------------- VARS

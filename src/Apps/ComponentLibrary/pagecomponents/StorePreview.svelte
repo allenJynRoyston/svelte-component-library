@@ -20,7 +20,7 @@
     <hr>
     <br><br> 
 
-    <Accordian fill>
+    <Accordian full>
       <div slot='title'>
         <h2>DeviceStore:</h2>
       </div>
@@ -70,7 +70,7 @@
     </Accordian>   
     
     
-    <Accordian fill>
+    <Accordian full>
       <div slot='title'>
         <h2>SiteStore:</h2>
       </div>
@@ -113,7 +113,7 @@
           </p>                                                
     </Accordian>     
     
-    <Accordian fill>
+    <Accordian full>
       <div slot='title'>
         <h2>ModalStore:</h2>
       </div>

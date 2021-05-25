@@ -33,7 +33,7 @@
     <br><br>
     
     {#each Object.entries(colorBlocks) as [key]}
-      <Accordian fill open>
+      <Accordian full open>
 
         <div slot='title'>
           <h2 class='color-title'>{key}:</h2>                   

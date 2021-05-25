@@ -117,7 +117,7 @@
       {#if !!props}
         <div class='buttons'>
           {#each Object.entries(props) as [key, pair]}
-            <Button exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
+            <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
               {key}
             </Button>
           {/each}            

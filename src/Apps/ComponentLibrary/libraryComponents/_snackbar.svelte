@@ -22,7 +22,7 @@
   }
 
   const withButton = (type) => {
-    addSnack({component: Button, props: {text: "I'm a button component - click me!", type, onClick: () => {
+    addSnack({component: Button, props: {text: "I'm a button component - click me!", type, exactfit: true, onClick: () => {
       alert('do something...')
     }}, type})
   }  

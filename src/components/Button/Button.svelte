@@ -42,7 +42,7 @@
 </script>
 
 {#if !!href}
-  <Link fit {href} {target} >
+  <Link exactfit {href} {target} >
     <button class={`root-component button ${type} ${size} `} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
