@@ -90,76 +90,83 @@
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h3>{name}</h3>
-  <div slot='right' style='display: flex; gap: 5px'>
-    <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
-    <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
-    <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Code</Button>    
-  </div>  
-</TwoSlot>
-<hr>
+<div class='library-snippet'>
+  <TwoSlot showLeft showRight>
+    <h3>{name}</h3>
+    <div slot='right' style='display: flex; gap: 5px'>
+      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
+      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
+      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Code</Button>    
+    </div>  
+  </TwoSlot>
+  <hr>
 
 
-<CodeBlock open show={$showImport} title='Import:' snippet={`
-  import ${name} from '${importName}'
-  `} />
-
-{#if !!properties}
-  <CodeBlock open show={$showProperties} title='Properties:' snippet={`
-    ${properties}
+  <CodeBlock open show={$showImport} title='Import:' snippet={`
+    import ${name} from '${importName}'
     `} />
-{/if}
 
-{#if !!props || listofdropdowns().length > 0}
-  <LibraryBlock flex title="Props: ">
-    <div class='props-container'>
-      {#if !!props}
-        <div class='buttons'>
-          {#each Object.entries(props) as [key, pair]}
-            <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
-              {key}
-            </Button>
-          {/each}            
-        </div>
-      {/if}  
-      
-      {#if listofdropdowns().length > 0}    
-        <div class='dropdowns'>
-          {#each listofdropdowns() as props}
-            <Select {...props} />
-          {/each}   
-        </div>    
-      {/if}
-    </div>
-  </LibraryBlock>  
-{/if}
+  {#if !!properties}
+    <CodeBlock open show={$showProperties} title='Properties:' snippet={`
+      ${properties}
+      `} />
+  {/if}
 
-{#if !!livecode}
-  <LibraryBlock title='Live:'>
-    <slot name='liveexample'>
-    </slot>
-  </LibraryBlock>
+  {#if !!props || listofdropdowns().length > 0}
+    <LibraryBlock flex title="Props: ">
+      <div class='props-container'>
+        {#if !!props}
+          <div class='buttons'>
+            {#each Object.entries(props) as [key, pair]}
+              <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
+                {key}
+              </Button>
+            {/each}            
+          </div>
+        {/if}  
+        
+        {#if listofdropdowns().length > 0}    
+          <div class='dropdowns'>
+            {#each listofdropdowns() as props}
+              <Select {...props} />
+            {/each}   
+          </div>    
+        {/if}
+      </div>
+    </LibraryBlock>  
+  {/if}
 
-  <CodeBlock show={$showExample} open title='Live example:' snippet={`
-    ${livecode}
-    `} />
-{/if}
+  {#if !!livecode}
+    <LibraryBlock title='Live:'>
+      <slot name='liveexample'>
+      </slot>
+    </LibraryBlock>
 
-{#if !!code}
-  <LibraryBlock title='Example:'>
-    <slot name='example'>
-    </slot>
-  </LibraryBlock>
+    <CodeBlock show={$showExample} open title='Live example:' snippet={`
+      ${livecode}
+      `} />
+  {/if}
+
+  {#if !!code}
+    <LibraryBlock title='Example:'>
+      <slot name='example'>
+      </slot>
+    </LibraryBlock>
 
 
-  <CodeBlock show={$showExample} open title='Example:' snippet={`
-    ${code}
-    `} />
-{/if}
+    <CodeBlock show={$showExample} open title='Example:' snippet={`
+      ${code}
+      `} />
+  {/if}
+</div>
 
 <style lang='scss'>
   @import '../../../scss/src/_media-queries.scss';
+
+  .library-snippet{
+    max-width: 1000px;
+    margin: auto;
+  }
 
   .props-container{
     width: 100%;          

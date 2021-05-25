@@ -1,7 +1,6 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
   import {ModalStore} from '@store/store'
-  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'  
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte';
   import SVG from '@components/SVG/SVG.svelte';
   import Button from '@components/Button/Button.svelte';
@@ -80,11 +79,10 @@
   }
 </script>
 
-
 <div class={`modal`}  class:show={animateIn}>
   <div class='inner'>
 
-    <div class={`backdrop ${defaultBackdrop}`} on:click={closeBtn} class:animateIn={show} />
+    <div class={`backdrop ${defaultBackdrop}`} on:click={() => {!$modalIsBusy && closeBtn()}} class:animateIn={show} />
 
     <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} {style} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
 

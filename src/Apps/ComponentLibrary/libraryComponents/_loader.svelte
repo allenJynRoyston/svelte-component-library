@@ -38,9 +38,7 @@
   }
 
   $: livecode = `    
-    <Button ${fullstr} >
-      Content
-    </Button>   
+    <Loader ${fullstr}/> 
      `  
 </script>
 

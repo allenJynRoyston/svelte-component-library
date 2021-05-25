@@ -41,7 +41,7 @@
   import ColorTextAlias from '@lib/_colortext.svelte'
   import ModalAlias from '@lib/_modal.svelte'
   import TabsAlias from '@lib/_tabs.svelte'
-  import PromptAlias from '@lib/_prompt.svelte'
+  // import PromptAlias from '@lib/_prompt.svelte'
   import LoremBlockAlias from '@lib/_loremBlock.svelte'
 
   import ExampleForm from '@lib/_formExample.svelte'
@@ -112,7 +112,7 @@
     {content: SectionAlias, id: 'section'},
     {content: ColorTextAlias, id: 'colortext'},    
     {content: TabsAlias, id: 'tabs'},
-    {content: PromptAlias, id: 'prompt'},
+    // {content: PromptAlias, id: 'prompt'},
     {content: LoremBlockAlias, id: 'loremblock'}
   ]})   
 

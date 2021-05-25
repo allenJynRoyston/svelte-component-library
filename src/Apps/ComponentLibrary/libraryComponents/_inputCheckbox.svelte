@@ -1,16 +1,42 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import LibraryBlock from '../components/LibraryBlock.svelte'
   import InputCheckbox from '@components/FormComponents/InputCheckbox/InputCheckbox.svelte'
 
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
-  const theme:string = getContext('theme')
+  const snippet = {
+    name: 'InputCheckbox',
+    importName: '@components/FormComponents/InputCheckbox/InputCheckbox.svelte',
+    properties: `
+    export let onChange = null
+    export let onKeypress = null
+    export let updateForm = null;     
+    export let placeholder = null 
+    export let value = false
+    export let text = null;  
+    export let key = null
+    export let label = null; 
+    export let required = null;
+    `   
+  }
 
-  const props = {
+  $: livecode = `    
+    const props = {
+      label: 'Agree',
+      key: 'agree',
+      text: 'Do you agree to the terms and agreements?',
+      value: true,
+      required: true     
+    }
+
+    <InputCheckbox {...props} ${fullstr} /> 
+     `
+     
+  const staticprops = {
     label: 'Agree',
     key: 'agree',
     text: 'Do you agree to the terms and agreements?',
@@ -20,32 +46,13 @@
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>InputCheckbox</h2>
-  <div slot='right' style='display: flex; gap: 5px'>
-  </div>
-</TwoSlot>
-<hr>
 
-<CodeBlock open title='Import:' snippet={`
-  
-  `} />
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <InputCheckbox {...staticprops} {...props} {...selectprops} />
+   </div>    
 
-<CodeBlock title='Properties:' snippet={
-  `
-`} />
-
-<LibraryBlock title="Default: ">   
-  <InputCheckbox {...props} />
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`     
-
-  <FileInput {...props} />
-`} />  
-
-
-
+</LibrarySnippet>
 
 <style lang='scss'>
 

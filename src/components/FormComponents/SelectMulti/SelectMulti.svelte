@@ -4,57 +4,18 @@
   import { validateSelectMulti } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
-  /**
-   * onChange event
-  */
   export let onChange = null
-  /**
-   * onKeyPress event
-  */
   export let onKeypress = null
-  /**
-   * updateForm event
-  */  
-  export let updateForm = null;    
-  /**
-   * 
-  */  
+  export let updateForm = null;     
   export let type = 'checkbox'
-  /**
-   * 
-  */  
   export let placeholder = null
-  /**
-   * 
-  */  
   export let value = null
-  /**
-   * 
-  */  
   export let key = null
-  /**
-   * 
-  */
-  export let label = null;
-  /**
-   * 
-  */  
-  export let defaultOption = null;  
-  /**
-   * 
-  */  
+  export let label = null; 
+  export let defaultOption = null;   
   export let required = null;
-  /**
-   * 
-  */  
-  export let options = []
-  /**
-   * 
-  */    
+  export let options = []   
   export let onInitFilter = null;
-  /**
-   * 
-  */  
   export let onChangeFilter = null  
   //---------------------------
 

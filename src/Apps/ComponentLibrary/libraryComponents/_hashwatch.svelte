@@ -1,7 +1,27 @@
 <script>
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
+
   import Link from '@components/Link/Link'
   import HashWatch from '@components/URLWatcher/HashWatch'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'HashWatch',
+    importName: '@components/HashWatch/HashWatch.svelte',
+    properties: `
+    export let onChange;
+    `
+  }
+
+  $: livecode = `        
+    <HashWatch onChange={(val) => {
+      hashWatchValue = val      
+    }} />     
+     `  
 
   let hashWatchValue = null;
 
@@ -9,36 +29,20 @@
 
 </script>
 
-<h2>HashWatch</h2>
-<hr>
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <HashWatch onChange={(val) => {
+      hashWatchValue = val      
+    }} />    
 
-<CodeBlock open title='Import:' snippet={`
-  import HashWatch from '@components/URLWatcher/HashWatch'
-  `} />
+    <p>Test Links:</p>
+    <Link active type='primary' href={`${currentHash}&param1=foo`}>Foo</Link>
+    <Link active type='success' href={`${currentHash}&param1=bar`}>Bar</Link>
+    <Link active type='danger' href={`${currentHash}&param1=foobar`}>FooBar</Link> 
+    <br>
+    
+    <p>Results:</p>
+    {JSON.stringify(hashWatchValue, null, 4)}    
+   </div>    
+</LibrarySnippet>
 
-<Link href={`${currentHash}&param1=foo`}>Foo</Link>
-<Link href={`${currentHash}&param1=bar`}>Bar</Link>
-<Link href={`${currentHash}&param1=foobar`}>FooBar</Link> 
-<hr>
-
-<HashWatch onChange={(val) => {
-  hashWatchValue = val      
-}} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let onChange;
-  `} />
-
-<CodeBlock open title='Example:' snippet={`
-  let hashWatchValue = null;
-  const hashWatch = ({hash, params}) => {
-    hashWatchValue = params?.paramName || null;
-  }
-
-  <HashWatch onChange={hashWatch} />
-
-  {JSON.stringify(hashWatchValue, null, 4)}     
-  `} />  
-
-{JSON.stringify(hashWatchValue, null, 4)}      

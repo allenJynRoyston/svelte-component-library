@@ -22,9 +22,23 @@
   }
 
   $: livecode = `    
-    <Button ${fullstr} >
-      Content
-    </Button>   
+      const props = {
+        title: 'Splash Content',
+        version: '1.0',
+        buttonOne: {
+          text: 'CTA 1',
+          type: 'secondary',
+          rounded: true,     
+        },
+        buttonTwo: {
+          text: 'CTA 2',
+          type: 'primary',
+          rounded: true,  
+          hollow: true        
+        }       
+      } 
+
+     <Splash  {...props}  />
      `
      
   const staticprops = {

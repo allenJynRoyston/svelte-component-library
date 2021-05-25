@@ -9,10 +9,9 @@
       $onModalSubmit(e)
     }
     else{
-      isBusy = true
-      console.log(e)
+      isBusy = true      
       setTimeout(() => {
-        alert('submitted')
+        alert(JSON.stringify(e))
         isBusy = false
       }, 2000)
     }

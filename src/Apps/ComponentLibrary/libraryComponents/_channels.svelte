@@ -133,28 +133,30 @@
 
 <LibrarySnippet {...snippet} {livecode} {code} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
   <div slot='liveexample'>    
+    <p>Not animated:</p>
     <div class='button-block'>
       {#each channels.data as ch, index}
         <button on:click={() => {channels.current = index}}>{index + 1}</button>    
       {/each}
     </div>
 
-    <div style='height: 200px'>
+    <div style='height: 200px'>      
       <Channels {...channels}  {...props} {...selectprops} />
     </div>
    </div>    
 
    <div slot='example'>
-      <div class='button-block'>
-        {#each animatedChannels.data as ch, index}
-          <button on:click={() => {animatedChannels.current = index}}>{index + 1}</button>    
-        {/each}
-      </div>
-    
-      <div style='height: 200px'>
-        <Channels {...animatedChannels} {...props} />
-      </div>
-   </div>
+    <p>Animated:</p>
+    <div class='button-block'>
+      {#each animatedChannels.data as ch, index}
+        <button on:click={() => {animatedChannels.current = index}}>{index + 1}</button>    
+      {/each}
+    </div>
+  
+    <div style='height: 200px'>
+      <Channels {...animatedChannels} {...props} animate />
+    </div>
+  </div>
 </LibrarySnippet>
 
 

@@ -131,7 +131,10 @@
 <LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
   <div slot='liveexample'>    
     <SVG  {...props} {...selectprops} />
+    <br>
+    <hr>
+    <br>
+    <GridLayout {items} size={125} gap={10} outline/>
    </div>    
 </LibrarySnippet>
 
-<GridLayout {items} size={125} gap={10} outline/>

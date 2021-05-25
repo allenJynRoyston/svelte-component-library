@@ -19,7 +19,7 @@
   export let exactfit = false;
   export let props = null;
   export let disableAnimationOnMobile = false;
-
+  
   let ready = false
   let xpos;
   let currentChannel = current;  
@@ -48,11 +48,7 @@
     return table
   }
 
-  onMount(() => {
-    init()
-  })
-
-  const init = async() => {
+  onMount(async() => {
     ready = false;
     const table = createSizeTables()
     // set xxpos to be tweened
@@ -66,7 +62,8 @@
 
     await tick() 
     topDifference = ele?.getBoundingClientRect().top    
-  }
+  })
+
 
   const goto = async (channel) => {
     currentChannel = channel      
@@ -108,10 +105,7 @@
   $: {      
     backtotop && resetScrollTop()
     current != currentChannel && goto(current)     
-    topPos = ele?.getBoundingClientRect().top || 0
-    if(animate){
-      init()
-    }
+    topPos = ele?.getBoundingClientRect().top || 0    
   }  
 
 

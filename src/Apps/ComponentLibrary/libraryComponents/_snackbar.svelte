@@ -1,138 +1,118 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Link from '@components/Link/Link.svelte'  
+  import Button from '@components/Button/Button.svelte'
+  import Link from '@components/Link/Link.svelte'    
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'Snackbar',
+    importName: '@components/Snackbar/Snackbar.svelte',
+    properties: `
+
+    `,
+    props: {
+      closeOnClick: false,
+    }, 
+    dropdowns: [
+      {
+        label: 'type',
+        options: ['primary','success', 'warning', 'danger'], 
+        value: 0        
+      },
+      {
+        label: 'duration',
+        options: [null, 2000, 4000, 6000], 
+        value: 2        
+      }      
+    ]
+  }
+
+  $: livecode = `    
+    const addSnack:any =getContext('addSnack')
+    
+    const snacktime = () => {    
+      addSnack({
+        message: 'I am a snackbar!', 
+        type: 'primary', 
+        duration: 4000, 
+        closeOnClick: true,
+      })
+    }
+
+    <Button exactfit type='primary' onClick={() => {snacktime()}}>Add Snack</Button>
+     `  
 
   const addSnack:any =getContext('addSnack')
   
-  const addDurationSnack = (type) => {    
-    addSnack({message: 'I disappear after 4 seconds...', duration: 4000, type})
+  const snacktime = () => {    
+    addSnack({
+      message: 'I am a snackbar!', 
+      ...props,
+        ...selectprops,
+    })
   }
 
-  const addStaticSnack = (type) => {
-    addSnack({message: 'I will only go away when you manually close me.', type})
-  }  
 
-  const withLink = (type) => {
-    addSnack({component: Link, props: {text: "I'm a link component", href: '#library?component=snackbar&link=clicked', type, active: true}, type})
+  const withLink = () => {
+    addSnack({
+      component: Link, 
+      props: {
+        text: "I'm a link component", 
+        href: '#library?component=snackbar&link=clicked', 
+        type: props.type, 
+        active: true}, 
+        ...props,
+        ...selectprops,        
+      })
   }
 
-  const withButton = (type) => {
-    addSnack({component: Button, props: {text: "I'm a button component - click me!", type, exactfit: true, onClick: () => {
-      alert('do something...')
-    }}, type})
+  const withButton = () => {
+    addSnack({
+      component: Button, 
+      props: {
+        text: "I'm a button component - click me!", 
+        type: props.type, 
+        exactfit: true, 
+        onClick: () => {
+          alert('do something...')
+        }}, 
+        ...props,
+        ...selectprops,   
+    })
   }  
 
-  const closeOnClick = (type) => {
-    addSnack({closeOnClick: true, message: 'Close on click', type})
-  }  
+  const noDuration = () => {
 
+    const _selectprops = {...selectprops}
+    delete _selectprops.duration;
+
+    addSnack({
+      component: Link, 
+      props: {
+        text: "I'm a link component", 
+        href: '#library?component=snackbar&link=clicked', 
+        type: props.type, 
+        active: true}, 
+        ...props,
+        ..._selectprops,        
+      })
+  }
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Snackbar</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
 
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <Button exactfit type='primary' onClick={() => {snacktime()}}>Add Snack</Button>
+    <Button exactfit type='secondary' onClick={() => {noDuration()}}>No Duration Snack</Button>
+    <Button exactfit type='success' onClick={() => {withLink()}}>Add Snack (with link)</Button>
+    <Button exactfit type='warning' onClick={() => {withButton()}}>Add Snack (with component)</Button>
+   </div>    
+</LibrarySnippet>
 
-<CodeBlock open title='Import:' snippet={`
-  import Snackbar from '@components/Snackbar/Snackbar.svelte'
-  `} />
-
-<LibraryBlock title='Timers:'>
-  <div style='display: flex; gap: 10px'>
-    <Button type='primary' onClick={() => {addDurationSnack('primary')}}>Primary</Button>
-    <Button type='success' onClick={() => {addDurationSnack('success')}}>Success</Button>
-    <Button type='warning' onClick={() => {addDurationSnack('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {addDurationSnack('danger')}}>Danger</Button>
-  </div>
-</LibraryBlock>
-
-<LibraryBlock title='No Timers:'>  
-  <div style='display: flex; gap: 10px'>
-    <Button type='primary' onClick={() => {addStaticSnack('primary')}}>Primary</Button>
-    <Button type='success' onClick={() => {addStaticSnack('success')}}>Success</Button>
-    <Button type='warning' onClick={() => {addStaticSnack('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {addStaticSnack('danger')}}>Danger</Button>
-  </div>
-</LibraryBlock>
-
-<LibraryBlock title='With Components:'> 
-  <div style='display: flex; gap: 10px'>
-    <Button type='primary' onClick={() => {withLink('primary')}}>Primary</Button>
-    <Button type='success' onClick={() => {withLink('success')}}>Success</Button>
-    <Button type='warning' onClick={() => {withLink('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {withLink('danger')}}>Danger</Button>
-  </div>
-</LibraryBlock>
-
-<LibraryBlock title='With Components (Buttons):'> 
-  <div style='display: flex; gap: 10px'>
-    <Button type='primary' onClick={() => {withButton('primary')}}>Primary</Button>
-    <Button type='success' onClick={() => {withButton('success')}}>Success</Button>
-    <Button type='warning' onClick={() => {withButton('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {withButton('danger')}}>Danger</Button>
-  </div>
-</LibraryBlock>
-
-<LibraryBlock title='Close on click'> 
-  <div style='display: flex; gap: 10px'>
-    <Button type='primary' onClick={() => {closeOnClick('primary')}}>Primary</Button>
-    <Button type='success' onClick={() => {closeOnClick('success')}}>Success</Button>
-    <Button type='warning' onClick={() => {closeOnClick('warning')}}>Warning</Button>
-    <Button type='danger' onClick={() => {closeOnClick('danger')}}>Danger</Button>
-  </div>
-</LibraryBlock>
-
-
-<CodeBlock title='Properties:' snippet={`
-  export let snack = null;
-  export let onComplete = () => {};
-  export let onClick = () => {}
-`} />
-
-<CodeBlock open title='Example:' snippet={`
-  // ADDED IN ROOT COMPONENT **************
-    import SnackBar from '../../components/Snackbar/Snackbar.svelte'
-
-    //---------------------------  SNACKBAR CODE
-    let snack;
-    setContext('addSnack', (newSnack) => {
-      snack = newSnack
-    })
-    //---------------------------   
-
-    <SnackBar {snack} />  
-  // ******************************************
-
-
-  // ADDED IN CHILDREN COMPONENT **************
-  import {getContext} from 'svelte';
-
-  //----------------------------------------  SNACKBAR
-  const addSnack:any =getContext('addSnack')
-  
-  const newSnack = () => {
-    addSnack({message: 'Success message', duration: 4000, type: 'success'})
-  } 
-  //----------------------------------------
-  // ******************************************
-
-`} />  
-
-
-
-<style lang='scss' scoped>
-  button{
-    color: black;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-</style>

@@ -1,47 +1,43 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import LibraryBlock from '../components/LibraryBlock.svelte'
   import FileInput from '@components/FormComponents/FileInput/FileInput.svelte'
 
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
-  const theme:string = getContext('theme')
+  const snippet = {
+    name: 'Button',
+    importName: '@components/FormComponents/FileInput/FileInput.svelte',
+    properties: `
+    export let onChange = null
+    export let updateForm = null;    
 
-  const props = {
-
+    export let type = null  
+    export let placeholder = null
+    export let value = ''
+    export let key = null
+    export let label = null;
+    export let required = null;
+    export let accept = null
+    `
   }
+
+  $: livecode = `    
+    <FileInput ${fullstr} /> 
+     `
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Input</h2>
-  <div slot='right' style='display: flex; gap: 5px'>
-  </div>
-</TwoSlot>
-<hr>
 
-<CodeBlock open title='Import:' snippet={`
-  
-  `} />
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <FileInput {...props} {...selectprops} />
+   </div>    
 
-<CodeBlock title='Properties:' snippet={
-  `
-`} />
-
-<LibraryBlock title="Default: ">   
-  <FileInput {...props} />
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`     
-
-  <FileInput {...props} />
-`} />  
-
-
-
+</LibrarySnippet>
 
 <style lang='scss'>
 
