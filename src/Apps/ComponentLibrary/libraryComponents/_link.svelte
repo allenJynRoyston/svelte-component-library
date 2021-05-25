@@ -1,136 +1,57 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import Link from '@components/Link/Link.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'Link',
+    importName: '@components/Link/Link.svelte',
+    properties: `
+    export let href: string|null = null;
+    export let onClick = null;
+    export let text = null;
+    export let type = 'default'
+    export let target = null
+    export let classes = '';
+
+    export let active = false;
+    export let inherit = false;
+    export let underline = false;
+    export let exactfit = false;
+    `,
+    props: {
+      underline: false,
+      exactfit: false,
+      inherit: false,
+      active: true,
+      outline: false,
+    }, 
+    dropdowns: [
+      {
+        label: 'type',
+        options: [null, 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        value: 0        
+      }   
+    ]
+  }  
+
+  $: livecode = `    
+    <Link${fullstr}>
+      I am a link
+    </Link>   
+     `  
+   
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Link</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
 
-<CodeBlock open title='Import:' snippet={`
-  import Link from '@components/Link/Link.svelte'
-  `} />
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <Link {...props} {...selectprops} href='/' >I am a link</Link>
+   </div>    
+</LibrarySnippet>
 
-<CodeBlock title='Properties:' snippet={
-  `
-  export let href: string|null = null;  
-  export let onClick = null;
-  export let text = null;
-  
-  export let active = false;
-  export let inherit = false;  
-  export let underline = false;
-  export let fit = false;
-  `} />
-
-<LibraryBlock title='Default:' >
-  <Link href='/' >I am a link</Link>
-</LibraryBlock>
-
-<CodeBlock title='Example' snippet={
-  `
-  <Link href='/' >I am a link</Link>
-  `} />  
-
-<LibraryBlock title='Type:' >
-  <div style={`display: flex; gap: 10px`}>
-  <Link type='primary' active href='/' >Primary</Link>
-  <Link type='primary' underline active href='/' >Primary</Link>
-  
-  <Link type='secondary' active href='/' >Secondary</Link>
-  <Link type='secondary' underline active href='/' >Secondary</Link>  
-
-  <Link type='success' active href='/' >Success</Link>
-  <Link type='success' underline active href='/' >Success</Link>  
-  
-  <Link type='warning' active href='/' >Warning</Link>
-  <Link type='warning' underline active href='/' >Warning</Link>  
-  
-  <Link type='danger' active href='/' >Danger</Link>
-  <Link type='danger' underline active href='/' >Danger</Link>    
-  
-
-  <Link type='black' active href='/' >Black</Link>
-  <Link type='black' underline active href='/' >Black</Link>    
-  
-  <Link type='white' active href='/' >White</Link>
-  <Link type='white' underline active href='/' >White</Link>    
-    
-  </div>
-</LibraryBlock>
-
-<CodeBlock title='Example' snippet={
-  `
-  <Link href='/' >I am a link</Link>
-  `} />    
-
-<LibraryBlock title='Active:' >
-  <Link active href='/' >I am a link</Link>
-</LibraryBlock>
-
-<CodeBlock title='Example' snippet={
-  `
-  <Link active href='/' >I am a link</Link>
-  `} />    
-
-
-<LibraryBlock title='Underline:' >
-  <Link active underline href='/' >I am a link</Link>
-</LibraryBlock>
-
-<CodeBlock title='Example' snippet={
-  `
-  <Link active underline href='/' >I am a link</Link>
-  `} />      
-
-<LibraryBlock title='Fit: (Button wrapped in Link)' >
-  <h3>With Fit</h3>
-  <div style='display: flex'>
-    <Link fit href='/' >
-      <Button>Button 1</Button>
-    </Link>
-    <Link fit href='/' >
-      <Button type='secondary'>Button 2</Button>
-    </Link>  
-    <Link fit href='/' >
-      <Button type='success'>Button 3</Button>
-    </Link>      
-  </div>
-  <br><br>
-  <h3>No Fit</h3>
-  <div style='display: flex'>
-    <Link href='/' >
-      <Button>Button 1</Button>
-    </Link>
-    <Link href='/' >
-      <Button type='secondary'>Button 2</Button>
-    </Link>  
-    <Link href='/' >
-      <Button type='success'>Button 3</Button>
-    </Link>      
-  </div>  
-</LibraryBlock>
-
-
-<CodeBlock title='Example' snippet={
-  `
-  <div style='display: flex'>
-    <Link fit href='/' >
-      <Button>Button 1</Button>
-    </Link>
-    <Link fit href='/' >
-      <Button type='secondary'>Button 2</Button>
-    </Link>  
-    <Link fit href='/' >
-      <Button type='success'>Button 3</Button>
-    </Link>      
-  </div>
-  `} />        

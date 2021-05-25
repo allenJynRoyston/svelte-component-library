@@ -1,66 +1,56 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Loader from '@components/Loader/Loader'
+  import Loader from '@components/Loader/Loader.svelte'
 
-  const theme:string = getContext('theme')
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
-  let rounded = false;
-  let skinny = false;
+  const snippet = {
+    name: 'Loader',
+    importName: '@components/Loader/Loader.svelte',
+    properties: `
+    export let show = false
+    export let rounded = false;
+    export let type = 'primary'
+    export let skinny = false;
+    export let nobg = false;
+    export let fade = false;
+    export let nomargin = false;
+    `,
+    props: {
+      show: true,
+      rounded: false,
+      skinny: false,
+      nobg: false,
+      fade: false,
+      nomargin: false
+    }, 
+    dropdowns: [
+      {
+        label: 'type',
+        options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        value: 0        
+      }    
+    ]
+  }
+
+  $: livecode = `    
+    <Button ${fullstr} >
+      Content
+    </Button>   
+     `  
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Loader</h2>
-  <div slot='right' style='display: flex; gap: 5px'>
-    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={rounded} hollow={!rounded} nomargin onClick={() => {rounded = !rounded}} >Rounded</Button>
-    <Button  type={theme === 'dark' ? 'white' : 'black'} rounded useToggle toggled={skinny} hollow={!skinny} nomargin onClick={() => {skinny = !skinny}} >Skinny</Button>  
-  </div>
-</TwoSlot>
-<hr>
-<CodeBlock open title='Import:' snippet={`
-  import Loader from '@components/Loader/Loader'
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let show = false
-  export let rounded = false;
-  `} />
-
-<LibraryBlock title="Default:">
-    <Loader show {skinny} {rounded} />
-</LibraryBlock>
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <Loader {...props} {...selectprops} />
+   </div>    
+</LibrarySnippet>
 
 
-<CodeBlock open title='Example:' snippet={`
-  <Loader show ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  `} />  
-
-
-<LibraryBlock title="Type:">
-  <Loader show type='secondary' {skinny} {rounded} />
-  <Loader show type='magic'{skinny} {rounded} />
-  <Loader show type='success' {skinny} {rounded} />
-  <Loader show type='warning'{skinny} {rounded} />
-  <Loader show type='danger'{skinny} {rounded} />
-  <Loader show type='black'{skinny} {rounded} />
-  <Loader show type='white'{skinny} {rounded} />
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <Loader show type='secondary' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='magic' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='success' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='warning' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='danger' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='black' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-  <Loader show type='white' ${skinny ? 'skinny' : ''} ${rounded ? 'rounded' : ''}/>
-`} />  
 
 
 

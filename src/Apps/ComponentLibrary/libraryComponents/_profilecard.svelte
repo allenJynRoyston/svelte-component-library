@@ -1,48 +1,47 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
 
-  let props = {
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'ProfileCard',
+    importName: '@components/ProfileCard/ProfileCard.svelte',
+    properties: `
+    export let name = 'John Smith';
+    export let image = null;
+    export let bgColor = null;
+    export let props = null;
+    `
+  }
+
+  $: livecode = `    
+  <div style='height: 400px; display: flex; gap: 10px'>
+    <ProfileCard ${fullstr} />
+    <ProfileCard ${fullstr} />
+    <ProfileCard ${fullstr} />
+  </div>
+  `
+
+  let staticprops = {
     name: 'John Smith',
     bgColor: 'red'
   }
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>ProfileCard</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
-
-<CodeBlock open title='Import:' snippet={`
-  import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  `
-}/>
-
-<LibraryBlock title="dEFAULT:">
-  <div style='display: flex; gap: 10px'>
-    <ProfileCard {...props} />
-    <ProfileCard {...props} />
-    <ProfileCard {...props} />
-  </div>
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-
-
-`
-}/>  
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <div style='height: 400px; display: flex; gap: 10px'>
+      <ProfileCard {...staticprops} />
+      <ProfileCard {...staticprops} />
+      <ProfileCard {...staticprops} />
+    </div>
+   </div>    
+</LibrarySnippet>
 
 

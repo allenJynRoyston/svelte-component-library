@@ -170,9 +170,40 @@ $: {
   {/each}
 </div>
 
+<!-- .snackbar{
+  width: auto;
+  position: fixed;
+  bottom: 10px;
+  right: -20px;
+  z-index: 100;  
+  overflow: hidden;  
+  display: flex;
+  flex-direction: column-reverse;
 
+  @include desktop-and-up {  
+    width: 100%;
+    right: 30px;
+  }    
+}
+
+.snack{    
+  width: calc(100% - 60px);
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;    
+  font-size: 12px;
+  overflow: hidden;
+  background: var(--black-1);    
+
+  @include desktop-and-up {  
+    width: 300px;
+    min-width: 150px;
+  }       -->
 
 <style lang='scss'>
+  @import '../../scss/src/_media-queries.scss';
   .snackbar{
     position: fixed;
     bottom: 10px;
@@ -180,7 +211,7 @@ $: {
     z-index: 100;  
     overflow: hidden;  
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column-reverse;    
   }
 
   .snack{    
@@ -283,6 +314,7 @@ $: {
       flex: 1 1 auto;
       text-align: left;
       font-weight: bold;
+      padding: 15px 0;
 
       &.content-padding{
         padding: 10px 0;

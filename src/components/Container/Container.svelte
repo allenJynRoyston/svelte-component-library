@@ -1,9 +1,13 @@
-<script>
+<script lang='ts'>
+  import {getContext} from 'svelte';
+  
   export let offset = 0;
+
+  const theme:string = getContext('theme')
 
 </script>
 
-<div class={`root-component container offset-${offset}`}>
+<div class={`${theme === 'dark' ? 'dark-theme' : 'light-theme'} container offset-${offset}`}>
   <slot />
 </div>
 

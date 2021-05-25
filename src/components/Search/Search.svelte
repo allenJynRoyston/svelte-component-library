@@ -54,7 +54,7 @@
 
   {#if searchBtn || $isMobile}
     <Button nomargin exactfit size='small' type={isDark ? 'black' : 'white'} onClick={onClear}>
-      <SVG style='padding: 0 10px' icon='post' size={14} fill={!isDark ? colors.black[0].textColor : colors.white[0].textColor} />
+      <SVG style='padding: 0 10px' icon='post' size={14} fill={!isDark ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}  
 

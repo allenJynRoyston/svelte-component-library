@@ -1,17 +1,12 @@
 <script lang='ts'>
   export let type = 'primary'
-  export let bold = false;
 </script>
 
-<span class={`root-component color-text ${type}`} class:bold={bold}>
+<span class={`root-component color-text ${type}`} >
   <slot />
 </span>
 
 <style lang='scss' scoped>
-  .bold{
-    font-weight: 700
-  }
-
   .primary{
     color: var(--primary-0);
   }

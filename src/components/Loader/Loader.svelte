@@ -26,7 +26,7 @@
   margin: 2px 0;
 
   &.nobg{
-    background: transparent;
+    background: transparent!important
   }
 
   &.skinny{

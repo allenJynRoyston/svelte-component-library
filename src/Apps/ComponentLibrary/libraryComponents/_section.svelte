@@ -1,58 +1,43 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import Section from '@components/Section/Section.svelte'  
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'Section',
+    importName: '@components/Section/Section.svelte',
+    properties: `
+    export let outline = false;
+    export let className = null;
+    export let style = null;
+    export let paddingTop = false;
+    `,
+    props: {
+      outline: false,
+      paddingTop: false
+    }
+  }
+
+  $: livecode = `    
+    <Section ${fullstr}>
+      <h1>I render content with a consistent padding that shrinks on mobile to fit better.</h1>
+      <LoremBlock />
+    </Section>        
+     `
+
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Section</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
-
-<CodeBlock open title='Import:' snippet={`
-  import Section from '@components/Section/Section.svelte'  
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let outline = false;
-  export let className = null;
-  export let style = null;
-  `} />
-
-<LibraryBlock title="Default">
-  <Section >
-    <h1>I render content with a consistent padding that shrinks on mobile to fit better.</h1>
-    <LoremBlock />
-  </Section>
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <Section >
-    <h1>I render content with a consistent padding that shrinks on mobile to fit better.</h1>
-    <LoremBlock />
-  </Section>
-  `} />  
-
-
-<LibraryBlock title="Outline">
-  <Section outline>
-    <h1>I render content with a consistent padding that shrinks on mobile to fit better.</h1>
-    <LoremBlock />
-  </Section>
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <Section outline >
-    ...
-  </Section>
-  `} />  
+<LibrarySnippet {...snippet} {livecode}  bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <Section {...props} {...selectprops}>
+      <h1>I render content with a consistent padding that shrinks on mobile to fit better.</h1>
+      <LoremBlock />
+    </Section>    
+   </div>    
+</LibrarySnippet>

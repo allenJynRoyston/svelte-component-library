@@ -15,6 +15,7 @@
   export let disableSearch = false;
   export let watchParam = null
   export let activeTheme = 'primary'
+  export let ignoreForExample = false
 
   const colors:any = getContext('colors')
   const {openSidebar, urlParams, searchValue} = SiteStore;
@@ -83,7 +84,7 @@
                     <ul class='directory-links' slot='content'>
                       {#each pairs as {href, title}, index}
                         {#if $searchValue === null || partialMatch($searchValue, title)}
-                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component ? $urlParams.component === title : index === 0} onClick={() => {toggleCollapse(false)}} >
+                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} onClick={() => {toggleCollapse(false)}} >
                             {capitalize(title)} 
                           </Link>
                         {/if}        

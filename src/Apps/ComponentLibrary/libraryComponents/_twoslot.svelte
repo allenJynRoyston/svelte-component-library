@@ -1,46 +1,59 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
+
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'TwoSlot',
+    importName: '@components/TwoSlot/TwoSlot.svelte',
+    properties: `
+    export let style = null;
+    export let showLeft = false;
+    export let showRight = false;
+    export let outline = false; 
+    export let rounded = false;
+    `,
+    props: {
+      showLeft: true,
+      showRight: true,
+      outline: false,
+      rounded: false
+    }
+  }
+
+  $: livecode = `    
+    <TwoSlot${fullstr}>
+      <div slot='left'>
+        <h2>Left</h2>
+      </div>
+  
+      <div style='text-align: center'>
+        <p>Content that is placed inbetween.</p>
+      </div>
+      
+      <div slot='right'>
+        <button>Right</button>
+      </div>
+    </TwoSlot>   
+     `
+
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>TwoSlot</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <TwoSlot {...props} {...selectprops} >
+      <h2>Left</h2>
 
+      <div slot='right'>
+        <button>On the Right</button>
+      </div>
+    </TwoSlot>
+   </div>    
+</LibrarySnippet>
 
-<CodeBlock open title='Import:' snippet={`
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={`
-  export let style = null;
-  export let showRight = false;
-  export let showLeft = false
-  `} />
-
-<LibraryBlock title="Default:">
-  <TwoSlot showLeft showRight outline rounded>
-    <h2>Left</h2>
-
-    <div slot='right'>
-      <button>On the Right</button>
-    </div>
-  </TwoSlot>
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  <TwoSlot showLeft showRight >
-    <h2>Left</h2>
-
-    <div slot='right'>
-      <button>On the Right</button>
-    </div>
-  </TwoSlot>
-  `} />  
 

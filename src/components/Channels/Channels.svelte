@@ -48,7 +48,12 @@
     return table
   }
 
-  onMount(async() => {
+  onMount(() => {
+    init()
+  })
+
+  const init = async() => {
+    ready = false;
     const table = createSizeTables()
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
@@ -60,8 +65,8 @@
     channelReady && channelReady(currentChannel)    
 
     await tick() 
-    topDifference = ele?.getBoundingClientRect().top
-  })
+    topDifference = ele?.getBoundingClientRect().top    
+  }
 
   const goto = async (channel) => {
     currentChannel = channel      
@@ -104,6 +109,9 @@
     backtotop && resetScrollTop()
     current != currentChannel && goto(current)     
     topPos = ele?.getBoundingClientRect().top || 0
+    if(animate){
+      init()
+    }
   }  
 
 

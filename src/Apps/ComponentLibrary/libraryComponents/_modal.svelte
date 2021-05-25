@@ -158,32 +158,41 @@
 
 
 <LibraryBlock title="Examples:">
-  <Button exactfit onClick={openExampleBasic} >Basic</Button>
-  <Button exactfit onClick={openFormExample} >Form</Button>
-  <Button exactfit onClick={openCustomExample} >Custom</Button>
+  <div slot='right' style='display: flex; gap: 10px'>
+    <Button exactfit onClick={openExampleBasic} >Basic</Button>
+    <Button exactfit onClick={openFormExample} >Form</Button>
+    <Button exactfit onClick={openCustomExample} >Custom</Button>
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title="Location:">
-  <Button nomargin onClick={() => {openLocationExample('left')}} >Left</Button>  
-  <Button nomargin onClick={() => {openLocationExample('right')}} >Right</Button>  
-  <Button nomargin onClick={() => {openLocationExample('corner-right')}} >Corner right</Button>  
-  <Button nomargin onClick={() => {openLocationExample('corner-left')}} >Corner left</Button>  
+  <div style='display: flex; gap: 10px'>
+
+    <Button nomargin onClick={() => {openLocationExample('left')}} >Left</Button>  
+    <Button nomargin onClick={() => {openLocationExample('right')}} >Right</Button>  
+    <Button nomargin onClick={() => {openLocationExample('corner-right')}} >Corner right</Button>  
+    <Button nomargin onClick={() => {openLocationExample('corner-left')}} >Corner left</Button>  
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title="Types:">
-  <Button nomargin onClick={() => {openTypeExample('black')}} >Black (default)</Button>  
-  <Button nomargin onClick={() => {openTypeExample('white')}} >White</Button>  
-  <Button nomargin onClick={() => {openTypeExample('primary')}} >Primary</Button>  
-  <Button nomargin onClick={() => {openTypeExample('secondary')}} >Secondary</Button>  
-  <Button nomargin onClick={() => {openTypeExample('magic')}} >Magic</Button>  
-  <Button nomargin onClick={() => {openTypeExample('success')}} >Success</Button>  
-  <Button nomargin onClick={() => {openTypeExample('warning')}} >Warning</Button>  
-  <Button nomargin onClick={() => {openTypeExample('danger')}} >Danger</Button>  
+  <div style='display: flex; gap: 10px'>
+    <Button nomargin onClick={() => {openTypeExample('black')}} >Black (default)</Button>  
+    <Button nomargin onClick={() => {openTypeExample('white')}} >White</Button>  
+    <Button nomargin onClick={() => {openTypeExample('primary')}} >Primary</Button>  
+    <Button nomargin onClick={() => {openTypeExample('secondary')}} >Secondary</Button>  
+    <Button nomargin onClick={() => {openTypeExample('magic')}} >Magic</Button>  
+    <Button nomargin onClick={() => {openTypeExample('success')}} >Success</Button>  
+    <Button nomargin onClick={() => {openTypeExample('warning')}} >Warning</Button>  
+    <Button nomargin onClick={() => {openTypeExample('danger')}} >Danger</Button>  
+  </div>
 </LibraryBlock>
 
 <LibraryBlock title="Backdrop:">
-  <Button nomargin onClick={() => {openBackdropType('dark')}} >Dark</Button>  
-  <Button nomargin onClick={() => {openBackdropType('light')}} >Light</Button>  
+  <div style='display: flex; gap: 10px'>
+    <Button nomargin onClick={() => {openBackdropType('dark')}} >Dark</Button>  
+    <Button nomargin onClick={() => {openBackdropType('light')}} >Light</Button>  
+  </div>
 </LibraryBlock>
 
 

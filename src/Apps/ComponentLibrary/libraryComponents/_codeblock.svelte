@@ -1,45 +1,50 @@
 <script lang='ts'>  
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
+
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
-  const theme:string = getContext('theme')
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
+  const snippet = {
+    name: 'CodeBlock',
+    importName: '@components/CodeBlock/CodeBlock.svelte',
+    properties: `
+    export let title = null;
+    export let open = false;
+    export let nowrap = false;
+    export let show = false;
+    `,
+    props: {
+      open: true,
+      show: true,      
+      nowrap: false,  
+    }, 
+    dropdowns: [
+      {
+        label: 'title',
+        options: ['Title', 'Hello World'], 
+        value: 0        
+      }   
+    ]
+  }
+
+  $: livecode = `    
+    <CodeBlock ${fullstr} snippet={'
+      const greeting = "hello world"
+      <h1>{greeting}<h1>
+    '} />      
+     `  
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>CodeBlock</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
-
-<CodeBlock open title='Import:' snippet={`
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={`
-  export let title = null;
-  export let open = false;
-  export let snippet = '';     
-  export let lang = 'typescript'
-  `} />
-
-<LibraryBlock title="Default:">
-  <CodeBlock open title='Example:' snippet={`
-    const greeting = "hello world"
-    <h1>{greeting}<h1>
-  `} />  
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <CodeBlock open title='Example:' snippet={'
-    const greeting = "hello world"
-    <h1>{greeting}<h1>
-  '} />  
-  `} />  
-
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <CodeBlock {...props} {...selectprops} snippet={`
+      const greeting = "hello world"
+      <h1>{greeting}<h1>
+    `} />  
+   </div>    
+</LibrarySnippet>

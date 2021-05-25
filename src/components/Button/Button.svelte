@@ -27,6 +27,8 @@
 
   $: iconSize = () => {
     switch(size){
+      case 'tiny': 
+      return 8         
       case 'small': 
       return 10      
       case 'normal': 
@@ -103,14 +105,17 @@
 
     &.small{
       font-size: 9px;
-      height: 25px;
+      height: 30px;
     }    
 
-
+    &.tiny{
+      font-size: 9px;
+      height: 20px;
+    }    
 
     &.large{
       font-size: 14px;
-      height: 40px;
+      height: 50px;
     }
     
     &.rounded{
@@ -126,20 +131,18 @@
       background: var(--black-3);
     }    
 
-    @include tablet-portrait-and-up {
-      font-size: 14px;
-      height: 40px;
+    // @include tablet-portrait-and-up {
+    //   font-size: 14px;
+    //   height: 40px;
             
-      &.small{
-        font-size: 10px;
-        height: 30px;
-      }    
+    //   &.small{
+    //     font-size: 10px;
+    //   }    
 
-      &.large{
-        font-size: 18px;
-        height: 50px;
-      }
-    }    
+    //   &.large{
+    //     font-size: 18px;
+    //   }
+    // }    
                    
 
     &.white{      

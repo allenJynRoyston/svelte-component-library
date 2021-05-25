@@ -7,7 +7,7 @@
   export let outline:boolean = false;
   export let items:any = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
 
-  const style = () => {    
+  $: style = () => {    
     return `grid-auto-rows: ${size}px; grid-template-columns: repeat(auto-fill, minmax(${size}px, 1fr)); grid-gap: ${gap}px`
   }
 

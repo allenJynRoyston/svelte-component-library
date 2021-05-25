@@ -11,7 +11,8 @@
   export let classes = '';
   
   export let underline = false;
-  export let fit = false;
+  export let exactfit = false;
+  export let outline = false;
   
   //---------------------------
 
@@ -29,7 +30,7 @@
 
 </script>
 
-<a class={`link root-component ${type} ${classes}`} {target} {href} rel="noreferrer"  class:fit={fit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a class={`link root-component ${type} ${classes}`} {target} {href} rel="noreferrer"  class:outline={outline} class:exactfit={exactfit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 
@@ -39,11 +40,17 @@
     cursor: pointer;
     text-decoration: none;
     margin-bottom: 5px;
+    width: 100%;
+
     
-    &.fit{
+    &.exactfit{
       padding: 0;
       margin: 0;
       width: 100%;
+    }
+
+    &.outline{
+      border: 1px dashed var(--white-0);
     }
 
     &.inherit{
@@ -90,7 +97,7 @@
       &.active{
         color: var(--magic-0)!important;
         &.underline{
-          border-bottom: 2px solid var(--primary-1)!important;
+          border-bottom: 2px solid var(--magic-1)!important;
         }
       }      
     }    

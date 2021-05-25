@@ -1,36 +1,44 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import Search from '@components/Search/Search.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'Search',
+    importName: '@components/Search/Search.svelte',
+    properties: `
+    export let debounceTime = 0;
+    export let hideClear = false;
+    export let searchBtn = false;
+    export let onSearch = () => {}
+
+    `,
+    props: {
+      hideClear: false,
+      searchBtn: false
+    }, 
+    dropdowns: [
+      {
+        label: 'debounceTime',
+        options: [null, 300, 700, 1000], 
+        value: 0        
+      }     
+    ]
+  }
+
+  $: livecode = `    
+    <Search ${fullstr} />
+     `  
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Search</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <Search  {...props} {...selectprops} />
+  </div>    
 
-<CodeBlock open title='Import:' snippet={`
-  import Search from '@components/Search/Search'
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let debounceTime = 0;
-  export let hideClear = false;
-  export let onSearch = () => {}  
-  `} />
-
-<LibraryBlock title="Default">
-  <Search />
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <Search />
-  `} />  
+</LibrarySnippet>

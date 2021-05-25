@@ -34,7 +34,7 @@
     if(!!props){
       for (const [key, value] of Object.entries(props)) {
         if(value){
-          str += `${key} `
+          str += ` ${key}`
         }
       }    
     }
@@ -44,8 +44,10 @@
     if(!!dropdowns){
       dropdowns.forEach(x => {
         const {label, options, value} = x
-        str += `${label}='${options[value]}'`
-        selectprops = {...selectprops, [label]: options[value]}
+        if(options[value] !== null){
+          str += ` ${label}='${options[value]}'`
+          selectprops = {...selectprops, [label]: options[value]}
+        }
       })
     }
 
@@ -67,11 +69,11 @@
         options, 
         value,        
         defaultOption: 'Select an option',
-        onInitFilter: (val, options) => {   
+        onInitFilter: (val, options) => {             
           return options.find(x => x.id === val)
         },
         onChangeFilter: (val) => {    
-          dropdowns[0].value = val.id
+          dropdowns[index].value = val.id
           update()
         }
       }  
@@ -89,6 +91,7 @@
 </script>
 
 <TwoSlot showLeft showRight>
+  <h3>{name}</h3>
   <div slot='right' style='display: flex; gap: 5px'>
     <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
     <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
@@ -102,33 +105,35 @@
   import ${name} from '${importName}'
   `} />
 
+{#if !!properties}
+  <CodeBlock open show={$showProperties} title='Properties:' snippet={`
+    ${properties}
+    `} />
+{/if}
 
-<CodeBlock open show={$showProperties} title='Properties:' snippet={`
-  ${properties}
-  `} />
-
-
-<LibraryBlock flex title="Props: ">
-  <div class='props-container'>
-    {#if listofdropdowns().length > 0}        
-      <div class='props-wrap'>
-        {#each listofdropdowns() as props}
-          <Select {...props} exactfit={!$isTabletAndBelow} />
-        {/each}   
-      </div>
-    {/if}
-    
-    {#if !!props}
-      <div class='props-wrap' style="transform: translateY(3px)">      
-        {#each Object.entries(props) as [key, pair]}
-          <Button exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
-            {key}
-          </Button>
-        {/each}            
-      </div>    
-    {/if}
-  </div>
-</LibraryBlock>  
+{#if !!props || listofdropdowns().length > 0}
+  <LibraryBlock flex title="Props: ">
+    <div class='props-container'>
+      {#if !!props}
+        <div class='buttons'>
+          {#each Object.entries(props) as [key, pair]}
+            <Button exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
+              {key}
+            </Button>
+          {/each}            
+        </div>
+      {/if}  
+      
+      {#if listofdropdowns().length > 0}    
+        <div class='dropdowns'>
+          {#each listofdropdowns() as props}
+            <Select {...props} />
+          {/each}   
+        </div>    
+      {/if}
+    </div>
+  </LibraryBlock>  
+{/if}
 
 {#if !!livecode}
   <LibraryBlock title='Live:'>
@@ -157,26 +162,23 @@
   @import '../../../scss/src/_media-queries.scss';
 
   .props-container{
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
-    gap: 10px;
-    flex-direction: column;
-    @include tablet-landscape-and-up{
-      flex-direction: row;
-    }         
+    width: 100%;          
   }
 
-  .props-wrap{
-    flex: 1;
-    display: flex; 
-    gap: 5px; 
+  .dropdowns{
     width: 100%;
+    display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
-    @include tablet-landscape-and-up{
-      flex-wrap: none;
-    }             
+    gap: 5px;   
   }
+
+  .buttons{
+    width: 100%;    
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;   
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+  }
+
 </style>

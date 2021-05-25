@@ -1,90 +1,84 @@
-<script>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+<script lang='ts'>
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import ColumnLayout from '@components/Layout/ColumnLayout'
+  import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
+  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'ColumnLayout',
+    importName: '@components/ColumnLayout/ColumnLayout.svelte',
+    properties: `
+    export let links = []
+    export let currentIndex = null;
+    export let hidebtn:boolean = false;
+    export let side = 'left'
+    export let disableSearch = false;
+    export let watchParam = null
+    export let activeTheme = 'primary'
+    `,
+    props: {
+      hidebtn: false,
+      disableSearch: false,
+    }, 
+    dropdowns: [
+      {
+        label: 'activeTheme',
+        options: [null, 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        value: 0        
+      },
+      {
+        label: 'side',
+        options: [null, 'left', 'right'], 
+        value: 0        
+      }      
+    ]
+  }  
 
   const links = [
-    {title: 'Link_1', href: '#' },    
-    {title: 'Link_2', href: '#' },    
-    {title: 'Link_3', href: '#' }   
+    {title: 'Link 1', href: '#', section: 'Section 1' },    
+    {title: 'Link 2', href: '#', section: 'Section 1' },    
+    {title: 'Link 3', href: '#', section: 'Section 1' },    
+    {title: 'Link 1', href: '#', section: 'Section 2' },    
+    {title: 'Link 2', href: '#', section: 'Section 2' },    
+    {title: 'Link 3', href: '#', section: 'Section 2' },    
   ]
 
 
-  const links2 = [
-    {title: 'Link_1', href: '#' },    
-    {title: 'Link_2', href: '#' },    
-    {title: 'Link_3', href: '#' }   
-  ]
+
+  $: livecode = `    
+    const links = [
+      {title: 'Link 1', href: '#', section: 'Section 1' },    
+      {title: 'Link 2', href: '#', section: 'Section 1' },    
+      {title: 'Link 3', href: '#', section: 'Section 1' },    
+      {title: 'Link 1', href: '#', section: 'Section 2' },    
+      {title: 'Link 2', href: '#', section: 'Section 2' },    
+      {title: 'Link 3', href: '#', section: 'Section 2' },    
+    ]
+
+    <ColumnLayout {links} ${fullstr}>
+      <div style='padding: 0 10px'>
+        <LoremBlock />
+      </div>
+    </ColumnLayout>
+     `  
+
 
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>GridLayout</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
-
-<CodeBlock open title='Import:' snippet={`
-  import ColumnLayout from '@components/Layout/ColumnLayout'
-  `} />
-
-<CodeBlock title='Properties:' snippet={`
-  export let links = []
-  export let currentIndex = null;
-  export let side = 'left'
-  `} />
-
-<LibraryBlock title='Default' >
-  <div style='height: 300px'>
-    <ColumnLayout {links} currentIndex={1} >
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <ColumnLayout {links} {...props} {...selectprops} ignoreForExample>
       <div style='padding: 0 10px'>
-        <h3>I am content!</h3>
+        <LoremBlock />
       </div>
     </ColumnLayout>
-  </div>
-</LibraryBlock>
+   </div>    
 
-<CodeBlock open title='Example:' snippet={`
-  const links = [
-    {title: 'Header', href: '#header' },    
-    {title: 'Footer', href: '#footer' },    
-    {title: 'Button', href: '#button' }   
-  ]
 
-  <ColumnLayout {links} currentIndex={1} >
-    <div style='padding: 0 10px'>
-      <h3>I am content!</h3>
-    </div>
-  </ColumnLayout>
-    `} />  
-
-<LibraryBlock title='Right Side' >
-  <div style='height: 300px'>
-    <ColumnLayout links={links2} currentIndex={1} side='right' >
-      <div style='padding: 0 10px'>
-        <h3>I am content!</h3>
-      </div>
-    </ColumnLayout>
-  </div>
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  const links = [
-    {title: 'Header', href: '#header' },    
-    {title: 'Footer', href: '#footer' },    
-    {title: 'Button', href: '#button' }   
-  ]
-
-  <ColumnLayout {links} currentIndex={1} >
-    <div style='padding: 0 10px'>
-      <h3>I am content!</h3>
-    </div>
-  </ColumnLayout>
-    `} />  
-
+</LibrarySnippet>

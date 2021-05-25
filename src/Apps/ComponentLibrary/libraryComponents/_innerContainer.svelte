@@ -1,33 +1,48 @@
 <script lant='ts'>  
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'InnerContainer',
+    importName: '@components/InnerContainer/InnerContainer.svelte',
+    properties: `
+    export let height = '100vh'
+    export let adjustPx = 0
+    `,
+    dropdowns: [
+      {
+        label: 'height',
+        options: ['100vh', '75vh', '50vh'], 
+        value: 0        
+      }    
+    ]    
+  }
+
+  $: livecode = `    
+    <InnerContainer ${fullstr}>
+      <strong>
+        Automatically applies a scrollbar if wrapped in a container that is too small for the content.
+        Can set the height manually if you want finer control over how much scroll is available.
+      </strong>
+      <LoremBlock />
+      <LoremBlock />
+      <LoremBlock />
+    </InnerContainer>
+     `
+
+
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>InnerContainer</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
-
-<CodeBlock open title='Import:' snippet={`
-  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let height = '100vh'
-  `} />
-
-<LibraryBlock title="Default:">
-  <div style='height: 100px'>
-    <InnerContainer height='50vh'>
+<LibrarySnippet {...snippet} {livecode}bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <InnerContainer {...props} {...selectprops}>
       <strong>
         Automatically applies a scrollbar if wrapped in a container that is too small for the content.
         Can set the height manually if you want finer control over how much scroll is available.
@@ -36,21 +51,7 @@
       <LoremBlock />
       <LoremBlock />
     </InnerContainer>
-  </div>
-</LibraryBlock>
+  </div>    
+</LibrarySnippet>
 
-
-<CodeBlock open title='Example:' snippet={`
-  <div style='height: 100px'>
-    <InnerContainer height='50vh'>
-      <strong>
-        Automatically applies a scrollbar if wrapped in a container that is too small for the content.
-        Can set the height manually if you want finer control over how much scroll is available.
-      </strong>
-      <LoremBlock />
-      <LoremBlock />
-      <LoremBlock />
-    </InnerContainer>
-  </div>
-  `} />  
 

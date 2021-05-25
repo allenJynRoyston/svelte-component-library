@@ -1,53 +1,33 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import ThreeSlot from '@components/ThreeSlot/ThreeSlot.svelte'
 
-</script>
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
-<TwoSlot showLeft showRight>
-  <h2>ThreeSlot</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
+  const snippet = {
+    name: 'ThreeSlot',
+    importName: '@components/ThreeSlot/ThreeSlot.svelte',
+    properties: `
+    export let style = null;
+    export let showLeft = false;
+    export let showRight = false;
+    export let outline = false; 
+    export let rounded = false;
+    `,
+    props: {
+      showLeft: true,
+      showRight: true,
+      outline: false,
+      rounded: false
+    }
+  }
 
-
-<CodeBlock open title='Import:' snippet={`
-  import ThreeSlot from '@components/ThreeSlot/ThreeSlot.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={`
-  export let style = null;
-  export let showLeft = false;
-  export let showRight = false;
-  export let showCenter = false;
-  `} />
-
-<LibraryBlock title="Default:">
-  <ThreeSlot showLeft showRight outline rounded >
-    <div slot='left'>
-      <h2>Left</h2>
-    </div>
-
-    <div style='text-align: center'>
-      <p>Content that is placed inbetween.</p>
-    </div>
-    
-    <div slot='right'>
-      <button>Right</button>
-    </div>
-  </ThreeSlot>
-</LibraryBlock>
-
-
-
-<CodeBlock open title='Example:' snippet={`
-    <ThreeSlot showLeft showRight outline rounded >
+  $: livecode = `    
+    <ThreeSlot${fullstr}>
       <div slot='left'>
         <h2>Left</h2>
       </div>
@@ -57,9 +37,29 @@
       </div>
       
       <div slot='right'>
-        <Button>Right</Button>
+        <button>Right</button>
+      </div>
+    </ThreeSlot>   
+     `
+
+</script>
+
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <ThreeSlot {...props} {...selectprops} >
+      <div slot='left'>
+        <h2>Left</h2>
+      </div>
+  
+      <div style='text-align: center'>
+        <p>Content that is placed inbetween.</p>
+      </div>
+      
+      <div slot='right'>
+        <button>Right</button>
       </div>
     </ThreeSlot>
-`} />  
+   </div>    
+</LibrarySnippet>
 
 

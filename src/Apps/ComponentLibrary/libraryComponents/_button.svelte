@@ -36,14 +36,21 @@
       hollow: false,
       disabled: false,
       nomargin: false,
-      exactfit: true      
+      exactfit: true,
+      useToggle: false,  
+      toggled: false
     }, 
     dropdowns: [
       {
         label: 'type',
         options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        
-      }
+      },
+      {
+        label: 'size',
+        options: ['tiny', 'small', 'normal', 'large'], 
+        value: 0        
+      }      
     ]
   }
 
@@ -91,7 +98,7 @@
     </Button>
    </div>    
 
-   <div slot='example' style='display: flex; gap: 2px; flex-wrap: wrap'>
+   <div slot='example'>
     <Button type='primary' {...props}>
       Primary
     </Button>

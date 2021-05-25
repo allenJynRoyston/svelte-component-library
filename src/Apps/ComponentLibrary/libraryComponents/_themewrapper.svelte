@@ -1,65 +1,57 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
+  
   import ExampleBlock from '../components/ExampleBlock.svelte'
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'  
 
-  const theme:string = getContext('theme')
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
+
+  const snippet = {
+    name: 'ThemeWrapper',
+    importName: '@components/ThemeWrapper/ThemeWrapper.svelte',
+    properties: `
+    export let theme = 'light'
+    export let delay = 1;
+    export let ele = null;
+    export let lock = false;
+    export let alwayslight = false;
+    export let alwaysdark = false;
+    export let refresh = true;
+    export let themeWatch = false;    
+    `,
+    props: {
+      lock: false,
+      alwayslight: true,
+      alwaysdark: false,
+      themeWatch: false,
+      refresh: true,
+    }, 
+    dropdowns: [
+      {
+        label: 'theme',
+        options: ['light', 'dark'], 
+        value: 0        
+      }    
+    ]
+  }
+
+  $: livecode = `    
+    <ThemeWrapper ${fullstr} >
+      <ExampleBlock />
+    </ThemeWrapper>   
+     `
+
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>ThemeWrapper</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
 
-
-<CodeBlock open title='Import:' snippet={`
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={`
-  export let theme = 'light'
-  export let delay = 1;
-  export let refresh = true;
-  export let ele = null;
-  export let themeWatch = false;
-  export let lock = false;
-  `} />
-
-
-
-<LibraryBlock title="Light Theme:" >
-  <ThemeWrapper  alwayslight>
-    <ExampleBlock />
-  </ThemeWrapper> 
-</LibraryBlock>
-
-<LibraryBlock title="Dark Theme:" >
-  <ThemeWrapper alwaysdark>
-    <ExampleBlock />
-  </ThemeWrapper>   
-</LibraryBlock>
-
-
-
-<CodeBlock open title='Example:' snippet={`
-  <ThemeWrapper  alwayslight>
-    <ExampleBlock />
-  </ThemeWrapper> 
-
-
-  <ThemeWrapper alwaysdark>
-    <ExampleBlock />
-  </ThemeWrapper>   
-  `} />  
-
-
-
-
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <ThemeWrapper  {...props} {...selectprops}>
+      <ExampleBlock />
+    </ThemeWrapper> 
+   </div>    
+</LibrarySnippet>

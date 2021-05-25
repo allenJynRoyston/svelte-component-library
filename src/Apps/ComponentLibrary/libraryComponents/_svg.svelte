@@ -1,11 +1,14 @@
 <script lang="ts">
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import SVG from '@components/SVG/SVG.svelte'
   import GridLayout from '@components/Layout/GridLayout.svelte'
   import SVGPreview from '../components/SVGPreview.svelte'
+
+  let fullstr = '';
+  let propstr = '';
+  let props; 
+  let selectprops; 
 
   const svgs = [
     'dots',
@@ -77,7 +80,47 @@
     'menu',
     'hashtag',
     'refresh'
-  ]
+  ]  
+
+  const snippet = {
+    name: 'SVG',
+    importName: '@components/SVG/SVG.svelte',
+    properties: `
+    export let size:number = 14; 
+    export let fill:string|null = null;
+    export let icon:IconTypes = null
+    export let index:number|null = null;
+    export let title:string|null = null;
+    export let style:string|null = null;
+    export let onClick:(index) => void|null = null;
+    export let ignoreTheme = false;
+    `,
+    props: {
+      ignoreTheme: false
+    }, 
+    dropdowns: [
+      {
+        label: 'fill',
+        options: [null, 'red', 'green', 'blue'], 
+        value: 0        
+      },      
+      {
+        label: 'size',
+        options: [10, 14, 18, 22, 26, 30, 50 , 100], 
+        value: 6        
+      },
+      {
+        label: 'icon',
+        options: svgs, 
+        value: 0        
+      }            
+    ]
+  }
+
+  $: livecode = `    
+    <SVG${fullstr}/>
+     `
+   
 
   export let items = svgs.map(svg =>{
     return {component: SVGPreview, props: {icon: svg, title: svg}}
@@ -85,71 +128,10 @@
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>SVG</h2>
-  <div slot='right' style='display: flex; gap 10px'>
-  </div>
-</TwoSlot>
-<hr>
+<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+  <div slot='liveexample'>    
+    <SVG  {...props} {...selectprops} />
+   </div>    
+</LibrarySnippet>
 
-<CodeBlock open title='Import:' snippet={`
-  import SVG from '@components/SVG/SVG.svelte'
-  `} />
-
-<CodeBlock title='Properties:' snippet={
-  `
-  export let size:number = 14;
-  export let fill:string|null = null;
-  export let icon:IconTypes = null
-  export let index:number|null = null;
-  export let title:string|null = null;
-  export let style:string|null = null;
-  export let onClick:(index) => void|null = null;
-  `} />
-
-<LibraryBlock title="Default">
-  <GridLayout {items} size={125} gap={10} outline/>
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-    <SVG icon='home' size={14} />
-    `} />
-
-<LibraryBlock title="Size: ">
-  <SVG icon='home' size={50} />
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  <SVG icon='home' size={50} />
-  `} />    
-
-<LibraryBlock title="Fill: ">
-  <SVG icon='home' size={50} fill='red' />
-</LibraryBlock>
-
-<CodeBlock open title='Example:' snippet={`
-  <SVG icon='home' size={50} ignoreTheme fill='red' />
-  `} />  
-
-<LibraryBlock title="Ignore Theme: ">
-  <div style='background: white; padding: 20px'>
-    <SVG icon='home' size={50} ignoreTheme />
-  </div>
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <div style='background: white; padding: 20px'>
-    <SVG icon='home' size={50} ignoreTheme />
-  </div>
-  `} />    
-
-<LibraryBlock title="Title (on hover): ">
-  <SVG icon='home' size={50} title='I am the title' />
-</LibraryBlock>
-
-
-<CodeBlock open title='Example:' snippet={`
-  <SVG icon='home' size={50} title='I am the title' />
-  `} />    
+<GridLayout {items} size={125} gap={10} outline/>
