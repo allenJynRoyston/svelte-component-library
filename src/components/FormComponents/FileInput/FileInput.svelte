@@ -73,7 +73,7 @@
 
 </script>
 
-<div class={`root-component fileinput-container`} data-testid='fileinput-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`fileinput-container ${theme}-theme`} data-testid='fileinput-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label>{label}</label>
   {/if}

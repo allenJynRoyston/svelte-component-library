@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, getContext } from 'svelte';
   import { validate } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -35,7 +35,7 @@
     setTimeout(() => { updateParent(value) })
   }
 
-
+  const theme:string = getContext('theme');
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -81,7 +81,7 @@
 
 </script>
 
-<div class={`root-component input-container`} test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`input-container ${theme}-theme`} test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}

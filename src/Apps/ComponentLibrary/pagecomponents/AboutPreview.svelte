@@ -15,7 +15,7 @@
 </script>
 
 
-<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
+<ThemeWrapper >
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -38,7 +38,7 @@
   </Container>
 </ThemeWrapper>
 
-<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
+<ThemeWrapper invert>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -59,7 +59,7 @@
   </Container>
 </ThemeWrapper>
 
-<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
+<ThemeWrapper>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -87,7 +87,7 @@
   </Container>
 </ThemeWrapper>
 
-<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
+<ThemeWrapper invert>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -109,7 +109,7 @@
 </ThemeWrapper>
 
 
-<ThemeWrapper alwaysdark={theme === 'dark'} alwayslight={theme === 'light'}>
+<ThemeWrapper>
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>
@@ -128,7 +128,7 @@
 </ThemeWrapper>
 
 
-<ThemeWrapper alwaysdark={theme === 'light'} alwayslight={theme === 'dark'}>
+<ThemeWrapper invert >
   <Container offset={2}>
     <Section>
       <section class='section-wrap'>

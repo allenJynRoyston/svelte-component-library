@@ -37,6 +37,7 @@
       disabled: false,
       nomargin: false,
       exactfit: true,
+      fullOnMobile: false,
       useToggle: false,  
       toggled: false
     }, 

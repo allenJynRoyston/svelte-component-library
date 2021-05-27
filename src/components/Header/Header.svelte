@@ -1,4 +1,5 @@
 <script lang='ts'>  
+  import { getContext } from 'svelte';
   import { SiteStore } from '@store/store';
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import Link from '@components/Link/Link.svelte'
@@ -19,13 +20,15 @@
 
   const {openSidebar, openNotch} = SiteStore;
 
+  const theme:string = getContext('theme');
+
   $openNotch = notchEle?.show === undefined ? true : !!notchEle?.show
 
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
 
 </script>
 
-<nav class={`root-component`} style={!!bgSrc ? imageStyle: null}>
+<nav class={`nav-header ${theme}-theme`} style={!!bgSrc ? imageStyle: null}>
   
     <TwoSlot showLeft showRight>
       {#if showLayoutButton}

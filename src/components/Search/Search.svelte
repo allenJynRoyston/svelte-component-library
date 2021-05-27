@@ -12,8 +12,6 @@
   export let onSearch = () => {}
 
   const {isMobile} = DeviceStore;
-
-
   const {searchValue} = SiteStore;
   let currentvalue = null;
   
@@ -35,7 +33,7 @@
 
 
   const colors:any = getContext('colors');
-  const isDark = getContext('theme') === 'dark'
+  const theme:string = getContext('theme')
 
 
   let render = true;
@@ -44,23 +42,23 @@
 
 </script>
 
-<div class={`root-component search`} bind:this={ele}>
-  <Button nomargin exactfit size='small' type={isDark ? 'black' : 'white'} onClick={onGo}>
-    <SVG icon='search' size={10} fill={!isDark ? colors.black[0].color : colors.white[0].color} />
+<div class={`search ${theme}-theme`} bind:this={ele}>
+  <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onGo}>
+    <SVG icon='search' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
   </Button>
 
   <Input noBottomMargin onKeypress={onKeypress} value={$searchValue || ''} />
 
 
   {#if searchBtn || $isMobile}
-    <Button nomargin exactfit size='small' type={isDark ? 'black' : 'white'} onClick={onClear}>
-      <SVG style='padding: 0 10px' icon='post' size={14} fill={!isDark ? colors.black[0].color : colors.white[0].color} />
+    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
+      <SVG style='padding: 0 10px' icon='post' size={14} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}  
 
   {#if !hideClear && !$isMobile}
-    <Button nomargin exactfit size='small' type={isDark ? 'black' : 'white'} onClick={onClear}>
-      <SVG icon='cross' size={10} fill={!isDark ? colors.black[0].color : colors.white[0].color} />
+    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
+      <SVG icon='cross' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}
 

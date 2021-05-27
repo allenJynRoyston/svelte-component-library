@@ -8,7 +8,6 @@
 
   const colors:any = getContext('colors');
   const theme:string = getContext('theme');
-  const isDark = theme === 'dark'
   
   let ele;
   let renderItems = [...items]
@@ -46,7 +45,7 @@
 </script>
 
 {#if renderItems.length > 0}
-  <table class={`root-component shopping-cart`} bind:this={ele}>
+  <table class={`shopping-cart ${theme}-theme`} bind:this={ele}>
     <tbody>
       <tr class='table-header'>
         {#each header as {title, align, applyClass}}
@@ -58,7 +57,7 @@
         <tr>
           <td class={`${returnClass(0)}`} style={`${returnAlign(0)}`} >
             <button on:click={() => {deleteItem(index)}}>
-              <SVG icon='bin' fill={!isDark ? colors.black[0].color : colors.white[0].color} />
+              <SVG icon='bin' fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
             </button>          
           </td>        
           <td class={`${returnClass(1)}`} style={`${returnAlign(1)}`}>

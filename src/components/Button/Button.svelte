@@ -17,6 +17,7 @@
   export let hollow = false;
   export let target = null;
   export let exactfit = false;
+  export let fullOnMobile = false;
   export let nomargin = false;  
 
   export let useToggle = false;
@@ -43,7 +44,7 @@
 
 {#if !!href}
   <Link exactfit {href} {target} >
-    <button class={`root-component button ${type} ${size} `} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+    <button class={`button ${type} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}
@@ -53,7 +54,7 @@
     </button>    
   </Link>
 {:else}
-  <button class={`root-component button ${type} ${size}`} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+  <button class={`button ${type} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}
@@ -94,8 +95,13 @@
     }
 
     &.exactfit{
-      margin: 0;   
       width: auto!important;
+    }
+
+    &.fullOnMobile{
+      @include mobile-only {      
+        width: 100%!important;
+      }
     }
 
     &.disabled{
@@ -115,7 +121,7 @@
 
     &.large{
       font-size: 14px;
-      height: 50px;
+      height: 40px;
     }
     
     &.rounded{
@@ -129,20 +135,7 @@
 
     &:active{
       background: var(--black-3);
-    }    
-
-    // @include tablet-portrait-and-up {
-    //   font-size: 14px;
-    //   height: 40px;
-            
-    //   &.small{
-    //     font-size: 10px;
-    //   }    
-
-    //   &.large{
-    //     font-size: 18px;
-    //   }
-    // }    
+    }     
                    
 
     &.white{      

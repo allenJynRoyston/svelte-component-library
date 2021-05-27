@@ -17,7 +17,9 @@
   export let activeTheme = 'primary'
   export let ignoreForExample = false
 
-  const colors:any = getContext('colors')
+  const colors:any = getContext('colors');
+  const theme:string = getContext('theme');
+
   const {openSidebar, urlParams, searchValue} = SiteStore;
 
   const toggleCollapse = (state = null) => {
@@ -61,11 +63,11 @@
 
 </script>
 
-<div class={`root-component column-layout`} >
+<div class={`column-layout ${theme}-theme`} >
     <div class='layout-inner'>
       <div class={`directory ${side}`} class:collapse={opened}>
         {#if !hidebtn || opened}
-          <button class={`root-component collapse-btn`} class:collapse={opened} on:click={() => {toggleCollapse(false)}}>
+          <button class={`collapse-btn ${theme}-theme`} class:collapse={opened} on:click={() => {toggleCollapse(false)}}>
             <SVG icon={opened ? 'arrow-left' : 'arrow-right'} fill={colors.white[0].color} size={16} />
           </button>
         {/if}

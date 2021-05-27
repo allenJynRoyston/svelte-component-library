@@ -1,6 +1,6 @@
 <script lang='ts'>  
   import {onMount, getContext} from 'svelte';
-import { get } from 'svelte/store';
+  import { get } from 'svelte/store';
 
   export let size:number = 14; 
   export let fill:string|null = null;
@@ -11,10 +11,11 @@ import { get } from 'svelte/store';
   export let onClick:(index) => void|null = null;
   export let ignoreTheme = false;
   
-  const isDark = getContext('theme') === 'dark';
+  const colors:any = getContext('colors');
+  const theme:string = getContext('theme');
+  const isDark = theme === 'dark';
   
   let ele;
-  let colors:any = getContext('colors');
 
   type IconTypes =
     | null
@@ -110,7 +111,7 @@ import { get } from 'svelte/store';
 </style>
 
 
-<div  class={`root-component svg-container ${onClick && "isbutton"}`} on:click={() => {onClick && onClick(index)}} {style} bind:this={ele} >
+<div  class={`svg-container ${onClick && "isbutton"} ${theme}-theme`} on:click={() => {onClick && onClick(index)}} {style} bind:this={ele} >
   <!---------->
   {#if icon === 'dots'}
     <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 20 20">

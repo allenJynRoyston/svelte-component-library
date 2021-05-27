@@ -1,4 +1,6 @@
 <script lang='ts'>
+  import {getContext} from 'svelte';
+
   export let show = false
   export let rounded = false;
   export let type = 'primary'
@@ -7,10 +9,12 @@
   export let fade = false;
   export let nomargin = false;
 
+  const theme:string = getContext('theme')
+
 </script>
 
 {#if show}
-  <div class={`root-component loader`} class:nomargin={nomargin}  class:nobg={nobg} class:rounded={rounded} class:skinny={skinny}>
+  <div class={`loader ${theme}-theme`} class:nomargin={nomargin}  class:nobg={nobg} class:rounded={rounded} class:skinny={skinny}>
     <div class={`line ${type}`} class:fade={fade} class:rounded={rounded} />
   </div>
 {/if}

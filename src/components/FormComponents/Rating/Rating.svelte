@@ -19,6 +19,7 @@
   export let slots = null 
 
   const colors:any = getContext('colors')
+  const theme:string = getContext('theme');
   //---------------------------
 
   //--------------------------- VARS
@@ -27,6 +28,7 @@
     id:key,
     placeholder,    
   }
+
 
   let ratings = [];
   for(let i = 1; i <= maxLength; i++){
@@ -70,7 +72,7 @@
 
 </script>
 
-<div class={`root-component rating-container`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`rating-container ${theme}-theme`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}

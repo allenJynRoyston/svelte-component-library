@@ -15,16 +15,14 @@
 
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
-  $: useType = (type === null ? (theme === 'dark' ? 'black' : 'white') : type)
   
-
-
+  $: useType = (type === null ? (theme === 'dark' ? 'black' : 'white') : type)
   $: fill = !!useType ? colors[useType][4].textFriendlyColor : (theme === 'dark' ? 'black' : 'white')
 
  
 </script>
 
-<button class={`root-component channel-button ${useType}`} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
+<button class={`channel-button ${useType}`} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
   <div class='icon' >
     <SVG icon={leftIcon || 'globe'} {fill} ignoreTheme size={iconSize} />
   </div>

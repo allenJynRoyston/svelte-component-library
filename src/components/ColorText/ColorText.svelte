@@ -1,8 +1,12 @@
 <script lang='ts'>
+  import {getContext} from 'svelte';
+
   export let type = 'primary'
+
+  const theme:string = getContext('theme');
 </script>
 
-<span class={`root-component color-text ${type}`} >
+<span class={`color-text ${type} ${theme}-theme`} >
   <slot />
 </span>
 
@@ -33,28 +37,28 @@
 
 
   .dark-theme{
-    .primary{
-        color: var(--primary-0);
+      &.primary{
+        color: var(--primary-1);
       }
 
-      .secondary{
-        color: var(--secondary-0);
+      &.secondary{
+        color: var(--secondary-1);
       }
 
-      .magic{
-        color: var(--magic-0);
+      &.magic{
+        color: var(--magic-1);
       }      
 
-      .success{
-        color: var(--success-0);
+      &.success{
+        color: var(--success-1);
       }
 
-      .warning{
-        color: var(--warning-0);
+      &.warning{
+        color: var(--warning-1);
       }
 
-      .danger{
-        color: var(--danger-0);
+      &.danger{
+        color: var(--danger-1);
       }
   }
 </style>

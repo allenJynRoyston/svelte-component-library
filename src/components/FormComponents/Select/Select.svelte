@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { validateSelect } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -27,6 +27,8 @@
     placeholder,    
   }
 
+  const theme:string = getContext('theme');
+  
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(selected)
@@ -61,7 +63,7 @@
   //---------------------------
 </script>
 
-<div class={`root-component select-container`} data-testid='select-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`select-container ${theme}-theme`} data-testid='select-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}

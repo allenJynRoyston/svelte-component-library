@@ -6,12 +6,10 @@
   export let props = null;
   export let index = null;
 
-
   $: style = !!bgColor ? `background: ${bgColor}; color: var(${textColor})` : null;
-
 </script>
 
-<div class={`root-component color-block`}  {style} >
+<div class='color-block'  {style} >
   <h3>{name}</h3>
 </div>
 

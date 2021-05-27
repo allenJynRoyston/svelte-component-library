@@ -1,72 +1,48 @@
 <script lang='ts'>
-  import {onMount} from 'svelte';
+  import {onMount, tick, getContext} from 'svelte';
 
-  export let theme = 'light'
-  export let delay = 1;
-  export let refresh = true;
-  export let ele = null;
-  export let themeWatch = false;
-  export let lock = false;
-  export let alwayslight = false;
-  export let alwaysdark = false;
+  export let forcetheme = null;
+  export let invert = false;
+
+  let ele = null;
+    
+  const theme:string = getContext('theme');
+
+  const getInvert = (t) => {
+    if(t === 'dark'){return 'light'}
+    if(t === 'light'){return 'dark'}
+  }
 
   onMount(() => {
     getChildren()
   })
 
-  const getChildren = () => {
-    setTimeout(() => {
-      if(!!ele){
+  const getChildren = async() => {
+    await tick()
+    if(!!ele){
 
-        const isLocked =  Boolean(ele?.getAttribute('theme-lock') === 'true') || false
-        const isAlwaysLight = Boolean(ele?.getAttribute('data-alwayslight') === 'true') || false
+      let useTheme = !!forcetheme ? forcetheme : theme
 
-        if(isLocked){
-          for (let child of ele.querySelectorAll('.root-component')) {
-            child.classList.remove("dark-theme");
-            child.classList.remove("light-theme");
-            child.classList.add(`${theme}-theme`);
-          }        
-        }
-        if(lock){
-          ele.setAttribute('theme-lock', true)
-        }            
-               
-        if(isAlwaysLight){
-          for (let child of ele.querySelectorAll('.root-component')) {
-            child.classList.remove('root-component')
-            child.classList.remove("dark-theme");
-            child.classList.remove("light-theme");
-            child.classList.add(`light-theme`);
-          }
-          ele.setAttribute('theme-lock', true)
-        }
-
-        if(alwaysdark){
-          for (let child of ele.querySelectorAll('.root-component')) {
-            child.classList.remove('root-component')
-            child.classList.remove("dark-theme");
-            child.classList.remove("light-theme");
-            child.classList.add(`dark-theme`);
-          }
-          ele.setAttribute('theme-lock', true)
-        }        
+      for (let child of ele.querySelectorAll('.dark-theme, .light-theme')) {
+          child.classList.remove("dark-theme");
+          child.classList.remove("light-theme");
+          child.classList.add(`${invert ? getInvert(useTheme) : useTheme}-theme`);
+      }
 
 
-      } 
-
-    }, 1)    
+    } 
   }
 
 
-  $: {      
-    themeWatch && getChildren()
+  $: {     
+    forcetheme && getChildren(); 
+    (invert || !invert) && getChildren()
   }  
 
 </script>
 
 
-<div data-theme={theme} data-alwayslight={alwayslight} bind:this={ele}>
+<div bind:this={ele}>
   <slot />
 </div>
 

@@ -1,12 +1,16 @@
-<script>
+<script lang='ts'>
+  import {getContext} from 'svelte';
+
   export let style = null;
   export let showRight = false;
   export let showLeft = false
   export let outline = false; 
   export let rounded = false;
+
+  const theme:string = getContext('theme');
 </script>
 
-<div class={`root-component two-slot`} class:outline={outline} class:rounded={rounded} {style}>
+<div class={`two-slot ${theme}-theme`} class:outline={outline} class:rounded={rounded} {style}>
 
   {#if showLeft}
     <div class='left'>

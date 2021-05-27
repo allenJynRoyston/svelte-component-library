@@ -1,11 +1,14 @@
 <script lang='ts'>
   import {SiteStore} from '@store/store'
   import Link from '@components/Link/Link.svelte'
+  import {getContext} from 'svelte';
 
   const {urlParams}  = SiteStore;
 
   export let tabRoot = 'tab';
   export let tabs = []
+
+  const theme:string = getContext('theme');
 
   const getHref = (param, index) => {
 		const hash =  location.hash.includes(`&${tabRoot}`) ?  location.hash.split(`&${tabRoot}`)[0] : location.hash;
@@ -18,10 +21,10 @@
 </script>
 
 
-<div class={`tabs root-component`}>
+<div class={`tabs ${theme}-theme`}>
   <div class='links'>
     {#each tabs as {title, param = null}, index}
-      <Link underline active={active(param, index)} href={getHref(param || String(index), index)}>{title}</Link>
+      <Link style={'margin-right: 10px'} underline active={active(param, index)} href={getHref(param || String(index), index)}>{title}</Link>
     {/each}  
   </div>
 
@@ -39,10 +42,7 @@
 
   .links{
     width: 100%;
-    display: flex;
-    flex-direction: flex-start;
-    align-items: center;
-    gap: 10px;
+    display: block;
   }
 
   .content{

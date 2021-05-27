@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { validateDate } from '../../../js'
   import * as dayjs from "dayjs";
 
@@ -24,6 +24,9 @@
     id:key,
     placeholder,    
   }
+
+  const theme:string = getContext('theme');
+
 
   value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value
 
@@ -58,7 +61,7 @@
 
 </script>
 
-<div class={`root-component inputdate-container`} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`inputdate-container ${theme}-theme`} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}

@@ -13,26 +13,16 @@
     name: 'ThemeWrapper',
     importName: '@components/ThemeWrapper/ThemeWrapper.svelte',
     properties: `
-    export let theme = 'light'
-    export let delay = 1;
-    export let ele = null;
-    export let lock = false;
-    export let alwayslight = false;
-    export let alwaysdark = false;
-    export let refresh = true;
-    export let themeWatch = false;    
+    export let forcetheme = null;
+    export let invert = false;  
     `,
     props: {
-      lock: false,
-      alwayslight: true,
-      alwaysdark: false,
-      themeWatch: false,
-      refresh: true,
+      invert: false
     }, 
     dropdowns: [
       {
-        label: 'theme',
-        options: ['light', 'dark'], 
+        label: 'forcetheme',
+        options: [null, 'light', 'dark'], 
         value: 0        
       }    
     ]

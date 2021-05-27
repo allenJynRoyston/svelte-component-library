@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { validateCheckbox } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -21,6 +21,9 @@
     id:key,
     placeholder,    
   }
+
+  const theme:string = getContext('theme');
+
 
 
   //--------------------------- ONMOUNT
@@ -57,7 +60,7 @@
 
 </script>
 
-<div class={`root-component inputcheckbox-container`} class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`inputcheckbox-container ${theme}-theme`} class:hasLabel={label} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
 
   {#if label}
     <label for={key} >{label}</label>

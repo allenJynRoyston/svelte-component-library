@@ -1,4 +1,6 @@
 <script lang='ts'>
+  import {getContext} from 'svelte';
+  
   import Link from "../Link/Link.svelte";
   import HashWatch from '../URLWatcher/HashWatch.svelte';
   import SVG from '../SVG/SVG.svelte';
@@ -14,12 +16,15 @@
     watchedParam = !!params[watchProp] ? params[watchProp] : null;
     watchedHash = !!hash ? hash : null;
   }
+
+  const theme:string = getContext('theme')
+
   //---------------------------
 
 </script>
 
 <HashWatch onChange={watchProp && hashChange} />
-<div class={`root-component nav-bar`}>
+<div class={`nav-bar ${theme}-theme`}>
   <div class='links'>
     {#each links as {title, active = false, href = '/', icon}, index}
       <Link inherit {href} active={watchedParam === title.toLowerCase()} underline >
@@ -29,7 +34,7 @@
   </div>
 
   <div class='icons'>
-    {#each links as {icon = 'home', title, active = false, href = '/', icon}, index}
+    {#each links as {icon = 'home', title, active = false, href = '/'}, index}
       <Link inherit {href} active={watchedParam === title.toLowerCase()} underline >
         <SVG {icon} style='padding-bottom: 4px;' />
       </Link>  

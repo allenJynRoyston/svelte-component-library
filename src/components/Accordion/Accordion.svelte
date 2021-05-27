@@ -9,18 +9,21 @@
   export let rounded = false;
   export let outline = false;
   export let listform = false;
+
+  const theme:string = getContext('theme')
+  const colors:any = getContext('colors')
+
   
   $: isOpened = open;
   let ele;
 
-  const isDark = getContext('theme') === 'dark'
   const toggle = () => {
     isOpened = !isOpened
   }
 
 </script>
 
-<div class={`root-component accordion`} class:rounded={rounded} class:outline={outline} bind:this={ele} >
+<div class={`accordion ${theme}-theme`} class:rounded={rounded} class:outline={outline} bind:this={ele} >
   <div class='accordion-inner'>
     <TwoSlot showLeft showRight>     
 
@@ -31,7 +34,7 @@
       </button>  
 
       <div slot='right'>
-        <SVG icon={isOpened ? 'minus' : 'plus'} size={10} onClick={toggle} fill={isDark ? 'white' : '#333'}/>
+        <SVG icon={isOpened ? 'minus' : 'plus'} size={10} onClick={toggle} fill={theme === 'dark' ? colors.white[0].color : colors.black[0].color}/>
       </div>
     </TwoSlot>
   </div>

@@ -1,4 +1,5 @@
 <script lang='ts'>
+  import {getContext} from 'svelte';
   import {DeviceStore} from '@store/store'
   import Button from '../Button/Button.svelte'
 
@@ -9,9 +10,11 @@
 
   const {isTabletAndBelow} = DeviceStore;
 
+  const theme:string = getContext('theme');
+
 </script>
 
-<div class={`root-component splash`}>
+<div class={`splash ${theme}-theme`}>
   <h5 class='title'>
     {title}
   </h5>  

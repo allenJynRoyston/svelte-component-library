@@ -1,4 +1,6 @@
 <script lang='ts'>
+  import {getContext} from 'svelte'
+
   import Accordion from '../Accordion/Accordion.svelte'
 
   export let title = null;
@@ -13,6 +15,8 @@
 
   export let lang:'typescript' | 'css' = 'typescript'
 
+  const theme:string = getContext('theme')
+
 </script>
 
 <div class='code-block-container' class:show={show} class:hide={!show}>
@@ -23,7 +27,7 @@
       </div>
 
 
-      <div slot='content' class={`root-component code-block`}>
+      <div slot='content' class={`code-block ${theme}-theme`}>
         <code>
           <pre>
             {snippet}
@@ -32,7 +36,7 @@
       </div>
     </Accordion>
   {:else}
-    <div class={`root-component code-block`}>
+    <div class={`code-block ${theme}-theme`}>
       <code>
         <pre>
           {snippet}

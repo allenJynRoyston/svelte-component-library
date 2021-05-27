@@ -1,11 +1,14 @@
 <script lang='ts'>
+  import {getContext} from 'svelte'
   import LoremBlock from '../LoremBlock/LoremBlock.svelte'
-
+  
   export let size:number = 150;
   export let gap:number = 10;
 
   export let outline:boolean = false;
   export let items:any = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
+
+  const theme:string = getContext('theme');
 
   $: style = () => {    
     return `grid-auto-rows: ${size}px; grid-template-columns: repeat(auto-fill, minmax(${size}px, 1fr)); grid-gap: ${gap}px`
@@ -15,7 +18,7 @@
 
 <ul class='grid-layout' style={style()}>
   {#each items as {component, row, column, onClick, props}, index}
-    <li class={`root-component grid-item`}
+    <li class={`grid-item ${theme}-theme`}
         class:row-two={row && row === 2} 
         class:row-three={row && row === 3}     
         class:column-two={column && column === 2} 

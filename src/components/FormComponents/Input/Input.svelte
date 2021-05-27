@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { validate } from '../../../js'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import Button from '@components/Button/Button.svelte'
@@ -33,6 +33,8 @@
 
   let showPassword = false
 
+  const theme:string = getContext('theme');
+
   //--------------------------- ONMOUNT
 	onMount(() => {  
     updateParent(value)
@@ -64,7 +66,7 @@
 
 </script>
 
-<div class={`root-component input-container`} data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`input-container ${theme}-theme`} data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <TwoSlot showLeft showRight>
       <label for={key} >{label}</label>

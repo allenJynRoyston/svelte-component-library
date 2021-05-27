@@ -1,14 +1,18 @@
-<script>
+<script lang='ts'>
+  import {getContext} from 'svelte';
+
   export let name = 'John Smith';
   export let image = null;
   export let bgColor = null;
   export let props = null;
 
+  const theme:string = getContext('theme')
+
   $: style = !!bgColor ? `background: ${bgColor}` : null;
 
 </script>
 
-<div class={`root-component profile-card`}  {style} >
+<div class={`profile-card ${theme}-theme`}  {style} >
   <div class='image'>
 
   </div>

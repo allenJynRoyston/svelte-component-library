@@ -138,15 +138,13 @@
 
 </script>
 
-<ThemeWrapper {theme} {themeWatch} lock>
-  <Container offset={1}>
-    <HashWatch onChange={onChange}/>
+<Container offset={1}>
+  <HashWatch onChange={onChange}/>
 
-    <Header {...headercopy} showFooter showLayoutButton />
+  <Header {...headercopy} showFooter showLayoutButton />
 
-    <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
-      <Channels {...channel} animate disableAnimationOnMobile />
-    </ColumnLayout>
-  </Container>
-</ThemeWrapper>
+  <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
+    <Channels {...channel} animate disableAnimationOnMobile />
+  </ColumnLayout>
+</Container>
 

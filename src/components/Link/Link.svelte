@@ -1,6 +1,6 @@
 <script lang='ts'>
+  import { getContext } from "svelte";
 
-  //--------------------------- COMPONENT PROPS
   export let href: string|null = null;
   export let active = false;
   export let onClick = null;
@@ -9,28 +9,17 @@
   export let type = 'default'
   export let target = null
   export let classes = '';
+  export let style = ''
   
   export let underline = false;
   export let exactfit = false;
   export let outline = false;
-  
-  //---------------------------
 
-  //--------------------------- VARS    
-  //--------------------------- ONMOUNT
-
-  //---------------------------   
-
-  //--------------------------- EVENT HANDLERS
-
-  //---------------------------
-
-  //--------------------------- $
-  //---------------------------  
+  const theme:string = getContext('theme')
 
 </script>
 
-<a class={`link root-component ${type} ${classes}`} {target} {href} rel="noreferrer"  class:outline={outline} class:exactfit={exactfit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
+<a class={`link ${theme}-theme ${type} ${classes}`} {target} {href} {style} rel="noreferrer"  class:outline={outline} class:exactfit={exactfit} class:underline={underline} class:inherit={inherit} class:active={active} on:click={() => {onClick && onClick()}}>
   <slot>{text || 'Link'}</slot>
 </a>
 

@@ -1,6 +1,6 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
-  import { onMount } from 'svelte';
+  import { onMount, getContext } from 'svelte';
   import { validateSelectMulti } from '../../../js'
 
   //--------------------------- COMPONENT PROPS
@@ -32,6 +32,8 @@
     id:key,
     placeholder,    
   }
+
+  const theme:string = getContext('theme');
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -67,7 +69,7 @@
   //---------------------------
 </script>
 
-<div class={`root-component selectmulti-container`} data-testid='selectmulti-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`selectmulti-container ${theme}-theme`} data-testid='selectmulti-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
     <label for={key} >{label}</label>
   {/if}
