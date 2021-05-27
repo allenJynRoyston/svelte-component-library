@@ -3,10 +3,12 @@
 
   import ThreeSlot from '@components/ThreeSlot/ThreeSlot.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ThreeSlot',
@@ -27,7 +29,7 @@
   }
 
   $: livecode = `    
-    <ThreeSlot${fullstr}>
+    <ThreeSlot${propstr}${selectstr}${inputstr}>
       <div slot='left'>
         <h2>Left</h2>
       </div>
@@ -44,9 +46,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ThreeSlot {...props} {...selectprops} >
+    <ThreeSlot {...props} {...selectprops}
+{...inputprops} >
       <div slot='left'>
         <h2>Left</h2>
       </div>

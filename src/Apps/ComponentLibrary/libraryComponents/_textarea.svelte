@@ -3,10 +3,12 @@
 
   import TextArea from '@components/FormComponents/Textarea/Textarea.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'TextArea',
@@ -42,7 +44,7 @@
       minLength: 5
     }
       
-    <TextArea {...props} ${fullstr} /> 
+    <TextArea {...props} ${propstr}${selectstr}${inputstr} /> 
      `
 
   const staticprops = {
@@ -57,9 +59,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <TextArea {...staticprops} {...props} {...selectprops} />
+    <TextArea {...staticprops} {...props} {...selectprops}
+{...inputprops} />
    </div>    
 
 </LibrarySnippet>

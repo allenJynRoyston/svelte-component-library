@@ -3,10 +3,12 @@
 
   import Container from '@components/Container/Container.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Container',
@@ -27,7 +29,7 @@
   }  
 
   $: livecode = `    
-    <Container ${fullstr}>
+    <Container ${propstr}${selectstr}${inputstr}>
       <div style='padding: 20px'>
         <h1>I am a header.</h1>
         <p>
@@ -39,9 +41,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Container  {...props} {...selectprops}>
+    <Container  {...props} {...selectprops}
+{...inputprops}>
       <div style='padding: 20px'>
         <h1>I am a header.</h1>
         <p>

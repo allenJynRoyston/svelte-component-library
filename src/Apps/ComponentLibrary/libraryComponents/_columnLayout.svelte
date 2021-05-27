@@ -4,10 +4,12 @@
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ColumnLayout',
@@ -60,7 +62,7 @@
       {title: 'Link 3', href: '#', section: 'Section 2' },    
     ]
 
-    <ColumnLayout {links} ${fullstr}>
+    <ColumnLayout {links} ${propstr}${selectstr}${inputstr}>
       <div style='padding: 0 10px'>
         <LoremBlock />
       </div>
@@ -71,9 +73,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ColumnLayout {links} {...props} {...selectprops} ignoreForExample>
+    <ColumnLayout {links} {...props} {...selectprops}
+{...inputprops} ignoreForExample>
       <div style='padding: 0 10px'>
         <LoremBlock />
       </div>

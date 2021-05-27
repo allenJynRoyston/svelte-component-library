@@ -7,10 +7,12 @@
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
   import Search from '@components/Search/Search.svelte';
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
 
   const snippet = {
@@ -85,7 +87,7 @@
   }
 
   $: livecode = `    
-    <Header ${fullstr} >
+    <Header ${propstr}${selectstr}${inputstr} >
 
     </Header>   
      `  
@@ -93,9 +95,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Header {...staticprops} {...props} {...selectprops} >
+    <Header {...staticprops} {...props} {...selectprops}
+{...inputprops} >
 
     </Header>    
    </div>    

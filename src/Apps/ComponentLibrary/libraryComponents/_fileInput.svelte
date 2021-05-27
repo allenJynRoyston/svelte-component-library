@@ -3,10 +3,12 @@
 
   import FileInput from '@components/FormComponents/FileInput/FileInput.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Button',
@@ -26,15 +28,16 @@
   }
 
   $: livecode = `    
-    <FileInput ${fullstr} /> 
+    <FileInput ${propstr}${selectstr}${inputstr} /> 
      `
 
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <FileInput {...props} {...selectprops} />
+    <FileInput {...props} {...selectprops}
+{...inputprops} />
    </div>    
 
 </LibrarySnippet>

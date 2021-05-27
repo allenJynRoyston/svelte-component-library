@@ -43,13 +43,14 @@
 
   //--------------------------- EVENT HANDLERS
   const onChangeEventHandler = () => {   
-    onChange && onChange(value)
+    onChange && onChange(value, key)
     updateParent(value)
   }
 
   const onKeypressHandler = (e) => {
     setTimeout(() => {
       onKeypress && onKeypress(value)
+      onChange && onChange(value, key)
       updateParent(value)
     })
   }
@@ -107,6 +108,7 @@
 
 
     label{
+      text-transform: uppercase;
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;

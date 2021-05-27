@@ -4,10 +4,12 @@
   import ExampleBlock from '../components/ExampleBlock.svelte'
   import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'  
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ThemeWrapper',
@@ -29,7 +31,7 @@
   }
 
   $: livecode = `    
-    <ThemeWrapper ${fullstr} >
+    <ThemeWrapper ${propstr}${selectstr}${inputstr} >
       <ExampleBlock />
     </ThemeWrapper>   
      `
@@ -38,9 +40,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ThemeWrapper  {...props} {...selectprops}>
+    <ThemeWrapper  {...props} {...selectprops}
+{...inputprops}>
       <ExampleBlock />
     </ThemeWrapper> 
    </div>    

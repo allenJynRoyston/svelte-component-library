@@ -5,10 +5,12 @@
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
 
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ColorText',
@@ -30,15 +32,16 @@
   }
 
   $: livecode = `    
-    <ColorText ${fullstr} >
+    <ColorText ${propstr}${selectstr}${inputstr} >
       <LoremBlock />
     </ColorText>
      `  
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ColorText {...props} {...selectprops}>
+    <ColorText {...props} {...selectprops}
+{...inputprops}>
       <LoremBlock />
     </ColorText>
    </div>    

@@ -3,10 +3,12 @@
 
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'CodeBlock',
@@ -32,7 +34,7 @@
   }
 
   $: livecode = `    
-    <CodeBlock ${fullstr} snippet={'
+    <CodeBlock ${propstr}${selectstr}${inputstr} snippet={'
       const greeting = "hello world"
       <h1>{greeting}<h1>
     '} />      
@@ -40,9 +42,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <CodeBlock {...props} {...selectprops} snippet={`
+    <CodeBlock {...props} {...selectprops}
+{...inputprops} snippet={`
       const greeting = "hello world"
       <h1>{greeting}<h1>
     `} />  

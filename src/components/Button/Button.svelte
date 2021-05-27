@@ -3,25 +3,26 @@
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
 
-  export let onClick = null
-  export let disabled = false
   export let style = null
-  export let role = 'button'
-  export let dataTestid = null
   export let text = null
-
-  export let type = 'primary';
   export let href = null;
+  export let dataTestid = null
+
+  export let role = 'button'
+  export let type = 'primary';
+  export let size = 'normal'
+
+  export let disabled = false
   export let rounded = false;
-  export let size = ''
   export let hollow = false;
   export let target = null;
   export let exactfit = false;
   export let fullOnMobile = false;
   export let nomargin = false;  
-
   export let useToggle = false;
   export let toggled = false;
+
+  export let onClick = null
 
   const theme:string = getContext('theme')
   const colors = getContext('colors')
@@ -39,8 +40,8 @@
     }  
   }
 
-
 </script>
+
 
 {#if !!href}
   <Link exactfit {href} {target} >

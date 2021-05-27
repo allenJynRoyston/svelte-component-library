@@ -5,10 +5,12 @@
   import GridLayout from '@components/Layout/GridLayout.svelte'
   import SVGPreview from '../components/SVGPreview.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const svgs = [
     'dots',
@@ -118,7 +120,7 @@
   }
 
   $: livecode = `    
-    <SVG${fullstr}/>
+    <SVG${propstr}${selectstr}${inputstr}/>
      `
    
 
@@ -128,9 +130,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <SVG  {...props} {...selectprops} />
+    <SVG  {...props} {...selectprops}
+{...inputprops} />
     <br>
     <hr>
     <br>

@@ -5,10 +5,12 @@
   import Splash from '@components/Splash/Splash.svelte'
   const theme:string = getContext('theme');
   
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Splash',
@@ -59,9 +61,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Splash {...staticprops} {...props} {...selectprops} />
+    <Splash {...staticprops} {...props} {...selectprops}
+{...inputprops} />
   </div>    
 </LibrarySnippet>
 

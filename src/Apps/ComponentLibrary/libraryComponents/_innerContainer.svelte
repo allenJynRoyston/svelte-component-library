@@ -4,10 +4,12 @@
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'InnerContainer',
@@ -26,7 +28,7 @@
   }
 
   $: livecode = `    
-    <InnerContainer ${fullstr}>
+    <InnerContainer ${propstr}${selectstr}${inputstr}>
       <strong>
         Automatically applies a scrollbar if wrapped in a container that is too small for the content.
         Can set the height manually if you want finer control over how much scroll is available.
@@ -40,9 +42,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode}bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode}bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <InnerContainer {...props} {...selectprops}>
+    <InnerContainer {...props} {...selectprops}
+{...inputprops}>
       <strong>
         Automatically applies a scrollbar if wrapped in a container that is too small for the content.
         Can set the height manually if you want finer control over how much scroll is available.

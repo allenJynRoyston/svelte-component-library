@@ -3,10 +3,12 @@
 
   import Input from '@components/FormComponents/Input/Input.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Input',
@@ -49,7 +51,7 @@
       required: true
     }
       
-    <Input {...props} ${fullstr} /> 
+    <Input {...props} ${propstr}${selectstr}${inputstr} /> 
      `
   const staticprops = {
     label: 'Input',
@@ -60,9 +62,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Input {...staticprops} {...props} {...selectprops} />
+    <Input {...staticprops} {...props} {...selectprops}
+{...inputprops} />
    </div>    
 
 </LibrarySnippet>

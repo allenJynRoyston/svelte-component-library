@@ -3,10 +3,12 @@
 
   import Select from '@components/FormComponents/Select/Select.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Select',
@@ -52,7 +54,7 @@
       required: true
     }
       
-    <Select {...props} ${fullstr} /> 
+    <Select {...props} ${propstr}${selectstr}${inputstr} /> 
      `
   const staticprops = {
       label: 'Select',
@@ -78,9 +80,10 @@
 
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Select {...staticprops} {...props} {...selectprops} />
+    <Select {...staticprops} {...props} {...selectprops}
+{...inputprops} />
    </div>    
 
 </LibrarySnippet>

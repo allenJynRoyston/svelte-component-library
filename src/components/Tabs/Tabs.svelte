@@ -16,9 +16,7 @@
     return  `${hash}&${tabRoot}=${param || String(index)}`
   }
 
-
   $: active = (param, index) => !!$urlParams[tabRoot] ? $urlParams[tabRoot]?.toString() === index?.toString() || $urlParams[tabRoot]?.toString() === param?.toString() : index === 0
-
 </script>
 
 

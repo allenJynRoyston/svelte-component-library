@@ -3,10 +3,12 @@
 
   import Loader from '@components/Loader/Loader.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Loader',
@@ -38,13 +40,14 @@
   }
 
   $: livecode = `    
-    <Loader ${fullstr}/> 
+    <Loader ${propstr}${selectstr}${inputstr}/> 
      `  
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Loader {...props} {...selectprops} />
+    <Loader {...props} {...selectprops}
+{...inputprops} />
    </div>    
 </LibrarySnippet>
 

@@ -3,10 +3,12 @@
 
   import Link from '@components/Link/Link.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Link',
@@ -41,7 +43,7 @@
   }  
 
   $: livecode = `    
-    <Link${fullstr}>
+    <Link${propstr}${selectstr}${inputstr}>
       I am a link
     </Link>   
      `  
@@ -49,9 +51,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Link {...props} {...selectprops} href='/' >I am a link</Link>
+    <Link {...props} {...selectprops}
+{...inputprops} href='/' >I am a link</Link>
    </div>    
 </LibrarySnippet>
 

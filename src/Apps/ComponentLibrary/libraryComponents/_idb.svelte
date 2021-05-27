@@ -6,10 +6,12 @@
   import {createDB} from '@js/utility'
   import {IndexDBStore} from '@js/index'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'IDB',
@@ -63,7 +65,7 @@
       query = await db.get('user', 'Person 2')    
     }
 
-    <IDB {...idb} {onReady} ${fullstr}/>
+    <IDB {...idb} {onReady} ${propstr}${selectstr}${inputstr}/>
      `
 
 
@@ -107,7 +109,7 @@
 <IDB {...idb} {onReady} />
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
     <p>★★ Check application/database</p>
     <hr>

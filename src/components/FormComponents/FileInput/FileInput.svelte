@@ -125,6 +125,7 @@
     
 
     label{
+      text-transform: uppercase;
       font-size: 10px;
       margin-bottom: 2px;
       display: flex;

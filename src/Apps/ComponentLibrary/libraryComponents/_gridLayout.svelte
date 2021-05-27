@@ -4,10 +4,12 @@
   import GridLayout from '@components/Layout/GridLayout.svelte'
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'  
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops;   
+  let selectprops;
+  let inputprops;  
 
   const snippet = {
     name: 'GridLayout',
@@ -60,14 +62,15 @@
         {component: LoremBlock, props: {content: 'F'}}
       ]
 
-      <GridLayout ${fullstr}/>
+      <GridLayout ${propstr}${selectstr}${inputstr}/>
      `
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode}  bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode}  bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <GridLayout {items} {...props} {...selectprops} />
+    <GridLayout {items} {...props} {...selectprops}
+{...inputprops} />
   </div>    
 </LibrarySnippet>
 

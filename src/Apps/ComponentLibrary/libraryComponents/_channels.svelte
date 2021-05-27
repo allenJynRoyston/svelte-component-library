@@ -5,10 +5,12 @@
   import Channels from '@components/Channels/Channels.svelte'
   import {createChannel} from '@js/utility'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'Channels',
@@ -69,7 +71,7 @@
         ]
       }) 
 
-      <Channels {...channels} ${fullstr} />
+      <Channels {...channels} ${propstr}${selectstr}${inputstr} />
      `  
 
   $: code = `
@@ -131,7 +133,7 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} {code} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} {code} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
     <p>Not animated:</p>
     <div class='button-block'>
@@ -141,7 +143,8 @@
     </div>
 
     <div style='height: 200px'>      
-      <Channels {...channels}  {...props} {...selectprops} />
+      <Channels {...channels}  {...props} {...selectprops}
+{...inputprops} />
     </div>
    </div>    
 

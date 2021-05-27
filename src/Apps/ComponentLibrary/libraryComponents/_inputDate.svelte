@@ -5,10 +5,12 @@
 
 
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'InputDate',
@@ -38,7 +40,7 @@
       required: true,
     }
 
-    <InputDate {...props} ${fullstr} /> 
+    <InputDate {...props} ${propstr}${selectstr}${inputstr} /> 
      `
      
   const staticprops = {
@@ -53,9 +55,10 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <InputDate {...staticprops} {...props} {...selectprops} />
+    <InputDate {...staticprops} {...props} {...selectprops}
+{...inputprops} />
    </div>    
 
 </LibrarySnippet>

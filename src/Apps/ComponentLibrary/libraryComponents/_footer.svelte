@@ -3,10 +3,12 @@
 
   import Footer from '@components/Footer/Footer.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops;   
+  let selectprops;
+  let inputprops;  
 
   const snippet = {
     name: 'Footer',
@@ -14,16 +16,17 @@
   }
 
   $: livecode = `    
-    <Footer ${fullstr}>
+    <Footer ${propstr}${selectstr}${inputstr}>
       Made with ❤️ Allen Royston 2021
     </Footer>
      `
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Footer {...props} {...selectprops}>
+    <Footer {...props} {...selectprops}
+{...inputprops}>
       Made with ❤️ Allen Royston 2021
     </Footer>
    </div>    

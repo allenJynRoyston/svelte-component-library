@@ -2,7 +2,8 @@
   import {onMount, getContext, tick} from 'svelte'
   import {DeviceStore} from '@store/store'
   import {LibraryStore} from '../localstore/libraryStore'
-  
+
+  import Input from '@components/FormComponents/Input/Input.svelte'
   import Select from '@components/FormComponents/Select/Select.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
@@ -13,51 +14,66 @@
   export let name = null;
   export let importName = null;
   export let properties = null;
+  export let inputs = null;
   export let code = null;
   export let livecode = null;
 
-  export let props = null;
   export let dropdowns = [];
+
+  export let props = null;
   export let selectprops = null;
+  export let inputprops = {};
   
-  export let fullstr = '';
   export let propstr = '';
+  export let selectstr = '';
+  export let inputstr = ''
 
   const theme:string = getContext('theme')
 
   const {showImport, showProperties, showExample} = LibraryStore;
   const {isTabletAndBelow} = DeviceStore;
 
-  const update = async() => {
+  const update = async(val = null, key = null) => {
     await tick();
-    let str = ''
+    let _propstr = ''
     if(!!props){
       for (const [key, value] of Object.entries(props)) {
         if(value){
-          str += ` ${key}`
+          _propstr += ` ${key}`
         }
       }    
     }
+    propstr = _propstr;
 
-    propstr = str;
-
+    let _selectstr = ''
     if(!!dropdowns){
-      dropdowns.forEach(x => {
-        const {label, options, value} = x
+      dropdowns.forEach(({label, options, value}) => {
         if(options[value] !== null){
-          str += ` ${label}='${options[value]}'`
+          _selectstr += ` ${label}='${options[value]}'`
           selectprops = {...selectprops, [label]: options[value]}
         }
       })
     }
 
-    fullstr = str   
+    selectstr = _selectstr   
+  }
+
+  const updateInputs = (value, key) => {
+    inputprops[key] = value
+
+    let _inputstr = ''
+    for (const [key, value] of Object.entries(inputprops)) {
+      if(value){
+        _inputstr += ` ${key}='${value}'`
+      }
+    }
+    inputstr = _inputstr
   }
 
   $: listofdropdowns = () => {
     const list = []
 
-    dropdowns.forEach((x, index) => {
+    dropdowns?.forEach((x, index) => {
       let {label, options, value} = x
 
       options = options.map((title, id) => {
@@ -83,8 +99,26 @@
     return list
   }
 
+  $: listofinputs = () => {
+    const list = []
+
+    inputs?.forEach(({label, prop, renderAs, value}) => {
+      const obj = {
+        label,
+        value, 
+        key: prop
+      }  
+      list.push(obj)
+    })
+
+    return list
+  }  
+
   onMount(() => {
     update()
+    inputs?.forEach(({value, prop}) => {
+      updateInputs(value, prop)      
+    })
   })
 
 
@@ -112,6 +146,7 @@
       `} />
   {/if}
 
+
   {#if !!props || listofdropdowns().length > 0}
     <LibraryBlock flex title="Props: ">
       <div class='props-container'>
@@ -132,9 +167,20 @@
             {/each}   
           </div>    
         {/if}
+
+
+        {#if !!listofinputs().length > 0}
+          <div class='inputs'>
+            {#each listofinputs() as props}
+              <Input {...props} onChange={updateInputs} />
+            {/each}   
+          </div>   
+        {/if}          
       </div>
     </LibraryBlock>  
   {/if}
+
+
 
   {#if !!livecode}
     <LibraryBlock title='Live:'>
@@ -172,7 +218,7 @@
     width: 100%;          
   }
 
-  .dropdowns{
+  .dropdowns, .inputs{
     width: 100%;
     display: flex;
     justify-content: flex-start;

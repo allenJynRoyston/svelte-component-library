@@ -3,10 +3,12 @@
 
   import Form from '@components/Form/Form.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops;   
+  let selectprops;
+  let inputprops;  
 
   const snippet = {
     name: 'Form',
@@ -108,7 +110,7 @@
     ]  
 
   
-    <Form {formData} ${fullstr} />
+    <Form {formData} ${propstr}${selectstr}${inputstr} />
      `
 
      let formData = [
@@ -174,9 +176,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Form  {...props} {...selectprops} {formData} />
+    <Form  {...props} {...selectprops}
+{...inputprops} {formData} />
   </div>    
 
 </LibrarySnippet>

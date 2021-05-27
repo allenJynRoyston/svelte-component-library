@@ -3,10 +3,12 @@
 
   import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ProfileCard',
@@ -21,9 +23,9 @@
 
   $: livecode = `    
   <div style='height: 400px; display: flex; gap: 10px'>
-    <ProfileCard ${fullstr} />
-    <ProfileCard ${fullstr} />
-    <ProfileCard ${fullstr} />
+    <ProfileCard ${propstr}${selectstr}${inputstr} />
+    <ProfileCard ${propstr}${selectstr}${inputstr} />
+    <ProfileCard ${propstr}${selectstr}${inputstr} />
   </div>
   `
 
@@ -34,7 +36,7 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
     <div style='height: 400px; display: flex; gap: 10px'>
       <ProfileCard {...staticprops} />

@@ -10,6 +10,7 @@
   export let rounded = false;
   export let nomargin = false;
   export let type = null;
+  export let style = '';
 
   let ele;
 
@@ -22,7 +23,7 @@
  
 </script>
 
-<button class={`channel-button ${useType}`} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
+<button class={`channel-button ${useType}`} {style} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
   <div class='icon' >
     <SVG icon={leftIcon || 'globe'} {fill} ignoreTheme size={iconSize} />
   </div>

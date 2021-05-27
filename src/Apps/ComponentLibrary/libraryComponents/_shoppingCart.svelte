@@ -3,10 +3,12 @@
   
   import ShoppingCart from '@components/ShoppingCart/ShoppingCart.svelte'
 
-  let fullstr = '';
   let propstr = '';
+  let selectstr = '';
+  let inputstr = '';
   let props; 
-  let selectprops; 
+  let selectprops;
+  let inputprops;
 
   const snippet = {
     name: 'ShoppingCart',
@@ -29,7 +31,7 @@
       alert("clicked on item: " + items[index].name)
     }
 
-    <ShoppingCart {items} {onClick} ${fullstr}/>
+    <ShoppingCart {items} {onClick} ${propstr}${selectstr}${inputstr}/>
      `
 
   const items = [
@@ -45,9 +47,10 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ShoppingCart {items} {onClick}  {...props} {...selectprops} />
+    <ShoppingCart {items} {onClick}  {...props} {...selectprops}
+{...inputprops} />
    </div>    
 </LibrarySnippet>
 

@@ -3,10 +3,12 @@
 
     import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
 
-    let fullstr = '';
     let propstr = '';
+    let selectstr = '';
+    let inputstr = '';
     let props; 
-    let selectprops; 
+    let selectprops;
+    let inputprops;
 
     const svgs = [
     'dots',
@@ -117,22 +119,24 @@
         options: [18, 24, 30, 36], 
         value: 0        
       }      
-    ]
+    ],
+    inputs: [
+      {label: 'text', prop: 'content', renderAs: 'input', value: 'Some button text'},
+      {label: 'style', prop: 'style', renderAs: 'input', value: 'margin-bottom: 100px'}      
+    ]    
   }
 
   $: livecode = `    
-    <ChannelButton ${fullstr} >
-      <h3>Check it out!</h3>
-    </ChannelButton>   
+    <ChannelButton${propstr}${selectstr}${inputstr} />
      `  
 
+
 </script>
-
-
-<LibrarySnippet {...snippet} {livecode}  bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ChannelButton  {...props} {...selectprops}>
-      <h3>Check it out!</h3>
+
+    <ChannelButton {...props} {...selectprops} {...inputprops}>
+      
     </ChannelButton>    
    </div>    
 </LibrarySnippet>

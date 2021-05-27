@@ -44,7 +44,6 @@
   // import PromptAlias from '@lib/_prompt.svelte'
   import LoremBlockAlias from '@lib/_loremBlock.svelte'
 
-  import ExampleForm from '@lib/_formExample.svelte'
   import FormAlias from '@lib/_form.svelte';
   import InputAlias from '@lib/_input.svelte'  
   import FileInputAlias from '@lib/_fileInput.svelte'  
@@ -74,7 +73,6 @@
     {content: ModalAlias, id: 'modal', section: 'RootComponents'},
     {content: SnackbarAlias, id: 'snackbar', section: 'RootComponents'},
 
-    // {content: ExampleForm, id: 'exampleform', section: 'Form'},
     {content: FormAlias, id: 'form', section: 'Form'},
     {content: InputAlias, id: 'input', section: 'Form'},
     {content: FileInputAlias, id: 'fileinput', section: 'Form'},
