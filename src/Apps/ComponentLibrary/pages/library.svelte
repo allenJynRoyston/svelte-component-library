@@ -16,7 +16,7 @@
   import LoaderAlias from '@lib/_loader.svelte'
   import ProductCard from '@lib/_productcard.svelte'
   import LinkAlias from '@lib/_link.svelte'
-  import FormAlias from '@lib/_formExample.svelte'
+  import FormExampleAlias from '@lib/_formExample.svelte'
   import SearchAlias from '@lib/_search.svelte'
   import HashWatchAlias from '@lib/_hashwatch.svelte'
   import SVGAlias from '@lib/_svg.svelte'
@@ -45,6 +45,7 @@
   import LoremBlockAlias from '@lib/_loremBlock.svelte'
 
   import ExampleForm from '@lib/_formExample.svelte'
+  import FormAlias from '@lib/_form.svelte';
   import InputAlias from '@lib/_input.svelte'  
   import FileInputAlias from '@lib/_fileInput.svelte'  
   import InputCheckboxAlias from '@lib/_inputCheckbox.svelte'  
@@ -73,7 +74,8 @@
     {content: ModalAlias, id: 'modal', section: 'RootComponents'},
     {content: SnackbarAlias, id: 'snackbar', section: 'RootComponents'},
 
-    {content: ExampleForm, id: 'exampleform', section: 'Form'},
+    // {content: ExampleForm, id: 'exampleform', section: 'Form'},
+    {content: FormAlias, id: 'form', section: 'Form'},
     {content: InputAlias, id: 'input', section: 'Form'},
     {content: FileInputAlias, id: 'fileinput', section: 'Form'},
     {content: InputCheckboxAlias, id: 'inputcheckbox', section: 'Form'},
@@ -92,7 +94,6 @@
     {content: AccordionAlias, id: 'accordion'},    
     {content: ProductCard, id: 'productcard'},
     {content: LinkAlias, id: 'link'},
-    {content: FormAlias, id: 'form'},
     {content: SearchAlias, id: 'search'},
     {content: SVGAlias, id: 'svg'},
     {content: ThreeSlotAlias, id: 'threeslot'},
@@ -112,13 +113,13 @@
     {content: SectionAlias, id: 'section'},
     {content: ColorTextAlias, id: 'colortext'},    
     {content: TabsAlias, id: 'tabs'},
-    // {content: PromptAlias, id: 'prompt'},
+    {content: FormExampleAlias, id: 'formexample'},
     {content: LoremBlockAlias, id: 'loremblock'}
   ]})   
 
 
-  const links = channel.data.map(({id, section = 'components'}) => {
-    return {section, title: id, href: `${location.hash}&component=${id}&section=${section.toLowerCase()}`}
+  const links = channel.data.map(({id, section = 'components', order = 0}) => {
+    return {section, title: id, href: `#components?page=library&component=${id}&section=${section.toLowerCase()}`}
   }).sort((a, b) => a?.title.localeCompare(b?.title))
 
 

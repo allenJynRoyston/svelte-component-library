@@ -17,7 +17,14 @@
     properties: `
     export let tabRoot = 'tab';
     export let tabs = []
-    `
+    `,
+    dropdowns: [
+      {
+        label: 'type',
+        options: ['default', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        value: 0        
+      }   
+    ]    
   }
 
   $: livecode = `    
@@ -73,7 +80,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:fullstr={fullstr} bind:propstr={propstr} bind:props={props} bind:selectprops={selectprops} >
   <div slot='liveexample'>    
-    <Tabs {...staticprops} />
+    <Tabs {...staticprops} {...props} {...selectprops} />
    </div>    
 </LibrarySnippet>
 

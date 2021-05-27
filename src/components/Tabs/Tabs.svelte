@@ -7,6 +7,7 @@
 
   export let tabRoot = 'tab';
   export let tabs = []
+  export let type = 'default'
 
   const theme:string = getContext('theme');
 
@@ -24,7 +25,7 @@
 <div class={`tabs ${theme}-theme`}>
   <div class='links'>
     {#each tabs as {title, param = null}, index}
-      <Link style={'margin-right: 10px'} underline active={active(param, index)} href={getHref(param || String(index), index)}>{title}</Link>
+      <Link {type} style={'margin-right: 10px'} underline active={active(param, index)} href={getHref(param || String(index), index)}>{title}</Link>
     {/each}  
   </div>
 

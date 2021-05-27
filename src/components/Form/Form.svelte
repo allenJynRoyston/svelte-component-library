@@ -21,10 +21,11 @@
   //---------------------------
 
   //--------------------------- VARS
-  let completedFormData = {}
-  let isReady = false
+  let completedFormData = {}  
   let layoutSize = 'desktop'
-  let onBeforeUnload;  
+  let onBeforeUnload;
+    
+  let isReady = false  
   let hasError = false 
   let hasSubmitted = false
 
@@ -36,7 +37,7 @@
   //--------------------------- PROPS
   export let formData = []
   export let onSubmit = null;  
-  export let padding = 5
+  export let padding = 10
   export let breakpoints = {
     mobile: 480,
     tablet: 800,
@@ -227,10 +228,9 @@
   /* @ts-ignore */
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
 
-  const formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
+  $: formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
   //---------------------------
 </script>
-
 
 {#if isReady}
   <Container offset={theme === 'dark' ? 4 : 5}>
