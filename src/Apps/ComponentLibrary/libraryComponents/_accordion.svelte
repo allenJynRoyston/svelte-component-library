@@ -2,7 +2,7 @@
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import Accordion from '@components/Accordion/Accordion.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import ExampleBlock from '../components/ExampleBlock.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -14,12 +14,6 @@
   const snippet = {
     name: 'Accordion',
     importName: '@components/Accordion/Accordion.svelte',
-    properties: `
-    export let open = false
-    export let full = false
-    export let rounded = false;
-    export let outline = false;
-    `,
     props: {
       open: false,
       outline: true,
@@ -36,10 +30,7 @@
       </div>
     
       <div slot='content'>
-        <LoremBlock />
-        <LoremBlock />
-        <LoremBlock />
-        <LoremBlock />
+        <ExampleBlock />
       </div>
     </Accordion> 
      `
@@ -56,10 +47,7 @@
       </div>
     
       <div slot='content'>
-        <LoremBlock />
-        <LoremBlock />
-        <LoremBlock />
-        <LoremBlock />
+        <ExampleBlock />
       </div>
     </Accordion>    
   </div>

@@ -1,16 +1,18 @@
 <script lang='ts'>
   import { getContext } from "svelte";
 
-  export let href: string|null = null;
-  export let active = false;
+  
   export let onClick = null;
-  export let text = null;
-  export let inherit = false;
   export let type = 'default'
   export let target = null
+
+  export let href: string|null = null;
   export let classes = '';
   export let style = ''
-  
+  export let text = null;
+
+  export let inherit = false;
+  export let active = false;
   export let underline = false;
   export let exactfit = false;
   export let outline = false;

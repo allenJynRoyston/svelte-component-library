@@ -166,16 +166,20 @@ $: {
 
   .snackbar{
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+
     z-index: 100;  
     overflow: hidden;  
     display: flex;
     flex-direction: column-reverse;    
-    padding: 0 20px;
-    width: calc(100% - 40px);
+    padding: 0 5px;
+    width: calc(100% - 10px);
+    right: 0;
+    bottom: 0;
 
     @include desktop-and-up {  
+      padding: 0;
+      bottom: 10px;
+      right: 10px;      
       width: auto;
     }    
 

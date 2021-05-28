@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
 
-const showExample = writable(false);
-const showImport = writable(false);
-const showProperties = writable(false);
+const showExample = writable(true);
+const showImport = writable(true);
+const showProperties = writable(true);
 
 function siteInit() {
 	return {

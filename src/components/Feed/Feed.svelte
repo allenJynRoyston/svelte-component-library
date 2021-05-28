@@ -159,7 +159,7 @@
       box-shadow: none;
       
       &:hover{        
-        box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.25);      
+        -shadow: 10px 8px 5px rgba(0, 0, 0, 0.25);      
       }
 
       &.blur{

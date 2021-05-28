@@ -1,8 +1,10 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
+  import ExampleBlock from '../components/ExampleBlock.svelte'
 
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import Channels from '@components/Channels/Channels.svelte'
+  import Container from '@components/Container/Container.svelte'
   import {createChannel} from '@js/utility'
 
   let propstr = '';
@@ -30,27 +32,35 @@
     export let props = null;
     export let disableAnimationOnMobile = false;
     `,
+    notes: [
+      'Embedded should be set to true for this demo.'      
+    ],
     props: {
       backtotop: false,
       nopadding: false,
       animate: true,
-      nomargin: false,
-      exactfit: false,
-      disableAnimationOnMobile: false
+      selfContained: false,      
+      disableAnimationOnMobile: false,
+      outline: false,
+      showChannelNumber: true,
+      embedded: true,
     }, 
     dropdowns: [
       {
-        label: 'duration',
-        options: [400, 700, 1000], 
-        value: 0        
-      },
-      {
         label: 'easing',
-        options: ['cubicOut'], 
+        options: [
+          'linear', 'backIn', 'backOut', 'bounceIn', 'bounceInOut', 'bounceOut', 'circIn', 'circInOut', 'circOut', 'cubicIn', 'cubicInOut', 'cubicOut',
+          'elasticIn', 'elasticInOut', 'elasticOut', 'expoIn', 'expoInOut', 'expoOut', 'quadIn', 'quadInOut', 'quadOut', 
+          'quartIn', 'quartInOut', 'quartOut', 'quintIn', 'quintInOut', 'quintOut', 'sineIn', 'sineInOut', 'sineOut'
+        ], 
         value: 0        
       }      
-    ]
+    ],
+    inputs: [
+      {forprop: 'duration', value: 400, renderAs: 'input', componentprop: {type: 'number'}},
+    ]    
   }  
+
 
   $: livecode = `  
       import {createChannel} from '@js/utility'
@@ -74,92 +84,36 @@
       <Channels {...channels} ${propstr}${selectstr}${inputstr} />
      `  
 
-  $: code = `
-    import {createChannel} from '@js/utility'
-
-    const channels = createChannel({
-      current: 0,
-      data: [
-          {content: LoremBlock, props: {content: 'Channel 1'}},
-          {content: LoremBlock, props: {content: 'Channel 2'}},
-          {content: LoremBlock, props: {content: 'Channel 3'}},
-          {content: LoremBlock, props: {content: 'Channel 4'}},
-          {content: LoremBlock, props: {content: 'Channel 5'}},
-          {content: LoremBlock, props: {content: 'Channel 6'}},
-          {content: LoremBlock, props: {content: 'Channel 7'}},
-          {content: LoremBlock, props: {content: 'Channel 8'}},
-          {content: LoremBlock, props: {content: 'Channel 9'}},
-          {content: LoremBlock, props: {content: 'Channel 10'}}
-      ]
-    }) 
-
-    <Channels {...channels} ${propstr} /> 
-  `
-
    //--------------------------- CHANNEL
    const channels = createChannel({
      current: 0,
      data: [
-        {content: LoremBlock, props: {content: 'Channel 1'}},
-        {content: LoremBlock, props: {content: 'Channel 2'}},
-        {content: LoremBlock, props: {content: 'Channel 3'}},
-        {content: LoremBlock, props: {content: 'Channel 4'}},
-        {content: LoremBlock, props: {content: 'Channel 5'}},
-        {content: LoremBlock, props: {content: 'Channel 6'}},
-        {content: LoremBlock, props: {content: 'Channel 7'}},
-        {content: LoremBlock, props: {content: 'Channel 8'}},
-        {content: LoremBlock, props: {content: 'Channel 9'}},
-        {content: LoremBlock, props: {content: 'Channel 10'}}
+        {content: ExampleBlock},
+        {content: ExampleBlock},
+        {content: ExampleBlock},
+        {content: ExampleBlock},
+        {content: ExampleBlock}
     ]
   })   
-  
-  const animatedChannels = createChannel({
-     current: 0,
-     data: [
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-        {content: LoremBlock},
-    ]
-  })  
   //---------------------------   
   
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} {code} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <p>Not animated:</p>
     <div class='button-block'>
       {#each channels.data as ch, index}
         <button on:click={() => {channels.current = index}}>{index + 1}</button>    
       {/each}
     </div>
 
-    <div style='height: 200px'>      
-      <Channels {...channels}  {...props} {...selectprops}
-{...inputprops} />
+    <div style='height: 400px'>     
+      <Container offset={2}> 
+        <Channels {...channels}  {...props} {...selectprops} {...inputprops} />
+      </Container>
     </div>
    </div>    
-
-   <div slot='example'>
-    <p>Animated:</p>
-    <div class='button-block'>
-      {#each animatedChannels.data as ch, index}
-        <button on:click={() => {animatedChannels.current = index}}>{index + 1}</button>    
-      {/each}
-    </div>
-  
-    <div style='height: 200px'>
-      <Channels {...animatedChannels} {...props} animate />
-    </div>
-  </div>
 </LibrarySnippet>
 
 
@@ -172,7 +126,7 @@
 
 <style lang='scss' scoped>
   .button-block{
-    margin-left: 10px;
+    margin: 10px 0;
     display: flex; 
     gap: 5px    
   }

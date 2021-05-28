@@ -4,6 +4,7 @@
   import {LibraryStore} from '../localstore/libraryStore'
 
   import Input from '@components/FormComponents/Input/Input.svelte'
+  import Textarea from '@components/FormComponents/Textarea/Textarea.svelte'
   import Select from '@components/FormComponents/Select/Select.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
@@ -17,6 +18,7 @@
   export let inputs = null;
   export let code = null;
   export let livecode = null;
+  export let notes = [];
 
   export let dropdowns = [];
 
@@ -101,12 +103,12 @@
 
   $: listofinputs = () => {
     const list = []
-
-    inputs?.forEach(({label, prop, renderAs, value}) => {
+    inputs?.forEach(({forprop, componentprop = {}, renderAs, value}) => {
       const obj = {
-        label,
+        label: forprop,
+        key: forprop,         
         value, 
-        key: prop
+        ...componentprop
       }  
       list.push(obj)
     })
@@ -116,8 +118,8 @@
 
   onMount(() => {
     update()
-    inputs?.forEach(({value, prop}) => {
-      updateInputs(value, prop)      
+    inputs?.forEach(({value, forprop}) => {
+      updateInputs(value, forprop)      
     })
   })
 
@@ -140,70 +142,83 @@
     import ${name} from '${importName}'
     `} />
 
-  {#if !!properties}
-    <CodeBlock open show={$showProperties} title='Properties:' snippet={`
-      ${properties}
-      `} />
-  {/if}
 
-
-  {#if !!props || listofdropdowns().length > 0}
+  {#if $showProperties}
     <LibraryBlock flex title="Props: ">
-      <div class='props-container'>
-        {#if !!props}
-          <div class='buttons'>
-            {#each Object.entries(props) as [key, pair]}
-              <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
-                {key}
-              </Button>
-            {/each}            
-          </div>
-        {/if}  
+      {#if !!props || listofdropdowns().length > 0 || listofinputs().length > 0}
+        <div class='props-container'>
+          {#if !!props}
+            <div class='buttons'>
+              {#each Object.entries(props) as [key, pair]}
+                <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
+                  {key}
+                </Button>
+              {/each}            
+            </div>
+          {/if}  
+          
+          {#if listofdropdowns().length > 0}    
+            <hr>
+            <div class='dropdowns'>
+              {#each listofdropdowns() as props}
+                <Select {...props} />
+              {/each}   
+            </div>    
+          {/if}
         
-        {#if listofdropdowns().length > 0}    
-          <div class='dropdowns'>
-            {#each listofdropdowns() as props}
-              <Select {...props} />
-            {/each}   
-          </div>    
-        {/if}
 
-
-        {#if !!listofinputs().length > 0}
-          <div class='inputs'>
-            {#each listofinputs() as props}
-              <Input {...props} onChange={updateInputs} />
-            {/each}   
-          </div>   
-        {/if}          
-      </div>
+          {#if listofinputs && listofinputs().length > 0}
+            <hr>
+            <div class='inputs'>
+              {#each listofinputs() as props, index}
+                {#if inputs[index].renderAs === 'input'}
+                  <Input {...props} onChange={updateInputs} />
+                {/if}
+                {#if inputs[index].renderAs === 'textarea'}
+                  <Textarea {...props} onChange={updateInputs} />
+                {/if}              
+              {/each}   
+            </div>   
+          {/if}   
+            
+        </div>
+      {/if}           
     </LibraryBlock>  
   {/if}
 
+  {#if notes.length > 0}
+    <LibraryBlock title='Notes:'>
+      <ul>
+        {#each notes as note, index}
+          <li>⭐ {note}</li>
+        {/each}
+      </ul>
+    </LibraryBlock>
+  {/if}
 
 
   {#if !!livecode}
-    <LibraryBlock title='Live:'>
+    <LibraryBlock title='Example:'>
       <slot name='liveexample'>
       </slot>
     </LibraryBlock>
 
-    <CodeBlock show={$showExample} open title='Live example:' snippet={`
+    <CodeBlock show={$showExample} open title='Code:' snippet={`
       ${livecode}
       `} />
   {/if}
 
-  {#if !!code}
-    <LibraryBlock title='Example:'>
+  <!-- {#if !!code}
+    <LibraryBlock title='Code:'>
       <slot name='example'>
       </slot>
     </LibraryBlock>
 
 
-    <CodeBlock show={$showExample} open title='Example:' snippet={`
+    <CodeBlock show={$showExample} open title='Code:' snippet={`
       ${code}
       `} />
-  {/if}
+  {/if} -->
 </div>
 
 <style lang='scss'>
@@ -212,6 +227,12 @@
   .library-snippet{
     max-width: 1000px;
     margin: auto;
+  }
+
+  ul, li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 
   .props-container{

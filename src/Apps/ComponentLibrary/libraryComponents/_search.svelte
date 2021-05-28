@@ -21,6 +21,7 @@
 
     `,
     props: {
+      hideSearch: false,
       hideClear: false,
       searchBtn: false
     }, 

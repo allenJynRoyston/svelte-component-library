@@ -13,28 +13,6 @@
   const snippet = {
     name: 'Button',
     importName: '@components/Button/Button.svelte',
-    properties: `
-    export let style = null
-    export let text = null
-    export let href = null;
-    export let dataTestid = null
-
-    export let role = 'button'
-    export let type = 'primary';
-    export let size = 'normal'
-
-    export let disabled = false
-    export let rounded = false;
-    export let hollow = false;
-    export let target = null;
-    export let exactfit = false;
-    export let fullOnMobile = false;
-    export let nomargin = false;  
-    export let useToggle = false;
-    export let toggled = false;
-
-    export let onClick = null
-    `,
     props: {
       rounded: false,
       hollow: false,
@@ -58,9 +36,9 @@
       }      
     ], 
     inputs: [
-      {label: 'text', prop: 'text', renderAs: 'input', value: 'Some button text'},
-      {label: 'style', prop: 'style', renderAs: 'input', value: 'min-width: 200px'}      
-    ]
+      {forprop: 'text', renderAs: 'input', componentprop: {type: 'text'}, value: 'Some button text' },
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text'}, value: 'margin-bottom: 100px' }
+    ]      
   }
 
   $: livecode = `    

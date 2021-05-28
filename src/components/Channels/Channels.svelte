@@ -4,7 +4,7 @@
   import Loader from '@components/Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
+	import * as easings from 'svelte/easing';
 
   export let data = []
   export let current;
@@ -16,9 +16,10 @@
   export let backtotop = false;
   export let nopadding = false;
   export let animate = false;
-  export let exactfit = false;
-  export let props = null;
+  export let selfContained = false;
+  export let outline = false;  
   export let disableAnimationOnMobile = false;
+  export let showChannelNumber = false;
   
   let ready = false
   let xpos;
@@ -48,21 +49,24 @@
     return table
   }
 
-  onMount(async() => {
+
+
+  const init = async() => {    
     ready = false;
     const table = createSizeTables()
+
     // set xxpos to be tweened
     xpos = tweened(table[currentChannel], {
       duration: (disableAnimationOnMobile && $isNativeMobile) ? 0 : (animate ? duration : 0),
-      easing: easing === 'cubicOut' ? cubicOut : cubicOut
+      easing: easings[easing] || 'linear'
     });   
-    
+
     ready = true
     channelReady && channelReady(currentChannel)    
 
     await tick() 
-    topDifference = ele?.getBoundingClientRect().top    
-  })
+    topDifference = ele?.getBoundingClientRect().top      
+  }
 
 
   const goto = async (channel) => {
@@ -87,6 +91,10 @@
       }
     }
   }
+
+  onMount(async() => {
+    init()
+  })  
   
   $: xPostiion = () => {    
     return `transform: translateX(${$xpos}%); `
@@ -100,38 +108,50 @@
     return `width: calc(${((1 / data.length)*100).toFixed(4)}%)`
   }  
 
-  $: innerStyle = `height: calc(100vh - ${topPos}px + ${topOffset}px - ${embedded ? 10 : exactfit || nopadding ? 0 : 20}px);`
+  $: innerStyle = embedded ? `height: calc(100%)` : `height: calc(100vh - ${topPos}px + ${topOffset}px - ${selfContained || nopadding ? 0 : 20}px);`
 
   $: {      
     backtotop && resetScrollTop()
     current != currentChannel && goto(current)     
-    topPos = ele?.getBoundingClientRect().top || 0    
+    topPos = ele?.getBoundingClientRect().top || 0      
   }  
+
+  $: {
+    !!easing && init();
+    !!duration && init();
+    (animate || !animate) && init();
+    (disableAnimationOnMobile || !disableAnimationOnMobile) && init()
+  }
 
 
 </script>
 
 
-<div class:embedded={embedded}>
-  <div class='channels'  >
-    {#if ready}
-      <div class='channels-container' class:animate={animate} class:disableAnimationOnMobile={disableAnimationOnMobile} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
-        {#each data as {content, render, active, props}}
-          <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-            <div class='channel__inner' class:nopadding={nopadding} class:exactfit={exactfit} bind:this={ele} class:embedded={embedded} style={innerStyle} >
-              {#if render}
-                <svelte:component this={content} {...props}/>
-              {:else}
-                <Loader show />    
-              {/if}
-            </div>     
-          </div>
-        {/each}
-      </div> 
-    {:else}
-      <p>Loading...</p>
-    {/if}
-  </div>
+
+<div class='channels' class:embedded={embedded} >
+  {#if showChannelNumber}
+    <div class='channel-number'>
+      <span>{current + 1}/{data.length}</span>
+    </div>
+  {/if}
+
+  {#if ready}
+    <div class='channels-container' class:animate={animate} class:disableAnimationOnMobile={disableAnimationOnMobile} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
+      {#each data as {content, render, active, props}}
+        <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
+          <div class='channel__inner' class:outline={outline} class:nopadding={nopadding} class:selfContained={selfContained} bind:this={ele} style={innerStyle} >
+            {#if render}
+              <svelte:component this={content} {...props}/>
+            {:else}
+              <Loader show />    
+            {/if}
+          </div>     
+        </div>
+      {/each}
+    </div> 
+  {:else}
+    <p>Loading...</p>
+  {/if}
 </div>
 
 <style lang='scss' scoped>
@@ -148,7 +168,20 @@
   }
 
   .channels{
+    position: relative;
     overflow: hidden;
+  }
+
+  .channel-number{
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    z-index: 1;
+    padding: 5px;        
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--white-0);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);  
   }
 
   .channels-container{
@@ -161,7 +194,7 @@
   .channel{
     position: relative;
     width: 100%;   
-    
+   
     &.inactive{
       opacity: 0;
       &.animate{
@@ -190,20 +223,19 @@
       overflow-x: hidden;
       overflow-y: auto;
 
+      &.outline{
+        border: 1px dotted var(--white-0);
+      }
+
       &.nopadding{
         padding: 0;
       }
 
-      &.exactfit{
+      &.selfContained{
         width: 100%;
         height: 100vh;
         padding: 0;
         overflow: hidden;
-      }
-
-      &.embedded{
-        width: calc(100% - var(--channels-padding));
-        padding: 0 var(--channels-padding) 0 0;
       }
     }
   }

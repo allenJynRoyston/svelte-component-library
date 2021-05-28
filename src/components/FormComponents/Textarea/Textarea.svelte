@@ -65,6 +65,7 @@
   const onKeypressHandler = (e) => {
     setTimeout(() => {
       onKeypress && onKeypress(value)
+      onChange && onChange(value, key)      
       updateParent(value)
     })
   }

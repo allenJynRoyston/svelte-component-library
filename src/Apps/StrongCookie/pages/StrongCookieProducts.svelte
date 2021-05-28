@@ -41,5 +41,5 @@
 <hr>
 
 
-<Channels {...channel} embedded />
+<Channels {...channel} />
 

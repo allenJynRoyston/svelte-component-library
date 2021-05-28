@@ -7,8 +7,9 @@
   import Button from '@components/Button/Button.svelte'
 
   export let debounceTime = 0;
+  export let hideSearch = false;
   export let hideClear = false;
-  export let searchBtn = false;
+  export let searchBtn = false;  
   export let onSearch = () => {}
 
   const {isMobile} = DeviceStore;
@@ -43,9 +44,12 @@
 </script>
 
 <div class={`search ${theme}-theme`} bind:this={ele}>
-  <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onGo}>
-    <SVG icon='search' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
-  </Button>
+
+  {#if !hideSearch}
+    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onGo}>
+      <SVG icon='search' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
+    </Button>
+  {/if}
 
   <Input noBottomMargin onKeypress={onKeypress} value={$searchValue || ''} />
 

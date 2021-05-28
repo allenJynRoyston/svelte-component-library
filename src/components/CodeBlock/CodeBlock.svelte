@@ -40,26 +40,34 @@
 
 
         <div slot='content' class={`code-block ${theme}-theme`}>
-          <code>
-            <pre>
-              <div class='copy-btn'>
-                <Button type='success' exactfit nomargin hollow onClick={copy}>Copy</Button>
-              </div>            
-              {snippet}
-            </pre>
-          </code>    
+
+          <div class='copy-btn'>
+            <Button type='success' exactfit nomargin onClick={copy}>Copy</Button>
+          </div>  
+
+          <div class='inner'>
+            <code>
+              <pre>      
+                {snippet}
+              </pre>
+            </code>    
+          </div>
         </div>
       </Accordion>
     {:else}
       <div class={`code-block ${theme}-theme`}>
-        <code>   
-          <pre>
-            <div class='copy-btn'>
-              <Button type='success' exactfit nomargin hollow onClick={copy}>Copy</Button>
-            </div>               
-            {snippet}
-          </pre>
-        </code>    
+
+        <div class='copy-btn'>
+          <Button type='success' exactfit nomargin onClick={copy}>Copy</Button>
+        </div>  
+        
+        <div class='inner'>
+          <code>   
+            <pre>             
+              {snippet}
+            </pre>
+          </code>    
+        </div>
       </div>  
     {/if}
   </div>
@@ -80,27 +88,30 @@
     }    
   }
   .code-block{
-    overflow-x: auto;
-    overflow-y: hidden;
+    position: relative;
     background: var(--black-0);
     color: var(--primary-1);
     margin: 5px 0;
-
-
-
 
     &.dark-theme{
       color: var(--success-1);
     }
 
+    .inner{
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
   }
 
+ 
   code, pre{
-    position: relative;
     margin: 0;
     padding: 0;
     color: var(--success-0)
   }  
+
 
   .copy-btn{
     position: absolute;

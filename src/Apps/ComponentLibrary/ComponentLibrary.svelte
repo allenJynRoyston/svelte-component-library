@@ -77,7 +77,7 @@
 </script>
 
 <HashWatch onChange={onChange}/>
-<Channels {...channel} exactfit />
+<Channels {...channel} selfContained />
 
 <style lang='scss'>
   @import "../../scss/src/_media-queries.scss";

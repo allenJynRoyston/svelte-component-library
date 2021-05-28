@@ -85,15 +85,6 @@
     const snippet = {
     name: 'ChannelButton',
     importName: '@components/ChannelButton/ChannelButton.svelte',
-    properties: `
-    export let leftIcon = null;
-    export let rightIcon = null;
-    export let content = null;
-    export let iconSize = 18;
-    export let rounded = false;
-    export let nomargin = false;
-    export let type = null;
-    `,
     props: {
       rounded: false,
       nomargin: false
@@ -121,8 +112,8 @@
       }      
     ],
     inputs: [
-      {label: 'text', prop: 'content', renderAs: 'input', value: 'Some button text'},
-      {label: 'style', prop: 'style', renderAs: 'input', value: 'margin-bottom: 100px'}      
+      {forprop: 'content', renderAs: 'input', componentprop: {type: 'text'}, value: 'Some button text' },
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text'}, value: 'margin-bottom: 100px' }
     ]    
   }
 

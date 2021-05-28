@@ -333,7 +333,8 @@
       left: 0;
       display: none;
       justify-content: center;
-      align-items: center;      
+      align-items: center;     
+      z-index: 10; 
       &.show{
         display: flex
       }
@@ -354,6 +355,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      z-index: 11;
     }
 
   }
