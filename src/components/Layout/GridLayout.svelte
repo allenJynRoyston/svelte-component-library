@@ -6,7 +6,7 @@
   export let gap:number = 10;
 
   export let outline:boolean = false;
-  export let items:any = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
+  export let items:any = []
 
   const theme:string = getContext('theme');
 

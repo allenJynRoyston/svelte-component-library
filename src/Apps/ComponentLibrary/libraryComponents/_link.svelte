@@ -13,27 +13,12 @@
   const snippet = {
     name: 'Link',
     importName: '@components/Link/Link.svelte',
-    properties: `
-    export let href: string|null = null;
-    export let onClick = null;
-    export let text = null;
-    export let inherit = false;
-    export let type = 'default'
-    export let target = null
-    export let classes = '';
-    export let style = ''
-
-    export let active = false;
-    export let underline = false;
-    export let exactfit = false;
-    export let outline = false;
-    `,
     props: {
       underline: false,
-      exactfit: false,
       inherit: false,
       active: true,
       outline: false,
+      exactfit: false,
     }, 
     dropdowns: [
       {
@@ -48,24 +33,26 @@
       }           
     ], 
     inputs: [
-      {label: 'text', prop: 'text', renderAs: 'input', value: 'I am a link'},
-      {label: 'href', prop: 'href', renderAs: 'input', value: '/#something'},
-      {label: 'style', prop: 'style', renderAs: 'input', value: 'margin-bottom: 20px'}      
-
+      {forprop: 'text', renderAs: 'input', componentprop: {type: 'text'}, value: 'I am a link' },
+      {forprop: 'href', renderAs: 'input', componentprop: {type: 'text'}, value: '/#something' },
+      {forprop: 'classes', renderAs: 'input', componentprop: {type: 'text', placeholder: 'semi-bold italic'}, value: null },
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'margin-bottom: 20px'}, value: null },
     ]
   }  
 
   $: livecode = `    
-    <Link${propstr}${selectstr}${inputstr}>
-      I am a link
-    </Link>   
+    <div style='color: red'>
+      <Link${propstr}${selectstr}${inputstr}>
+        I am a link
+      </Link>   
+    </div>
      `  
    
 </script>
 
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
-  <div slot='liveexample'>    
+  <div slot='liveexample' style='color: red'>    
     <Link {...props} {...selectprops} {...inputprops} />
    </div>    
 </LibrarySnippet>

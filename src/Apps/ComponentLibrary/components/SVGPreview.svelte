@@ -26,7 +26,7 @@
   <button on:click={copy}>
     <div class='svg-preview'>
       <SVG {icon} size={30}/>
-      <Button exactfit size='small' hollow type='black'>{title}</Button>  
+      <Button exactfit size='small' hollow applyTheme='black'>{title}</Button>  
     </div>
   </button>
 </CopyToClipboard>    

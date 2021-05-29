@@ -1,6 +1,8 @@
 <script lang='ts'>
-  import {onMount, tick} from 'svelte'  
+  import {onMount, onDestroy, tick} from 'svelte'  
   import {SiteStore, DeviceStore} from '@store/store'
+  import {debounce} from '@js/utility'
+
   import Loader from '@components/Loader/Loader.svelte'
   
 	import { tweened } from 'svelte/motion';
@@ -49,8 +51,6 @@
     return table
   }
 
-
-
   const init = async() => {    
     ready = false;
     const table = createSizeTables()
@@ -92,8 +92,21 @@
     }
   }
 
-  onMount(async() => {
+  const resizeEvent = debounce(() => {
+    topPos = ele?.getBoundingClientRect().top || 0
+  }, 100)  
+
+
+  onMount(() => {
     init()
+    setTimeout(() => {
+      resizeEvent()
+    })
+    window.addEventListener('resize', resizeEvent);
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('resize', resizeEvent)
   })  
   
   $: xPostiion = () => {    
@@ -112,8 +125,10 @@
 
   $: {      
     backtotop && resetScrollTop()
-    current != currentChannel && goto(current)     
-    topPos = ele?.getBoundingClientRect().top || 0      
+    current != currentChannel && goto(current)  
+    setTimeout(() =>{  
+      topPos = ele?.getBoundingClientRect().top || 0      
+    }) 
   }  
 
   $: {

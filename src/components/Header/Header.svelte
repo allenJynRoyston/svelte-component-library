@@ -4,6 +4,7 @@
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte';
 
   export let title = null;
   export let logoSrc = null;
@@ -11,12 +12,20 @@
   export let logoLink = '/';
 
   export let navEle = null;
-  export let centerEle = null;  
+  export let heroEle = null;  
   export let footerEle = null;
   export let notchEle = null;
-  export let showCenter = false;  
+  
+  export let showHero = false;  
   export let showFooter = false;
-  export let showLayoutButton = false;
+  export let showNotch = false;
+
+  export let hideTitle = false;
+  export let hideLogo = false;
+  export let hideNav = false;
+
+  export let invertColors = false;
+  export let showBurgerMenuButton = false;
 
   const {openSidebar, openNotch} = SiteStore;
 
@@ -29,58 +38,62 @@
 </script>
 
 <nav class={`nav-header ${theme}-theme`} style={!!bgSrc ? imageStyle: null}>
-  
-    <TwoSlot showLeft showRight>
-      {#if showLayoutButton}
-        <span class='tablet-landscape-and-below' style='transform: translateY(-3px) translateX(-10px)'>
-          <SVG icon={$openSidebar ? 'menu' : 'circleup'} size={24} onClick={() => {$openSidebar = !$openSidebar}} />        
-        </span>
-      {/if}
+  <ThemeWrapper invert={invertColors}>
+    <TwoSlot >
+      <section class='inner' slot='left'>
+        {#if showBurgerMenuButton}
+          <span style='transform: translateX(-10px)'>
+            <SVG icon={$openSidebar ? 'cross' : 'menu'} size={24} onClick={() => {$openSidebar = !$openSidebar}} />        
+          </span>
+        {/if}
 
-      <Link href={logoLink} >
-        <div class='inner'>
+        <Link href={logoLink} >
+          <div class='inner'>
 
-          {#if !!logoSrc}
-            <img class='logo' src={logoSrc} alt='logo' />
-          {/if}
+            {#if !!logoSrc && !hideLogo}
+              <img class='logo' src={logoSrc} alt='logo' />
+            {/if}
 
-          <div class='brand'>
-            <slot>
-              <h1>{title}</h1>
-            </slot>
+            {#if !hideTitle}
+              <div class='brand'>
+                <slot>
+                  <h1>{title}</h1>
+                </slot>
+              </div>
+            {/if}
           </div>
-        </div>
-      </Link>
+        </Link>
+      </section>
       
       <div class='navcontainer' slot='right'>
-        {#if !!navEle}
+        {#if !!navEle && !hideNav}
           <svelte:component this={navEle.component} {...navEle.props} />
         {/if}
 
         {#if !!notchEle}
-         <SVG icon={$openNotch ? 'cross' : 'dots'} onClick={() => {$openNotch = !$openNotch}} />
+         <SVG icon={$openNotch ? 'cross' : 'dots'} onClick={() => {$openNotch = !$openNotch}} style='transform: translateY(2px)' />
         {/if}
       </div>
     </TwoSlot>
 
-  {#if centerEle}
-    <div class='splash' class:expand={showCenter}>
-      <svelte:component this={centerEle.component} {...centerEle.props} />
-    </div>
-  {/if}
+    {#if !!heroEle}
+      <div class='splash' class:expand={showHero}>
+        <svelte:component this={heroEle.component} {...heroEle.props} />
+      </div>
+    {/if}
 
-  {#if footerEle}
-    <div class='footer' class:expand={showFooter}>
-      <svelte:component this={footerEle.component} {...footerEle.props} />
-    </div>
-  {/if}
+    {#if !!footerEle}
+      <div class='footer' class:expand={showFooter}>
+        <svelte:component this={footerEle.component} {...footerEle.props} />
+      </div>
+    {/if}
 
-  {#if !!notchEle}
-    <div class='header-notch' class:show={$openNotch} >      
-      <svelte:component this={notchEle.component} {...notchEle.props} />
-    </div>
-  {/if}
-
+    {#if !!notchEle}
+      <div class='header-notch' class:show={showNotch} >      
+        <svelte:component this={notchEle.component} {...notchEle.props} />
+      </div>
+    {/if}
+  </ThemeWrapper>
 </nav>
 
 
@@ -111,22 +124,22 @@
       margin-right: 10px;
     }
 
-    background: var(--white-0);
+    // background: var(--white-0);
     .brand{
       font-size: 10px;
-      color: var(--white-0-text);    
+      // color: var(--white-0-text);    
 
       @include desktop-and-up {     
         font-size: 12px;
       }  
     }
 
-    &.dark-theme{
-      background: var(--black-1);
-      .brand{
-        color: var(--black-1-text);
-      }
-    }
+    // &.dark-theme{
+    //   background: var(--black-1);
+    //   .brand{
+    //     color: var(--black-1-text);
+    //   }
+    // }
   }
   
   .navcontainer{

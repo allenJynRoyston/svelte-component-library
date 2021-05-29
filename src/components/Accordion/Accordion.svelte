@@ -25,9 +25,9 @@
 
 <div class={`accordion ${theme}-theme`} class:rounded={rounded} class:outline={outline} bind:this={ele} >
   <div class='accordion-inner'>
-    <TwoSlot showLeft showRight>     
+    <TwoSlot>     
 
-      <button on:click={toggle} style='width: 100%; text-align: left'>
+      <button slot='left' on:click={toggle} style='width: 100%; text-align: left'>
         <slot name='title'>
           <h2>Accordian</h2>
         </slot> 

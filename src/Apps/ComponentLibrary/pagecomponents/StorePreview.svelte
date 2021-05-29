@@ -12,7 +12,7 @@
 
 </script>
 
-<Section paddingTop>
+<Section>
   <section>
     <h1>
       Available Stores:

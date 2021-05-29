@@ -13,9 +13,6 @@
   const snippet = {
     name: 'Container',
     importName: '@components/Container/Container.svelte',
-    properties: `
-    export let offset = 0;
-    `,
     props: {
 
     }, 

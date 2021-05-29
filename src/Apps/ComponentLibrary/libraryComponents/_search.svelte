@@ -13,26 +13,16 @@
   const snippet = {
     name: 'Search',
     importName: '@components/Search/Search.svelte',
-    properties: `
-    export let debounceTime = 0;
-    export let hideClear = false;
-    export let searchBtn = false;
-    export let onSearch = () => {}
-
-    `,
     props: {
-      hideSearch: false,
+      hideSearchIcon: false,
       hideClear: false,
-      searchBtn: false
+      hideSearchButton: false,
     }, 
-    dropdowns: [
-      {
-        label: 'debounceTime',
-        options: [null, 300, 700, 1000], 
-        value: 0        
-      }     
-    ]
+    inputs: [
+      {forprop: 'debounceTime', renderAs: 'input', componentprop: {type: 'number'}, value: 300 },      
+    ]       
   }
+  
 
   $: livecode = `    
     <Search ${propstr}${selectstr}${inputstr} />
@@ -41,8 +31,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Search  {...props} {...selectprops}
-{...inputprops} />
+    <Search  {...props} {...selectprops} {...inputprops} />
   </div>    
 
 </LibrarySnippet>

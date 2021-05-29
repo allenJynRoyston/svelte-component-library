@@ -54,24 +54,24 @@
   }
   //---------------------------  
 
-
-
 </script>
+
+
 
 <HashWatch onChange={hashWatch} />
 
 <Container offset={theme === 'dark' ? 2 : 0}>
   <div class='home-page'>
     
-    <Header {...headercopy} showCenter={channel.current === 0} showFooter={channel.current === 0} />
+    <Header {...headercopy} showHero={channel.current === 0} showFooter={channel.current === 0} />
 
     <div class='home-section'>
       <div class='button-nav'>
-        <Button nomargin size={$isMobile ? 'small' : 'normal'} type='primary' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
-        <Button nomargin size={$isMobile ? 'small' : 'normal'} type='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
-        <Button nomargin size={$isMobile ? 'small' : 'normal'} type='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
-        <Button nomargin size={$isMobile ? 'small' : 'normal'} type='warning' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
-        <Button nomargin size={$isMobile ? 'small' : 'normal'} type='danger' disabled={channel.current === 4}  href={`${rootUrl}store`} onClick={() => {channel.current = 4}}>Stores</Button>
+        <Button full nomargin size={$isMobile ? 'small' : 'normal'} applyTheme='primary' disabled={channel.current === 0} href={`${rootUrl}about`} onClick={() => {channel.current = 0}}>About</Button>
+        <Button full nomargin size={$isMobile ? 'small' : 'normal'} applyTheme='secondary' disabled={channel.current === 1} href={`${rootUrl}colors`} onClick={() => {channel.current = 1}}>Colors</Button>
+        <Button full nomargin size={$isMobile ? 'small' : 'normal'} applyTheme='success' disabled={channel.current === 2} href={`${rootUrl}typography`} onClick={() => {channel.current = 2}}>Typography</Button>
+        <Button full nomargin size={$isMobile ? 'small' : 'normal'} applyTheme='warning' disabled={channel.current === 3}  href={`${rootUrl}utilities`} onClick={() => {channel.current = 3}}>Utilities</Button>
+        <Button full nomargin size={$isMobile ? 'small' : 'normal'} applyTheme='danger' disabled={channel.current === 4}  href={`${rootUrl}store`} onClick={() => {channel.current = 4}}>Stores</Button>
       </div>
       
       

@@ -87,8 +87,8 @@
     <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} {style} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
 
       <div class='header'  class:busy={$modalIsBusy}>
-        <TwoSlot showLeft showRight>
-          <h2>{$modalProps?.title || 'Unavailable'}</h2>        
+        <TwoSlot >
+          <h2 slot='left'>{$modalProps?.title || 'Unavailable'}</h2>        
           <div slot='right'>
             <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
           </div>

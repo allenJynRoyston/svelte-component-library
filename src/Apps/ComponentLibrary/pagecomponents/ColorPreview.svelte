@@ -23,7 +23,7 @@
 
 </script>
 
-<Section paddingTop>
+<Section>
   <section>
 
     <h1>

@@ -11,8 +11,8 @@
 
 </script>
 
-<TwoSlot showLeft showRight>
-  <h2>Example Form</h2>
+<TwoSlot>
+  <h2 slot='left'>Example Form</h2>
   <div slot='right' style='display: flex; gap: 5px'>
   </div>
 </TwoSlot>

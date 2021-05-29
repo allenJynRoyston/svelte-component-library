@@ -14,7 +14,7 @@
 
 </script>
 
-<Section paddingTop>
+<Section>
   <section>
     <h1>
       Typography:
@@ -30,8 +30,8 @@
       <div slot='content'>
         <Section>
           {#each fonts as font, index}
-            <TwoSlot showLeft showRight>
-              <div class='title'>{font}</div>
+            <TwoSlot>
+              <div slot='left' class='title'>{font}</div>
               <div slot='right'>
                 <span class={index === 0 ? 'font-one' : 'font-two'}>
                   {phrase} 
@@ -54,8 +54,8 @@
       <div slot='content'>
         <Section>
           {#each classes as _class, index}
-            <TwoSlot showLeft showRight>
-              <div class='title'>
+            <TwoSlot>
+              <div slot='left' class='title'>
                 <ColorText type={_class}>
                   {_class} 
                 </ColorText>
@@ -85,8 +85,8 @@
 
       <div slot='content'>
         <Section>
-          <TwoSlot showLeft showRight>
-            <div class='title'>h1:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>h1:</div>
             <div slot='right'>
               <h1 class='font-one'>
                 {phrase}
@@ -94,8 +94,8 @@
             </div>
           </TwoSlot>
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>h2:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>h2:</div>
             <div slot='right'>
               <h2>
                 {phrase}
@@ -103,8 +103,8 @@
             </div>
           </TwoSlot>
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>h3:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>h3:</div>
             <div slot='right'>
               <h3>
                 {phrase}
@@ -112,8 +112,8 @@
             </div>
           </TwoSlot> 
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>h4:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>h4:</div>
             <div slot='right'>
               <h4>
                 {phrase}
@@ -121,8 +121,8 @@
             </div>
           </TwoSlot> 
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>h5:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>h5:</div>
             <div slot='right'>
               <h5>
                 {phrase}
@@ -140,8 +140,8 @@
 
       <div slot='content'>
         <Section>
-          <TwoSlot showLeft showRight>
-            <div class='title'>p:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>p:</div>
             <div slot='right'>
               <p>
                 {phrase}
@@ -149,8 +149,8 @@
             </div>
           </TwoSlot>  
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>span:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>span:</div>
             <div slot='right'>
               <span>
                 {phrase}
@@ -158,8 +158,8 @@
             </div>
           </TwoSlot>  
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>a:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>a:</div>
             <div slot='right'>
               <a href={`${location.hash}`}>
                 {phrase}
@@ -167,15 +167,15 @@
             </div>
           </TwoSlot>  
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>body:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>body:</div>
             <div slot='right'>        
               {phrase}        
             </div>
           </TwoSlot>  
           <hr>
-          <TwoSlot showLeft showRight>
-            <div class='title'>em:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>em:</div>
             <div slot='right'>      
               <em>
                 {phrase}        
@@ -183,8 +183,8 @@
             </div>
           </TwoSlot>      
           <hr> 
-          <TwoSlot showLeft showRight>
-            <div class='title'>strong:</div>
+          <TwoSlot >
+            <div slot='left' class='title'>strong:</div>
             <div slot='right'>      
               <strong>
                 {phrase}        

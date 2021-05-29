@@ -13,19 +13,16 @@
   const snippet = {
     name: 'ThreeSlot',
     importName: '@components/ThreeSlot/ThreeSlot.svelte',
-    properties: `
-    export let style = null;
-    export let showLeft = false;
-    export let showRight = false;
-    export let outline = false; 
-    export let rounded = false;
-    `,
     props: {
-      showLeft: true,
-      showRight: true,
-      outline: false,
-      rounded: false
-    }
+      hideLeft: false,
+      hideRight: false,
+      hideContent: false,
+      outline: true,
+      rounded: true
+    },
+    inputs: [
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid red'}, value: null }
+    ]       
   }
 
   $: livecode = `    
@@ -34,7 +31,7 @@
         <h2>Left</h2>
       </div>
   
-      <div style='text-align: center'>
+      <div slot='center' style='text-align: center'>
         <p>Content that is placed inbetween.</p>
       </div>
       
@@ -48,13 +45,12 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ThreeSlot {...props} {...selectprops}
-{...inputprops} >
+    <ThreeSlot {...props} {...selectprops}{...inputprops} >
       <div slot='left'>
         <h2>Left</h2>
       </div>
   
-      <div style='text-align: center'>
+      <div slot='center' style='text-align: center'>
         <p>Content that is placed inbetween.</p>
       </div>
       

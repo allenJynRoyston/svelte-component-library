@@ -14,11 +14,11 @@
 </script>
 
 <div class='themeswitcher' class:dark-theme={theme === 'dark'}>
-  <Button type='white' size='small' disabled={theme === 'light'} hollow={theme === 'light'} onClick={() => {setTheme('light')}}>
+  <Button applyTheme='white' size='small' disabled={theme === 'light'} hollow={theme === 'light'} onClick={() => {setTheme('light')}}>
     Light
   </Button>  
 
-  <Button type='white' size='small' disabled={theme === 'dark'} hollow={theme === 'dark'} onClick={() => {setTheme('dark')}}>
+  <Button applyTheme='white' size='small' disabled={theme === 'dark'} hollow={theme === 'dark'} onClick={() => {setTheme('dark')}}>
     Dark
   </Button>    
 </div>

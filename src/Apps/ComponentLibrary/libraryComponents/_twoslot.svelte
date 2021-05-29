@@ -13,33 +13,23 @@
   const snippet = {
     name: 'TwoSlot',
     importName: '@components/TwoSlot/TwoSlot.svelte',
-    properties: `
-    export let style = null;
-    export let showLeft = false;
-    export let showRight = false;
-    export let outline = false; 
-    export let rounded = false;
-    `,
     props: {
-      showLeft: true,
-      showRight: true,
-      outline: false,
-      rounded: false
-    }
+      hideLeft: false,
+      hideRight: false,
+      outline: true,
+      rounded: true
+    },
+    inputs: [
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid red'}, value: null }
+    ] 
   }
 
   $: livecode = `    
     <TwoSlot${propstr}${selectstr}${inputstr}>
-      <div slot='left'>
-        <h2>Left</h2>
-      </div>
-  
-      <div style='text-align: center'>
-        <p>Content that is placed inbetween.</p>
-      </div>
-      
+      <h2 slot='left'>Left</h2>
+
       <div slot='right'>
-        <button>Right</button>
+        <button>On the Right</button>
       </div>
     </TwoSlot>   
      `
@@ -48,9 +38,8 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <TwoSlot {...props} {...selectprops}
-{...inputprops} >
-      <h2>Left</h2>
+    <TwoSlot {...props}{...selectprops}{...inputprops} >
+      <h2 slot='left'>Left</h2>
 
       <div slot='right'>
         <button>On the Right</button>

@@ -25,7 +25,7 @@
 
 <button class={`channel-button ${useType}`} {style} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
   <div class='icon' >
-    <SVG icon={leftIcon || 'globe'} {fill} ignoreTheme size={iconSize} />
+    <SVG icon={leftIcon || 'globe'} {fill} size={iconSize} />
   </div>
   <div class='content' type='button' on:click={onClick}>
     <slot>
@@ -33,7 +33,7 @@
     </slot>
   </div>
   <div class='icon' >
-    <SVG icon={rightIcon || 'arrow-right'} {fill} ignoreTheme size={iconSize} />
+    <SVG icon={rightIcon || 'arrow-right'} {fill} size={iconSize} />
   </div>
 </button>
 

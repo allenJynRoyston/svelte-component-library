@@ -12,7 +12,7 @@
 
 <style lang='scss' scoped>
   .primary{
-    color: var(--primary-0);
+    color: var(--primary-0)!important;
   }
 
   .secondary{
@@ -37,28 +37,28 @@
 
 
   .dark-theme{
-      &.primary{
-        color: var(--primary-1);
-      }
+    &.primary{
+      color: var(--primary-1);
+    }
 
-      &.secondary{
-        color: var(--secondary-1);
-      }
+    &.secondary{
+      color: var(--secondary-1);
+    }
 
-      &.magic{
-        color: var(--magic-1);
-      }      
+    &.magic{
+      color: var(--magic-1);
+    }      
 
-      &.success{
-        color: var(--success-1);
-      }
+    &.success{
+      color: var(--success-1);
+    }
 
-      &.warning{
-        color: var(--warning-1);
-      }
+    &.warning{
+      color: var(--warning-1);
+    }
 
-      &.danger{
-        color: var(--danger-1);
-      }
+    &.danger{
+      color: var(--danger-1);
+    }
   }
 </style>

@@ -21,7 +21,7 @@
 
 </script>
 
-<Section paddingTop>
+<Section>
   <section>
     <h1>
       Utility:

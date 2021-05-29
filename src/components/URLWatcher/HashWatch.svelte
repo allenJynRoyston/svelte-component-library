@@ -5,9 +5,11 @@
 
   //--------------------------- ONMOUNT
   onMount(async() => {
-    window.addEventListener("hashchange", locationHashChanged, false)    
-    locationHashChanged()
+    window.addEventListener("hashchange", locationHashChanged, false)        
     ready = true
+    setTimeout(() => {
+      locationHashChanged()
+    })
   })  
 
   onDestroy(() => {

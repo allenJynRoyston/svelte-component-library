@@ -13,25 +13,6 @@
   const snippet = {
     name: 'Form',
     importName: '@components/Form/Form.svelte',
-    properties: `
-    export let formData = []
-    export let onSubmit = null;  
-    export let padding = 5
-    export let breakpoints = {
-      mobile: 480,
-      tablet: 800,
-      desktop: 1920,
-      wide: 2440
-    }
-    export let style = null
-    export let localStorageKey = null;            
-    export let idModifier = null;       
-
-    export let clearLocalStorage = false; 
-    export let isBusy = false
-    export let showPreview = false
-    export let showButton = false
-    `,
     props: {
       clearLocalStorage: false,
       isBusy: false,

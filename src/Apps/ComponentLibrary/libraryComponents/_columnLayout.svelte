@@ -14,15 +14,6 @@
   const snippet = {
     name: 'ColumnLayout',
     importName: '@components/ColumnLayout/ColumnLayout.svelte',
-    properties: `
-    export let links = []
-    export let currentIndex = null;
-    export let hidebtn:boolean = false;
-    export let side = 'left'
-    export let disableSearch = false;
-    export let watchParam = null
-    export let activeTheme = 'primary'
-    `,
     props: {
       hidebtn: false,
       disableSearch: false,
@@ -38,6 +29,9 @@
         options: [null, 'left', 'right'], 
         value: 0        
       }      
+    ], 
+    notes: [
+      'See Documentation for a better description on how to setup the columnLayout component.'
     ]
   }  
 
@@ -75,8 +69,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ColumnLayout {links} {...props} {...selectprops}
-{...inputprops} ignoreForExample>
+    <ColumnLayout {links} {...props} {...selectprops} {...inputprops} ignoreForExample>
       <div style='padding: 0 10px'>
         <LoremBlock />
       </div>

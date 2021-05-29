@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
+  import {svgslist} from '@components/SVG/SVG.svelte'
   import SVG from '@components/SVG/SVG.svelte'
   import GridLayout from '@components/Layout/GridLayout.svelte'
   import SVGPreview from '../components/SVGPreview.svelte'
@@ -11,78 +12,6 @@
   let props; 
   let selectprops;
   let inputprops;
-
-  const svgs = [
-    'dots',
-    'home',
-    'spinner',
-    'cogs',
-    'fire',
-    'usertie',
-    'search',
-    'cross',
-    'globe',
-    'image',
-    'star-full',
-    'star-empty',
-    'comments',
-    'chain',
-    'chainbroken',
-    'plus',
-    'minus',
-    'checkbox-unchecked',
-    'checkbox-checked',
-    'locked',
-    'unlocked',
-    'file-text',
-    'youtube',
-    'like',
-    'dislike',
-    'love',
-    'camera',
-    'save',
-    'grid-small',
-    'grid-large',
-    'showcase',
-    'arrow-left',
-    'arrow-right',
-    'edit',
-    'bin',
-    'display',
-    'play',
-    'friend',
-    'list',
-    'bell',
-    'people',
-    'shield',
-    'edit',
-    'link',
-    'flag',
-    'post',
-    'checkmark',
-    'happy',
-    'sad',
-    'angry',
-    'wink',
-    'shocked',
-    'crying',
-    'baffled',
-    'bullhorn',
-    'circleup',
-    'warning',
-    'notification',
-    'email',
-    'instagram',
-    'linkedin',
-    'conversation',
-    'globe2',
-    'share',
-    'stats',
-    'upload',
-    'menu',
-    'hashtag',
-    'refresh'
-  ]  
 
   const snippet = {
     name: 'SVG',
@@ -97,26 +26,28 @@
     export let onClick:(index) => void|null = null;
     export let ignoreTheme = false;
     `,
-    props: {
-      ignoreTheme: false
-    }, 
     dropdowns: [
       {
-        label: 'fill',
-        options: [null, 'red', 'green', 'blue'], 
+        label: 'icon',
+        options: svgslist, 
         value: 0        
-      },      
-      {
-        label: 'size',
-        options: [10, 14, 18, 22, 26, 30, 50 , 100], 
-        value: 6        
       },
       {
-        label: 'icon',
-        options: svgs, 
+        label: 'applyTheme',
+        options: [null, 'primary', 'secondary', 'magic', 'success', 'warning', 'danger'], 
         value: 0        
-      }            
-    ]
+      }               
+    ],
+    inputs: [
+      {forprop: 'index', renderAs: 'input', componentprop: {type: 'number'}, value: 0 },
+      {forprop: 'title', renderAs: 'input', componentprop: {type: 'text'}, value: 'SVG Title' },
+      {forprop: 'fill', renderAs: 'input', componentprop: {type: 'text', placeholder: '#f2f2f2 or color name (i.e. red)'}, value: null },
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid red'}, value: null },
+      {forprop: 'size', renderAs: 'input', componentprop: {type: 'number'}, value: 22 }
+    ], 
+    notes: [
+      'Fill takes priority over applyTheme.'
+    ]  
   }
 
   $: livecode = `    
@@ -124,7 +55,7 @@
      `
    
 
-  export let items = svgs.map(svg =>{
+  export let items = svgslist.map(svg =>{
     return {component: SVGPreview, props: {icon: svg, title: svg}}
   })
 

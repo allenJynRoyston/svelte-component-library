@@ -1,12 +1,10 @@
 <script lang='ts'>
-  import {getContext} from 'svelte';  
-  import { createChannel, capitalizeStr } from '@js/utility'
+  import { createChannel } from '@js/utility'
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
   import Channels from '@components/Channels/Channels.svelte'
   import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
   import Container from '@components/Container/Container.svelte'
 
   import AccordionAlias from '@lib/_accordion.svelte'  
@@ -59,9 +57,7 @@
   const headercopy:any = {...headerprops}
   if(!!headercopy?.notchEle){
     headerprops.notchEle.props = {showSearch: true}
-  }
-
-  const theme:string = getContext('theme');
+  }  
 
   //--------------------------- CHANNEL
   const channel = createChannel({    
@@ -83,7 +79,7 @@
     {content: RatingAlias, id: 'rating', section: 'Form'},
     {content: SelectAlias, id: 'select', section: 'Form'},
     {content: SelectMultiAlias, id: 'selectmulti', section: 'Form'},    
-
+    {content: FormExampleAlias, id: 'formexample', section: 'Form Examples'},
 
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
@@ -110,8 +106,7 @@
     {content: InnerContainerAlias, id: 'innercontainer'},
     {content: SectionAlias, id: 'section'},
     {content: ColorTextAlias, id: 'colortext'},    
-    {content: TabsAlias, id: 'tabs'},
-    {content: FormExampleAlias, id: 'formexample'},
+    {content: TabsAlias, id: 'tabs'},    
     {content: LoremBlockAlias, id: 'loremblock'}
   ]})   
 
@@ -140,7 +135,7 @@
 <Container offset={1}>
   <HashWatch onChange={onChange}/>
 
-  <Header {...headercopy} showFooter showLayoutButton />
+  <Header {...headercopy} showFooter showBurgerMenuButton />
 
   <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
     <Channels {...channel} animate disableAnimationOnMobile />

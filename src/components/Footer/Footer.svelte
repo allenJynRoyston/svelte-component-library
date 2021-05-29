@@ -9,7 +9,7 @@
 
 <footer class={`footer ${theme}-theme`}>
   <slot>
-    <p>Developed by <ColorText type='secondary'><Link inherit href='https://github.com/allenRoyston' target="_blank">Allen Royston</Link></ColorText> | 2021</p>
+    <p>Footer</p>
   </slot>
 </footer>
 

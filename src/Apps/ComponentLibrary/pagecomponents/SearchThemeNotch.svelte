@@ -1,9 +1,12 @@
 <script lang='ts'>
   import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
   import Search from '@components/Search/Search.svelte'
+  import {SiteStore} from '@store/store';
 
   export let showSearch = false;
-
+  
+  const {searchValue} = SiteStore;
+  
 </script>
 
 
@@ -12,7 +15,7 @@
     <ThemeSwitch />
   </div>
   {#if showSearch}
-    <Search/>
+    <Search onUpdate={(val) => $searchValue = val}/>
   {/if}
 </div>
 

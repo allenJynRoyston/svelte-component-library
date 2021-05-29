@@ -20,16 +20,12 @@
   const getChildren = async() => {
     await tick()
     if(!!ele){
-
       let useTheme = !!forcetheme ? forcetheme : theme
-
       for (let child of ele.querySelectorAll('.dark-theme, .light-theme')) {
           child.classList.remove("dark-theme");
           child.classList.remove("light-theme");
           child.classList.add(`${invert ? getInvert(useTheme) : useTheme}-theme`);
       }
-
-
     } 
   }
 

@@ -14,17 +14,16 @@
   const snippet = {
     name: 'InnerContainer',
     importName: '@components/InnerContainer/InnerContainer.svelte',
-    properties: `
-    export let height = '100vh'
-    export let adjustPx = 0
-    `,
-    dropdowns: [
-      {
-        label: 'height',
-        options: ['100vh', '75vh', '50vh'], 
-        value: 0        
-      }    
-    ]    
+    props: {
+      accountForTopPos: false,
+    },     
+    inputs: [
+      {forprop: 'height', renderAs: 'input', componentprop: {type: 'text'}, value: '250px' },
+      {forprop: 'adjustPx', renderAs: 'input', componentprop: {type: 'number'}, value: null }
+    ],
+    notes: [
+      'AccountForTopPos should only be set to true if InnerContainer is used to wrap a main component, such as the ColumnLayout'
+    ]       
   }
 
   $: livecode = `    
@@ -44,8 +43,7 @@
 
 <LibrarySnippet {...snippet} {livecode}bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <InnerContainer {...props} {...selectprops}
-{...inputprops}>
+    <InnerContainer {...props} {...selectprops}{...inputprops}>
       <strong>
         Automatically applies a scrollbar if wrapped in a container that is too small for the content.
         Can set the height manually if you want finer control over how much scroll is available.

@@ -2,6 +2,8 @@
   	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
     import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
+    import {svgslist} from '@components/SVG/SVG.svelte'
+
 
     let propstr = '';
     let selectstr = '';
@@ -9,78 +11,6 @@
     let props; 
     let selectprops;
     let inputprops;
-
-    const svgs = [
-    'dots',
-    'home',
-    'spinner',
-    'cogs',
-    'fire',
-    'usertie',
-    'search',
-    'cross',
-    'globe',
-    'image',
-    'star-full',
-    'star-empty',
-    'comments',
-    'chain',
-    'chainbroken',
-    'plus',
-    'minus',
-    'checkbox-unchecked',
-    'checkbox-checked',
-    'locked',
-    'unlocked',
-    'file-text',
-    'youtube',
-    'like',
-    'dislike',
-    'love',
-    'camera',
-    'save',
-    'grid-small',
-    'grid-large',
-    'showcase',
-    'arrow-left',
-    'arrow-right',
-    'edit',
-    'bin',
-    'display',
-    'play',
-    'friend',
-    'list',
-    'bell',
-    'people',
-    'shield',
-    'edit',
-    'link',
-    'flag',
-    'post',
-    'checkmark',
-    'happy',
-    'sad',
-    'angry',
-    'wink',
-    'shocked',
-    'crying',
-    'baffled',
-    'bullhorn',
-    'circleup',
-    'warning',
-    'notification',
-    'email',
-    'instagram',
-    'linkedin',
-    'conversation',
-    'globe2',
-    'share',
-    'stats',
-    'upload',
-    'menu',
-    'hashtag',
-    'refresh'
-  ]      
 
     const snippet = {
     name: 'ChannelButton',
@@ -97,12 +27,12 @@
       },
       {
         label: 'leftIcon',
-        options: [null, ...svgs], 
+        options: [null, ...svgslist], 
         value: 0        
       },  
       {
         label: 'rightIcon',
-        options: [null, ...svgs], 
+        options: [null, ...svgslist], 
         value: 0        
       },            
       {

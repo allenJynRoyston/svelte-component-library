@@ -2,8 +2,8 @@
   import {getContext} from 'svelte';
 
   export let style = null;
-  export let showRight = false;
-  export let showLeft = false
+  export let hideRight = false;
+  export let hideLeft = false
   export let outline = false; 
   export let rounded = false;
 
@@ -12,30 +12,35 @@
 
 <div class={`two-slot ${theme}-theme`} class:outline={outline} class:rounded={rounded} {style}>
 
-  {#if showLeft}
     <div class='left'>
-      <slot>Left</slot>
+      {#if !hideLeft}
+        <slot name='left'>
+          Left
+        </slot>
+      {/if}
     </div>
-  {/if}
+  
 
-  {#if showRight}
+  
     <div class='right'>
-      <slot name='right' >
-        Right
-      </slot>
+      {#if !hideRight}
+        <slot name='right' >
+          Right
+        </slot>
+      {/if}
     </div>
-  {/if}
+  
 </div>
 
 <style lang='scss' scoped>
   .two-slot{
-    width: 100%;
+    width: calc(100% - 20px);
     display: flex;
     align-items: center;
+    padding: 5px 10px;
 
     &.outline{
-      width: calc(100% - 20px);
-      padding: 10px;
+      width: calc(100% - 26px);
       border: 3px solid var(--black-1);
     }
 
@@ -45,6 +50,7 @@
 
     &.dark-theme{
       &.outline{
+        width: calc(100% - 26px);
         border: 3px solid var(--white-0);
       }
     }

@@ -9,7 +9,7 @@
 
 </script>
 
-<TwoSlot showLeft showRight>
+<TwoSlot>
   <h2>Prompt</h2>
   <div slot='right' style='display: flex; gap 10px'>
   </div>

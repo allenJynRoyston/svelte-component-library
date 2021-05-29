@@ -9,7 +9,7 @@
   export let dataTestid = null
 
   export let role = 'button'
-  export let type = 'primary';
+  export let applyTheme = 'primary';
   export let size = 'normal'
 
   export let disabled = false
@@ -21,6 +21,7 @@
   export let nomargin = false;  
   export let useToggle = false;
   export let toggled = false;
+  export let full = false;
 
   export let onClick = null
 
@@ -44,18 +45,18 @@
 
 
 {#if !!href}
-  <Link exactfit {href} {target} >
-    <button class={`button ${type} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
-    <span class='inner'>
-      <slot>{text || 'Button'}</slot>
-      {#if useToggle}
-        <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={iconSize()} />
-      {/if}
-    </span>
+  <Link inherit {href} {target} style={full ? 'width: 100%' : null}>
+    <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>      
+      <span class='inner'>          
+          <slot>{text || 'Button'}</slot>
+          {#if useToggle}
+            <SVG icon={toggled ? 'checkbox-checked' : 'checkbox-unchecked'} fill={toggled ? colors.success[0].color : colors.danger[0].color } size={iconSize()} />
+          {/if}        
+      </span>      
     </button>    
   </Link>
 {:else}
-  <button class={`button ${type} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} type='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+  <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}

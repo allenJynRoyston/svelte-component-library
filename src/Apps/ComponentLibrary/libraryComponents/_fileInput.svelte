@@ -13,18 +13,6 @@
   const snippet = {
     name: 'Button',
     importName: '@components/FormComponents/FileInput/FileInput.svelte',
-    properties: `
-    export let onChange = null
-    export let updateForm = null;    
-
-    export let type = null  
-    export let placeholder = null
-    export let value = ''
-    export let key = null
-    export let label = null;
-    export let required = null;
-    export let accept = null
-    `
   }
 
   $: livecode = `    

@@ -15,45 +15,39 @@
   const snippet = {
     name: 'Splash',
     importName: '@components/Splash/Splash.svelte',
-    properties: `
-    export let title = 'Splash Title';
-    export let version = null;
-    export let buttonOne = null;
-    export let buttonTwo = null;
-    `,
+    inputs: [
+      {forprop: 'title', renderAs: 'input', componentprop: {type: 'text'}, value: 'Splash title!' },
+      {forprop: 'version', renderAs: 'input', componentprop: {type: 'text'}, value: '0.9' }
+    ]        
   }
 
   $: livecode = `    
       const props = {
-        title: 'Splash Content',
-        version: '1.0',
         buttonOne: {
           text: 'CTA 1',
-          type: 'secondary',
+          applyTheme: 'secondary',
           rounded: true,     
         },
         buttonTwo: {
           text: 'CTA 2',
-          type: 'primary',
+          applyTheme: theme === 'dark' ? 'white' : 'black',
           rounded: true,  
           hollow: true        
-        }       
+        }    
       } 
 
-     <Splash  {...props}  />
+     <Splash {...props}${propstr}${selectstr}${inputstr}/>
      `
      
   const staticprops = {
-    title: 'Splash Content',
-    version: '1.0',
     buttonOne: {
-      text: 'CTA 1',
-      type: 'secondary',
+      text: 'Action 1',
+      applyTheme: 'secondary',
       rounded: true,     
     },
     buttonTwo: {
-      text: 'CTA 2',
-      type: theme === 'dark' ? 'white' : 'black',
+      text: 'Action 2',
+      applyTheme: theme === 'dark' ? 'white' : 'black',
       rounded: true,  
       hollow: true        
     }       
@@ -63,8 +57,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Splash {...staticprops} {...props} {...selectprops}
-{...inputprops} />
+    <Splash {...staticprops} {...props} {...selectprops} {...inputprops} />
   </div>    
 </LibrarySnippet>
 

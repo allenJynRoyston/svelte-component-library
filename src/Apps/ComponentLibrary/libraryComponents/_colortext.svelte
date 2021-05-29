@@ -15,13 +15,6 @@
   const snippet = {
     name: 'ColorText',
     importName: '@components/ColorText/ColorText.svelte',
-    properties: `
-    export let type = 'primary'
-    export let bold = false;
-    `,
-    props: {
-     
-    }, 
     dropdowns: [
       {
         label: 'type',
@@ -40,9 +33,8 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <ColorText {...props} {...selectprops}
-{...inputprops}>
-      <LoremBlock />
+    <ColorText {...props} {...selectprops}{...inputprops}>
+      <LoremBlock ignoreTheme />
     </ColorText>
    </div>    
 

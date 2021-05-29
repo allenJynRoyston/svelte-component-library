@@ -17,21 +17,6 @@
   const snippet = {
     name: 'Channels',
     importName: '@components/Channels/Channels.svelte',
-    properties: `
-    export let data = []
-    export let current;
-    export let afterUpdate = null;
-    export let channelReady = null;
-    export let duration = 400;
-    export let easing = 'cubicOut'
-    export let embedded = false;
-    export let backtotop = false;
-    export let nopadding = false;
-    export let animate = false;
-    export let exactfit = false;
-    export let props = null;
-    export let disableAnimationOnMobile = false;
-    `,
     notes: [
       'Embedded should be set to true for this demo.'      
     ],

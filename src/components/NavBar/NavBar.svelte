@@ -8,11 +8,13 @@
   export let links = []
   export let watchHash = null;
   export let watchProp = null;
+  export let exactfit = false;
 
   //--------------------------- HASHCHANGE  
   let watchedParam = null;
   let watchedHash = null;
-  const hashChange = async({hash, params}) => {    
+  
+  const hashChange = async({hash, params}) => {        
     watchedParam = !!params[watchProp] ? params[watchProp] : null;
     watchedHash = !!hash ? hash : null;
   }
@@ -24,9 +26,10 @@
 </script>
 
 <HashWatch onChange={watchProp && hashChange} />
+
 <div class={`nav-bar ${theme}-theme`}>
   <div class='links'>
-    {#each links as {title, active = false, href = '/', icon}, index}
+    {#each links as {title, href = '/'}}
       <Link inherit {href} active={watchedParam === title.toLowerCase()} underline >
         {title}
       </Link>  
@@ -34,7 +37,7 @@
   </div>
 
   <div class='icons'>
-    {#each links as {icon = 'home', title, active = false, href = '/'}, index}
+    {#each links as {icon = 'home', title, href = '/'}}
       <Link inherit {href} active={watchedParam === title.toLowerCase()} underline >
         <SVG {icon} style='padding-bottom: 4px;' />
       </Link>  

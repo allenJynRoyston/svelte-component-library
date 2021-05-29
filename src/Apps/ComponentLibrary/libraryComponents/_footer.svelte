@@ -25,8 +25,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Footer {...props} {...selectprops}
-{...inputprops}>
+    <Footer {...props} {...selectprops} {...inputprops}>
       Made with ❤️ Allen Royston 2021
     </Footer>
    </div>    

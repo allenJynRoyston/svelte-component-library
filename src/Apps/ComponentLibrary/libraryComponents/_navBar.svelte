@@ -10,28 +10,34 @@
   let selectprops;
   let inputprops;
 
+  const locationHash = `#components?page=library&component=navbar&section=components`
+
   const snippet = {
     name: 'NavBar',
     importName: '@components/NavBar/NavBar.svelte',
-    properties: `
-    export let links = []
-    export let watchHash = null;
-    export let watchProp = null;
-    `
+    inputs: [
+      {forprop: 'watchHash', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'watchProp', renderAs: 'input', componentprop: {type: 'text'}, value: 'testprop' }
+    ]
   }
 
   $: livecode = `    
-    <div style='width: 100px'>
-      <NavBar  ${propstr}${selectstr}${inputstr} />
-    </div>
+      const props = {
+        links: [
+          {title: 'Home', active: true, icon: 'icon', href: \'${locationHash}&testprop=home\'},
+          {title: 'About', icon: 'icon', href: \'${locationHash}&testprop=about\'},
+          {title: 'Contact', icon: 'icon', href: \'${locationHash}&testprop=contact\'}
+        ]    
+      }
+
+      <NavBar {...props} ${propstr}${selectstr}${inputstr} />
      `  
 
   const staticprops = {
-    watchProp: 'link',
     links: [
-      {title: 'Home', active: true, icon: 'icon', href: `${location.hash}&link=home`},
-      {title: 'About', icon: 'icon', href: `${location.hash}&link=about`},
-      {title: 'Contact', icon: 'icon', href: `${location.hash}&link=contact`}
+      {title: 'Home', active: true, icon: 'icon', href: `${locationHash}&testprop=home`},
+      {title: 'About', icon: 'icon', href: `${locationHash}&testprop=about`},
+      {title: 'Contact', icon: 'icon', href: `${locationHash}&testprop=contact`}
     ]    
   }
 
@@ -39,11 +45,8 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <div style='width: 100px'>
-      <NavBar  {...staticprops} {...props} {...selectprops}
-{...inputprops} />
-    </div>
-   </div>    
+    <NavBar  {...staticprops} {...props} {...selectprops} {...inputprops} />
+  </div>    
 </LibrarySnippet>
 
 

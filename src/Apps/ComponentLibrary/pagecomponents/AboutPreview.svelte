@@ -120,7 +120,7 @@
           Svelte-Tip is working towards a 1.0 release soon, but feel free to check it out now!            
         </p>        
         <div style='max-width: 200px; margin: auto'>
-          <Button href='https://github.com/allenRoyston/svelte-component-library' target="_blank" type={theme ==='light' ? 'magic' : 'primary'} hollow rounded>Github</Button>  
+          <Button href='https://github.com/allenRoyston/svelte-component-library' target="_blank" applyTheme={theme ==='light' ? 'magic' : 'primary'} hollow rounded>Github</Button>  
         </div>    
       </section> 
     </Section>

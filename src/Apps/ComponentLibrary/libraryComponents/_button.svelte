@@ -25,14 +25,14 @@
     }, 
     dropdowns: [
       {
-        label: 'type',
+        label: 'applyTheme',
         options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        
       },
       {
         label: 'size',
         options: ['tiny', 'small', 'normal', 'large'], 
-        value: 0        
+        value: 2        
       }      
     ], 
     inputs: [
@@ -83,7 +83,7 @@
     <Button  {...props} {...selectprops} {...inputprops} />    
    </div>    
 
-   <div slot='example'>
+   <!-- <div slot='example'>
     <Button type='primary' {...props}>
       Primary
     </Button>
@@ -111,5 +111,5 @@
     <Button type='white' {...props}>
       White
     </Button>   
-   </div>
+   </div> -->
 </LibrarySnippet>

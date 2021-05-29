@@ -14,15 +14,9 @@
   const snippet = {
     name: 'Section',
     importName: '@components/Section/Section.svelte',
-    properties: `
-    export let outline = false;
-    export let className = null;
-    export let style = null;
-    export let paddingTop = false;
-    `,
     props: {
       outline: false,
-      paddingTop: false
+      nomargin: false
     }
   }
 

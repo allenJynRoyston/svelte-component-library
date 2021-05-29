@@ -53,7 +53,7 @@
 <Container offset={1}>
   <HashWatch onChange={onChange}/>
 
-  <Header {...headercopy} showFooter showLayoutButton />
+  <Header {...headercopy} showFooter  />
 
   <ColumnLayout {links} currentIndex={channel.current} hidebtn >
     <Channels {...channel} animate />

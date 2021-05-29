@@ -20,7 +20,8 @@
   let headerprops = {
     title: 'Svelte-Tip',    
     bgSrc: `./images/bg/header-${theme}-bg.jpg`,
-    logoSrc: './images/logo/logo.png',    
+    logoSrc: './images/logo/logo.png',     
+    showNotch: true,           
     navEle: {
       component: NavBar,
       props: {
@@ -32,21 +33,21 @@
         ]    
       }
     },
-    centerEle: {
+    heroEle: {
       component: Splash,
       props: {
         title: 'Welcome!',
         version,
         buttonOne: {
           text: 'Github',
-          type: theme === 'dark' ? 'white' : 'black',
+          applyTheme: theme === 'dark' ? 'white' : 'black',
           href: 'https://github.com/allenRoyston/svelte-component-library',
           rounded: true,     
           hollow: true
         },
         buttonTwo: {
           text: 'Library',
-          type: 'primary',
+          applyTheme: 'primary',
           href: '#components?page=library',
           rounded: true,          
         }        

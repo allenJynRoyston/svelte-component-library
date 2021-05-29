@@ -32,41 +32,45 @@
 
   const theme:string = getContext('theme')
 
-  const {showImport, showProperties, showExample} = LibraryStore;
+  const {showImport, showProperties, showCode, showExample} = LibraryStore;
   const {isTabletAndBelow} = DeviceStore;
 
-  const update = async(val = null, key = null) => {
+  const updateProps = async(val = null, key = null) => {
     await tick();
     let _propstr = ''
     if(!!props){
       for (const [key, value] of Object.entries(props)) {
-        if(value){
+        if(!!value){
           _propstr += ` ${key}`
         }
       }    
     }
     propstr = _propstr;
+  }
 
+  const updateSelect = async() => {
     let _selectstr = ''
     if(!!dropdowns){
       dropdowns.forEach(({label, options, value}) => {
-        if(options[value] !== null){
+        if(!!options[value]){
           _selectstr += ` ${label}='${options[value]}'`
           selectprops = {...selectprops, [label]: options[value]}
         }
       })
     }
 
-    selectstr = _selectstr   
+    selectstr = _selectstr  
   }
+
 
   const updateInputs = (value, key) => {
     inputprops[key] = value
 
     let _inputstr = ''
     for (const [key, value] of Object.entries(inputprops)) {
-      if(value){
-        _inputstr += ` ${key}='${value}'`
+      const {renderAs} = inputs.find(x => x.forprop === key)
+      if(!!value){
+        _inputstr += renderAs === 'textarea' ? ` ${key}={\`${value}\`}` : ` ${key}='${value}'`
       }
     }
     inputstr = _inputstr
@@ -92,7 +96,7 @@
         },
         onChangeFilter: (val) => {    
           dropdowns[index].value = val.id
-          update()
+          updateSelect()
         }
       }  
       list.push(obj)
@@ -117,7 +121,8 @@
   }  
 
   onMount(() => {
-    update()
+    updateProps();
+    updateSelect();
     inputs?.forEach(({value, forprop}) => {
       updateInputs(value, forprop)      
     })
@@ -127,12 +132,13 @@
 </script>
 
 <div class='library-snippet'>
-  <TwoSlot showLeft showRight>
-    <h3>{name}</h3>
+  <TwoSlot>
+    <h3 slot='left'>{name}</h3>
     <div slot='right' style='display: flex; gap: 5px'>
-      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
-      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
-      <Button type={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Code</Button>    
+      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
+      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
+      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Example</Button>    
+      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showCode} hollow={!$showCode} nomargin onClick={() => {$showCode = !$showCode}} >Code</Button>    
     </div>  
   </TwoSlot>
   <hr>
@@ -150,7 +156,7 @@
           {#if !!props}
             <div class='buttons'>
               {#each Object.entries(props) as [key, pair]}
-                <Button style='min-width: 100px' exactfit type={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {update(); props[key] = !props[key]}} >
+                <Button style='min-width: 100px' exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} rounded size='small' useToggle toggled={props[key]} hollow={!props[key]} onClick={() => {updateProps(); props[key] = !props[key]}} >
                   {key}
                 </Button>
               {/each}            
@@ -173,13 +179,21 @@
               {#each listofinputs() as props, index}
                 {#if inputs[index].renderAs === 'input'}
                   <Input {...props} onChange={updateInputs} />
-                {/if}
+                {/if}           
+              {/each}   
+            </div>   
+          {/if}   
+
+          {#if listofinputs && listofinputs().length > 0}
+            <br>
+            <div class='inputs'>
+              {#each listofinputs() as props, index}
                 {#if inputs[index].renderAs === 'textarea'}
                   <Textarea {...props} onChange={updateInputs} />
                 {/if}              
               {/each}   
             </div>   
-          {/if}   
+          {/if}             
             
         </div>
       {/if}           
@@ -198,12 +212,14 @@
 
 
   {#if !!livecode}
-    <LibraryBlock title='Example:'>
-      <slot name='liveexample'>
-      </slot>
-    </LibraryBlock>
+    {#if $showExample}
+      <LibraryBlock title='Example:'>
+        <slot name='liveexample'>
+        </slot>
+      </LibraryBlock>
+    {/if}
 
-    <CodeBlock show={$showExample} open title='Code:' snippet={`
+    <CodeBlock show={$showCode} open title='Code:' snippet={`
       ${livecode}
       `} />
   {/if}

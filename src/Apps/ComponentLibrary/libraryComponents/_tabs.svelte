@@ -16,22 +16,20 @@
   const snippet = {
     name: 'Tabs',
     importName: '@components/Tabs/Tabs.svelte',
-    properties: `
-    export let tabRoot = 'tab';
-    export let tabs = []
-    `,
     dropdowns: [
       {
-        label: 'type',
-        options: ['default', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        label: 'applyTheme',
+        options: [ null, 'white', 'black', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger'], 
         value: 0        
       }   
-    ]    
+    ],
+    inputs: [
+      {forprop: 'hashNav', renderAs: 'input', componentprop: {type: 'text'}, value: 'tabroot' }      
+    ]       
   }
 
   $: livecode = `    
     const props = { 
-      tabRoot: 'tabRoot',
       tabs: [
         {
           title: "Example Block",
@@ -52,11 +50,10 @@
       ]    
     }
 
-    <Tabs ${propstr}${selectstr}${inputstr} />  
+    <Tabs {props} ${propstr}${selectstr}${inputstr} />  
      `
 
   const staticprops = { 
-    tabRoot: 'tabRoot',
     tabs: [
       {
         title: "Example Block",

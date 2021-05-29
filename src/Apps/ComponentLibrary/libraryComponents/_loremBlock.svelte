@@ -2,6 +2,7 @@
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -13,22 +14,21 @@
   const snippet = {
     name: 'LoremBlock',
     importName: '@components/LoremBlock/LoremBlock.svelte',
-    properties: `
-    export let style = null;
-    export let index = null;
-    export let content = "Lorem ipsum dolor sit amet..."
-    export let onClick = () => {};
-    export let length = 1;
-    `,
+    props: {
+      ignoreTheme: false,      
+    }, 
     inputs: [
-      {label: 'style', prop: 'style', renderAs: 'input', value: null},
-      {label: 'index', prop: 'index', renderAs: 'input', value: null},
-      {label: 'content', prop: 'content', renderAs: 'input', value: 'Hello World!'},
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid white'}, value: null },
+      {forprop: 'index', renderAs: 'input', componentprop: {type: 'number'}, value: null },
+      {forprop: 'content', renderAs: 'input', componentprop: {type: 'text'}, value: 'Hello World!' },
+      {forprop: 'length', renderAs: 'input', componentprop: {type: 'number'}, value: 1 }
     ]  
   }
 
-  $: livecode = `    
-    <LoremBlock ${propstr}${selectstr}${inputstr} />
+  $: livecode = `   
+    <ThemeWrapper invert>    
+      <LoremBlock ${propstr}${selectstr}${inputstr} />
+    </ThemeWrapper />
      `
 
 </script>
@@ -36,6 +36,8 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <LoremBlock  {...props} {...selectprops} {...inputprops} />
+    <ThemeWrapper invert>
+      <LoremBlock  {...props} {...selectprops} {...inputprops} />
+    </ThemeWrapper>
    </div>    
 </LibrarySnippet>

@@ -14,28 +14,13 @@
   const snippet = {
     name: 'GridLayout',
     importName: '@components/GridLayout/GridLayout.svelte',
-    properties: `
-    export let size:number = 150;
-    export let gap:number = 10;
-
-    export let outline:boolean = false;
-    export let items:any = [{component: LoremBlock, row: 2, column: 2}, {component: LoremBlock}, {component: LoremBlock}]
-    `,
     props: {
       outline: true
     }, 
-    dropdowns: [
-      {
-        label: 'size',
-        options: [null, 100, 150, 200], 
-        value: 0        
-      },
-      {
-        label: 'gap',
-        options: [null, 10, 20, 30, 40, 50], 
-        value: 0        
-      }      
-    ]
+    inputs: [
+      {forprop: 'size', renderAs: 'input', componentprop: {type: 'number'}, value: 150 },
+      {forprop: 'gap', renderAs: 'input', componentprop: {type: 'number'}, value: 10 }
+    ]        
   }
 
   export let items = [

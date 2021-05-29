@@ -1,122 +1,134 @@
-@import "./src/_normalize";
-@import "./src/_media-queries";
-@import "./src/_typography";
+@import './src/_normalize';
+@import './src/_media-queries';
+@import './src/_typography';
 
-// VISIBILITY
+// GLOBALS
 :global(hr) {
-  border: none;
-  border-bottom: 2px solid var(--hr);
+	border: none;
+	border-bottom: 2px solid var(--hr);
+}
+
+:global(.italic) {
+	font-style: italic;
+}
+
+:global(.bold) {
+	font-weight: 700;
+}
+
+:global(.semi-bold) {
+	font-weight: 600;
 }
 
 // VISIBILITY
 :global(.mobile-only) {
-  display: none;
-  @include mobile-only {
-    display: block;
-  }
+	display: none;
+	@include mobile-only {
+		display: block;
+	}
 }
 
 :global(.mobile-portrait-and-below) {
-  display: none;
-  @include mobile-portrait-and-below {
-    display: block;
-  }
+	display: none;
+	@include mobile-portrait-and-below {
+		display: block;
+	}
 }
 
 :global(.mobile-portrait-and-up) {
-  display: none;
-  @include mobile-portrait-and-up {
-    display: block;
-  }
+	display: none;
+	@include mobile-portrait-and-up {
+		display: block;
+	}
 }
 
 :global(.mobile-landscape-and-below) {
-  display: none;
-  @include mobile-landscape-and-below {
-    display: block;
-  }
+	display: none;
+	@include mobile-landscape-and-below {
+		display: block;
+	}
 }
 
 :global(.mobile-landscape-and-below) {
-  display: none;
-  @include mobile-landscape-and-below {
-    display: block;
-  }
+	display: none;
+	@include mobile-landscape-and-below {
+		display: block;
+	}
 }
 
 :global(.mobile-landscape-and-up) {
-  display: none;
-  @include mobile-landscape-and-up {
-    display: block;
-  }
+	display: none;
+	@include mobile-landscape-and-up {
+		display: block;
+	}
 }
 
 :global(.tablet-only) {
-  display: none;
-  @include tablet-only {
-    display: block;
-  }
+	display: none;
+	@include tablet-only {
+		display: block;
+	}
 }
 
 :global(.tablet-portrait-and-below) {
-  display: none;
-  @include tablet-portrait-and-below {
-    display: block;
-  }
+	display: none;
+	@include tablet-portrait-and-below {
+		display: block;
+	}
 }
 
 :global(.tablet-portrait-and-up) {
-  display: none;
-  @include tablet-portrait-and-up {
-    display: block;
-  }
+	display: none;
+	@include tablet-portrait-and-up {
+		display: block;
+	}
 }
 
 :global(.tablet-landscape-only) {
-  display: none;
-  @include tablet-landscape-only {
-    display: block;
-  }
+	display: none;
+	@include tablet-landscape-only {
+		display: block;
+	}
 }
 
 :global(.tablet-landscape-and-below) {
-  display: none;
-  @include tablet-landscape-and-below {
-    display: block;
-  }
+	display: none;
+	@include tablet-landscape-and-below {
+		display: block;
+	}
 }
 
 :global(.desktop-and-up) {
-  display: none;
-  @include desktop-and-up {
-    display: block;
-  }
+	display: none;
+	@include desktop-and-up {
+		display: block;
+	}
 }
 
 :global(.desktop-and-below) {
-  display: none;
-  @include desktop-and-below {
-    display: block;
-  }
+	display: none;
+	@include desktop-and-below {
+		display: block;
+	}
 }
 
 :global(.desktop-and-below) {
-  display: none;
-  @include desktop-and-below {
-    display: block;
-  }
+	display: none;
+	@include desktop-and-below {
+		display: block;
+	}
 }
 
 :global(.desktop-only) {
-  display: none;
-  @include desktop-only {
-    display: block;
-  }
+	display: none;
+	@include desktop-only {
+		display: block;
+	}
 }
 
 :global(.retina) {
-  display: none;
-  @include retina {
-    display: block;
-  }
+	display: none;
+	@include retina {
+		display: block;
+	}
 }

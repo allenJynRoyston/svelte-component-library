@@ -1,35 +1,33 @@
 <script lang='ts'>  
   import {debounce} from '@js/utility'
   import {getContext, tick} from 'svelte';
-  import {SiteStore, DeviceStore} from '@store/store'
+  import {DeviceStore} from '@store/store'
   import SVG from '@components/SVG/SVG.svelte'
   import Input from '@components/FormComponents/Input/Input.svelte'
   import Button from '@components/Button/Button.svelte'
 
-  export let debounceTime = 0;
-  export let hideSearch = false;
+  export let debounceTime = 0;  
+
+  export let hideSearchIcon = false;
   export let hideClear = false;
-  export let searchBtn = false;  
-  export let onSearch = () => {}
+  export let hideSearchButton = false;  
+
+  export let onUpdate = (val) => {
+    console.log(val)
+  }
 
   const {isMobile} = DeviceStore;
-  const {searchValue} = SiteStore;
   let currentvalue = null;
-  
-  const onKeypress = debounce((val) => {
-   $searchValue = val.length === 0 ? null : val
-   onSearch($searchValue)
-  }, debounceTime)  
 
   const onClear = async() => {
-    $searchValue = null
+    currentvalue = null;
     render = false;
     await tick()
     render = true;    
   }
 
   const onGo = () => {
-    onSearch($searchValue)
+    onUpdate(currentvalue)
   }
 
 
@@ -40,28 +38,32 @@
   let render = true;
   let ele;
 
+  $: onKeypress = debounce((val) => {
+    currentvalue = val.length === 0 ? null : val
+    onUpdate(val.length === 0 ? null : val)
+  }, debounceTime)    
 
 </script>
 
 <div class={`search ${theme}-theme`} bind:this={ele}>
 
-  {#if !hideSearch}
-    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onGo}>
+  {#if !hideSearchIcon}
+    <Button nomargin exactfit size='small' applyTheme={theme === 'dark' ? 'black' : 'white'} onClick={onGo}>
       <SVG icon='search' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}
 
-  <Input noBottomMargin onKeypress={onKeypress} value={$searchValue || ''} />
+  <Input noBottomMargin onKeypress={onKeypress}  />
 
 
-  {#if searchBtn || $isMobile}
-    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
+  {#if !hideSearchButton || $isMobile}
+    <Button nomargin exactfit size='small' applyTheme={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
       <SVG style='padding: 0 10px' icon='post' size={14} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}  
 
   {#if !hideClear && !$isMobile}
-    <Button nomargin exactfit size='small' type={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
+    <Button nomargin exactfit size='small' applyTheme={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
       <SVG icon='cross' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}

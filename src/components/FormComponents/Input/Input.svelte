@@ -69,8 +69,8 @@
 
 <div class={`input-container ${theme}-theme`} data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors?.length > 0} class:valid={errors?.length === 0}>
   {#if label}
-    <TwoSlot showLeft showRight>
-      <label for={key} >{label}</label>
+    <TwoSlot >
+      <label slot='left' for={key} >{label}</label>
 
       <div slot='right'>
         {#if allowShowToggle && type === 'password'}

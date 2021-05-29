@@ -41,7 +41,7 @@
         <div slot='content' class={`code-block ${theme}-theme`}>
 
           <div class='copy-btn'>
-            <Button type='success' exactfit nomargin onClick={copy}>Copy</Button>
+            <Button applyTheme='success' exactfit nomargin onClick={copy}>Copy</Button>
           </div>  
 
           <div class='inner'>
@@ -57,7 +57,7 @@
       <div class={`code-block ${theme}-theme`}>
 
         <div class='copy-btn'>
-          <Button type='success' exactfit nomargin onClick={copy}>Copy</Button>
+          <Button applyTheme='success' exactfit nomargin onClick={copy}>Copy</Button>
         </div>  
         
         <div class='inner'>
@@ -108,7 +108,8 @@
   code, pre{
     margin: 0;
     padding: 0;
-    color: var(--success-0)
+    color: var(--success-0);
+    min-height: 50px;
   }  
 
 

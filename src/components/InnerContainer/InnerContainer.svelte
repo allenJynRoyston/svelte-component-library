@@ -5,6 +5,7 @@
 
   export let height = '100vh'
   export let adjustPx = 0
+  export let accountForTopPos = false;
 
   let ele;
   let topPos = 0
@@ -31,9 +32,10 @@
     window.removeEventListener('resize', resizeEvent)
   })
 
-  $: style = `height: calc(${height} - ${Math.abs(topPos)}px - ${adjustPx}px)`
+  $: style = accountForTopPos ?
+  `height: calc(100vh - ${Math.abs(topPos)}px - ${adjustPx}px)` : 
+  `height: calc(${height} - ${!!adjustPx ? `${adjustPx}px` : `0px`})`
 </script>
-
 
 <div class='inner-container'{style} bind:this={ele}>
   <slot />

@@ -11,11 +11,12 @@
   export let links = []
   export let currentIndex = null;
   export let hidebtn:boolean = false;
-  export let side = 'left'
   export let disableSearch = false;
   export let watchParam = null
-  export let activeTheme = 'primary'
   export let ignoreForExample = false
+
+  export let activeTheme = 'primary'
+  export let side = 'left'  
 
   const colors:any = getContext('colors');
   const theme:string = getContext('theme');
@@ -74,7 +75,7 @@
 
         <Container offset={5}>
           <div class='directory-inner' class:collapse={opened} >
-            <InnerContainer>
+            <InnerContainer accountForTopPos height={'100%'}>
               <div class='directory-links-container'>
                 {#each Object.entries(linkList) as [key, pairs], index}
                   <Accordion listform full open={isOpened(key, index)}>
@@ -85,7 +86,7 @@
                     
                     <ul class='directory-links' slot='content'>
                       {#each pairs as {href, title}, index}
-                        {#if $searchValue === null || partialMatch($searchValue, title)}
+                        {#if $searchValue === null || partialMatch($searchValue?.toLowerCase(), title?.toLowerCase())}
                           <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} onClick={() => {toggleCollapse(false)}} >
                             {capitalize(title)} 
                           </Link>

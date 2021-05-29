@@ -12,7 +12,10 @@
 
   const snippet = {
     name: 'FormExample',
-    importName: '@components/FormPremade/FormExample'
+    importName: '@components/FormPremade/FormExample',
+    notes: [
+      'Just an example of a completed Form.  See Form component for a working example.'
+    ]
   }
 
   $: livecode = `    
@@ -24,7 +27,6 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>   
-    <p>Note: This is just a preview of a completed form.</p> 
     <FormExample />   
    </div>    
 

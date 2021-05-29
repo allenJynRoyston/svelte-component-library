@@ -1,29 +1,32 @@
 <script lang='ts'>
   import {SiteStore} from '@store/store'
   import Link from '@components/Link/Link.svelte'
+  import Button from '@components/Button/Button.svelte'
   import {getContext} from 'svelte';
 
   const {urlParams}  = SiteStore;
 
-  export let tabRoot = 'tab';
+  export let hashNav = 'tab';
   export let tabs = []
-  export let type = 'default'
+  export let applyTheme = 'black';
 
   const theme:string = getContext('theme');
 
-  const getHref = (param, index) => {
-		const hash =  location.hash.includes(`&${tabRoot}`) ?  location.hash.split(`&${tabRoot}`)[0] : location.hash;
-    return  `${hash}&${tabRoot}=${param || String(index)}`
+  $: getHref = (param, index) => {
+		const hash =  location.hash.includes(`&${hashNav}`) ?  location.hash.split(`&${hashNav}`)[0] : location.hash;
+    return  `${hash}&${hashNav}=${param || String(index)}`
   }
 
-  $: active = (param, index) => !!$urlParams[tabRoot] ? $urlParams[tabRoot]?.toString() === index?.toString() || $urlParams[tabRoot]?.toString() === param?.toString() : index === 0
+  $: active = (param, index) => !!$urlParams[hashNav] ? $urlParams[hashNav]?.toString() === index?.toString() || $urlParams[hashNav]?.toString() === param?.toString() : index === 0
 </script>
 
 
 <div class={`tabs ${theme}-theme`}>
   <div class='links'>
     {#each tabs as {title, param = null}, index}
-      <Link {type} style={'margin-right: 10px'} underline active={active(param, index)} href={getHref(param || String(index), index)}>{title}</Link>
+    <Button nomargin exactfit {applyTheme} hollow={active(param, index)} href={getHref(param || String(index), index)}>
+      {title}
+    </Button>
     {/each}  
   </div>
 
@@ -41,7 +44,7 @@
 
   .links{
     width: 100%;
-    display: block;
+    display: flex;
   }
 
   .content{
