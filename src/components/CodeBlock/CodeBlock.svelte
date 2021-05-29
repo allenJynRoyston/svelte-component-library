@@ -38,7 +38,6 @@
           <h3>{title}</h3>
         </div>
 
-
         <div slot='content' class={`code-block ${theme}-theme`}>
 
           <div class='copy-btn'>
