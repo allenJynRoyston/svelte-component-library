@@ -155,8 +155,9 @@
     `} />
 
 
-  {#if $showProperties && !!props || listofdropdowns().length > 0 || listofinputs().length > 0}
+  {#if $showProperties}
     <LibraryBlock flex title="Properties: ">
+      {#if !!props || listofdropdowns().length > 0 || listofinputs().length > 0}
         <div class='props-container'>
           {#if !!props}
             <div class='buttons'>
@@ -207,6 +208,9 @@
           {/if}             
             
         </div>
+      {:else}
+        <p>No properties</p>
+      {/if}
     </LibraryBlock>  
   {/if}
 
