@@ -1,4 +1,4 @@
-<script lang='ts'>
+-<script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import Input from '@components/FormComponents/Input/Input.svelte'
@@ -10,30 +10,19 @@
   let selectprops;
   let inputprops;
 
+  const events = {
+    onChange: (val) => {
+      snippet.inputs[0].value = val
+    } 
+  }
+
   const snippet = {
     name: 'Input',
-    importName: '@components/FormComponents/Input/Input.svelte',
-    properties: `
-    export let onChange = null
-    export let onKeypress = null
-    export let updateForm = null;    
-
-    export let type = null  
-    export let placeholder = null
-    export let value = ''
-    export let noBottomMargin = false
-    export let key = null
-    export let label = null;
-    export let regex = null;
-    export let required = null;
-    export let allowShowToggle = true;  
-    export let minLength = null;
-    export let maxLength = null;
-    export let hasSubmitted = false;
-    `,
+    importName: '@form/Input/Input.svelte',
     props: {
-      noBottomMargin: false,
-      allowShowToggle: false,
+      nomargin: false,
+      required: false,
+      allowShowToggle: false
     },    
     dropdowns: [
       {
@@ -41,31 +30,34 @@
         options: ['text', 'password'], 
         value: 0        
       }    
+    ],
+    inputs: [
+      {forprop: 'value', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'placeholder', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'key', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'label', renderAs: 'input', componentprop: {type: 'text'}, value: 'label' },
+      {forprop: 'regex', renderAs: 'input', componentprop: {type: 'text'}, value: '^[a-zA-Z.]+$' },
+      {forprop: 'minLength', renderAs: 'input', componentprop: {type: 'number'}, value: 5 },
+      {forprop: 'maxLength', renderAs: 'input', componentprop: {type: 'number'}, value: 25 },
+    ],
+    notes: [
+      'allowShowToggle: only applicable if type is set to password',      
+      'key: prop is equivilent to element id.  Only need to alter if you have more then one Input on the same form.',
+      'required: only triggers if wrapped in a Form component.  See Form component for more details.',            
     ]     
   }
 
   $: livecode = `    
-    const props = {
-      label: 'Input',
-      placeholder: 'Placeholder...',
-      required: true
-    }
-      
-    <Input {...props} ${propstr}${selectstr}${inputstr} /> 
+    <Input ${propstr}${selectstr}${inputstr} /> 
      `
-  const staticprops = {
-    label: 'Input',
-    placeholder: 'Placeholder...',
-    required: true
-  }
+
 
 </script>
 
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
-  <div slot='liveexample'>    
-    <Input {...staticprops} {...props} {...selectprops}
-{...inputprops} />
+  <div slot='liveexample'>        
+    <Input {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 
 </LibrarySnippet>

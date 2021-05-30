@@ -18,7 +18,8 @@
       open: false,
       outline: true,
       rounded: false,  
-      full: false  
+      full: false,
+      nopadding: false
     }
   }
 

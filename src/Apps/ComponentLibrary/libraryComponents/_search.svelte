@@ -19,6 +19,8 @@
       hideSearchButton: false,
     }, 
     inputs: [
+      {forprop: 'value', renderAs: 'input', componentprop: {type: 'text'}, value: null },      
+      {forprop: 'placeholder', renderAs: 'input', componentprop: {type: 'text'}, value: 'Placeholder text...' },      
       {forprop: 'debounceTime', renderAs: 'input', componentprop: {type: 'number'}, value: 300 },      
     ]       
   }

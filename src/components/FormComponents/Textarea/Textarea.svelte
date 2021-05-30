@@ -1,31 +1,27 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, onDestroy, getContext } from 'svelte';
-  import { validate } from '../../../js'
+  import { validate } from '@js'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Button from '@components/Button/Button.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let onChange = null
   export let onKeypress = null
   export let updateForm = null;    
 
-  export let placeholder = null
-  export let value = '' 
+  export let value = null; 
   export let key = null
   export let label = null; 
   export let regex = null;
   export let required = null; 
   export let minLength = null;  
   export let maxLength = null;
-  export let contentEdit = false
-  export let hasSubmitted = false  
+  export let contentEdit = false  
   //---------------------------
 
   //--------------------------- VARS
-  let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
+  let errors = [];  
   let element;
 
   const autoExpand = (e, el) => {
@@ -79,12 +75,20 @@
   }
   //---------------------------
 
-
+  $: props = {
+    id:key,    
+  }
 </script>
 
 <div class={`input-container ${theme}-theme`} test-dataid='input-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
-    <label for={key} >{label}</label>
+    <TwoSlot nopadding>
+      <label slot='left' for={key} style='transform: translateY(4px);' >{label}</label>
+
+      <div slot='right'>
+        <Button style='opacity: 0' exactfit size='tiny'></Button>  
+      </div>
+    </TwoSlot>
   {/if}
   
   {#if contentEdit}

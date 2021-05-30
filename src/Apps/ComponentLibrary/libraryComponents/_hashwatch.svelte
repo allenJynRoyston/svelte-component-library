@@ -13,10 +13,7 @@
 
   const snippet = {
     name: 'HashWatch',
-    importName: '@components/HashWatch/HashWatch.svelte',
-    properties: `
-    export let onChange;
-    `
+    importName: '@components/HashWatch/HashWatch.svelte'
   }
 
   $: livecode = `        
@@ -27,7 +24,7 @@
 
   let hashWatchValue = null;
 
-  const currentHash = '#components?page=library&component=hashwatch'
+  const currentHash = '#components?page=library&component=hashwatch&section=rootcomponents'
 
 </script>
 

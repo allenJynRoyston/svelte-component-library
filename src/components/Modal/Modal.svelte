@@ -110,13 +110,13 @@
           <slot name='footer'>
             <div class='default-footer' class:full={fullcorner || full}>
               {#if $modalProps?.onCancel}
-                <Button disabled={$modalIsBusy} type={$modalProps?.cancelBtn?.type || (defaultType)} size="small" onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
+                <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.cancelBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
                   {$modalProps?.cancelBtn?.text || 'Cancel'}
                 </Button>
               {/if}
 
               {#if $modalProps?.onConfirm}
-                <Button disabled={$modalIsBusy} type={$modalProps?.confirmBtn?.type || (defaultType)} hollow size="small" onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
+                <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.confirmBtn?.type || (defaultType)} hollow onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
                   {$modalProps?.confirmBtn?.text || 'Confirm'}
                 </Button>
               {/if}              
@@ -346,8 +346,8 @@
 
       .footer{
         display: flex;        
-        min-height: 50px; 
-        max-height: 50px;    
+        min-height: 70px; 
+        max-height: 70px;    
         box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.25);  
         display: flex;
         justify-content: flex-end;

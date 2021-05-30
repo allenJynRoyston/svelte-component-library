@@ -17,12 +17,15 @@ export const validate = (props) => {
 				isValid = false;
 			}
 
-			if (regex && !regex.test(value)) {
-				validationErrors.push({
-					type: 'regex',
-					message: 'Value does not match regex value.',
-				});
-				isValid = false;
+			if (!!regex) {
+				const pattern = new RegExp(regex);
+				if (!pattern.test(value)) {
+					validationErrors.push({
+						type: 'regex',
+						message: 'Value does not match regex value.',
+					});
+					isValid = false;
+				}
 			}
 
 			if (minLength && value?.length < minLength) {
@@ -73,7 +76,12 @@ export const validateDate = (props) => {
 	const check = () => {
 		const testDate = dayjs(value);
 
-		if (required && value.length === 0) {
+		if (required && value?.length === 0) {
+			validationErrors.push({ type: 'required', message: 'Required missing.' });
+			isValid = false;
+		}
+
+		if (required && value === null) {
 			validationErrors.push({ type: 'required', message: 'Required missing.' });
 			isValid = false;
 		}
@@ -113,7 +121,7 @@ export const validateDate = (props) => {
 		check();
 	}
 
-	if (!required && value.length > 0) {
+	if (!required && (value === null || value.length > 0)) {
 		check();
 	}
 
@@ -137,7 +145,12 @@ export const validateTime = (props) => {
 	};
 
 	const check = () => {
-		if (required && value.length === 0) {
+		if (required && value?.length === 0) {
+			validationErrors.push({ type: 'required', message: 'Required missing.' });
+			isValid = false;
+		}
+
+		if (required && value === null) {
 			validationErrors.push({ type: 'required', message: 'Required missing.' });
 			isValid = false;
 		}
@@ -180,7 +193,8 @@ export const validateTime = (props) => {
 	if (required) {
 		check();
 	}
-	if (!required && value.length > 0) {
+
+	if (!required && (value === null || value.length > 0)) {
 		check();
 	}
 

@@ -17,7 +17,7 @@
     importName: '@components/ColorText/ColorText.svelte',
     dropdowns: [
       {
-        label: 'type',
+        label: 'applyTheme',
         options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger'], 
         value: 0        
       }    

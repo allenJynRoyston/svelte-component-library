@@ -19,7 +19,6 @@
       importName: '@components/Modal/Modal.svelte',
       properties: `
         Must pass props through $modalProps:
-
       `,
       props: {
         rounded: false,
@@ -35,7 +34,7 @@
         {
           label: 'location',
           options: ['left', 'right', 'center', 'corner-left', 'corner-right'], 
-          value: 0        
+          value: 2        
         },
         {
           label: 'backdrop',

@@ -1,30 +1,6 @@
-<script lang='ts'>  
-  import {ModalStore} from '@store/store'
-  import Form from '@components/Form/Form.svelte'
+<script lang='ts' context="module">
 
-  const {onModalSubmit} = ModalStore;
-
-  export let onSubmit = (e) => {
-    if(!!$onModalSubmit){
-      $onModalSubmit(e)
-    }
-    else{
-      isBusy = true      
-      setTimeout(() => {
-        alert(JSON.stringify(e))
-        isBusy = false
-      }, 2000)
-    }
-  };
-
-  export let localStorageKey = null;
-  export let idModifier = null;
-  export let clearLocalStorage = true;
-  export let busy = false;
-
-  let isBusy = false
-
-  let formData = [
+  export const exampleFormData = [
     {
       renderAs: 'input',      
       label: 'Firstname',
@@ -127,9 +103,9 @@
       renderAs: 'date', 
       label: 'Date',
       key: 'date',
-      value: '12-01-1982',
+      value: '01-30-2021',
       minDate: '01-01-1950',
-      maxDate: '01-01-2020',      
+      maxDate: '01-01-2022',      
       required: true,
       sizing: {
         desktop: 50,
@@ -171,15 +147,13 @@
     },      
     {
       renderAs: 'fileinput', 
-      label: 'File Input',
+      label: 'File Input (optional)',
       key: 'fileinput',      
-      value: 2,
-      accept: 'image/png, image/jpeg',
-      required: false
+      value: null,
+      accept: 'image/png, image/jpeg'      
     },      
     {
       renderAs: 'selectmulti', 
-      type: 'checkbox',
       label: 'Multi Select',
       key: 'selectmulti',      
       value: [1, 3],      
@@ -210,29 +184,52 @@
       key: 'rating',      
       value: 2,                
       required: true,
-      maxLength: 10,  
-      slots: {
-        selected: 'star-full',
-        notSelected: 'star-empty'
-      }      
+      maxLength: 10  
     },    
     {
       renderAs: 'checkbox', 
       label: 'Agree',
       key: 'agree',
       text: 'Do you agree to the terms and agreements?',
-      value: true,
+      checked: true,
       required: true     
     },                                   
   ]
 
+</script>
+
+
+<script lang='ts'>  
+  import {ModalStore} from '@store/store'
+  import Form from '@components/Form/Form.svelte'
+
+  const {onModalSubmit} = ModalStore;
+
+  export let onSubmit = (e) => {
+    if(!!$onModalSubmit){
+      $onModalSubmit(e)
+    }
+    else{
+      isBusy = true      
+      setTimeout(() => {
+        alert(JSON.stringify(e))
+        isBusy = false
+      }, 2000)
+    }
+  };
+
+
+  let isBusy = false
+
   const props = {
-    formData,
-    onSubmit, 
-    idModifier,
+    formData: exampleFormData,
+    onSubmit: () => {
+
+    }, 
+    idModifier: null,
     padding: 20,
-    localStorageKey,
-    clearLocalStorage
+    localStorageKey: null,
+    clearLocalStorage: true
   }
 
 </script>

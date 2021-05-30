@@ -3,8 +3,11 @@
   import {DeviceStore} from '@store/store'
   import {LibraryStore} from '../localstore/libraryStore'
 
-  import Input from '@components/FormComponents/Input/Input.svelte'
-  import Textarea from '@components/FormComponents/Textarea/Textarea.svelte'
+  import Input from '@form/Input/Input.svelte'
+  import Textarea from '@form/Textarea/Textarea.svelte'
+  import InputDate from '@form/InputDate/InputDate.svelte'
+  import InputTime from '@form/InputTime/InputTime.svelte'
+
   import Select from '@components/FormComponents/Select/Select.svelte'
   import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
@@ -19,6 +22,7 @@
   export let code = null;
   export let livecode = null;
   export let notes = [];
+  export let events = {}
 
   export let dropdowns = [];
 
@@ -48,16 +52,18 @@
     propstr = _propstr;
   }
 
-  const updateSelect = async() => {
+  const updateSelect = async() => {    
     let _selectstr = ''
     if(!!dropdowns){
-      dropdowns.forEach(({label, options, value}) => {
+      dropdowns.forEach(({label, options, value = 0}) => {
+
         if(!!options[value]){
           _selectstr += ` ${label}='${options[value]}'`
           selectprops = {...selectprops, [label]: options[value]}
         }
       })
     }
+
 
     selectstr = _selectstr  
   }
@@ -91,11 +97,11 @@
         options, 
         value,        
         defaultOption: 'Select an option',
-        onInitFilter: (val, options) => {             
+        onInitFilter: (val, options) => {              
           return options.find(x => x.id === val)
         },
-        onChangeFilter: (val) => {    
-          dropdowns[index].value = val.id
+        onChangeFilter: (val) => {                        
+          dropdowns[index].value = val?.id
           updateSelect()
         }
       }  
@@ -149,9 +155,8 @@
     `} />
 
 
-  {#if $showProperties}
-    <LibraryBlock flex title="Props: ">
-      {#if !!props || listofdropdowns().length > 0 || listofinputs().length > 0}
+  {#if $showProperties && !!props || listofdropdowns().length > 0 || listofinputs().length > 0}
+    <LibraryBlock flex title="Properties: ">
         <div class='props-container'>
           {#if !!props}
             <div class='buttons'>
@@ -179,7 +184,13 @@
               {#each listofinputs() as props, index}
                 {#if inputs[index].renderAs === 'input'}
                   <Input {...props} onChange={updateInputs} />
-                {/if}           
+                {/if}    
+                {#if inputs[index].renderAs === 'inputdate'}
+                  <InputDate {...props} onChange={updateInputs} />
+                {/if}  
+                {#if inputs[index].renderAs === 'inputtime'}
+                  <InputTime {...props} onChange={updateInputs} />
+                {/if}                                           
               {/each}   
             </div>   
           {/if}   
@@ -196,7 +207,6 @@
           {/if}             
             
         </div>
-      {/if}           
     </LibraryBlock>  
   {/if}
 
@@ -223,18 +233,6 @@
       ${livecode}
       `} />
   {/if}
-
-  <!-- {#if !!code}
-    <LibraryBlock title='Code:'>
-      <slot name='example'>
-      </slot>
-    </LibraryBlock>
-
-
-    <CodeBlock show={$showExample} open title='Code:' snippet={`
-      ${code}
-      `} />
-  {/if} -->
 </div>
 
 <style lang='scss'>
@@ -249,6 +247,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    font-size: 12px;
   }
 
   .props-container{

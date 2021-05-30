@@ -6,11 +6,12 @@
   export let hideLeft = false
   export let outline = false; 
   export let rounded = false;
+  export let nopadding = false;
 
   const theme:string = getContext('theme');
 </script>
 
-<div class={`two-slot ${theme}-theme`} class:outline={outline} class:rounded={rounded} {style}>
+<div class={`two-slot ${theme}-theme`} class:nopadding={nopadding} class:outline={outline} class:rounded={rounded} {style}>
 
     <div class='left'>
       {#if !hideLeft}
@@ -38,6 +39,12 @@
     display: flex;
     align-items: center;
     padding: 5px 10px;
+    flex-wrap: wrap;
+
+    &.nopadding{
+      width: 100%;
+      padding: 0;
+    }
 
     &.outline{
       width: calc(100% - 26px);

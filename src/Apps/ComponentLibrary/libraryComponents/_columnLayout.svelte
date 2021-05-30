@@ -14,8 +14,7 @@
   const snippet = {
     name: 'ColumnLayout',
     importName: '@components/ColumnLayout/ColumnLayout.svelte',
-    props: {
-      hidebtn: false,
+    props: {      
       disableSearch: false,
     }, 
     dropdowns: [

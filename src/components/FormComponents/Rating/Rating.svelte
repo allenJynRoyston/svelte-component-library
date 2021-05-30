@@ -1,22 +1,21 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS 
   import { getContext, onMount }  from 'svelte'
-  import { validateRating } from '../../../js'
+  import { validateRating } from '@js'
   import SVG from '@components/SVG/SVG.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let onChange = null
-  export let onKeypress = null
   export let updateForm = null;    
 
-  export let type = null;  
-  export let placeholder = null
+  export let applyTheme = null;    
   export let value = 0
   export let key = null
   export let label = null;
   export let required = null;
   export let maxLength = 5;  
-  export let slots = null 
+  export let emptyIcon = null 
+  export let fullIcon = null;
 
   const colors:any = getContext('colors')
   const theme:string = getContext('theme');
@@ -24,33 +23,32 @@
 
   //--------------------------- VARS
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
-
-
+  
   let ratings = [];
-  for(let i = 1; i <= maxLength; i++){
-    ratings.push({selected: i <= value, i})
-  }
 
-  const inSlots = {
-    selected: slots?.selected || 'star-full',
-    notSelected: slots?.notSelected || 'star-empty'
-  }  
 
-  const fill = () => {
-    return !!type ? colors[type][0].color : null
+  $: fill = () => {
+    return !!applyTheme ? colors[applyTheme][0].color : null
   }
 
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent()
+    buildArr()
   }); 
   //---------------------------   
 
   //--------------------------- FUNCTIONS
+  const buildArr = () => {
+    let _ratings = []
+    for(let i = 1; i <= maxLength; i++){
+      _ratings.push({selected: i <= value, i})
+    }
+
+    ratings = _ratings
+    toggle(value);
+  }
+
   const updateParent = () => {        
     const {isValid, val, validationErrors} = validateRating({ratings, required})
     errors = validationErrors
@@ -66,20 +64,38 @@
       x.selected = unSelect ? false : i <= index
       return x
     })    
+
+    setTimeout(() =>{          
+      onChange && onChange(index, 'value')
+    })
+
     updateParent()
   }
   //---------------------------
+
+
+  $: inSlots = {    
+    selected: emptyIcon || 'star-full',
+    notSelected: fullIcon || 'star-empty'
+  }    
+
+  $: {
+    value && toggle(value)
+    maxLength && buildArr()
+  }
 
 </script>
 
 <div class={`rating-container ${theme}-theme`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
-    <label for={key} >{label}</label>
+    <label>{label}</label>
   {/if}
   
   <div class={`rating-icons`}>
     {#each ratings as {selected, i}, index}    
-      <button role='button'        
+      <button 
+        id={`rating-btn-${i}`}
+        role='button'        
         data-testid={`rating-btn-${i}`}
         on:click|preventDefault={() => {toggle(index)}} >
           <SVG fill={selected ? fill() : null} icon={selected ? inSlots.selected : inSlots.notSelected}/>          

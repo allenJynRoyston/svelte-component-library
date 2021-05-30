@@ -43,7 +43,7 @@
       <section class='inner' slot='left'>
         {#if showBurgerMenuButton}
           <span style='transform: translateX(-10px)'>
-            <SVG icon={$openSidebar ? 'cross' : 'menu'} size={24} onClick={() => {$openSidebar = !$openSidebar}} />        
+            <SVG icon={$openSidebar ? 'cross' : 'menu'} size={18} onClick={() => {$openSidebar = !$openSidebar}} />        
           </span>
         {/if}
 

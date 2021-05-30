@@ -1,29 +1,34 @@
 <script lang='ts'>  
   import {debounce} from '@js/utility'
-  import {getContext, tick} from 'svelte';
+  import {onMount, getContext, tick} from 'svelte';
   import {DeviceStore} from '@store/store'
   import SVG from '@components/SVG/SVG.svelte'
   import Input from '@components/FormComponents/Input/Input.svelte'
   import Button from '@components/Button/Button.svelte'
 
   export let debounceTime = 0;  
-
   export let hideSearchIcon = false;
   export let hideClear = false;
   export let hideSearchButton = false;  
+  export let value = null;
+  export let placeholder = null;
 
-  export let onUpdate = (val) => {
-    console.log(val)
-  }
+  export let onUpdate = () => {}
 
   const {isMobile} = DeviceStore;
-  let currentvalue = null;
+  
+  $: currentvalue = value || null;
+
+  onMount(() => {
+    onUpdate(currentvalue)
+  })
 
   const onClear = async() => {
     currentvalue = null;
     render = false;
+    onUpdate(null)    
     await tick()
-    render = true;    
+    render = true;      
   }
 
   const onGo = () => {
@@ -53,7 +58,9 @@
     </Button>
   {/if}
 
-  <Input noBottomMargin onKeypress={onKeypress}  />
+  {#if render}
+    <Input nomargin onKeypress={onKeypress} {placeholder} bind:value />
+  {/if}
 
 
   {#if !hideSearchButton || $isMobile}
@@ -63,7 +70,7 @@
   {/if}  
 
   {#if !hideClear && !$isMobile}
-    <Button nomargin exactfit size='small' applyTheme={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
+    <Button nomargin exactfit disabled={currentvalue === null || currentvalue?.length === 0} size='small' applyTheme={theme === 'dark' ? 'black' : 'white'} onClick={onClear}>
       <SVG icon='cross' size={10} fill={theme !== 'dark' ? colors.black[0].color : colors.white[0].color} />
     </Button>
   {/if}

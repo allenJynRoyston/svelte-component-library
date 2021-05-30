@@ -1,7 +1,9 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, getContext } from 'svelte';
-  import { validateSelect } from '../../../js'
+  import { validateSelect } from '@js'
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Button from '@components/Button/Button.svelte'
 
   //--------------------------- COMPONENT PROPS
   export let onChange = null
@@ -20,28 +22,29 @@
   //---------------------------
 
   //--------------------------- VARS
-  let selected = onInitFilter ? onInitFilter(value, options) : null
+  let selected = null;
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
 
   const theme:string = getContext('theme');
   
   //--------------------------- ONMOUNT
 	onMount(() => {
     updateParent(selected)
+    getSelected();
   }); 
   //---------------------------   
 
   //--------------------------- EVENT HANDLERS
+  const getSelected = () => {
+    selected = onInitFilter ? onInitFilter(value, options) : null;
+  }
+
   const onChangeEventHandler = () => {   
     onChange && onChange(selected)
     updateParent(selected)
   }
 
-  const onKeypressHandler = (e) => {
+  const onKeypressHandler = () => {
     setTimeout(() => {
       onKeypress && onKeypress(selected)
       updateParent(selected)
@@ -61,11 +64,22 @@
     updateForm && updateForm({key, val, isValid, errors})
   }
   //---------------------------
+
+  $: {
+    value && getSelected()
+  }
 </script>
 
 <div class={`select-container ${theme}-theme`} data-testid='select-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
-    <label for={key} >{label}</label>
+    <TwoSlot nopadding>
+      <label slot='left' for={key} style='transform: translateY(4px);' >{label}</label>
+
+      <div slot='right'>
+        <Button style='opacity: 0' exactfit size='tiny'></Button>  
+      </div>
+
+    </TwoSlot>
   {/if}
 
   <!-- svelte-ignore a11y-no-onchange -->
@@ -99,6 +113,7 @@
       border: none;
       border-bottom: 2px solid transparent;
       outline: none;
+      cursor: pointer;
       
       &.exactfit{
         width: auto;

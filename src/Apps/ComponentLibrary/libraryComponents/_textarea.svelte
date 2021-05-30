@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import TextArea from '@components/FormComponents/Textarea/Textarea.svelte'
+  import TextArea from '@form/Textarea/Textarea.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,57 +12,34 @@
 
   const snippet = {
     name: 'TextArea',
-    importName: '@components/FormComponents/TextArea/TextArea.svelte',
-    properties: `
-    export let onChange = null
-    export let onKeypress = null
-    export let updateForm = null;    
-
-    export let placeholder = null
-    export let value = '' 
-    export let key = null
-    export let label = null; 
-    export let regex = null;
-    export let required = null; 
-    export let minLength = null;  
-    export let maxLength = null;
-    export let contentEdit = false
-    export let hasSubmitted = false   
-    `,
+    importName: '@form/TextArea/TextArea.svelte',
     props: {
       contentEdit: false,
-    }   
+      required: false
+    },    
+    inputs: [
+      {forprop: 'value', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'key', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'label', renderAs: 'input', componentprop: {type: 'text'}, value: 'label' },
+      {forprop: 'regex', renderAs: 'input', componentprop: {type: 'text'}, value: '^[a-zA-Z.]+$' },
+      {forprop: 'minLength', renderAs: 'input', componentprop: {type: 'number'}, value: 5 },
+      {forprop: 'maxLength', renderAs: 'input', componentprop: {type: 'number'}, value: 25 },
+    ],
+    notes: [
+      'key: prop is equivilent to element id.  Only need to alter if you have more then one Input on the same form.',
+      'required: only triggers if wrapped in a Form component.  See Form component for more details.',            
+    ]  
   }
 
   $: livecode = `    
-    const props = {
-      label: 'Description',
-      key: 'description',      
-      value: 'blah blah blah blah',
-      required: true,
-      contentEdit: true,
-      minLength: 5
-    }
-      
-    <TextArea {...props} ${propstr}${selectstr}${inputstr} /> 
+    <TextArea${propstr}${selectstr}${inputstr} /> 
      `
-
-  const staticprops = {
-    label: 'Description',
-    key: 'description',      
-    value: 'blah blah blah blah',
-    required: true,
-    contentEdit: true,
-    minLength: 5
-  }
-
 </script>
 
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <TextArea {...staticprops} {...props} {...selectprops}
-{...inputprops} />
+    <TextArea {...props} {...selectprops} {...inputprops} />
    </div>    
 
 </LibrarySnippet>

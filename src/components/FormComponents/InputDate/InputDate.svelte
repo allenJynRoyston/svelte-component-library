@@ -1,16 +1,19 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, getContext } from 'svelte';
-  import { validateDate } from '../../../js'
+  import { validateDate } from '@js'
   import * as dayjs from "dayjs";
+
+  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Button from '@components/Button/Button.svelte'
+
 
   //--------------------------- COMPONENT PROPS
   export let onChange = null
   export let onKeypress = null
   export let updateForm = null;    
   
-  export let placeholder = null
-  export let value = ''
+  export let value = null
   export let key = null
   export let label = null; 
   export let minDate = null;
@@ -20,15 +23,9 @@
 
   //--------------------------- VARS
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
 
   const theme:string = getContext('theme');
 
-
-  value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value
 
   //--------------------------- ONMOUNT
 	onMount(() => {
@@ -38,13 +35,14 @@
 
   //--------------------------- EVENT HANDLERS
   const onChangeEventHandler = () => {   
-    onChange && onChange(value)
+    onChange && onChange(value, key)
     updateParent(value)
   }
 
-  const onKeypressHandler = (e) => {
+  const onKeypressHandler = () => {
     setTimeout(() => {
       onKeypress && onKeypress(value)
+      onChange && onChange(value, key)
       updateParent(value)
     })
   }
@@ -58,12 +56,29 @@
   }
   //---------------------------
 
+  $: props = {
+    id:key,    
+  }
+
+  $: value = !!value ? dayjs.default(value).format('YYYY-MM-DD') : value  
+
+  $: {
+    value && onKeypressHandler();
+    maxDate && onKeypressHandler();
+    minDate && onKeypressHandler();
+  }
 
 </script>
 
 <div class={`inputdate-container ${theme}-theme`} class:invalid={errors.length > 0} class:valid={errors.length === 0}>
   {#if label}
-    <label for={key} >{label}</label>
+    <TwoSlot nopadding>
+      <label slot='left' for={key} style='transform: translateY(4px);' >{label}</label>
+
+      <div slot='right'>
+        <Button style='opacity: 0' exactfit size='tiny'></Button>          
+      </div>
+    </TwoSlot>
   {/if}
   
   <input type='date' {...props} on:change={onChangeEventHandler} on:keydown={onKeypressHandler} bind:value  />  
@@ -82,14 +97,14 @@
     }
 
     input{
-      height: 30px;
+      height: calc(30px - 2px);
       width: calc(100% - 20px);
       padding: 0 10px;
       border-bottom: 2px solid transparent;
       outline: none;
       &::placeholder{
-        color: var(--black-6);
-      }     
+        color: var(--black-8);
+      }
     }
 
 

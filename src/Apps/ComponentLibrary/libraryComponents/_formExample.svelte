@@ -1,7 +1,8 @@
-<script>
+<script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import FormExample from '@components/FormPremade/FormExample'
+  import Form from '@components/Form/Form.svelte'
+  import {exampleFormData} from '@components/FormPremade/FormExample.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -11,23 +12,29 @@
   let inputprops;
 
   const snippet = {
-    name: 'FormExample',
-    importName: '@components/FormPremade/FormExample',
-    notes: [
-      'Just an example of a completed Form.  See Form component for a working example.'
-    ]
+    name: 'Form (with example)',
+    importName: '@components/FormPremade/FormExample'
   }
 
+  console.log(exampleFormData)
+
   $: livecode = `    
-    <FormExample /> 
+  let formData = ${JSON.stringify(exampleFormData, null, 4)}
+
+
+  <Form {formData} />
     `
+
+  const staticprops = {
+    formData: exampleFormData,        
+  }    
 
 </script>
 
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>   
-    <FormExample />   
+    <Form {...staticprops}/>   
    </div>    
 
 </LibrarySnippet>

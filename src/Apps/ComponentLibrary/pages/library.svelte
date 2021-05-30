@@ -69,22 +69,23 @@
     {content: ModalAlias, id: 'modal', section: 'RootComponents'},
     {content: SnackbarAlias, id: 'snackbar', section: 'RootComponents'},
 
-    {content: FormAlias, id: 'form', section: 'Form'},
-    {content: InputAlias, id: 'input', section: 'Form'},
-    {content: FileInputAlias, id: 'fileinput', section: 'Form'},
-    {content: InputCheckboxAlias, id: 'inputcheckbox', section: 'Form'},
-    {content: TextareaAlias, id: 'textarea', section: 'Form'},
-    {content: InputDateAlias, id: 'inputdate', section: 'Form'},
-    {content: InputTimeAlias, id: 'inputtime', section: 'Form'},
-    {content: RatingAlias, id: 'rating', section: 'Form'},
-    {content: SelectAlias, id: 'select', section: 'Form'},
-    {content: SelectMultiAlias, id: 'selectmulti', section: 'Form'},    
+    
+    {content: InputAlias, id: 'input', section: '@Form'},
+    {content: FileInputAlias, id: 'fileinput', section: '@Form'},
+    {content: InputCheckboxAlias, id: 'inputcheckbox', section: '@Form'},
+    {content: TextareaAlias, id: 'textarea', section: '@Form'},
+    {content: InputDateAlias, id: 'inputdate', section: '@Form'},
+    {content: InputTimeAlias, id: 'inputtime', section: '@Form'},
+    {content: RatingAlias, id: 'rating', section: '@Form'},
+    {content: SelectAlias, id: 'select', section: '@Form'},
+    {content: SelectMultiAlias, id: 'selectmulti', section: '@Form'},    
     {content: FormExampleAlias, id: 'formexample', section: 'Form Examples'},
 
     {content: HeaderAlias, id: 'header'},
     {content: FooterAlias, id: 'footer'},
     {content: ButtonAlias, id: 'button'},
     {content: LoaderAlias, id: 'loader'},
+    {content: FormAlias, id: 'form'},    
     {content: AccordionAlias, id: 'accordion'},    
     {content: ProductCard, id: 'productcard'},
     {content: LinkAlias, id: 'link'},
@@ -111,7 +112,7 @@
   ]})   
 
 
-  const links = channel.data.map(({id, section = 'components', order = 0}) => {
+  const links = channel.data.map(({id, section = '@Components', order = 0}) => {
     return {section, title: id, href: `#components?page=library&component=${id}&section=${section.toLowerCase()}`}
   }).sort((a, b) => a?.title.localeCompare(b?.title))
 
@@ -137,7 +138,7 @@
 
   <Header {...headercopy} showFooter showBurgerMenuButton />
 
-  <ColumnLayout {links} currentIndex={channel.current} watchParam='section' hidebtn >
+  <ColumnLayout {links} currentIndex={channel.current} watchParam='section'  >
     <Channels {...channel} animate disableAnimationOnMobile />
   </ColumnLayout>
 </Container>

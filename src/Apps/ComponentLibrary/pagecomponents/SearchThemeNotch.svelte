@@ -5,19 +5,24 @@
 
   export let showSearch = false;
   
-  const {searchValue} = SiteStore;
+  const {searchValue, openSidebar, openNotch} = SiteStore;
   
+  const onUpdate = (val) => { 
+    $searchValue = val        
+    $openSidebar = val?.length > 0;
+  }
 </script>
 
-
-<div class='search-notch'>
-  <div class='theme-notch'>
-    <ThemeSwitch />
+{#if $openNotch}
+  <div class='search-notch'>
+    <div class='theme-notch'>
+      <ThemeSwitch />
+    </div>
+    {#if showSearch}
+      <Search onUpdate={onUpdate} debounceTime={10} hideSearchButton placeholder='Search for a component...'/>
+    {/if}
   </div>
-  {#if showSearch}
-    <Search onUpdate={(val) => $searchValue = val}/>
-  {/if}
-</div>
+{/if}
 
 <style lang='scss'>
   @import "../../../scss/src/_media-queries.scss";

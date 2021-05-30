@@ -97,6 +97,7 @@ module.exports = {
 	alias: {
 		'@lib': './src/Apps/ComponentLibrary/libraryComponents',
 		'@components': './src/components',
+		'@form': './src/components/FormComponents',
 		'@js': './src/js',
 		'@store': './src/stores',
 		'@scss': './src/scss',

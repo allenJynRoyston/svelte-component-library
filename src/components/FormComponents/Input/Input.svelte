@@ -1,7 +1,7 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, getContext } from 'svelte';
-  import { validate } from '../../../js'
+  import { validate } from '@js'
   import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
   import Button from '@components/Button/Button.svelte'
 
@@ -13,7 +13,7 @@
   export let type = null  
   export let placeholder = null
   export let value = ''
-  export let noBottomMargin = false
+  export let nomargin = false
   export let key = null
   export let label = null;
   export let regex = null;
@@ -21,16 +21,11 @@
   export let allowShowToggle = true;  
   export let minLength = null;
   export let maxLength = null;
-  export let hasSubmitted = false;
   //---------------------------
 
   //--------------------------- VARS
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
-
+  
   let showPassword = false
 
   const theme:string = getContext('theme');
@@ -64,13 +59,21 @@
   }
   //---------------------------
 
+  $: props = {
+    id:key,
+    placeholder
+  }
+
+  $: {
+    value && onChangeEventHandler()
+  }
 
 </script>
 
-<div class={`input-container ${theme}-theme`} data-testid='input-container' class:no-bottom-margin={noBottomMargin} class:invalid={errors?.length > 0} class:valid={errors?.length === 0}>
+<div class={`input-container ${theme}-theme`} data-testid='input-container' class:nomargin={nomargin} class:invalid={errors?.length > 0} class:valid={errors?.length === 0}>
   {#if label}
-    <TwoSlot >
-      <label slot='left' for={key} >{label}</label>
+    <TwoSlot nopadding>
+      <label slot='left' for={key} style='transform: translateY(4px);' >{label}</label>
 
       <div slot='right'>
         {#if allowShowToggle && type === 'password'}
@@ -102,10 +105,9 @@
   .input-container {        
     width: 100%;
 
-    &.no-bottom-margin{
-      margin-bottom: 0px;
+    &.nomargin{
+      margin: 0;
     }
-
 
     label{
       text-transform: uppercase;
@@ -121,7 +123,7 @@
       border-bottom: 2px solid transparent;
       outline: none;
       &::placeholder{
-        color: var(--black-6);
+        color: var(--black-7);
       }
     }
 
@@ -154,12 +156,12 @@
         input{
           color: var(--white-2)
         }
-    }
+      }
 
       input{
         background: var(--black-5);
         &::placeholder{
-          color: var(--black-6);
+          color: var(--black-7);
         }
       }
     }    

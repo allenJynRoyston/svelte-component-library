@@ -41,8 +41,8 @@
   export let breakpoints = {
     mobile: 480,
     tablet: 800,
-    desktop: 1920,
-    wide: 2440
+    desktop: 1080,
+    wide: 1440
   }
   export let localStorageKey = null;    
   export let clearLocalStorage = false;     
@@ -106,11 +106,18 @@
 
 
     // check if localStorage key exists
+    initStorageKey()
+    
+    isReady = true; 
+  }); 
+  //--------------------------- 
+
+  const initStorageKey = () => {
     try{
-      if(!!localStorageKey){
+      if(!!localStorageKey && localStorageKey.length > 0){
         // set onBeforeUnload to capture formData
         onBeforeUnload = window.addEventListener('beforeunload', (e) => {
-          if(!hasError && !hasSubmitted){
+          if(!hasError && !hasSubmitted && !!localStorageKey && localStorageKey.length > 0){
             window.localStorage.setItem(localStorageKey, JSON.stringify(completedFormData));
           }
         }); 
@@ -124,22 +131,21 @@
             /* @ts-ignore */             
             formData.find(x => x.key === key).value = pair.value
           }
-
-          if(clearLocalStorage){
-            window.localStorage.removeItem(localStorageKey);
-          }
         }
+
+        if(clearLocalStorage){
+          window.localStorage.removeItem(localStorageKey);
+        }         
       }
     }
     catch(e){
       window.localStorage.removeItem(localStorageKey);      
       hasError = true
       location.reload()
-    }
+    }  
     
-    isReady = true; 
-  }); 
-  //--------------------------- 
+   
+  }
 
   //--------------------------- FUNCTIONS
   const onSubmitHandler = () => {
@@ -229,6 +235,11 @@
   $: getErrorData = Object.entries(completedFormData).filter(x => {return {...x[1]}})  
 
   $: formStyling = `width: calc(100% - ${padding*2}px); padding: ${padding}px; ${!!style ? style: ''}`  
+
+  $: {
+    localStorageKey && initStorageKey();
+    clearLocalStorage && initStorageKey()
+  }
   //---------------------------
 </script>
 
@@ -245,10 +256,10 @@
 
           <div style={layoutSize === 'mobile' ? applyStyles(data.sizing, 'mobile') : applyStyles(data.sizing, 'desktop') } >
             {#if data.renderAs === 'input'}
-              <Input {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
+              <Input {...stripUnusedProperties(data)} updateForm={updateForm} />
             {/if}
             {#if data.renderAs === 'textarea'}
-              <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} {hasSubmitted} />
+              <Textarea {...stripUnusedProperties(data)} updateForm={updateForm} />
             {/if}      
             {#if data.renderAs === 'date'}
               <InputDate {...stripUnusedProperties(data)} updateForm={updateForm} />
@@ -278,7 +289,7 @@
         <section>        
           {#if showPreview}
             <div class='preview-container'>
-              <FormPreview data={completedFormData} />
+              <FormPreview show={showPreview} data={completedFormData} />
             </div>
 
             <div class='error-container'>

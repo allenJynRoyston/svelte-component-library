@@ -9,6 +9,7 @@
   export let rounded = false;
   export let outline = false;
   export let listform = false;
+  export let nopadding = false;
 
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
@@ -23,9 +24,9 @@
 
 </script>
 
-<div class={`accordion ${theme}-theme`} class:rounded={rounded} class:outline={outline} bind:this={ele} >
+<div class={`accordion ${theme}-theme`} class:nopadding={nopadding} class:rounded={rounded} class:outline={outline} bind:this={ele} >
   <div class='accordion-inner'>
-    <TwoSlot>     
+    <TwoSlot {nopadding}>     
 
       <button slot='left' on:click={toggle} style='width: 100%; text-align: left'>
         <slot name='title'>
@@ -41,7 +42,7 @@
 
 
   <div class='accordion-content' class:opened={isOpened} class:full={full}>
-    <div class='inner' class:listform={listform}>
+    <div class='inner'  class:nopadding={nopadding} class:listform={listform}>
       <slot name='content'>
         Accordion content... 
       </slot>
@@ -54,6 +55,11 @@
   .accordion{
     width: 100%;
     background: transparent;
+
+    &.nopadding{
+      width: 100%;
+      padding: 0
+    }
 
     &.rounded{
       border-radius: 10px
@@ -93,6 +99,10 @@
 
   .accordion-inner{
     padding: 10px;
+
+    &.nopadding{     
+      padding: 0
+    }    
   }
 
   .accordion-content{

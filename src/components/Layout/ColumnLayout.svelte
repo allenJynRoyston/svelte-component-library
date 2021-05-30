@@ -1,7 +1,7 @@
 <script lang='ts'>  
   import {getContext} from 'svelte';
-  import { SiteStore } from '@store/store';
-    
+  import { SiteStore } from '@store/store';  
+
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
@@ -10,7 +10,6 @@
 
   export let links = []
   export let currentIndex = null;
-  export let hidebtn:boolean = false;
   export let disableSearch = false;
   export let watchParam = null
   export let ignoreForExample = false
@@ -38,8 +37,6 @@
 
   let linkList = {};
 
-  $:opened = $openSidebar
-
   const buildList = () => {
     let _list = {};
     links.forEach(x => {
@@ -55,7 +52,7 @@
   }
 
   
-  $: isOpened = (key, index) => $urlParams[watchParam] ? ($urlParams[watchParam] || null) === key.toLowerCase() : index === 0
+  $: accordionIsOpened = (key, index) => $urlParams[watchParam] ? ($urlParams[watchParam] || null) === key.toLowerCase() : index === 0
 
   $: {
     buildList()
@@ -66,23 +63,18 @@
 
 <div class={`column-layout ${theme}-theme`} >
     <div class='layout-inner'>
-      <div class={`directory ${side}`} class:collapse={opened}>
-        {#if !hidebtn || opened}
-          <button class={`collapse-btn ${theme}-theme`} class:collapse={opened} on:click={() => {toggleCollapse(false)}}>
-            <SVG icon={opened ? 'arrow-left' : 'arrow-right'} fill={colors.white[0].color} size={16} />
-          </button>
-        {/if}
-
+      <div class={`directory ${side}`} class:collapse={!$openSidebar}>
         <Container offset={5}>
-          <div class='directory-inner' class:collapse={opened} >
+          <div class='directory-inner' class:collapse={$openSidebar} >
             <InnerContainer accountForTopPos height={'100%'}>
               <div class='directory-links-container'>
                 {#each Object.entries(linkList) as [key, pairs], index}
-                  <Accordion listform full open={isOpened(key, index)}>
+                  <Accordion listform full open={accordionIsOpened(key, index)}>
                     <span class='directory-key' slot='title'>
                       {capitalize(key)} 
                     </span>
 
+                   
                     
                     <ul class='directory-links' slot='content'>
                       {#each pairs as {href, title}, index}
@@ -103,7 +95,7 @@
       </div>
 
      
-      <div class={`content ${side}`} class:collapse={opened}>
+      <div class={`content ${side}`} class:collapse={!$openSidebar}>
           <slot>
             <p>Content</p>
           </slot>
@@ -124,7 +116,7 @@
     }
 
     .directory {
-      width: 0;
+      width: 100vw;
       height: 100vh;
       display: flex;
       flex-direction: row;     
@@ -136,13 +128,13 @@
       }      
 
       &.collapse{
-        width: 100%;
+        width: 0;
+        overflow: hidden;
       }
 
       @include desktop-and-up {
+        width: 250px;
         font-size: 14px!important;
-        width: auto!important;
-        min-width: 225px;
         display: block;
       }
     }
@@ -150,17 +142,18 @@
     .directory-inner{
       overflow: hidden;
       width: 0;   
-  
-      @include desktop-and-up {     
-        width: auto!important;
-        height: 100%!important;
-        text-align: left!important;
-      }    
 
       &.collapse{
         width: 100vw;
         text-align: center;
       }
+
+  
+      @include desktop-and-up {     
+        width: auto!important;
+        height: 100%!important;
+        text-align: left!important;
+      }          
     }
 
     .directory-links-container{
@@ -185,42 +178,6 @@
         font-size: 14px;
       }         
     }
-
-
-
-    .collapse-btn{
-      display: block;
-      position: absolute;
-      top: 75px;
-      right: -40px;
-      width: 40px;
-      height: 60px;    
-      border-radius: 0 10px 10px 0;
-      cursor: pointer;
-      z-index: 1;
-      border: none;
-      outline: none;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);  
-      background: var(--black-1);
-
-      &.dark-theme{
-        background: var(--white-1);
-      }
-      
-
-      &.collapse{
-        border-radius: 10px 0 0 10px;      
-        right: 0px;
-      }
-
-      &:active{
-        background: var(--black-0);
-      }
-
-      @include desktop-and-up {
-        display: none;      
-      }    
-    }
     
     .content {      
       width: 100%;
@@ -229,12 +186,7 @@
       &.right{
         order: 0;
       }
-
-      &.collapse{
-        width: 0;
-        padding: 0;
-      }      
-
+  
       @include desktop-and-up {
         width: 100%!important;
       }          

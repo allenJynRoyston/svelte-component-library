@@ -15,24 +15,19 @@
   const snippet = {
     name: 'Snackbar',
     importName: '@components/Snackbar/Snackbar.svelte',
-    properties: `
-
-    `,
     props: {
       closeOnClick: false,
     }, 
     dropdowns: [
       {
-        label: 'type',
+        label: 'applyTheme',
         options: ['primary','success', 'warning', 'danger'], 
         value: 0        
-      },
-      {
-        label: 'duration',
-        options: [null, 2000, 4000, 6000], 
-        value: 2        
-      }      
-    ]
+      },      
+    ],
+    inputs: [
+      {forprop: 'duration', renderAs: 'input', componentprop: {type: 'number'}, value: 1000 },      
+    ],    
   }
 
   $: livecode = `    
@@ -53,6 +48,7 @@
   const addSnack:any =getContext('addSnack')
   
   const snacktime = () => {    
+
     addSnack({
       message: 'I am a snackbar!', 
       ...props,
@@ -111,10 +107,10 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <Button exactfit type='primary' onClick={() => {snacktime()}}>Add Snack</Button>
-    <Button exactfit type='secondary' onClick={() => {noDuration()}}>No Duration Snack</Button>
-    <Button exactfit type='success' onClick={() => {withLink()}}>Add Snack (with link)</Button>
-    <Button exactfit type='warning' onClick={() => {withButton()}}>Add Snack (with component)</Button>
+    <Button exactfit applyTheme='primary' onClick={() => {snacktime()}}>Add Snack</Button>
+    <Button exactfit applyTheme='secondary' onClick={() => {noDuration()}}>No Duration Snack</Button>
+    <Button exactfit applyTheme='success' onClick={() => {withLink()}}>Add Snack (with link)</Button>
+    <Button exactfit applyTheme='warning' onClick={() => {withButton()}}>Add Snack (with component)</Button>
    </div>    
 </LibrarySnippet>
 

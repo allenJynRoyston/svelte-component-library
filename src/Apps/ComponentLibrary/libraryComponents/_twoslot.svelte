@@ -17,7 +17,8 @@
       hideLeft: false,
       hideRight: false,
       outline: true,
-      rounded: true
+      rounded: true,
+      nopadding: false
     },
     inputs: [
       {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid red'}, value: null }

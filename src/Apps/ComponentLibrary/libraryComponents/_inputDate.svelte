@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import InputDate from '@components/FormComponents/InputDate/InputDate.svelte'
+  import InputDate from '@form/InputDate/InputDate.svelte'
 
 
 
@@ -12,53 +12,41 @@
   let selectprops;
   let inputprops;
 
+  const events = {
+    onChange: (val) => {
+      snippet.inputs[0].value = val
+    } 
+  }
+
   const snippet = {
     name: 'InputDate',
-    importName: '@components/FormComponents/InputDate/InputDate.svelte',
-    properties: `
-    export let onChange = null
-    export let onKeypress = null
-    export let updateForm = null;    
-    
-    export let placeholder = null
-    export let value = ''
-    export let key = null
-    export let label = null; 
-    export let minDate = null;
-    export let maxDate = null;    
-    export let required = null;
-    `   
+    importName: '@form/InputDate/InputDate.svelte',
+    props: {
+      required: false,
+    },     
+    inputs: [
+      {forprop: 'value', renderAs: 'inputdate', value: '01-30-2021' },
+      {forprop: 'key', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'label', renderAs: 'input', componentprop: {type: 'text'}, value: 'label' },
+      {forprop: 'minDate', renderAs: 'inputdate', value: '01-01-1950' },
+      {forprop: 'maxDate', renderAs: 'inputdate', value: '01-01-2025' },      
+    ],
+    notes: [      
+      'key: prop is equivilent to element id.  Only need to alter if you have more then one Input on the same form.',
+      'required: only triggers if wrapped in a Form component.  See Form component for more details.',            
+    ]         
   }
 
   $: livecode = `    
-    const props = {
-      label: 'Date',
-      key: 'date',
-      value: '12-01-1982',
-      minDate: '01-01-1950',
-      maxDate: '01-01-2020',      
-      required: true,
-    }
-
     <InputDate {...props} ${propstr}${selectstr}${inputstr} /> 
      `
-     
-  const staticprops = {
-    label: 'Date',
-    key: 'date',
-    value: '12-01-1982',
-    minDate: '01-01-1950',
-    maxDate: '01-01-2020',      
-    required: true,
-  }
-
+    
 </script>
 
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <InputDate {...staticprops} {...props} {...selectprops}
-{...inputprops} />
+    <InputDate {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 
 </LibrarySnippet>

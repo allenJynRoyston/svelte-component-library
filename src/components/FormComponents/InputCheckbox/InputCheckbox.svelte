@@ -1,14 +1,13 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, getContext } from 'svelte';
-  import { validateCheckbox } from '../../../js'
+  import { validateCheckbox } from '@js'
 
   //--------------------------- COMPONENT PROPS
   export let onChange = null
   export let onKeypress = null
   export let updateForm = null;     
-  export let placeholder = null 
-  export let value = false
+  export let checked = false
   export let text = null;  
   export let key = null
   export let label = null; 
@@ -17,9 +16,9 @@
 
   //--------------------------- VARS
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
+  $: props = {
+    checked,
+    id:key,    
   }
 
   const theme:string = getContext('theme');
@@ -28,30 +27,32 @@
 
   //--------------------------- ONMOUNT
 	onMount(() => {
-    updateParent(value)
+    onChange && onChange(checked, key)
+    updateParent(checked)
   }); 
   //---------------------------   
 
   //--------------------------- EVENT HANDLERS
   const onChangeEventHandler = () => {   
     setTimeout(() => {
-      onChange && onChange(value)
-      updateParent(value)
+      onKeypress && onKeypress(checked)
+      onChange && onChange(checked)
+      updateParent(checked)
     })
   }
   //---------------------------
 
   //--------------------------- FUNCTIONS
   const toggle = () => {
-    value = !value
+    checked = !checked
     setTimeout(() => {
-      onChange && onChange(value)
-      updateParent(value)
+      onChange && onChange(checked)
+      updateParent(checked)
     })
   }
 
   const updateParent = (val) => {        
-    const {isValid, validationErrors} = validateCheckbox({value, required})
+    const {isValid, validationErrors} = validateCheckbox({value: checked, required})
     errors = validationErrors
     updateForm && updateForm({key, val, isValid, errors})
   }
@@ -67,7 +68,7 @@
   {/if}  
 
   <div class='cb-container'  on:click={toggle}>
-    <input type='checkbox' {...props} on:change={onChangeEventHandler} bind:checked={value} />  
+    <input type='checkbox' {...props} on:change={onChangeEventHandler} bind:checked={checked} />  
     <span class='cb-text'>{text}</span>
   </div>
 
@@ -104,24 +105,26 @@
     }
         
 
+
     &.valid{
-      .cb-text{
+      label{
         color: var(--black-2)
-      }  
+      }
     }
 
     &.invalid{
-      .cb-text{
+      label{
         color: var(--danger-0)
       }
     }    
 
-
     &.dark-theme{
-      .cb-text{
-        color: var(--white-2)
-      }  
-    }
+      &.valid{
+        label{
+          color: var(--white-2)
+        }
+      }
+    }    
 
 
   }  

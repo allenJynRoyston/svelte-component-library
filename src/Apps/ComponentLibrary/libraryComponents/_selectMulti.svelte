@@ -13,28 +13,21 @@
   const snippet = {
     name: 'SelectMulti',
     importName: '@components/FormComponents/SelectMulti/SelectMulti.svelte',
-    properties: `
-    export let onChange = null
-    export let onKeypress = null
-    export let updateForm = null;     
-    export let type = 'checkbox'
-    export let placeholder = null
-    export let value = null
-    export let key = null
-    export let label = null; 
-    export let defaultOption = null;   
-    export let required = null;
-    export let options = []   
-    export let onInitFilter = null;
-    export let onChangeFilter = null  
-    `   
+    props: {
+      required: false,
+    },    
+    inputs: [
+      {forprop: 'key', renderAs: 'input', componentprop: {type: 'text'}, value: null },
+      {forprop: 'label', renderAs: 'input', componentprop: {type: 'text'}, value: 'label' },
+    ],
+    notes: [
+      'key: prop is equivilent to element id.  Only need to alter if you have more then one Input on the same form.',
+      'required: only triggers if wrapped in a Form component.  See Form component for more details.',            
+    ]   
   }
 
   $: livecode = `    
-    const props = {
-      type: 'checkbox',
-      label: 'Multi Select',
-      key: 'selectmulti',      
+    const props = { 
       value: [1, 3],      
       options: [
         {id: 1, title: 'option 1'},
@@ -58,13 +51,10 @@
       required: true    
     }
 
-    <SelectMulti {...props} ${propstr}${selectstr}${inputstr} /> 
+    <SelectMulti {...props}${propstr}${selectstr}${inputstr} /> 
      `
      
-    const staticprops = {
-      type: 'checkbox',
-      label: 'Multi Select',
-      key: 'selectmulti',      
+    const staticprops = { 
       value: [1, 3],      
       options: [
         {id: 1, title: 'option 1'},
@@ -93,8 +83,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <SelectMulti {...staticprops} {...props} {...selectprops}
-{...inputprops} />
+    <SelectMulti {...staticprops} {...props} {...selectprops} {...inputprops} />
    </div>    
 </LibrarySnippet>
 

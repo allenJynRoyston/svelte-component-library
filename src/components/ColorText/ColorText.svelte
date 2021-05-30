@@ -1,12 +1,12 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
 
-  export let type = 'primary'
+  export let applyTheme = 'primary'
 
   const theme:string = getContext('theme');
 </script>
 
-<span class={`color-text ${type} ${theme}-theme`} >
+<span class={`color-text ${applyTheme} ${theme}-theme`} >
   <slot />
 </span>
 

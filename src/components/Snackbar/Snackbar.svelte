@@ -126,7 +126,7 @@ $: {
 <div class={`snackbar`} >
   {#each snacks as snack (snack.id)}
     <div 
-      class={`snack ${!!theme ? `${theme}-theme` : ''} ${snack?.type || ''} ${snack?.closeOnClick ? 'clickable' : ''}`} 
+      class={`snack ${!!theme ? `${theme}-theme` : ''} ${snack?.applyTheme || ''} ${snack?.closeOnClick ? 'clickable' : ''}`} 
       class:animateIn={snack.animateIn} 
       class:animateOut={!snack.animateIn}
       class:btmpadding={snack?.duration}
@@ -134,7 +134,7 @@ $: {
       on:mouseenter={() => {cancelTimer(snack.id)}} >
 
       <div class='icon'>
-        <SVG icon={returnIcon(snack.type)} fill={returnIconColor(snack.type)} />
+        <SVG icon={returnIcon(snack.applyTheme)} fill={returnIconColor(snack.applyTheme)} />
       </div>
       
       <div class='content' class:content-padding={snack?.component}>

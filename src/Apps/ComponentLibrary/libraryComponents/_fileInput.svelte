@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import FileInput from '@components/FormComponents/FileInput/FileInput.svelte'
+  import FileInput from '@form/FileInput/FileInput.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -10,9 +10,29 @@
   let selectprops;
   let inputprops;
 
-  const snippet = {
-    name: 'Button',
-    importName: '@components/FormComponents/FileInput/FileInput.svelte',
+  const events = {
+    onChange: (val) => {
+      snippet.inputs[0].value = val
+    } 
+  }
+
+  
+  $: snippet = {
+    name: 'FileInput',
+    importName: '@form/FileInput/FileInput.svelte',    
+    props: {
+      required: false
+    },    
+    inputs: [
+      {forprop: 'value', renderAs: 'input', componentprop: {type: 'text', placeholder: "C:\\fakepath\\file.PNG"}, value: null },
+      {forprop: 'label', renderAs: 'input', componentprop: {type: 'text'}, value: 'label' },
+      {forprop: 'key', renderAs: 'input', componentprop: {type: 'text', placeholder: "fileinput"}, value: null },
+      {forprop: 'accept', renderAs: 'input', componentprop: {type: 'text', placeholder: 'image/png, image/jpeg, ...'}, value: null }      
+    ],
+    notes: [
+      'required: only triggers if wrapped in a Form component.  See Form component for more details.',
+      'key: prop is equivilent to element id.  Only need to alter if you have more then one fileInput on the same form.'
+    ]
   }
 
   $: livecode = `    
@@ -24,8 +44,7 @@
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <FileInput {...props} {...selectprops}
-{...inputprops} />
+    <FileInput {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 
 </LibrarySnippet>

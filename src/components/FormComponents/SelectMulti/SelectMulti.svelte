@@ -1,22 +1,21 @@
 <script lang='ts'>  
   //--------------------------- IMPORTS  
   import { onMount, getContext } from 'svelte';
-  import { validateSelectMulti } from '../../../js'
+  import { validateSelectMulti } from '@js'
 
   //--------------------------- COMPONENT PROPS
-  export let onChange = null
-  export let onKeypress = null
-  export let updateForm = null;     
-  export let type = 'checkbox'
-  export let placeholder = null
   export let value = null
   export let key = null
   export let label = null; 
   export let defaultOption = null;   
   export let required = null;
   export let options = []   
+  
+  export let updateForm = null;       
   export let onInitFilter = null;
   export let onChangeFilter = null  
+  export let onChange = null
+  export let onKeypress = null  
   //---------------------------
 
   //--------------------------- VARS
@@ -28,11 +27,7 @@
 
   _options = onInitFilter ? onInitFilter(value, _options) : _options 
   let errors = [];
-  const props = {
-    id:key,
-    placeholder,    
-  }
-
+  
   const theme:string = getContext('theme');
 
   //--------------------------- ONMOUNT
@@ -67,6 +62,11 @@
     updateForm && updateForm({key, val: isSelected, isValid, errors})
   }
   //---------------------------
+
+  $: props = {
+    id:key,
+  }
+
 </script>
 
 <div class={`selectmulti-container ${theme}-theme`} data-testid='selectmulti-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
@@ -77,7 +77,7 @@
   <ul class='selectmulti-options'>
     {#each _options as option, i}        
       <li class='selectmulti-option' on:click={() => {onClick(i)}} >
-        <input data-testid={`selectmulti-option-${i}`} type={type} checked={option._selected}>
+        <input data-testid={`selectmulti-option-${i}`} type='checkbox' checked={option._selected}>
         <span class='text'>{option.title}</span>        
       </li>  
     {/each}
