@@ -4,6 +4,7 @@ const showExample = writable(true);
 const showImport = writable(true);
 const showProperties = writable(true);
 const showCode = writable(true);
+const showActions = writable(true);
 
 function siteInit() {
 	return {
@@ -11,6 +12,7 @@ function siteInit() {
 		showProperties,
 		showExample,
 		showCode,
+		showActions,
 	};
 }
 

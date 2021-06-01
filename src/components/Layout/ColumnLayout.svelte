@@ -1,6 +1,6 @@
 <script lang='ts'>  
   import {getContext} from 'svelte';
-  import { SiteStore } from '@store/store';  
+  import { SiteStore, DeviceStore } from '@store/store';  
 
   import Link from '@components/Link/Link.svelte'
   import SVG from '@components/SVG/SVG.svelte'
@@ -8,9 +8,7 @@
   import Container from '@components/Container/Container.svelte'
   import Accordion from '@components/Accordion/Accordion.svelte'
 
-  export let links = []
-  export let currentIndex = null;
-  export let disableSearch = false;
+  export let links = []    
   export let watchParam = null
   export let ignoreForExample = false
 
@@ -21,6 +19,7 @@
   const theme:string = getContext('theme');
 
   const {openSidebar, urlParams, searchValue} = SiteStore;
+  const {isTabletAndBelow} = DeviceStore;
 
   const toggleCollapse = (state = null) => {
      $openSidebar = !!state || !$openSidebar
@@ -74,12 +73,11 @@
                       {capitalize(key)} 
                     </span>
 
-                   
                     
                     <ul class='directory-links' slot='content'>
                       {#each pairs as {href, title}, index}
                         {#if $searchValue === null || partialMatch($searchValue?.toLowerCase(), title?.toLowerCase())}
-                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} onClick={() => {toggleCollapse(false)}} >
+                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} onClick={() => {$isTabletAndBelow ? toggleCollapse() : null}} >
                             {capitalize(title)} 
                           </Link>
                         {/if}        
@@ -133,7 +131,7 @@
       }
 
       @include desktop-and-up {
-        width: 250px;
+        width: 350px;
         font-size: 14px!important;
         display: block;
       }

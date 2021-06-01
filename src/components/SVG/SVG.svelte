@@ -155,7 +155,7 @@
   export let index:number|null = null;
   export let title:string|null = null;
   export let style:string|null = null;
-  export let onClick:(index) => void|null = null;
+  export let onClick = null;
   
   const colors:any = getContext('colors');
   const theme:string = getContext('theme');

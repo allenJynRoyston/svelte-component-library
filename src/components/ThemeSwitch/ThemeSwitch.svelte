@@ -14,11 +14,11 @@
 </script>
 
 <div class='themeswitcher' class:dark-theme={theme === 'dark'}>
-  <Button applyTheme='white' size='small' disabled={theme === 'light'} hollow={theme === 'light'} onClick={() => {setTheme('light')}}>
+  <Button exactfit applyTheme='white' size='small' disabled={theme === 'light'} hollow={theme === 'light'} onClick={() => {setTheme('light')}}>
     Light
   </Button>  
 
-  <Button applyTheme='white' size='small' disabled={theme === 'dark'} hollow={theme === 'dark'} onClick={() => {setTheme('dark')}}>
+  <Button exactfit applyTheme='white' size='small' disabled={theme === 'dark'} hollow={theme === 'dark'} onClick={() => {setTheme('dark')}}>
     Dark
   </Button>    
 </div>
@@ -28,11 +28,10 @@
   .themeswitcher{    
     justify-content: flex-start;
     display: flex;
-    gap: 10px;
+    // gap: 5px;
     font-size: 12px;
     font-weight: 700;
     color: var(--black-1);
-    padding: 10px;   
 
     &.dark-theme{
       color: var(--white-1);

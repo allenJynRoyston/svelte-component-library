@@ -14,6 +14,16 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    startChannelTransistion: (val) => {     
+      eventLog = [...eventLog, {action: 'startChannelTransistion', val}]
+    },
+    endChannelTransisition: (val) => {
+      eventLog = [...eventLog, {action: 'endChannelTransisition', val}]
+    }
+  }     
+
   const snippet = {
     name: 'Channels',
     importName: '@components/Channels/Channels.svelte',
@@ -85,7 +95,7 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events}>
   <div slot='liveexample'>    
     <div class='button-block'>
       {#each channels.data as ch, index}
@@ -95,7 +105,7 @@
 
     <div style='height: 400px'>     
       <Container offset={2}> 
-        <Channels {...channels}  {...props} {...selectprops} {...inputprops} />
+        <Channels {...channels}  {...props} {...selectprops} {...inputprops} {...events}/>
       </Container>
     </div>
    </div>    

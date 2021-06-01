@@ -39,9 +39,9 @@
   export let onSubmit = null;  
   export let padding = 10
   export let breakpoints = {
-    mobile: 480,
-    tablet: 800,
-    desktop: 1080,
+    mobile: 320,
+    tablet: 1024,
+    desktop: 1382,
     wide: 1440
   }
   export let localStorageKey = null;    

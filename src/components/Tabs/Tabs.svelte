@@ -1,16 +1,16 @@
 <script lang='ts'>
   import {SiteStore} from '@store/store'
-  import Link from '@components/Link/Link.svelte'
   import Button from '@components/Button/Button.svelte'
   import {getContext} from 'svelte';
-
-  const {urlParams}  = SiteStore;
 
   export let hashNav = 'tab';
   export let tabs = []
   export let applyTheme = 'black';
+  export let onClick = null;
 
   const theme:string = getContext('theme');
+  const {urlParams}  = SiteStore;
+
 
   $: getHref = (param, index) => {
 		const hash =  location.hash.includes(`&${hashNav}`) ?  location.hash.split(`&${hashNav}`)[0] : location.hash;
@@ -24,9 +24,9 @@
 <div class={`tabs ${theme}-theme`}>
   <div class='links'>
     {#each tabs as {title, param = null}, index}
-    <Button nomargin exactfit {applyTheme} hollow={active(param, index)} href={getHref(param || String(index), index)}>
-      {title}
-    </Button>
+      <Button nomargin exactfit {applyTheme} hollow={active(param, index)} href={getHref(param || String(index), index)} onClick={() => {onClick && onClick(index)}}>
+        {title}
+      </Button>
     {/each}  
   </div>
 

@@ -8,6 +8,9 @@
   export let show = false;
   export let closeOnBackdrop = false;
 
+  export let onStartModal = null;
+  export let onEndModal = null;
+
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
 
@@ -58,7 +61,8 @@
   $: {
     freezeAnimation = true;
         
-    if(show){     
+    if(show){    
+      onStartModal && onStartModal() 
       animateIn = true;
       setTimeout(() => {
         freezeAnimation = false
@@ -73,6 +77,7 @@
       freezeAnimation = false;
       clearInterval(animateInTimer);
       animateInTimer = setTimeout(() => {
+        onEndModal && onEndModal()
         animateIn = false;
       }, 300)      
     }
@@ -426,7 +431,7 @@
         }                  
 
         &.hasFooter{
-          max-height: calc(100vh - 120px);        
+          max-height: calc(100vh - 140px);        
           &.nopadding{
             max-height: calc(100vh - 100px);    
           }               

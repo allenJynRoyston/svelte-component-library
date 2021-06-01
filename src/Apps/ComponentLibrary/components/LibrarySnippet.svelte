@@ -1,6 +1,5 @@
 <script lang='ts'>
-  import {onMount, getContext, tick} from 'svelte'
-  import {DeviceStore} from '@store/store'
+  import {onMount, getContext, tick} from 'svelte'  
   import {LibraryStore} from '../localstore/libraryStore'
 
   import Input from '@form/Input/Input.svelte'
@@ -22,7 +21,8 @@
   export let code = null;
   export let livecode = null;
   export let notes = [];
-  export let events = {}
+  export let eventLog = [];
+  export let events = null;
 
   export let dropdowns = [];
 
@@ -36,8 +36,7 @@
 
   const theme:string = getContext('theme')
 
-  const {showImport, showProperties, showCode, showExample} = LibraryStore;
-  const {isTabletAndBelow} = DeviceStore;
+  const {showImport, showProperties, showCode, showExample, showActions} = LibraryStore;  
 
   const updateProps = async(val = null, key = null) => {
     await tick();
@@ -63,8 +62,6 @@
         }
       })
     }
-
-
     selectstr = _selectstr  
   }
 
@@ -126,6 +123,20 @@
     return list
   }  
 
+  let eventList = !!events ? Object.keys(events).map(title => {
+    return {title, toggled: true }
+  }) : []
+
+  const toggleEvent = (index) => {
+    eventList = eventList.map((x, i) => {
+      if(i === index){
+        x.toggled = !x.toggled
+      }
+      return x
+    })
+  }
+
+  
   onMount(() => {
     updateProps();
     updateSelect();
@@ -133,18 +144,17 @@
       updateInputs(value, forprop)      
     })
   })
-
-
 </script>
 
 <div class='library-snippet'>
-  <TwoSlot>
+  <TwoSlot nopadding>
     <h3 slot='left'>{name}</h3>
-    <div slot='right' style='display: flex; gap: 5px'>
-      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
-      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
-      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Example</Button>    
-      <Button applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showCode} hollow={!$showCode} nomargin onClick={() => {$showCode = !$showCode}} >Code</Button>    
+    <div slot='right' style='display: flex; gap: 5px; flex-wrap: wrap'>
+      <Button exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showImport} hollow={!$showImport} nomargin onClick={() => {$showImport = !$showImport}} >Import</Button>        
+      <Button exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showActions} hollow={!$showActions} nomargin onClick={() => {$showActions = !$showActions}} >Actions</Button>    
+      <Button exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showProperties} hollow={!$showProperties} nomargin onClick={() => {$showProperties = !$showProperties}} >Properties</Button>    
+      <Button exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showExample} hollow={!$showExample} nomargin onClick={() => {$showExample = !$showExample}} >Example</Button>    
+      <Button exactfit applyTheme={theme === 'dark' ? 'white' : 'black'} size='small' useToggle toggled={$showCode} hollow={!$showCode} nomargin onClick={() => {$showCode = !$showCode}} >Code</Button>    
     </div>  
   </TwoSlot>
   <hr>
@@ -154,6 +164,25 @@
     import ${name} from '${importName}'
     `} />
 
+  {#if !!events && $showActions}    
+    <LibraryBlock hideFull title='Actions:'>
+
+      <div class='actions'>
+        {#each eventList as {title, toggled}, index}        
+          <Button size='small' exactfit applyTheme='white' {toggled} useToggle onClick={() => {toggleEvent(index)}}>
+            {title}
+          </Button>
+        {/each}
+      </div>
+
+      {#each eventLog as log}     
+        {#if eventList.find(x => x.title === log.action).toggled}
+          {JSON.stringify(log, null, 4)}
+          <br>
+        {/if}          
+      {/each}
+    </LibraryBlock>    
+  {/if}
 
   {#if $showProperties}
     <LibraryBlock flex title="Properties: ">
@@ -237,6 +266,7 @@
       ${livecode}
       `} />
   {/if}
+
 </div>
 
 <style lang='scss'>
@@ -252,6 +282,14 @@
     margin: 0;
     padding: 0;
     font-size: 12px;
+  }
+
+  .actions{
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   .props-container{

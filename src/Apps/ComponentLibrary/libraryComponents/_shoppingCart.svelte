@@ -10,6 +10,16 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    }, 
+    onRemove: (val) => {
+      eventLog = [...eventLog, {action: 'onRemove', val}]
+    }
+  }
+
   const snippet = {
     name: 'ShoppingCart',
     importName: '@components/ShoppingCart/ShoppingCart.svelte',
@@ -47,10 +57,9 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog}>
   <div slot='liveexample'>    
-    <ShoppingCart {items} {onClick}  {...props} {...selectprops}
-{...inputprops} />
+    <ShoppingCart {items} {onClick}  {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 </LibrarySnippet>
 

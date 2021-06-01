@@ -13,10 +13,10 @@ function deviceStoreInit() {
 			return $appWidth >= 480 && $appWidth < 768;
 		}),
 		isTabletAndBelow: derived(appWidth, ($appWidth) => {
-			return $appWidth < 768;
+			return $appWidth < 1024;
 		}),
 		isDesktop: derived(appWidth, ($appWidth) => {
-			return $appWidth >= 768;
+			return $appWidth >= 1382;
 		}),
 		isNativeMobile: readable(
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(

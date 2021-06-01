@@ -15,7 +15,7 @@
   export let onInitFilter = null;
   export let onChangeFilter = null  
   export let onChange = null
-  export let onKeypress = null  
+  export let onClick = null  
   //---------------------------
 
   //--------------------------- VARS
@@ -37,9 +37,10 @@
   //---------------------------   
 
   //--------------------------- EVENT HANDLERS
-  const onClick = (index) => {   
+  const onButtonClick = (index) => {   
     _options[index]._selected = !_options[index]._selected
     updateParent()
+    onClick && onClick();
   }
   //---------------------------
 
@@ -59,6 +60,7 @@
       return x 
     })
     
+    onChange && onChange()
     updateForm && updateForm({key, val: isSelected, isValid, errors})
   }
   //---------------------------
@@ -76,7 +78,7 @@
 
   <ul class='selectmulti-options'>
     {#each _options as option, i}        
-      <li class='selectmulti-option' on:click={() => {onClick(i)}} >
+      <li class='selectmulti-option' on:click={() => {onButtonClick(i)}} >
         <input data-testid={`selectmulti-option-${i}`} type='checkbox' checked={option._selected}>
         <span class='text'>{option.title}</span>        
       </li>  

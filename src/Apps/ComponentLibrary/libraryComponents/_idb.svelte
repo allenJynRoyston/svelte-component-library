@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import {getContext, setContext} from 'svelte'
+  import {setContext} from 'svelte'
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
   import IDB from '@components/Utility/IndexDBSetup.svelte'

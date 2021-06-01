@@ -6,9 +6,6 @@
   import Button from '@components/Button/Button.svelte'
 
   //--------------------------- COMPONENT PROPS
-  export let onChange = null
-  export let onKeypress = null 
-  export let updateForm = null;    
   export let placeholder = null
   export let value = null
   export let key = null
@@ -19,6 +16,10 @@
   export let onInitFilter = null;
   export let onChangeFilter = null  
   export let exactfit = false;  
+
+  export let onChange = null
+  export let onKeypress = null 
+  export let updateForm = null;      
   //---------------------------
 
   //--------------------------- VARS

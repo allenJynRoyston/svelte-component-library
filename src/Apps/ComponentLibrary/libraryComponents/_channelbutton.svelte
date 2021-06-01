@@ -4,13 +4,19 @@
     import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
     import {svgslist} from '@components/SVG/SVG.svelte'
 
-
     let propstr = '';
     let selectstr = '';
     let inputstr = '';
     let props; 
     let selectprops;
     let inputprops;
+
+    let eventLog = []
+    const events = {
+      onClick: (val) => {     
+        eventLog = [...eventLog, {action: 'onClick', val}]
+      } 
+    }      
 
     const snippet = {
     name: 'ChannelButton',
@@ -53,10 +59,10 @@
 
 
 </script>
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events}>
   <div slot='liveexample'>    
 
-    <ChannelButton {...props} {...selectprops} {...inputprops}>
+    <ChannelButton {...props} {...selectprops} {...inputprops} {...events} >
       
     </ChannelButton>    
    </div>    

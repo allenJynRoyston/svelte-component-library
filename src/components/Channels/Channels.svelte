@@ -23,6 +23,9 @@
   export let disableAnimationOnMobile = false;
   export let showChannelNumber = false;
   
+  export let startChannelTransistion = null;
+  export let endChannelTransisition = null;
+
   let ready = false
   let xpos;
   let currentChannel = current;  
@@ -67,9 +70,10 @@
     await tick() 
     topDifference = ele?.getBoundingClientRect().top      
   }
+  
 
-
-  const goto = async (channel) => {
+  const goto = async (channel) => {    
+    startChannelTransistion && startChannelTransistion()
     currentChannel = channel      
     draw()       
   }
@@ -80,7 +84,8 @@
     channelReady && channelReady(currentChannel)  
 
     await xpos.set(val)
-    afterUpdate && afterUpdate()        
+    afterUpdate && afterUpdate()     
+    endChannelTransisition && endChannelTransisition()      
   }
 
   const resetScrollTop = () => {

@@ -16,6 +16,7 @@
     importName: '@components/ColumnLayout/ColumnLayout.svelte',
     props: {      
       disableSearch: false,
+      ignoreForExample: true
     }, 
     dropdowns: [
       {

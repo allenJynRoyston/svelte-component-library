@@ -4,14 +4,15 @@
   import { validateCheckbox } from '@js'
 
   //--------------------------- COMPONENT PROPS
-  export let onChange = null
-  export let onKeypress = null
-  export let updateForm = null;     
   export let checked = false
   export let text = null;  
   export let key = null
   export let label = null; 
   export let required = null;
+
+  export let onChange = null
+  export let onKeypress = null
+  export let updateForm = null;       
   //---------------------------
 
   //--------------------------- VARS

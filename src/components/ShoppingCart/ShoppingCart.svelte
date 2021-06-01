@@ -3,7 +3,9 @@
   import {getContext} from 'svelte';
   import SVG from '../SVG/SVG.svelte'
   export let items = []
-  export let onClick = (index) => {};
+
+  export let onClick = null;
+  export let onRemove = null;
   //---------------------------
 
   const colors:any = getContext('colors');
@@ -21,6 +23,8 @@
   ]
 
   const deleteItem = (index) => {
+    onRemove && onRemove(renderItems[index])
+
     renderItems = renderItems.filter((items, i) => index !== i)    
   }
 
@@ -61,7 +65,7 @@
             </button>          
           </td>        
           <td class={`${returnClass(1)}`} style={`${returnAlign(1)}`}>
-            <button on:click={() => {onClick(index)}}>
+            <button on:click={() => {onClick && onClick(index)}}>
               {name}
             </button>
           </td>

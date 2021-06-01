@@ -39,11 +39,11 @@
 
 <nav class={`nav-header ${theme}-theme`} style={!!bgSrc ? imageStyle: null}>
   <ThemeWrapper invert={invertColors}>
-    <TwoSlot >
+    <TwoSlot nopadding>
       <section class='inner' slot='left'>
         {#if showBurgerMenuButton}
-          <span style='transform: translateX(-10px)'>
-            <SVG icon={$openSidebar ? 'cross' : 'menu'} size={18} onClick={() => {$openSidebar = !$openSidebar}} />        
+          <span style='margin-right: 10px;'>
+            <SVG icon={$openSidebar ? 'cross' : 'menu'} size={14} onClick={() => {$openSidebar = !$openSidebar}} />        
           </span>
         {/if}
 

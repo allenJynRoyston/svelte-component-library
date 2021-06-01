@@ -211,7 +211,7 @@
   <h1>Svelte Component-DB Library</h1>
 </Header>
 
-<ColumnLayout {links} currentIndex={channel.current} >
+<ColumnLayout {links} >
   {#if ready}
     <Channels {...channel} />
   {/if}

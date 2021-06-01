@@ -18,7 +18,7 @@
 
   //--------------------------- 
   let headerprops = {
-    title: 'Svelte-Tip',    
+    title: 'SvelteTip',    
     bgSrc: `./images/bg/header-${theme}-bg.jpg`,
     logoSrc: './images/logo/logo.png',     
     showNotch: true,           

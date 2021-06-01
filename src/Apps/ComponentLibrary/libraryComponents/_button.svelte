@@ -10,6 +10,13 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }
+
   const snippet = {
     name: 'Button',
     importName: '@components/Button/Button.svelte',
@@ -78,38 +85,8 @@
 
 
 
-<LibrarySnippet {...snippet} {livecode} {code} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} {code} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events} >
   <div slot='liveexample'>    
-    <Button  {...props} {...selectprops} {...inputprops} />    
+    <Button  {...props} {...selectprops} {...inputprops} {...events}/>    
    </div>    
-
-   <!-- <div slot='example'>
-    <Button type='primary' {...props}>
-      Primary
-    </Button>
-
-    <Button type='secondary'  {...props}>
-      Secondary
-    </Button>
-    
-    <Button type='success'{...props}>
-      Success
-    </Button>  
-
-    <Button type='warning' {...props}>
-      Warning
-    </Button>    
-    
-    <Button type='danger' {...props}>
-      Danger
-    </Button>         
-    
-    <Button type='black' {...props}>
-      Black
-    </Button>    
-    
-    <Button type='white' {...props}>
-      White
-    </Button>   
-   </div> -->
 </LibrarySnippet>

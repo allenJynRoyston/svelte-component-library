@@ -2,7 +2,7 @@
   import {getContext} from 'svelte';
   import SVG from '@components/SVG/SVG.svelte'
 
-  export let onClick = () => {}
+  export let onClick = null;
   export let leftIcon = null;
   export let rightIcon = null;
   export let content = null;
@@ -23,11 +23,11 @@
  
 </script>
 
-<button class={`channel-button ${useType}`} {style} class:rounded={rounded} class:nomargin={nomargin} on:click={onClick} bind:this={ele}>
+<button class={`channel-button ${useType}`} {style} class:rounded={rounded} class:nomargin={nomargin} on:click={() => {onClick && onClick()}} bind:this={ele}>
   <div class='icon' >
     <SVG icon={leftIcon || 'globe'} {fill} size={iconSize} />
   </div>
-  <div class='content' type='button' on:click={onClick}>
+  <div class='content' type='button'>
     <slot>
       {content || 'Button'}
     </slot>

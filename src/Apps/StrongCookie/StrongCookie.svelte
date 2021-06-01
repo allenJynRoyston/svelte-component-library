@@ -93,7 +93,7 @@
   <h1>Strongcookie.com</h1>
 </Header>
 
-<ColumnLayout {links} currentIndex={channel.current} >
+<ColumnLayout {links} >
   {#if ready}
     <Channels {...channel} backtotop />
   {/if}

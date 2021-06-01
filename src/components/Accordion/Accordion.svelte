@@ -11,6 +11,9 @@
   export let listform = false;
   export let nopadding = false;
 
+  export let onClick = null;
+
+
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
 
@@ -20,6 +23,7 @@
 
   const toggle = () => {
     isOpened = !isOpened
+    onClick && onClick(isOpened)
   }
 
 </script>

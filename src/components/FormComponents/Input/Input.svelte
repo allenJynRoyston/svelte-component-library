@@ -79,7 +79,7 @@
         {#if allowShowToggle && type === 'password'}
           <Button nomargin exactfit size='tiny' onClick={() => {showPassword = !showPassword}} >{showPassword ? 'Hide' : 'Show'}</Button>  
         {:else}
-          <Button style='opacity: 0' exactfit size='tiny'></Button>  
+          <Button style='max-width: 1px; opacity: 0; pointer-events: none;' exactfit size='tiny'>|</Button>  
         {/if}     
 
       </div>

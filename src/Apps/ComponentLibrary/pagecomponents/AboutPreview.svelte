@@ -20,14 +20,14 @@
     <Section>
       <section class='section-wrap'>
         <h2 class='about-title'>
-          What is Svelte-Tip?
+          What is SvelteTip?
         </h2>
         <p>
-          Svelte-Tip is a rapid development boilerplate project built using the 
+          SvelteTip is a rapid development boilerplate project built using the 
           <ColorText applyTheme='warning'><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText> framework and 
           <ColorText applyTheme='magic'><Link target="_blank" href='https://www.snowpack.dev/' inherit>Snowpack</Link></ColorText> build tool.            
-          Svelte-Tip takes advantage of both of these amazing technologies to specialize on ease of use, tiny compile size, and component centric development that makes building 
-          large apps just as seamless as small ones.  Regardless of the size or complexity of your SPA project, you'll find that using Svelte-Tip 
+          SvelteTip takes advantage of both of these amazing technologies to specialize on ease of use, tiny compile size, and component centric development that makes building 
+          large apps just as seamless as small ones.  Regardless of the size or complexity of your SPA project, you'll find that using SvelteTip 
           can save you - the developer - countless little pockets of time.        
         </p>
         <p>
@@ -46,13 +46,13 @@
           Build it Once
         </h2>
         <p>
-          Svelte-Tip prides itself on it's growing library of useful pre-made components that have been specifically engineered to work just as well on your phone as it would your desktop.  
+          SvelteTip prides itself on it's growing library of useful pre-made components that have been specifically engineered to work just as well on your phone as it would your desktop.  
           The goal, ultimately, is to move towards a "just build it once" web ecosystem that avoids costly mobile app development.
           
           If you know a little bit of <ColorText applyTheme='warning'><Link target="_blank" href='https://svelte.dev/' inherit>Svelte</Link></ColorText>, functionality can be extended with ease.
         </p>
         <p>
-          New things will be added to the Svelte-Tip library over time, so check back often to see if there's a component you can use for your project!
+          New things will be added to the SvelteTip library over time, so check back often to see if there's a component you can use for your project!
         </p>        
       </section> 
     </Section>
@@ -67,7 +67,7 @@
           Optimized for Production
         </h2>
         <p>
-          Svelte-Tip is built with optimization in mind, but without all the hassel that goes into it.  When you're ready to go, a simple:  
+          SvelteTip is built with optimization in mind, but without all the hassel that goes into it.  When you're ready to go, a simple:  
           <br><br>
           <CodeBlock nowrap snippet={`            
   $npm run build
@@ -92,16 +92,16 @@
     <Section>
       <section class='section-wrap'>
         <h2 class='about-title'>
-          Svelte-Tip is Non-opinionated (kinda)
+          SvelteTip is Non-opinionated (kinda)
         </h2>
         <p>
           Do you like Typescript?  SCSS or SASS?  Less or Stylus?  Pug?  Awesome - me too; give me all the tools please. Build how you want to bulid.  
-          While there is a recommended structure Svelte-tip prefers for it's root app, nothing says you have to use it.  Or any of it.  It's as non-commital 
+          While there is a recommended structure SvelteTip prefers for it's root app, nothing says you have to use it.  Or any of it.  It's as non-commital 
           as your last failed relationship (presumably).            
         </p>    
         <p>
-          Everything in Svelte-Tip is meant to be easily customizable, including the colors, typography and component styles.  
-          In fact, this entire site is built using only the components in the Svelte-Tip library!
+          Everything in SvelteTip is meant to be easily customizable, including the colors, typography and component styles.  
+          In fact, this entire site is built using only the components in the SvelteTip library!
         </p>            
       </section> 
     </Section>
@@ -117,7 +117,7 @@
           Try it out now
         </h2>
         <p>
-          Svelte-Tip is working towards a 1.0 release soon, but feel free to check it out now!            
+          SvelteTip is working towards a 1.0 release soon, but feel free to check it out now!            
         </p>        
         <div style='max-width: 200px; margin: auto'>
           <Button href='https://github.com/allenRoyston/svelte-component-library' target="_blank" applyTheme={theme ==='light' ? 'magic' : 'primary'} hollow rounded>Github</Button>  
@@ -133,7 +133,7 @@
     <Section>
       <section class='section-wrap'>
         <h2 class='about-title'>
-          Built using Svelte-Tip!
+          Built using SvelteTip!
         </h2>
         <p>
           Nothing yet, but let's try and change that around shall we!           

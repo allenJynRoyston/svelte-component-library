@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { createChannel } from '@js/utility'
+  import {DeviceStore} from '@store/store';
 
   import Header from '@components/Header/Header.svelte'
   import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
@@ -58,6 +59,8 @@
   if(!!headercopy?.notchEle){
     headerprops.notchEle.props = {showSearch: true}
   }  
+
+  const {isTabletAndBelow} = DeviceStore
 
   //--------------------------- CHANNEL
   const channel = createChannel({    
@@ -138,8 +141,8 @@
 
   <Header {...headercopy} showFooter showBurgerMenuButton />
 
-  <ColumnLayout {links} currentIndex={channel.current} watchParam='section'  >
-    <Channels {...channel} animate disableAnimationOnMobile />
+  <ColumnLayout {links} watchParam='section'  >
+    <Channels {...channel} animate={!$isTabletAndBelow} disableAnimationOnMobile />
   </ColumnLayout>
 </Container>
 

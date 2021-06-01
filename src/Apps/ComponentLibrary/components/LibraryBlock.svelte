@@ -2,10 +2,11 @@
   import Accordion from '../../../components/Accordion/Accordion'
   export let title = null;
   export let flex = false;
+  export let hideFull = false;
 </script>
 
 <div class='library-block'>
-  <Accordion full open>
+  <Accordion full={!hideFull} open>
     <div slot='title' class='title'>
       <h3>{title || 'Title'}</h3>
     </div>

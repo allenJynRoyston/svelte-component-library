@@ -13,26 +13,26 @@
   export let value = null;
   export let placeholder = null;
 
-  export let onUpdate = () => {}
+  export let onUpdate = null;
 
   const {isMobile} = DeviceStore;
   
   $: currentvalue = value || null;
 
   onMount(() => {
-    onUpdate(currentvalue)
+    onUpdate && onUpdate(currentvalue)
   })
 
   const onClear = async() => {
     currentvalue = null;
     render = false;
-    onUpdate(null)    
+    onUpdate && onUpdate(null)    
     await tick()
     render = true;      
   }
 
   const onGo = () => {
-    onUpdate(currentvalue)
+    onUpdate && onUpdate(currentvalue)
   }
 
 
@@ -45,7 +45,7 @@
 
   $: onKeypress = debounce((val) => {
     currentvalue = val.length === 0 ? null : val
-    onUpdate(val.length === 0 ? null : val)
+    onUpdate && onUpdate(val.length === 0 ? null : val)
   }, debounceTime)    
 
 </script>

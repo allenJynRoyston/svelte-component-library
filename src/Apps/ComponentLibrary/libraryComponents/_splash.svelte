@@ -5,6 +5,14 @@
   import Splash from '@components/Splash/Splash.svelte'
   const theme:string = getContext('theme');
   
+
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }
+  
   let propstr = '';
   let selectstr = '';
   let inputstr = '';
@@ -43,21 +51,23 @@
     buttonOne: {
       text: 'Action 1',
       applyTheme: 'secondary',
-      rounded: true,     
+      rounded: true,    
+      onClick: events.onClick 
     },
     buttonTwo: {
       text: 'Action 2',
       applyTheme: theme === 'dark' ? 'white' : 'black',
       rounded: true,  
-      hollow: true        
+      hollow: true,
+      onClick: events.onClick
     }       
   }     
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog}>
   <div slot='liveexample'>    
-    <Splash {...staticprops} {...props} {...selectprops} {...inputprops} />
+    <Splash {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>
   </div>    
 </LibrarySnippet>
 

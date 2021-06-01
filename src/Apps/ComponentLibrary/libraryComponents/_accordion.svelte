@@ -11,6 +11,13 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }  
+
   const snippet = {
     name: 'Accordion',
     importName: '@components/Accordion/Accordion.svelte',
@@ -40,9 +47,9 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events}>
   <div slot='liveexample'>
-    <Accordion {...props} {...selectprops} {...inputprops} >
+    <Accordion {...props} {...selectprops} {...inputprops} {...events} >
       <div slot='title'>
         <h3>Accordion</h3>
       </div>

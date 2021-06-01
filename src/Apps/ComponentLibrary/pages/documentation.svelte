@@ -55,7 +55,7 @@
 
   <Header {...headercopy} showFooter  />
 
-  <ColumnLayout {links} currentIndex={channel.current}  >
+  <ColumnLayout {links}  >
     <Channels {...channel} animate />
   </ColumnLayout>
 </Container>

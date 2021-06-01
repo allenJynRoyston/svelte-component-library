@@ -10,6 +10,13 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }
+
   const snippet = {
     name: 'Link',
     importName: '@components/Link/Link.svelte',
@@ -51,9 +58,9 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events}>
   <div slot='liveexample' style='color: red'>    
-    <Link {...props} {...selectprops} {...inputprops} />
+    <Link {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 </LibrarySnippet>
 

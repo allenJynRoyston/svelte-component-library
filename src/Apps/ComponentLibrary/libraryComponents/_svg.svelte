@@ -13,6 +13,13 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }  
+
   const snippet = {
     name: 'SVG',
     importName: '@components/SVG/SVG.svelte',
@@ -61,10 +68,9 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events}>
   <div slot='liveexample'>    
-    <SVG  {...props} {...selectprops}
-{...inputprops} />
+    <SVG  {...props} {...selectprops} {...inputprops} {...events}/>
     <br>
     <hr>
     <br>

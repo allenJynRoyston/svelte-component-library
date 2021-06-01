@@ -11,6 +11,14 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onChange: (val) => {
+      hashWatchValue = val    
+      eventLog = [...eventLog, {action: 'onChange', val}]
+    }     
+  }  
+
   const snippet = {
     name: 'HashWatch',
     importName: '@components/HashWatch/HashWatch.svelte'
@@ -28,11 +36,9 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog}>
   <div slot='liveexample'>    
-    <HashWatch onChange={(val) => {
-      hashWatchValue = val      
-    }} />    
+    <HashWatch onChange={events.onChange} />    
 
     <p>Test Links:</p>
     <Link active type='primary' href={`${currentHash}&param1=foo`}>Foo</Link>

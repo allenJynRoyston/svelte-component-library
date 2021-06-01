@@ -10,6 +10,13 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onUpdate: (val) => {      
+      eventLog = [...eventLog, {action: 'onUpdate', val}]
+    } 
+  }
+
   const snippet = {
     name: 'Search',
     importName: '@components/Search/Search.svelte',
@@ -31,9 +38,9 @@
      `  
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog} >
   <div slot='liveexample'>    
-    <Search  {...props} {...selectprops} {...inputprops} />
+    <Search  {...props} {...selectprops} {...inputprops} {...events}/>
   </div>    
 
 </LibrarySnippet>

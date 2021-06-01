@@ -10,10 +10,18 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
   const events = {
     onChange: (val) => {
-      snippet.props.checked = val
-    } 
+      snippet.inputs[0].value = val;
+      eventLog = [...eventLog, {action: 'onChange', val}]
+    },
+    onKeypress: (val) => {
+      eventLog = [...eventLog, {action: 'onKeypress', val}]
+    },
+    updateForm: (val) => {
+      eventLog = [...eventLog, {action: 'updateForm', val}]
+    }        
   }
 
   $: snippet = {
@@ -42,7 +50,7 @@
 </script>
 
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog}>
   <div slot='liveexample'>    
     <InputCheckbox {...props} {...selectprops} {...inputprops} {...events} />
    </div>    
