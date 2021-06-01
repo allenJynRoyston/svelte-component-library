@@ -3,7 +3,6 @@
   import { SiteStore, DeviceStore } from '@store/store';  
 
   import Link from '@components/Link/Link.svelte'
-  import SVG from '@components/SVG/SVG.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
   import Container from '@components/Container/Container.svelte'
   import Accordion from '@components/Accordion/Accordion.svelte'
@@ -20,10 +19,23 @@
 
   const {openSidebar, urlParams, searchValue} = SiteStore;
   const {isTabletAndBelow} = DeviceStore;
+  
 
   const toggleCollapse = (state = null) => {
      $openSidebar = !!state || !$openSidebar
   }
+
+  let removeWidth = false;
+	SiteStore.openSidebar.subscribe(async(value) => {
+    if(!value){
+      setTimeout(() => {
+        removeWidth = true;
+      }, 300)
+    }
+    else{
+      removeWidth = false
+    }
+	});    
 
   const capitalize = (s) => {
     if (typeof s !== 'string') return ''
@@ -62,13 +74,13 @@
 
 <div class={`column-layout ${theme}-theme`} >
     <div class='layout-inner'>
-      <div class={`directory ${side}`} class:collapse={!$openSidebar}>
+      <div class={`directory ${side}`} class:collapse={!$openSidebar} class:removeWidth={removeWidth}>
         <Container offset={5}>
-          <div class='directory-inner' class:collapse={$openSidebar} >
+          <div class='directory-inner' >
             <InnerContainer accountForTopPos height={'100%'}>
               <div class='directory-links-container'>
                 {#each Object.entries(linkList) as [key, pairs], index}
-                  <Accordion listform full open={accordionIsOpened(key, index)}>
+                  <Accordion listform full open={ $searchValue?.length > 0 || accordionIsOpened(key, index)}>
                     <span class='directory-key' slot='title'>
                       {capitalize(key)} 
                     </span>
@@ -77,7 +89,7 @@
                     <ul class='directory-links' slot='content'>
                       {#each pairs as {href, title}, index}
                         {#if $searchValue === null || partialMatch($searchValue?.toLowerCase(), title?.toLowerCase())}
-                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} onClick={() => {$isTabletAndBelow ? toggleCollapse() : null}} >
+                          <Link classes='font-one' type={activeTheme} {href} active={!!$urlParams?.component && !ignoreForExample ? $urlParams?.component === title : index === 0} >
                             {capitalize(title)} 
                           </Link>
                         {/if}        
@@ -93,10 +105,14 @@
       </div>
 
      
-      <div class={`content ${side}`} class:collapse={!$openSidebar}>
-          <slot>
-            <p>Content</p>
-          </slot>
+      <div class={`content ${side}`}>
+        {#if $isTabletAndBelow && $openSidebar}
+          <div class='backdrop' on:click={() => {$openSidebar = false}} />
+        {/if}
+
+        <slot>
+          <p>Content</p>
+        </slot>
       </div>
    
     </div>
@@ -108,6 +124,7 @@
   .column-layout {
     width: 100%;
     display: block;  
+    position: relative;
 
     .layout-inner{
       display: flex;
@@ -118,19 +135,33 @@
       height: 100vh;
       display: flex;
       flex-direction: row;     
-      position: relative;
       font-size: 12px;    
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: auto;
+      overflow: hidden;
+      transform: translateX(0);
+      transition: 0.3s;
+
+      &.removeWidth{
+        width: 0!important;
+      }
 
       &.right{
         order: 1;
       }      
 
       &.collapse{
-        width: 0;
-        overflow: hidden;
+        transform: translateX(-100%);
       }
 
+
       @include desktop-and-up {
+        position: relative;
+        top: 0;
+        left: 0;
         width: 350px;
         font-size: 14px!important;
         display: block;
@@ -138,20 +169,7 @@
     }
 
     .directory-inner{
-      overflow: hidden;
-      width: 0;   
-
-      &.collapse{
-        width: 100vw;
-        text-align: center;
-      }
-
-  
-      @include desktop-and-up {     
-        width: auto!important;
-        height: 100%!important;
-        text-align: left!important;
-      }          
+      overflow: hidden;         
     }
 
     .directory-links-container{
@@ -178,8 +196,21 @@
     }
     
     .content {      
+      position: relative;
       width: 100%;
       overflow: hidden;
+
+      .backdrop{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.9;
+        z-index: 1;
+        background: var(--black-0);
+        cursor: pointer;
+      }
 
       &.right{
         order: 0;
