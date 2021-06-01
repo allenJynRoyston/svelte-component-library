@@ -3,6 +3,8 @@
   export let style = null;
   export let index = null;
   export let ignoreTheme = false;
+  export let nopadding = false;
+
   export let content = null;
   export let onClick = () => {};
   export let length = 1;
@@ -13,7 +15,7 @@
   const theme:string = getContext('theme')
 </script>
 
-<div class={`lorem-blocks ${theme}-theme`}  class:ignoreTheme={ignoreTheme}>
+<div class={`lorem-blocks ${theme}-theme`}  class:ignoreTheme={ignoreTheme} class:nopadding={nopadding}>
   {#each arr as _a}
     <div class='lorem-block' {style} on:click={() => {onClick({index})}}>
         <p>
@@ -28,6 +30,10 @@
     padding: 10px;
     background: var(--white-0);
     color: var(--white-0-text);
+
+    &.nopadding{
+      padding: 0;
+    }
 
     &.dark-theme{
       background: var(--black-3);

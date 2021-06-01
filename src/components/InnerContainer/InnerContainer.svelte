@@ -6,6 +6,7 @@
   export let height = '100vh'
   export let adjustPx = 0
   export let accountForTopPos = false;
+  export let bindonce = false;
 
   let ele;
   let topPos = 0

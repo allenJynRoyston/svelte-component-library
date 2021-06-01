@@ -38,6 +38,8 @@
 
   const {isNativeMobile} = DeviceStore;
 
+  const {openSidebar} = SiteStore;
+
   // watches for changes in offsetHeight
 	SiteStore.openNotch.subscribe(async(value) => {
     setTimeout(() => {

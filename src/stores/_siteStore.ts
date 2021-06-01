@@ -2,7 +2,9 @@ import { writable } from 'svelte/store';
 
 export const urlHash = writable(null);
 export const urlParams = writable(null);
-export const openSidebar = writable(true);
+export const openSidebar = writable(
+	!(typeof window.orientation !== 'undefined')
+);
 export const openNotch = writable(false);
 export const searchValue = writable(null);
 

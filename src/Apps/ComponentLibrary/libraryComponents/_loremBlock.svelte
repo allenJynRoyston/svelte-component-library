@@ -16,6 +16,7 @@
     importName: '@components/LoremBlock/LoremBlock.svelte',
     props: {
       ignoreTheme: false,      
+      nopadding: false,
     }, 
     inputs: [
       {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'outline: 1px solid white'}, value: null },
