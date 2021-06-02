@@ -4,25 +4,32 @@
   import FullImage from '../Image/FullImage.svelte';
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+  import SVG from '@components/SVG/SVG.svelte'
+  import Button from '@components/Button/Button.svelte'
 
-  export let name = 'John Smith';
-  export let title = 'title'
-  export let profession = 'profession'
-  export let applyTheme = 'primary';
-  export let imageSrc = null;
-  export let bgColor = null;
-  export let props = null;
+
   export let shadow = false;
   export let innerShadow = false;
+  export let rounded = false;
+  export let useBGImage = false;
+  export let useGradiant = false;
+  
+  export let imageType = 'rounded'
+  export let applyTheme = 'primary';
+
+  export let name = 'name'
+  export let title = 'title'
+  export let profession = 'profession'  
+  export let imageSrc = null; 
+  export let links = []
+  
 
   const theme:string = getContext('theme')
+  const colors:any = getContext('colors')
 
   let cardWidth = null;
   let contentHeight = null;
-  let height = null;
-
-  const {isMobile} = DeviceStore;
-  
+  let height = null;  
 
   const setHeight = () => {
     if(height === null){
@@ -45,33 +52,55 @@
     }    
   }
 
+  $: iconSize = () => {
+    if( cardWidth < 420  ){
+      return 22
+    }    
+    else{
+      return 14
+    }
+  }  
+  
+
   $ : {
     contentHeight !== null && setHeight()
   }
   
 </script>
 
-<div class={`profile-card ${theme}-theme`} class:shadow={shadow} bind:clientWidth={cardWidth}>
+<div class={`profile-card ${theme}-theme ${cardSize()} ${applyTheme}${useGradiant ? '-gradiant' : ''}`} class:rounded={rounded} class:shadow={shadow} bind:clientWidth={cardWidth}>
+  
+  <div class={`profile ${imageType}`} class:innerShadow={innerShadow}>
+    <div class={`inner ${imageType}`}>
 
-  {cardSize()}
-  <!-- <div class={`profile ${applyTheme}`} class:innerShadow={innerShadow}>
-    <div class='inner'>
-      <div class='nameplate'>
-        {name} {cardWidth}
-      </div>
+      {#if !!profession && profession?.length > 0}
+        <div class='nameplate'>
+          {profession}
+        </div>
+      {/if}
       
-      <div class='image'>
-        <FullImage src={imageSrc} alt={imageSrc} />
-      </div>
+      {#if !!imageSrc}
+        <div class={`image`}>
+          <FullImage src={imageSrc} alt={imageSrc} />
+        </div>
 
-      <div class='scoreplate'>
-        {profession}
-      </div>    
+        {#if useBGImage}
+          <div class={`image-bg`}>
+            <FullImage src={imageSrc} alt={imageSrc} />
+          </div>        
+        {/if}
+      {/if}
+
+      {#if !!title && title?.length > 0}
+        <div class='scoreplate'>
+          {title}
+        </div>    
+      {/if}
     </div>
   </div>
 
 
-  <div class='details'>
+  <div class={`details`} class:innerShadow={innerShadow}>
     <div class='header'>
       <h2>{name}</h2>
     </div>
@@ -79,15 +108,19 @@
       {#if !!height}
         <InnerContainer height={`${height}px`}>
           <slot name='content'>
-            <LoremBlock ignoreTheme />
+            <LoremBlock nopadding ignoreTheme />
           </slot>
         </InnerContainer>
       {/if}
     </div>
     <div class='footer'>
-      <h1>Contact</h1>
+      {#each links as {icon, href}}
+        <Button {href}  size='small' nobg >
+          <SVG {icon} size={iconSize()} applyTheme={theme === 'dark' ? cardSize() === 'tiny' ? 'white' : applyTheme : cardSize() === 'tiny' ? 'white' : 'black'} />
+        </Button>
+      {/each}
     </div>
-  </div>   -->
+  </div>  
 </div>
 
 <style lang='scss'>
@@ -95,37 +128,26 @@
 
   .profile-card{
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: row;    
-    background: var(--white-0);
-    color: var(--white-0-text);
     overflow: hidden;
-    
-
-    &.shadow{
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.50);  
-    }
-
-    &.dark-theme{
-      background: var(--black-1);
-      color: var(--black-1-text);
-    }
+    background: var(--white-0);
+    color: var(--white-0-text);    
 
     .profile{      
-      width: 200px;
-      height: 100%;
-
-      @include tablet-landscape-and-up {
-        width: 300px;
-      }
+      width: auto;
+      height: 100%;     
+      overflow: hidden; 
       
       &.innerShadow{
         box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.50);  
       }
 
       .inner{
-        height: 100%;
+        position: relative;
+        height: calc(100% - 80px);
+        padding: 40px;
         display: flex;   
         justify-content: center;
         align-items: center;
@@ -134,85 +156,184 @@
       }
 
       .nameplate, .scoreplate{
+        text-align: center;
         padding: 2px 10px;
         border-radius: 10px;
+        z-index: 1;
       }      
 
-      .image{
-        border-radius: 50%;
+      .image{        
         width: 100px;
         height: 100px;
-        overflow: hidden;      
-
-        @include tablet-landscape-and-up {
-          width: 150px;
-          height: 150px;
-        }
+        overflow: hidden;  
+        z-index: 1;
       }
-    }
 
+      .image-bg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;        
+        filter: grayscale(100%);        
+      }      
 
-    .profile-mobile{      
-      display: flex;   
-      padding: 5px 10px;
-      width: calc(100% - 20px);
-      
+      &.background{
+        padding: 0;
 
-      .nameplate, .scoreplate{
-        height: 20px;
-        font-size: 10px;
-      }       
+        .inner{
+          justify-content: space-between;
+        }
 
-      .image{
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        overflow: hidden; 
-        margin-right: 10px;             
+      }    
+
+      &.rounded{
+        .image{
+          border-radius: 10px;
+        }
+      }        
+
+      &.circle{
+        .image{
+          border-radius: 50%;
+        }
       }      
     }
 
+
     .details{
-      width: calc(100% - 20px);
-      padding: 20px 10px;      
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       gap: 10px;
 
+      .header, .footer{
+        display: flex;
+        width: calc(100% - 40px);
+        padding: 10px 20px;
+      }
+
+      .content{
+        width: calc(100% - 40px);
+        padding: 0 20px;
+      }
+
+      .footer{
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
       .content{
         flex: 1 1 auto;
       }
+    }
 
+    &.small{
+      .image{
+        width: 75px;
+        height: 75px;
+      }
+    }
+
+    &.tiny{
+      flex-direction: column;
+
+      .header{
+        justify-content: center;
+      }
+
+      .profile{
+        padding: 0;
+        width: 100%;
+        height: auto;
+      }
+
+      .image{
+        width: 75px;
+        height: 75px;
+      }
+
+      .details{
+        height: 300px;
+
+        &.innerShadow{
+          .footer{
+            box-shadow: 5px -5px 15px rgba(0, 0, 0, 0.50);  
+          }
+        }
+      }  
     }
 
 
-    .primary{
-        background: var(--primary-5);
+    &.rounded{
+      border-radius: 10px;
+    }
+
+    &.shadow{
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.50);  
+    }
+
+    &.dark-theme{
+      background: var(--black-1);
+      color: var(--black-1-text);
+    }    
+
+
+    $themes: 'primary', 'secondary', 'magic', 'success', 'warning', 'danger';
+    @each $theme in $themes {
+      &.#{$theme}{
+        
+        .profile{
+          background: var(--#{$theme}-5);
+        } 
 
         .nameplate, .scoreplate{
-          background: var(--primary-7);
-          color: var(--primary-7-text);
+          background: var(--#{$theme}-7);
+          color: var(--#{$theme}-7-text);
         }
 
         .image{
-          background: var(--primary-8);
+          background: var(--#{$theme}-8);          
         }
-      }    
 
-      .secondary{
-        background: var(--secondary-5);
+        &.tiny{
+          .footer{
+            justify-content: space-around;
+            background: var(--#{$theme}-5);
+          }
+        }        
+      }
+    }
+
+    $themes: 'primary', 'secondary', 'magic', 'success', 'warning', 'danger';
+    @each $theme in $themes {
+      &.#{$theme}-gradiant{
+        
+        .profile{
+          background: linear-gradient(var(--#{$theme}-5), var(--#{$theme}-6));
+        } 
 
         .nameplate, .scoreplate{
-          background: var(--secondary-7);
-          color: var(--secondary-7-text);
+          background: var(--#{$theme}-7);
+          color: var(--#{$theme}-7-text);
         }
 
         .image{
-          background: var(--secondary-8);
+          background: var(--#{$theme}-8);
+          border: 3px solid var(--#{$theme}-3);
         }
-      } 
+
+        &.tiny{
+          .footer{
+            justify-content: space-around;
+            background: linear-gradient(var(--#{$theme}-5), var(--#{$theme}-6));
+          }
+        }        
+      }
+    }
 
     
   }

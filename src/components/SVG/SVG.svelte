@@ -56,6 +56,7 @@
     'baffled',
     'bullhorn',
     'circleup',
+    'circledown',
     'warning',
     'notification',
     'email',
@@ -67,8 +68,13 @@
     'stats',
     'upload',
     'menu',
+    'menu2',
     'hashtag',
-    'refresh'
+    'refresh',
+    'exit',
+    'facebook', 
+    'instagram',
+    'twitch'
   ]   
 
   export type IconTypes =
@@ -129,6 +135,7 @@
     | 'baffled'
     | 'bullhorn'
     | 'circleup'
+    | 'circledown'
     | 'warning'
     | 'notification'
     | 'email'
@@ -140,8 +147,13 @@
     | 'stats'
     | 'upload'
     | 'menu'
+    | 'menu2'
     | 'hashtag'
     | 'refresh'
+    | 'exit'
+    | 'facebook'
+    | 'twitch'
+    | 'instagram'
 
 </script>
 
@@ -737,6 +749,17 @@
     </svg>
   {/if}
 
+  {#if icon === 'circledown'}
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
+      {#if title !== null}
+        <title>{title}</title>
+      {/if}
+      <path fill={applyFill} d="M32 16c0-8.837-7.163-16-16-16s-16 7.163-16 16 7.163 16 16 16 16-7.163 16-16zM3 16c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13-13-5.82-13-13z"></path>
+      <path fill={applyFill} d="M9.914 11.086l-2.829 2.829 8.914 8.914 8.914-8.914-2.828-2.828-6.086 6.086z"></path>
+    </svg>
+  {/if}
+
+
   {#if icon === 'warning'}
     <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
@@ -843,6 +866,17 @@
     </svg>
   {/if}
 
+  {#if icon === 'menu2'}
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 44 32">
+      {#if title !== null}
+        <title>{title}</title>
+      {/if}
+      <path fill={applyFill} d="M0 6h28v6h-28v-6zM0 14h28v6h-28v-6zM0 22h28v6h-28v-6z"></path>
+      <path fill={applyFill} d="M31 18l6 6 6-6z"></path>
+      <path fill={applyFill} d="M43 16l-6-6-6 6z"></path>
+    </svg>
+  {/if}  
+
   {#if icon === 'hashtag'}
     <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
       {#if title !== null}
@@ -862,5 +896,35 @@
     </svg>
   {/if}
 
+
+  {#if icon === 'facebook'}
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
+      {#if title !== null}
+        <title>{title}</title>
+      {/if}
+      <path fill={applyFill} d="M29 0h-26c-1.65 0-3 1.35-3 3v26c0 1.65 1.35 3 3 3h13v-14h-4v-4h4v-2c0-3.306 2.694-6 6-6h4v4h-4c-1.1 0-2 0.9-2 2v2h6l-1 4h-5v14h9c1.65 0 3-1.35 3-3v-26c0-1.65-1.35-3-3-3z"></path>
+    </svg>
+  {/if}
+
+
+  {#if icon === 'whatsapp'}
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
+      {#if title !== null}
+        <title>{title}</title>
+      {/if}
+      <path fill={applyFill} d="M27.281 4.65c-2.994-3-6.975-4.65-11.219-4.65-8.738 0-15.85 7.112-15.85 15.856 0 2.794 0.731 5.525 2.119 7.925l-2.25 8.219 8.406-2.206c2.319 1.262 4.925 1.931 7.575 1.931h0.006c0 0 0 0 0 0 8.738 0 15.856-7.113 15.856-15.856 0-4.238-1.65-8.219-4.644-11.219zM16.069 29.050v0c-2.369 0-4.688-0.637-6.713-1.837l-0.481-0.288-4.987 1.306 1.331-4.863-0.313-0.5c-1.325-2.094-2.019-4.519-2.019-7.012 0-7.269 5.912-13.181 13.188-13.181 3.519 0 6.831 1.375 9.319 3.862 2.488 2.494 3.856 5.8 3.856 9.325-0.006 7.275-5.919 13.188-13.181 13.188zM23.294 19.175c-0.394-0.2-2.344-1.156-2.706-1.288s-0.625-0.2-0.894 0.2c-0.262 0.394-1.025 1.288-1.256 1.556-0.231 0.262-0.462 0.3-0.856 0.1s-1.675-0.619-3.188-1.969c-1.175-1.050-1.975-2.35-2.206-2.744s-0.025-0.613 0.175-0.806c0.181-0.175 0.394-0.463 0.594-0.694s0.262-0.394 0.394-0.662c0.131-0.262 0.069-0.494-0.031-0.694s-0.894-2.15-1.219-2.944c-0.319-0.775-0.65-0.669-0.894-0.681-0.231-0.012-0.494-0.012-0.756-0.012s-0.694 0.1-1.056 0.494c-0.363 0.394-1.387 1.356-1.387 3.306s1.419 3.831 1.619 4.1c0.2 0.262 2.794 4.269 6.769 5.981 0.944 0.406 1.681 0.65 2.256 0.837 0.95 0.3 1.813 0.256 2.494 0.156 0.762-0.113 2.344-0.956 2.675-1.881s0.331-1.719 0.231-1.881c-0.094-0.175-0.356-0.275-0.756-0.475z"></path>
+    </svg>
+  {/if}
+
+  {#if icon === 'twitch'}
+    <svg class='svg-icon'  version="1.1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32">
+      {#if title !== null}
+        <title>{title}</title>
+      {/if}
+      <path fill={applyFill} d="M3 0l-3 5v23h8v4h4l4-4h5l9-9v-19h-27zM26 17l-5 5h-5l-4 4v-4h-6v-18h20v13z"></path>
+      <path fill={applyFill} d="M19 8h3v8h-3v-8z"></path>
+      <path fill={applyFill} d="M13 8h3v8h-3v-8z"></path>      
+    </svg>
+  {/if}
 
 </div>

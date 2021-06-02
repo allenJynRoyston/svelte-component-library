@@ -1,5 +1,5 @@
-<script>
-  import {onMount, onDestroy} from 'svelte';
+<script lang='ts'>
+  import {onMount, onDestroy, getContext} from 'svelte';
   import {SiteStore} from '@store/store'
   import {debounce} from '@js/utility'
 
@@ -11,6 +11,8 @@
   let ele;
   let topPos = 0
 
+  const theme:string = getContext('theme');
+
   const resizeEvent = debounce(() => {
     topPos = ele?.getBoundingClientRect().top || 0
   }, 100)
@@ -21,6 +23,7 @@
       resizeEvent()
     })
 	});    
+
 
   onMount(() => {
     setTimeout(() => {
@@ -38,7 +41,7 @@
   `height: calc(${height} - ${!!adjustPx ? `${adjustPx}px` : `0px`})`
 </script>
 
-<div class='inner-container'{style} bind:this={ele}>
+<div class={`inner-container ${theme}-theme`} {style} bind:this={ele}>
   <slot />
 </div>
 
@@ -46,6 +49,29 @@
 <style lang='scss'>
   .inner-container{    
     overflow-y: auto;
+    
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--white-2);      
+    }
+    &::-webkit-scrollbar-thumb {          
+      background: var(--white-6);
+    }
+
+
+    &.dark-theme{
+      &::-webkit-scrollbar {
+        width: 2px;
+      }
+      &::-webkit-scrollbar-track {
+        background: var(--black-2);      
+      }
+      &::-webkit-scrollbar-thumb {          
+        background: var(--black-6);
+      }
+    }
   }
 </style>
   

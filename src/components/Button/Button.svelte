@@ -22,6 +22,7 @@
   export let useToggle = false;
   export let toggled = false;
   export let full = false;
+  export let nobg = false;
 
   export let onClick = null
 
@@ -46,7 +47,7 @@
 
 {#if !!href}
   <Link inherit {href} {target} style={full ? 'width: 100%' : null}>
-    <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>      
+    <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>      
       <span class='inner'>          
           <slot>{text || 'Button'}</slot>
           {#if useToggle}
@@ -56,7 +57,7 @@
     </button>    
   </Link>
 {:else}
-  <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+  <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}
@@ -90,6 +91,12 @@
       justify-content: center;
       gap: 10px;
       transform: translateY(1px)
+    }
+
+    &.nobg{
+      background: none!important;
+      outline: none!important;
+      border: none!important;
     }
 
     &.nomargin{

@@ -22,7 +22,10 @@
     importName: '@components/ProfileCard/ProfileCard.svelte',
     props:{
       shadow: false,
-      innerShadow: false
+      innerShadow: true,
+      rounded: false,
+      useBGImage: false,
+      useGradiant: false
     },
     dropdowns: [
       {
@@ -30,27 +33,56 @@
         options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        
       }, 
+      {
+        label: 'imageType',
+        options: ['circle', 'rounded', 'flat', 'background'], 
+        value: 0        
+      },       
     ],
     inputs: [
-      {forprop: 'name', renderAs: 'input', componentprop: {type: 'text'}, value: 'Firstname Lastname' },
-      {forprop: 'imageSrc', renderAs: 'input', componentprop: {type: 'text'}, value: 'https://picsum.photos/200/300' }
+      {forprop: 'name', renderAs: 'input', componentprop: {type: 'text'}, value: 'First Last' },
+      {forprop: 'profession', renderAs: 'input', componentprop: {type: 'text'}, value: 'Developer' },
+      {forprop: 'title', renderAs: 'input', componentprop: {type: 'text'}, value: 'Level 99' },
+      {forprop: 'imageSrc', renderAs: 'input', componentprop: {type: 'text'}, value: 'https://picsum.photos/id/10/200/300' }
     ]          
   }
 
   $: livecode = `    
+  const props = {
+    links: [
+      {icon: 'facebook', href: '/facebook'},
+      {icon: 'instagram', href: '/instagram'},
+      {icon: 'email', href: '/email'},
+      {icon: 'whatsapp', href: '/whatsapp'}
+    ]
+  }
+
   <div style='height: 400px; display: flex; gap: 10px'>
-    <ProfileCard ${propstr}${selectstr}${inputstr} />
+    <ProfileCard {props} ${propstr}${selectstr}${inputstr} />
   </div>
   `
+
+  const staticprops = {
+    links: [
+      {icon: 'facebook', href: '/facebook'},
+      {icon: 'instagram', href: '/instagram'},
+      {icon: 'email', href: '/email'},
+      {icon: 'whatsapp', href: '/whatsapp'}
+    ]
+  }
 
 
 </script>
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <div style='height: 400px; display: flex; gap: 10px'>
-      <ProfileCard {...props} {...selectprops} {...inputprops} {...events}/>    
+    <div style='display: flex; gap: 10px'>
+      <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
     </div>
+    <div style='display: flex; gap: 10px; margin-top: 20px;'>
+      <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+      <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+    </div>    
    </div>    
 </LibrarySnippet>
 
