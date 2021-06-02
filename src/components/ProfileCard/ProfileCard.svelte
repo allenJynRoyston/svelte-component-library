@@ -1,6 +1,5 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import {DeviceStore} from '@store/store';
   import FullImage from '../Image/FullImage.svelte';
   import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
   import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
@@ -25,7 +24,6 @@
   
 
   const theme:string = getContext('theme')
-  const colors:any = getContext('colors')
 
   let cardWidth = null;
   let contentHeight = null;
@@ -53,8 +51,8 @@
   }
 
   $: iconSize = () => {
-    if( cardWidth < 420  ){
-      return 22
+    if( cardWidth < 720  ){
+      return 18
     }    
     else{
       return 14
@@ -115,7 +113,7 @@
     </div>
     <div class='footer'>
       {#each links as {icon, href}}
-        <Button {href}  size='small' nobg >
+        <Button {href}  exactfit size='small' nobg >
           <SVG {icon} size={iconSize()} applyTheme={theme === 'dark' ? cardSize() === 'tiny' ? 'white' : applyTheme : cardSize() === 'tiny' ? 'white' : 'black'} />
         </Button>
       {/each}
@@ -323,7 +321,6 @@
 
         .image{
           background: var(--#{$theme}-8);
-          border: 3px solid var(--#{$theme}-3);
         }
 
         &.tiny{

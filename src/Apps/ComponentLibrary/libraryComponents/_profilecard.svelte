@@ -1,7 +1,9 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
-
   import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
+  import {DeviceStore} from '@store/store';
+
+  const {isMobile} = DeviceStore;
 
   let propstr = '';
   let selectstr = '';
@@ -79,10 +81,12 @@
     <div style='display: flex; gap: 10px'>
       <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
     </div>
-    <div style='display: flex; gap: 10px; margin-top: 20px;'>
-      <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
-      <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
-    </div>    
+    {#if !$isMobile}
+      <div style='display: flex; gap: 10px; margin-top: 20px;'>
+        <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+        <ProfileCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+      </div>    
+    {/if}
    </div>    
 </LibrarySnippet>
 
