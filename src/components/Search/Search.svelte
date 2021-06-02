@@ -24,6 +24,7 @@
   })
 
   const onClear = async() => {
+    value = null;
     currentvalue = null;
     render = false;
     onUpdate && onUpdate(null)    

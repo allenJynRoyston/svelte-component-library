@@ -13,6 +13,7 @@
   export let useBGImage = false;
   export let useGradiant = false;
   
+  export let type = 'black'
   export let imageType = 'rounded'
   export let applyTheme = 'primary';
 
@@ -66,7 +67,7 @@
   
 </script>
 
-<div class={`profile-card ${theme}-theme ${cardSize()} ${applyTheme}${useGradiant ? '-gradiant' : ''}`} class:rounded={rounded} class:shadow={shadow} bind:clientWidth={cardWidth}>
+<div class={`profile-card ${type}-theme ${cardSize()} ${applyTheme}${useGradiant ? '-gradiant' : ''}`} class:rounded={rounded} class:shadow={shadow} bind:clientWidth={cardWidth}>
   
   <div class={`profile ${imageType}`} class:innerShadow={innerShadow}>
     <div class={`inner ${imageType}`}>
@@ -106,15 +107,15 @@
       {#if !!height}
         <InnerContainer height={`${height}px`}>
           <slot name='content'>
-            <LoremBlock nopadding ignoreTheme />
+            <LoremBlock ignoreTheme />
           </slot>
         </InnerContainer>
       {/if}
     </div>
     <div class='footer'>
       {#each links as {icon, href}}
-        <Button {href}  exactfit size='small' nobg >
-          <SVG {icon} size={iconSize()} applyTheme={theme === 'dark' ? cardSize() === 'tiny' ? 'white' : applyTheme : cardSize() === 'tiny' ? 'white' : 'black'} />
+        <Button {href} exactfit size='small' nobg >
+          <SVG {icon} size={iconSize()} applyTheme={type === 'dark' ? cardSize() === 'tiny' ? 'white' : applyTheme : cardSize() === 'tiny' ? 'white' : 'black'} />
         </Button>
       {/each}
     </div>
@@ -219,7 +220,6 @@
       }
 
       .footer{
-        gap: 10px;
         justify-content: flex-end;
         align-items: center;
       }

@@ -31,6 +31,11 @@
     },
     dropdowns: [
       {
+        label: 'type',
+        options: ['light', 'dark'], 
+        value: 0        
+      },       
+      {
         label: 'applyTheme',
         options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        

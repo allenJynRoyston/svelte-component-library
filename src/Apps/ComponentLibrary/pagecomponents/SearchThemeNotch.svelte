@@ -9,9 +9,7 @@
   
   const onUpdate = (val) => { 
     $searchValue = val
-    if(val?.length > 0){
-      $openSidebar = true
-    }
+    $openSidebar = val?.length > 0
   }
 </script>
 
