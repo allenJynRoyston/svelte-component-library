@@ -10,9 +10,9 @@
   export let shadow = false;
   export let innerShadow = false;
   export let rounded = false;
-  export let useBGImage = false;
   export let useGradiant = false;
   
+  export let orientation = 'vertical'
   export let type = 'black'
   export let imageType = 'rounded'
   export let applyTheme = 'primary';
@@ -21,7 +21,13 @@
   export let title = 'title'
   export let profession = 'profession'  
   export let imageSrc = null; 
+  export let bgSrc = null;
   export let links = []
+
+  export let onNameClick = null;
+  export let onProfessionClick = null;
+  export let onTitleClick = null;
+  export let onImageClick = null;
   
 
   const theme:string = getContext('theme')
@@ -67,31 +73,31 @@
   
 </script>
 
-<div class={`profile-card ${type}-theme ${cardSize()} ${applyTheme}${useGradiant ? '-gradiant' : ''}`} class:rounded={rounded} class:shadow={shadow} bind:clientWidth={cardWidth}>
+<div class={`profile-card ${type}-theme ${cardSize()} ${orientation} ${applyTheme}${useGradiant ? '-gradiant' : ''}`} class:rounded={rounded} class:shadow={shadow} bind:clientWidth={cardWidth}>
   
   <div class={`profile ${imageType}`} class:innerShadow={innerShadow}>
     <div class={`inner ${imageType}`}>
 
       {#if !!profession && profession?.length > 0}
-        <div class='nameplate'>
+        <div class='professionplate' class:clickable={!!onNameClick} on:click={() => {onProfessionClick && onProfessionClick()}}>
           {profession}
         </div>
       {/if}
       
       {#if !!imageSrc}
-        <div class={`image`}>
+        <div class={`image`} class:clickable={!!onImageClick} on:click={onImageClick && onImageClick()}>
           <FullImage src={imageSrc} alt={imageSrc} />
         </div>
 
-        {#if useBGImage}
+        {#if !!bgSrc}
           <div class={`image-bg`}>
-            <FullImage src={imageSrc} alt={imageSrc} />
+            <FullImage src={bgSrc} alt={bgSrc} />
           </div>        
         {/if}
       {/if}
 
       {#if !!title && title?.length > 0}
-        <div class='scoreplate'>
+        <div class='titleplate' class:clickable={!!onNameClick} on:click={() => {onTitleClick && onTitleClick()}}>
           {title}
         </div>    
       {/if}
@@ -100,7 +106,7 @@
 
 
   <div class={`details`} class:innerShadow={innerShadow}>
-    <div class='header'>
+    <div class='header' class:clickable={!!onNameClick} on:click={() => {onNameClick && onNameClick()}}>
       <h2>{name}</h2>
     </div>
     <div class='content' bind:clientHeight={contentHeight}>  
@@ -134,6 +140,10 @@
     background: var(--white-0);
     color: var(--white-0-text);    
 
+    .clickable{
+      cursor: pointer
+    }    
+
     .profile{      
       width: auto;
       height: 100%;     
@@ -154,7 +164,7 @@
         gap: 20px;          
       }
 
-      .nameplate, .scoreplate{
+      .professionplate, .titleplate{
         text-align: center;
         padding: 2px 10px;
         border-radius: 10px;
@@ -229,18 +239,32 @@
       }
     }
 
-    &.small{
-      .image{
-        width: 75px;
-        height: 75px;
-      }
-    }
 
-    &.tiny{
+    &.vertical{
       flex-direction: column;
 
       .header{
         justify-content: center;
+      }
+
+      .image{
+        width: 200px;
+        height: 200px;
+      }      
+    }
+    
+
+    &.tiny{
+      flex-direction: column;
+
+      .inner{
+        position: relative;
+        height: calc(100% - 40px);
+        padding: 20px; 
+      }      
+
+      .header{
+        justify-content: center;        
       }
 
       .profile{
@@ -250,8 +274,8 @@
       }
 
       .image{
-        width: 75px;
-        height: 75px;
+        width: 100px!important;
+        height: 100px!important;
       }
 
       .details{
@@ -288,7 +312,7 @@
           background: var(--#{$theme}-5);
         } 
 
-        .nameplate, .scoreplate{
+        .professionplate, .titleplate{
           background: var(--#{$theme}-7);
           color: var(--#{$theme}-7-text);
         }
@@ -314,8 +338,8 @@
           background: linear-gradient(var(--#{$theme}-5), var(--#{$theme}-6));
         } 
 
-        .nameplate, .scoreplate{
-          background: var(--#{$theme}-7);
+        .professionplate, .titleplate{
+          background:  linear-gradient(var(--#{$theme}-7), var(--#{$theme}-8));
           color: var(--#{$theme}-7-text);
         }
 

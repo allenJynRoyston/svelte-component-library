@@ -9,7 +9,7 @@
   export let iconSize = 18;
   export let rounded = false;
   export let nomargin = false;
-  export let type = null;
+  export let applyTheme = null;
   export let style = '';
 
   let ele;
@@ -17,7 +17,7 @@
   const theme:string = getContext('theme')
   const colors:any = getContext('colors')
   
-  $: useType = (type === null ? (theme === 'dark' ? 'black' : 'white') : type)
+  $: useType = (applyTheme === 'default' ? (theme === 'dark' ? 'black' : 'white') : applyTheme)
   $: fill = !!useType ? colors[useType][4].textFriendlyColor : (theme === 'dark' ? 'black' : 'white')
 
  

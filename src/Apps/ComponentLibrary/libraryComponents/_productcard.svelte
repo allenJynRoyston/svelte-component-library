@@ -10,34 +10,71 @@
   let selectprops;
   let inputprops;
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    } 
+  }
+
   const snippet = {
     name: 'ProductCard',
     importName: '@components/ProductCard/ProductCard.svelte',
-    properties: `
-    export let style = null;
-    export let imgSrc = 'https://picsum.photos/200/200';
-    export let name = 'Product'
-    export let description = 'Description'
-    export let price = 'Price'
-    export let infoText = 'More'
-    export let purchaseText = 'Buy';
-    export let index = null;
-    export let onInfoBtn = () => {}
-    export let onPurchaseBtn = () => {}
-    `
+    props:{
+      shadow: false,
+      innerShadow: true,
+      rounded: false,
+      useGradiant: false
+    },
+    dropdowns: [
+      {
+        label: 'orientation',
+        options: ['horizontal', 'vertical'], 
+        value: 0        
+      },      
+      {
+        label: 'type',
+        options: ['light', 'dark'], 
+        value: 0        
+      },                    
+      {
+        label: 'applyTheme',
+        options: ['primary', 'secondary', 'magic', 'success', 'warning', 'danger'], 
+        value: 0        
+      }, 
+      {
+        label: 'imageType',
+        options: ['circle', 'rounded', 'square', 'background'], 
+        value: 0        
+      },       
+    ],
+    inputs: [
+      {forprop: 'name', renderAs: 'input', componentprop: {type: 'text'}, value: 'First Last' },
+      {forprop: 'profession', renderAs: 'input', componentprop: {type: 'text'}, value: 'Developer' },
+      {forprop: 'title', renderAs: 'input', componentprop: {type: 'text'}, value: 'Level 99' },
+      {forprop: 'imageSrc', renderAs: 'input', componentprop: {type: 'text'}, value: 'https://picsum.photos/id/10/200/300' },
+      {forprop: 'bgSrc', renderAs: 'input', componentprop: {type: 'text'}, value: null }
+    ]          
   }
 
   $: livecode = `    
     <ProductCard${propstr}${selectstr}${inputstr}/>
      `
 
+     const staticprops = {
+    links: [
+      {icon: 'facebook', href: '/facebook'},
+      {icon: 'instagram', href: '/instagram'},
+      {icon: 'email', href: '/email'},
+      {icon: 'whatsapp', href: '/whatsapp'}
+    ]
+  }     
+
 </script>
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
   <div slot='liveexample'>    
-    <div style='height: 400px'>
-      <ProductCard />
-    </div>
+      <ProductCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>
    </div>    
 </LibrarySnippet>
 

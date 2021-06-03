@@ -27,19 +27,19 @@
     }, 
     dropdowns: [
       {
-        label: 'type',
-        options: [null, 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        label: 'applyTheme',
+        options: ['default', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        
       },
       {
         label: 'leftIcon',
-        options: [null, ...svgslist], 
-        value: 0        
+        options: [...svgslist], 
+        value: 11        
       },  
       {
         label: 'rightIcon',
-        options: [null, ...svgslist], 
-        value: 0        
+        options: [...svgslist], 
+        value: 32        
       },            
       {
         label: 'iconSize',
@@ -49,7 +49,7 @@
     ],
     inputs: [
       {forprop: 'content', renderAs: 'input', componentprop: {type: 'text'}, value: 'Some button text' },
-      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text'}, value: 'margin-bottom: 100px' }
+      {forprop: 'style', renderAs: 'input', componentprop: {type: 'text', placeholder: 'border: 1px solid red'}, value: null }
     ]    
   }
 

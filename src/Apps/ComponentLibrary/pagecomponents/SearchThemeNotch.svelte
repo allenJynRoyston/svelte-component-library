@@ -9,7 +9,9 @@
   
   const onUpdate = (val) => { 
     $searchValue = val
-    $openSidebar = val?.length > 0
+    if(val?.length > 0){
+       $openSidebar = true
+    }
   }
 </script>
 
@@ -47,8 +49,6 @@
     margin-top: 5px;
     margin-bottom: 5px;
     margin-right: 10px;
-    
-
 
     @include mobile-landscape-and-below {
       width: 100%;

@@ -31,8 +31,6 @@
 
   const theme:string = getContext('theme');
 
-  $openNotch = notchEle?.show === undefined ? true : !!notchEle?.show
-
   $: imageStyle = `background: url('${bgSrc}'); center center no-repeat; background-size: cover;`
 
 </script>
@@ -134,12 +132,6 @@
       }  
     }
 
-    // &.dark-theme{
-    //   background: var(--black-1);
-    //   .brand{
-    //     color: var(--black-1-text);
-    //   }
-    // }
   }
   
   .navcontainer{

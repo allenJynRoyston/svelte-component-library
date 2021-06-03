@@ -1,12 +1,36 @@
 import { writable } from 'svelte/store';
 
-export const urlHash = writable(null);
-export const urlParams = writable(null);
-export const searchValue = writable(null);
-export const openNotch = writable(localStorage.getItem('openNotch') === 'true');
-export const openSidebar = writable(
-	localStorage.getItem('openSidebar') === 'true'
-);
+//-------------------------------
+// localstorage setup
+const lsName = 'siteStore';
+const ls = !!localStorage.getItem(lsName)
+	? // pull from ls
+	  JSON.parse(localStorage.getItem(lsName))
+	: // defaults
+	  {
+			urlHash: null,
+			urlParams: null,
+			searchValue: null,
+			openNotch: true,
+			openSidebar: true,
+	  };
+
+const _store = {
+	urlHash: ls.urlHash,
+	urlParams: ls.urlParams,
+	searchValue: ls.searchValue,
+	openNotch: ls.openNotch,
+	openSidebar: ls.openSidebar,
+};
+//-------------------------------
+
+//-------------------------------
+// create/export store
+export const urlHash = writable(_store.urlHash);
+export const urlParams = writable(_store.urlParams);
+export const searchValue = writable(_store.searchValue);
+export const openNotch = writable(_store.openNotch);
+export const openSidebar = writable(_store.openSidebar);
 
 function siteInit() {
 	return {
@@ -18,12 +42,28 @@ function siteInit() {
 	};
 }
 
-openSidebar.subscribe((val) =>
-	localStorage.setItem('openSidebar', String(val))
-);
+export const SiteStore = siteInit();
+//-------------------------------
 
+//-------------------------------
+// subscribe to watch for changes
 openNotch.subscribe((val) => {
-	localStorage.setItem('openNotch', String(val));
+	_store.openNotch = val;
 });
 
-export const SiteStore = siteInit();
+openSidebar.subscribe((val) => {
+	_store.openSidebar = val;
+});
+//-------------------------------
+
+//-------------------------------
+// remove after loaded
+localStorage.removeItem(lsName);
+//-------------------------------
+
+//-------------------------------
+// save
+window.addEventListener('beforeunload', () => {
+	localStorage.setItem(lsName, JSON.stringify(_store));
+});
+//-------------------------------

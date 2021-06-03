@@ -56,16 +56,16 @@
           {#each classes as _class, index}
             <TwoSlot>
               <div slot='left' class='title'>
-                <ColorText type={_class}>
+                <ColorText applyTheme={_class}>
                   {_class} 
                 </ColorText>
 
               </div>
               <div slot='right'>
-                <ColorText type={_class}>
+                <ColorText applyTheme={_class}>
                   {phrase} 
                 </ColorText>
-                <ColorText type={_class}>
+                <ColorText applyTheme={_class}>
                   <h3>{phrase} </h3>
                 </ColorText>          
               </div>
