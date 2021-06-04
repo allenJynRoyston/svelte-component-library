@@ -1,8 +1,8 @@
 <script lang='ts'>
   import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import GridLayout from '@components/Layout/GridLayout.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'  
+  import GridLayout from '@layout/GridLayout.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'  
 
   let propstr = '';
   let selectstr = '';
@@ -11,15 +11,23 @@
   let selectprops;
   let inputprops;  
 
+  let eventLog = []
+  const events = {
+    onClick: (val) => {
+      eventLog = [...eventLog, {action: 'onClick', val}]
+    },
+  }
   const snippet = {
     name: 'GridLayout',
-    importName: '@components/GridLayout/GridLayout.svelte',
+    importName: '@layout/GridLayout.svelte',
     props: {
-      outline: true
+      outline: true,
+      exactfit: false,
     }, 
     inputs: [
       {forprop: 'size', renderAs: 'input', componentprop: {type: 'number'}, value: 150 },
-      {forprop: 'gap', renderAs: 'input', componentprop: {type: 'number'}, value: 10 }
+      {forprop: 'gap', renderAs: 'input', componentprop: {type: 'number'}, value: 10 },
+      {forprop: 'height', renderAs: 'input', componentprop: {type: 'number'}, value: 10 }
     ]        
   }
 
@@ -47,15 +55,14 @@
         {component: LoremBlock, props: {content: 'F'}}
       ]
 
-      <GridLayout ${propstr}${selectstr}${inputstr}/>
+      <GridLayout {items} ${propstr}${selectstr}${inputstr}/>
      `
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode}  bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode}  bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {eventLog} {events} >
   <div slot='liveexample'>    
-    <GridLayout {items} {...props} {...selectprops}
-{...inputprops} />
+    <GridLayout {items} {...props} {...selectprops} {...inputprops} {...events}/>
   </div>    
 </LibrarySnippet>
 

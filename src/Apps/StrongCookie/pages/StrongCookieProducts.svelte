@@ -1,9 +1,9 @@
 <script lang='ts'>
   import { createChannel } from '@js/utility'
 
-  import Channels from '@components/Channels/Channels.svelte'  
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Channels from '@base/Channels.svelte'  
+  import HashWatch from '@core/HashWatch.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
 
   import Products from '../components/Products.svelte'
   import ProductDetails from '../components/ProductDetails.svelte'

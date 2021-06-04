@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Form from '@components/Form/Form.svelte'
-  import {exampleFormData} from '@components/FormPremade/FormExample.svelte'
+  import Form from '@form/FormBuilder.svelte'
+  import {exampleFormData} from '@examples/FormExample.svelte'
 
   let propstr = '';
   let selectstr = '';

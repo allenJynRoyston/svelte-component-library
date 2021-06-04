@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import InputCheckbox from '@components/FormComponents/InputCheckbox/InputCheckbox.svelte'
+  import InputCheckbox from '@form/InputCheckbox.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -26,7 +26,7 @@
 
   $: snippet = {
     name: 'InputCheckbox',
-    importName: '@form/InputCheckbox/InputCheckbox.svelte',
+    importName: '@form/InputCheckbox.svelte',
     props: {
       required: false,
       checked: true,

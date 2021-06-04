@@ -2,7 +2,7 @@
   import {getContext} from 'svelte';
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Splash from '@components/Splash/Splash.svelte'
+  import Splash from '@layout/Splash.svelte'
   const theme:string = getContext('theme');
   
 
@@ -22,7 +22,7 @@
 
   const snippet = {
     name: 'Splash',
-    importName: '@components/Splash/Splash.svelte',
+    importName: '@layout/Splash.svelte',
     inputs: [
       {forprop: 'title', renderAs: 'input', componentprop: {type: 'text'}, value: 'Splash title!' },
       {forprop: 'version', renderAs: 'input', componentprop: {type: 'text'}, value: '0.9' }

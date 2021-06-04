@@ -2,12 +2,12 @@
   import {getContext} from 'svelte';
   import { createChannel, capitalizeStr } from '@js/utility'
 
-  import Header from '@components/Header/Header.svelte'
-  import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
-  import Channels from '@components/Channels/Channels.svelte'
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
-  import Container from '@components/Container/Container.svelte'
+  import Header from '@layout/Header.svelte'
+  import ColumnLayout from '@layout/ColumnLayout.svelte'
+  import Channels from '@base/Channels.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
+  import ThemeWrapper from '@layout/ThemeWrapper.svelte';
+  import Container from '@layout/Container.svelte'
 
   import HowToSnippet from '../documentationComponents/_howTo.svelte'
 

@@ -3,12 +3,11 @@
   import {DeviceStore} from '@store/store'
   import {createChannel} from '@js/utility'  
   
-  import Container from '@components/Container/Container.svelte';
-  import Header from '@components/Header/Header.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
-  import Channels from '@components/Channels/Channels.svelte'
-  import Button from '@components/Button/Button.svelte'
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
+  import Container from '@layout/Container.svelte';
+  import Header from '@layout/Header.svelte'
+  import Channels from '@base/Channels.svelte'
+  import Button from '@base/Button.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
 
   import AboutPreview from '../pagecomponents/AboutPreview.svelte'
   import ColorPreview from '../pagecomponents/ColorPreview.svelte'

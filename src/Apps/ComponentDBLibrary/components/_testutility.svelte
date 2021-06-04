@@ -1,6 +1,6 @@
 <script lang='ts'>
   import LibraryBlock from '../../ComponentLibrary/components/LibraryBlock.svelte'
-  import TestUtility from '../../../components/TestUtility/TestUtility.svelte'
+  import TestUtility from '../../../components/@Utility/TestUtility.svelte'
 
 
 </script>

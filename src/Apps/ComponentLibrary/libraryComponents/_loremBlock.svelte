@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'
+  import ThemeWrapper from '@layout/ThemeWrapper.svelte';
 
   let propstr = '';
   let selectstr = '';
@@ -13,7 +13,7 @@
 
   const snippet = {
     name: 'LoremBlock',
-    importName: '@components/LoremBlock/LoremBlock.svelte',
+    importName: '@base/LoremBlock.svelte',
     props: {
       ignoreTheme: false,      
       nopadding: false,

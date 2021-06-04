@@ -2,9 +2,9 @@
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
   import ExampleBlock from '../components/ExampleBlock.svelte'
 
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
-  import Channels from '@components/Channels/Channels.svelte'
-  import Container from '@components/Container/Container.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'
+  import Channels from '@base/Channels.svelte'
+  import Container from '@layout/Container.svelte'
   import {createChannel} from '@js/utility'
 
   let propstr = '';
@@ -26,7 +26,7 @@
 
   const snippet = {
     name: 'Channels',
-    importName: '@components/Channels/Channels.svelte',
+    importName: '@base/Channels.svelte',
     notes: [
       'Embedded should be set to true for this demo.'      
     ],

@@ -1,6 +1,6 @@
 <script lang='ts'>
     import {ModalStore} from '@store/store'
-    import Button from '@components/Button/Button.svelte'
+    import Button from '@base/Button.svelte'
 
     import ExampleBlock from '../components/ExampleBlock.svelte'
 
@@ -16,7 +16,7 @@
 
     const snippet = {
       name: 'Modal',
-      importName: '@components/Modal/Modal.svelte',
+      importName: '@core/Modal.svelte',
       properties: `
         Must pass props through $modalProps:
       `,

@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import ProductCard from '@components/ProductCard/ProductCard.svelte'
+  import ProductCard from '@cards/ProductCard.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -19,7 +19,7 @@
 
   const snippet = {
     name: 'ProductCard',
-    importName: '@components/ProductCard/ProductCard.svelte',
+    importName: '@cards/ProductCard.svelte',
     props:{
       shadow: false,
       innerShadow: true,
@@ -31,7 +31,7 @@
         label: 'orientation',
         options: ['horizontal', 'vertical'], 
         value: 0        
-      },      
+      },        
       {
         label: 'type',
         options: ['light', 'dark'], 
@@ -61,7 +61,7 @@
     <ProductCard${propstr}${selectstr}${inputstr}/>
      `
 
-     const staticprops = {
+  const staticprops = {
     links: [
       {icon: 'facebook', href: '/facebook'},
       {icon: 'instagram', href: '/instagram'},

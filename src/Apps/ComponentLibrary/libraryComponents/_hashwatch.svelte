@@ -1,8 +1,8 @@
 <script>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Link from '@components/Link/Link'
-  import HashWatch from '@components/URLWatcher/HashWatch'
+  import Link from '@base/Link'
+  import HashWatch from '@core/HashWatch'
 
   let propstr = '';
   let selectstr = '';
@@ -21,7 +21,7 @@
 
   const snippet = {
     name: 'HashWatch',
-    importName: '@components/HashWatch/HashWatch.svelte'
+    importName: '@core/HashWatch.svelte'
   }
 
   $: livecode = `        

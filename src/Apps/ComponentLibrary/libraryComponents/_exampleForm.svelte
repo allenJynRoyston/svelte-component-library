@@ -1,11 +1,10 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   import LibraryBlock from '../components/LibraryBlock.svelte'
-  import ExampleForm from '@components/FormPremade/FormExample.svelte'
+  import ExampleForm from '@examples/FormExample.svelte'
 
   const theme:string = getContext('theme')
 

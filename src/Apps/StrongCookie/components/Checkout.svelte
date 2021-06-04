@@ -1,5 +1,5 @@
 <script>
-  import ShoppingCart from '../../../components/ShoppingCart/ShoppingCart'
+  import ShoppingCart from '@shopping/ShoppingCart.svelte'
 
   const items = [
     {name: 'Product 1', price: 25.99, quantity: 1},

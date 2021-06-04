@@ -1,5 +1,5 @@
 <script>
-  import Accordion from '../../../components/Accordion/Accordion'
+  import Accordion from '@base/Accordion'
   export let title = null;
   export let flex = false;
   export let hideFull = false;

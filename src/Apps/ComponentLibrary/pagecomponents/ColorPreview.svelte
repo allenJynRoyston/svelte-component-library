@@ -1,10 +1,10 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Footer from '@components/Footer/Footer.svelte'
-  import ColorBlock from '@components/ColorBlock/ColorBlock.svelte'
-  import GridLayout from '@components/Layout/GridLayout.svelte'
-  import Section from '@components/Section/Section.svelte'
-  import Accordian from '@components/Accordion/Accordion.svelte'
+  import Footer from '@layout/Footer.svelte'
+  import ColorBlock from '@base/ColorBlock.svelte'
+  import GridLayout from '@layout/GridLayout.svelte'
+  import Section from '@layout/Section.svelte'
+  import Accordian from '@base/Accordion.svelte'
 
   const colors = getContext('colors');
 

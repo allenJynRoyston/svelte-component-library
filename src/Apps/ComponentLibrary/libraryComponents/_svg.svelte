@@ -1,9 +1,9 @@
 <script lang="ts">
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import {svgslist} from '@components/SVG/SVG.svelte'
-  import SVG from '@components/SVG/SVG.svelte'
-  import GridLayout from '@components/Layout/GridLayout.svelte'
+  import {svgslist} from '@base/SVG.svelte'
+  import SVG from '@base/SVG.svelte'
+  import GridLayout from '@layout/GridLayout.svelte'
   import SVGPreview from '../components/SVGPreview.svelte'
 
   let propstr = '';
@@ -22,7 +22,7 @@
 
   const snippet = {
     name: 'SVG',
-    importName: '@components/SVG/SVG.svelte',
+    importName: '@base/SVG.svelte',
     properties: `
     export let size:number = 14; 
     export let fill:string|null = null;

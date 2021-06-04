@@ -1,9 +1,9 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Tabs from '@components/Tabs/Tabs.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'  
-  import FormExample from '@components/FormPremade/FormExample.svelte'
+  import Tabs from '@base/Tabs.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'  
+  import FormExample from '@examples/FormExample.svelte'
   import ExampleBlock from '../components/ExampleBlock.svelte'
   
   let propstr = '';

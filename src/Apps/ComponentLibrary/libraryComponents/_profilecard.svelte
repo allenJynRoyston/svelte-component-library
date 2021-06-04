@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
-  import ProfileCard from '@components/ProfileCard/ProfileCard.svelte'
+  import ProfileCard from '@cards/ProfileCard.svelte'
   import {DeviceStore} from '@store/store';
 
   const {isMobile} = DeviceStore;
@@ -30,7 +30,7 @@
 
   const snippet = {
     name: 'ProfileCard',
-    importName: '@components/ProfileCard/ProfileCard.svelte',
+    importName: '@cards/ProfileCard.svelte',
     props:{
       shadow: false,
       innerShadow: true,

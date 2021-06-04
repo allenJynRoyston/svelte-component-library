@@ -4,18 +4,18 @@
   import { capitalizeStr, createChannel, createDB } from '@js/utility'  
   import {createTestData} from '@js/testutility'
 
-  import Header from '@components/Header/Header.svelte'
-  import Footer from '@components/Footer/Footer.svelte'  
-  import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
-  import Channels from '@components/Channels/Channels.svelte'
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import SnackBar from '@components/Snackbar/Snackbar.svelte'
-  import IDB from '@components/Utility/IndexDBSetup.svelte'
+  import Header from '@layout/Header.svelte'
+  import Footer from '@layout/Footer.svelte'  
+  import ColumnLayout from '@layout/ColumnLayout.svelte'
+  import Channels from '@base/Channels.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
+  import SnackBar from '@core/Snackbar.svelte'
+  import IDB from '@core/IndexDBSetup.svelte'
   import LocalStorageWatch from '../../components-db/LocalStorageWatch.svelte'
 
   import LocalStorageWatchAlias from './components/_localstoragewatch.svelte'
   import LoginAlias from './components/_login.svelte'
-  import TestUtilityAlias from './components/_testutility.svelte'
+  // import TestUtilityAlias from './components/_testutility.svelte'
   import UserFetcherAlias from './components/_userfetcher.svelte'
   import UserPortraitAlias from './components/_userportrait.svelte'
 
@@ -31,7 +31,7 @@
     data: [
     {content: LocalStorageWatchAlias, id: 'localstoragewatch'}, 
     {content: LoginAlias, id: 'login'}, 
-    {content: TestUtilityAlias, id: 'testutility'}, 
+    // {content: TestUtilityAlias, id: 'testutility'}, 
     {content: UserFetcherAlias, id: 'userfetcher'}, 
     {content: UserPortraitAlias, id: 'userportrait'}, 
   ]})   

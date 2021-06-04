@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Search from '@components/Search/Search.svelte'
+  import Search from '@base/Search.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -19,7 +19,7 @@
 
   const snippet = {
     name: 'Search',
-    importName: '@components/Search/Search.svelte',
+    importName: '@base/Search.svelte',
     props: {
       hideSearchIcon: false,
       hideClear: false,

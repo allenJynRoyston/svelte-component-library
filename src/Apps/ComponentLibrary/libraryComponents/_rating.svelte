@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Rating from '@components/FormComponents/Rating/Rating.svelte'
-  import {svgslist} from '@components/SVG/SVG.svelte'
+  import Rating from '@form/Rating.svelte'
+  import {svgslist} from '@base/SVG.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -24,7 +24,7 @@
 
   const snippet = {
     name: 'Rating',
-    importName: '@components/FormComponents/Rating/Rating.svelte',
+    importName: '@form/Rating.svelte',
     props: {
       required: false,
     },    

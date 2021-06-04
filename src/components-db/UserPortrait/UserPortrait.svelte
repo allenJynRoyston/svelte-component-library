@@ -1,6 +1,6 @@
 <script lang='ts'>
   //--------------------------- IMPORTS    
-  import Link from '../../components/Link/Link.svelte'
+  import Link from '@base/Link.svelte'
   import UserFetcher from '../Fetcher/UserFetcher.svelte'
 
   //---------------------------

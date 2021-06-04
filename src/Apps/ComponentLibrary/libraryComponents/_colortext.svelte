@@ -1,8 +1,8 @@
 <script lang='ts'>  
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import ColorText from '@components/ColorText/ColorText.svelte';
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import ColorText from '@base/ColorText.svelte';
+  import LoremBlock from '@base/LoremBlock.svelte'
 
 
   let propstr = '';
@@ -14,7 +14,7 @@
 
   const snippet = {
     name: 'ColorText',
-    importName: '@components/ColorText/ColorText.svelte',
+    importName: '@base/ColorText.svelte',
     dropdowns: [
       {
         label: 'applyTheme',

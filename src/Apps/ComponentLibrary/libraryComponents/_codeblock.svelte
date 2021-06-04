@@ -1,7 +1,7 @@
 <script lang='ts'>  
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,7 +12,7 @@
 
   const snippet = {
     name: 'CodeBlock',
-    importName: '@components/CodeBlock/CodeBlock.svelte',
+    importName: '@base/CodeBlock.svelte',
     props: {
       open: true,
       show: true,      

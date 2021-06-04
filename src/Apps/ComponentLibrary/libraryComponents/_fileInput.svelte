@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import FileInput from '@form/FileInput/FileInput.svelte'
+  import FileInput from '@form/FileInput.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -23,7 +23,7 @@
   
   $: snippet = {
     name: 'FileInput',
-    importName: '@form/FileInput/FileInput.svelte',    
+    importName: '@form/FileInput.svelte',    
     props: {
       required: false
     },    

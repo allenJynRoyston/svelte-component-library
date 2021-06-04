@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Button from '@components/Button/Button.svelte'
+  import Button from '@base/Button.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -19,7 +19,7 @@
 
   const snippet = {
     name: 'Button',
-    importName: '@components/Button/Button.svelte',
+    importName: '@base/Button.svelte',
     props: {
       rounded: false,
       hollow: false,

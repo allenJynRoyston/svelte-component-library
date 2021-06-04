@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import ColumnLayout from '@components/Layout/ColumnLayout.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
+  import ColumnLayout from '@layout/ColumnLayout.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'
 
   let propstr = '';
   let selectstr = '';

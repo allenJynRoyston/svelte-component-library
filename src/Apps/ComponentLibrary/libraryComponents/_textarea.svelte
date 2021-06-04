@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import TextArea from '@form/Textarea/Textarea.svelte'
+  import TextArea from '@form/Textarea.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -27,7 +27,7 @@
 
   const snippet = {
     name: 'TextArea',
-    importName: '@form/TextArea/TextArea.svelte',
+    importName: '@form/Textarea.svelte',
     props: {
       contentEdit: false,
       required: false

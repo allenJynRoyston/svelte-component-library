@@ -1,11 +1,8 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
 
-  import Button from '@components/Button/Button.svelte'
-  import Accordion from '@components/Accordion/Accordion.svelte'
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte';
-  import ThemeWrapper from '../../../components/ThemeWrapper/ThemeWrapper.svelte';
-  import Section from '../../../components/Section/Section.svelte';
+  import LoremBlock from '@base/LoremBlock.svelte';
+  import ThemeWrapper from '@layout/ThemeWrapper.svelte';
 
   const theme:string = getContext('theme')
 

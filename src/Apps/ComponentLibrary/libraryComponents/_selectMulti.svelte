@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import SelectMulti from '@components/FormComponents/SelectMulti/SelectMulti.svelte'
+  import SelectMulti from '@form/SelectMulti.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -27,7 +27,7 @@
 
   const snippet = {
     name: 'SelectMulti',
-    importName: '@components/FormComponents/SelectMulti/SelectMulti.svelte',
+    importName: '@form/SelectMulti.svelte',
     props: {
       required: false,
     },    

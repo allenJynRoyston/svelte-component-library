@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'
 </script>
 
 

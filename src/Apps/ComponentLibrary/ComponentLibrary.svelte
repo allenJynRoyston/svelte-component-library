@@ -4,10 +4,10 @@
 
   import SearchThemeNotch from './pagecomponents/SearchThemeNotch.svelte'
 
-  import Channels from '@components/Channels/Channels.svelte'
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import Splash from '@components/Splash/Splash.svelte'
-  import NavBar from '@components/NavBar/NavBar.svelte'
+  import Channels from '@base/Channels.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
+  import Splash from '@layout/Splash.svelte'
+  import NavBar from '@layout/NavBar.svelte'
   
   import Home from './pages/home.svelte';
   import Library from './pages/library.svelte';

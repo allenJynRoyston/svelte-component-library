@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import NavBar from '@components/NavBar/NavBar.svelte'
+  import NavBar from '@layout/NavBar.svelte'
   
   let propstr = '';
   let selectstr = '';
@@ -14,7 +14,7 @@
 
   const snippet = {
     name: 'NavBar',
-    importName: '@components/NavBar/NavBar.svelte',
+    importName: '@layout/NavBar.svelte',
     inputs: [
       {forprop: 'watchHash', renderAs: 'input', componentprop: {type: 'text'}, value: null },
       {forprop: 'watchProp', renderAs: 'input', componentprop: {type: 'text'}, value: 'testprop' }

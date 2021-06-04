@@ -1,8 +1,8 @@
 <script lang='ts'>
   	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-    import ChannelButton from '@components/ChannelButton/ChannelButton.svelte'
-    import {svgslist} from '@components/SVG/SVG.svelte'
+    import ChannelButton from '@base/ChannelButton.svelte'
+    import {svgslist} from '@base/SVG.svelte'
 
     let propstr = '';
     let selectstr = '';
@@ -20,7 +20,7 @@
 
     const snippet = {
     name: 'ChannelButton',
-    importName: '@components/ChannelButton/ChannelButton.svelte',
+    importName: '@base/ChannelButton.svelte',
     props: {
       rounded: false,
       nomargin: false

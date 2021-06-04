@@ -2,15 +2,17 @@
   import {onMount, getContext, tick} from 'svelte'  
   import {LibraryStore} from '../localstore/libraryStore'
 
-  import Input from '@form/Input/Input.svelte'
-  import Textarea from '@form/Textarea/Textarea.svelte'
-  import InputDate from '@form/InputDate/InputDate.svelte'
-  import InputTime from '@form/InputTime/InputTime.svelte'
+  import Input from '@form/Input.svelte'
+  import Textarea from '@form/Textarea.svelte'
+  import InputDate from '@form/InputDate.svelte'
+  import InputTime from '@form/InputTime.svelte'
+  import Select from '@form/Select.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
+  import Button from '@base/Button.svelte'
 
-  import Select from '@components/FormComponents/Select/Select.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import Button from '@components/Button/Button.svelte'
+  import GridLayout from '@layout/GridLayout.svelte'
+    
 
   import LibraryBlock from '../components/LibraryBlock.svelte'  
 
@@ -144,6 +146,7 @@
       updateInputs(value, forprop)      
     })
   })
+  
 </script>
 
 <div class='library-snippet'>

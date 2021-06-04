@@ -3,17 +3,17 @@
   import {setContext} from 'svelte'
   import {IndexDBStore} from '../../js/index'
 
-  import Header from '../../components/Header/Header.svelte'
-  import ColumnLayout from '../../components/Layout/ColumnLayout.svelte'  
-  import Channels from '../../components/Channels/Channels.svelte'
-  import HashWatch from '../../components/URLWatcher/HashWatch.svelte'
-  import SnackBar from '../../components/Snackbar/Snackbar.svelte'
+  import Header from '@layout/Header.svelte'
+  import ColumnLayout from '@layout/ColumnLayout.svelte'
+  import Channels from '@base/Channels.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
+  import SnackBar from '@core/Snackbar.svelte'
 
   import Home from './pages/StrongCookieHome.svelte'
   import About from './pages/StrongCookieAbout.svelte'
   import Products from './pages/StrongCookieProducts.svelte'
   import Checkout from './pages/StrongCookieCheckout.svelte'
-  import IDB from '../../components/Utility/IndexDBSetup.svelte'
+  import IDB from '@core/IndexDBSetup.svelte'
 
   import { createChannel, createDB } from '../../js/utility'  
   //--------------------------- 

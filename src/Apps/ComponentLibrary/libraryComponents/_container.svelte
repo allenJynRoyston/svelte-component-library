@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Container from '@components/Container/Container.svelte'
+  import Container from '@layout/Container.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,7 +12,7 @@
 
   const snippet = {
     name: 'Container',
-    importName: '@components/Container/Container.svelte',
+    importName: '@layout/Container.svelte',
     props: {
 
     }, 

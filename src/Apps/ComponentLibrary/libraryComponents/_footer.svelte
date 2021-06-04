@@ -1,7 +1,7 @@
 <script lant='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Footer from '@components/Footer/Footer.svelte'
+  import Footer from '@layout/Footer.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,7 +12,7 @@
 
   const snippet = {
     name: 'Footer',
-    importName: '@components/Footer/Footer.svelte'
+    importName: '@layout/Footer.svelte'
   }
 
   $: livecode = `    

@@ -1,6 +1,6 @@
 <script lang='ts'>
-  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
-  import Search from '@components/Search/Search.svelte'
+  import ThemeSwitch from '@unsorted/ThemeSwitch.svelte';
+  import Search from '@base/Search.svelte'
   import {SiteStore} from '@store/store';
 
   export let showSearch = false;

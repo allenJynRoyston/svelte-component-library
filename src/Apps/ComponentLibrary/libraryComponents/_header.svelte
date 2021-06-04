@@ -1,11 +1,11 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Header from '@components/Header/Header.svelte'
-  import NavBar from '@components/NavBar/NavBar.svelte';
-  import Splash from '@components/Splash/Splash.svelte'
-  import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte';
-  import Search from '@components/Search/Search.svelte';
+  import Header from '@layout/Header.svelte'
+  import NavBar from '@layout/NavBar.svelte';
+  import Splash from '@layout/Splash.svelte'
+  import ThemeSwitch from '@unsorted/ThemeSwitch.svelte';
+  import Search from '@base/Search.svelte';
 
   let propstr = '';
   let selectstr = '';
@@ -17,7 +17,7 @@
 
   const snippet = {
     name: 'Header',
-    importName: '@components/Header/Header.svelte',
+    importName: '@layout/Header.svelte',
     props: {
       showBurgerMenuButton: true,
       invertColors: false,
@@ -76,10 +76,10 @@
   }
 
   $: livecode = ` 
-    import NavBar from '@components/NavBar/NavBar.svelte'
-    import Splash from '@components/Splash/Splash.svelte'
-    import ThemeSwitch from '@components/ThemeSwitch/ThemeSwitch.svelte'
-    import Search from '@components/Search/Search.svelte'
+    import NavBar from '@layout/NavBar.svelte'
+    import Splash from '@layout/Splash.svelte'
+    import ThemeSwitch from '@unsorted/ThemeSwitch.svelte';
+    import Search from '@base/Search.svelte'
 
     let headerprops = {
       navEle: {

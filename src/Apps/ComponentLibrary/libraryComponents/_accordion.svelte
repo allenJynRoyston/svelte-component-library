@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Accordion from '@components/Accordion/Accordion.svelte'
+  import Accordion from '@base/Accordion.svelte'
   import ExampleBlock from '../components/ExampleBlock.svelte'
 
   let propstr = '';
@@ -20,7 +20,7 @@
 
   const snippet = {
     name: 'Accordion',
-    importName: '@components/Accordion/Accordion.svelte',
+    importName: '@base/Accordion.svelte',
     props: {
       open: false,
       outline: true,

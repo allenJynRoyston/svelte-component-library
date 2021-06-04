@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
-  import Section from '@components/Section/Section.svelte'  
+  import LoremBlock from '@base/LoremBlock.svelte'
+  import Section from '@layout/Section.svelte'  
 
   let propstr = '';
   let selectstr = '';
@@ -13,7 +13,7 @@
 
   const snippet = {
     name: 'Section',
-    importName: '@components/Section/Section.svelte',
+    importName: '@layout/Section.svelte',
     props: {
       outline: false,
       nomargin: false

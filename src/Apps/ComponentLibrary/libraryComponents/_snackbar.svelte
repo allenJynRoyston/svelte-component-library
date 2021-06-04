@@ -2,8 +2,8 @@
   import {getContext} from 'svelte'
   import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Button from '@components/Button/Button.svelte'
-  import Link from '@components/Link/Link.svelte'    
+  import Button from '@base/Button.svelte'
+  import Link from '@base/Link.svelte'    
 
   let propstr = '';
   let selectstr = '';
@@ -14,7 +14,7 @@
 
   const snippet = {
     name: 'Snackbar',
-    importName: '@components/Snackbar/Snackbar.svelte',
+    importName: '@core/Snackbar.svelte',
     props: {
       closeOnClick: false,
     }, 

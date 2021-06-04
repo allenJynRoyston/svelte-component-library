@@ -1,7 +1,7 @@
 -<script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Input from '@components/FormComponents/Input/Input.svelte'
+  import Input from '@form/Input.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -26,7 +26,7 @@
 
   const snippet = {
     name: 'Input',
-    importName: '@form/Input/Input.svelte',
+    importName: '@form/Input.svelte',
     props: {
       nomargin: false,
       required: false,

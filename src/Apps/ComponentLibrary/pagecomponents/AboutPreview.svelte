@@ -1,14 +1,14 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
 
-  import Footer from '@components/Footer/Footer.svelte'
-  import Container from '@components/Container/Container.svelte'
-  import Section from '@components/Section/Section.svelte'
-  import Button from '@components/Button/Button.svelte'
-  import ColorText from '@components/ColorText/ColorText.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'
-  import Link from '@components/Link/Link.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import Footer from '@layout/Footer.svelte'
+  import Container from '@layout/Container.svelte'
+  import Section from '@layout/Section.svelte'
+  import Button from '@base/Button.svelte'
+  import ColorText from '@base/ColorText.svelte'
+  import ThemeWrapper from '@layout/ThemeWrapper.svelte';
+  import Link from '@base/Link.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   const theme:string = getContext('theme');
 

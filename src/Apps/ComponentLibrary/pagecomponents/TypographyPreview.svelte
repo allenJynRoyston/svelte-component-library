@@ -1,10 +1,10 @@
 <script lang='ts'>
   import {getContext} from 'svelte';
-  import Footer from '@components/Footer/Footer.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
-  import Section from '@components/Section/Section.svelte'
-  import ColorText from '@components/ColorText/ColorText.svelte'
-  import Accordian from '@components/Accordion/Accordion.svelte'
+  import Footer from '@layout/Footer.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
+  import Section from '@layout/Section.svelte'
+  import ColorText from '@base/ColorText.svelte'
+  import Accordian from '@base/Accordion.svelte'
 
   const fonts:any = getContext('fonts');
 

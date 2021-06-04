@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,7 +12,7 @@
 
   const snippet = {
     name: 'TwoSlot',
-    importName: '@components/TwoSlot/TwoSlot.svelte',
+    importName: '@base/TwoSlot.svelte',
     props: {
       hideLeft: false,
       hideRight: false,

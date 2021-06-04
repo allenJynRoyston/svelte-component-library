@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Select from '@form/Select/Select.svelte'
+  import Select from '@form/Select.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -26,7 +26,7 @@
 
   const snippet = {
     name: 'Select',
-    importName: '@form/Select/Select.svelte',
+    importName: '@form/Select.svelte',
     props: {
       exactfit: false,   
       required: false   

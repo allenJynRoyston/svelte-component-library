@@ -2,7 +2,7 @@
   import {setContext} from 'svelte'
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import IDB from '@components/Utility/IndexDBSetup.svelte'
+  import IDB from '@core/IndexDBSetup.svelte'
   import {createDB} from '@js/utility'
   import {IndexDBStore} from '@js/index'
 
@@ -15,7 +15,7 @@
 
   const snippet = {
     name: 'IDB',
-    importName: '@components/Utility/IndexDBSetup.svelte',
+    importName: '@core/IndexDBSetup.svelte',
     properties: `
     export let indexdb:any;
     export let data:any = []

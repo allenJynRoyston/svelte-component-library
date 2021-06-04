@@ -2,7 +2,7 @@
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
   
   import ExampleBlock from '../components/ExampleBlock.svelte'
-  import ThemeWrapper from '@components/ThemeWrapper/ThemeWrapper.svelte'  
+  import ThemeWrapper from '@layout/ThemeWrapper.svelte';
 
   let propstr = '';
   let selectstr = '';

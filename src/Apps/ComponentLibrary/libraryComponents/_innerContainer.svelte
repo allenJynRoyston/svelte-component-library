@@ -1,8 +1,8 @@
 <script lant='ts'>  
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import LoremBlock from '@components/LoremBlock/LoremBlock.svelte'
-  import InnerContainer from '@components/InnerContainer/InnerContainer.svelte'
+  import LoremBlock from '@base/LoremBlock.svelte'
+  import InnerContainer from '@base/InnerContainer.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -13,9 +13,10 @@
 
   const snippet = {
     name: 'InnerContainer',
-    importName: '@components/InnerContainer/InnerContainer.svelte',
+    importName: '@base/InnerContainer.svelte',
     props: {
       accountForTopPos: false,
+      skinnybar: false,
     },     
     inputs: [
       {forprop: 'height', renderAs: 'input', componentprop: {type: 'text'}, value: '250px' },

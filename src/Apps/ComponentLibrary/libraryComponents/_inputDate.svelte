@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import InputDate from '@form/InputDate/InputDate.svelte'
+  import InputDate from '@form/InputDate.svelte'
 
 
 
@@ -28,7 +28,7 @@
 
   const snippet = {
     name: 'InputDate',
-    importName: '@form/InputDate/InputDate.svelte',
+    importName: '@form/InputDate.svelte',
     props: {
       required: false,
     },     

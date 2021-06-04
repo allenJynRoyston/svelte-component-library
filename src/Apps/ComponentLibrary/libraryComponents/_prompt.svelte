@@ -1,9 +1,9 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
-  import Button from '@components/Button/Button.svelte'
-  import TwoSlot from '@components/TwoSlot/TwoSlot.svelte'
+  import Button from '@base/Button.svelte'
+  import TwoSlot from '@base/TwoSlot.svelte'
   import LibraryBlock from '../components/LibraryBlock.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   import Prompt from '@components/Prompt/Prompt.svelte'
 

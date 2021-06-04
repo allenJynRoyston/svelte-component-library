@@ -2,7 +2,7 @@
   import LibraryBlock from '../../ComponentLibrary/components/LibraryBlock.svelte'
   import UserFetcher from '../../../components-db/Fetcher/UserFetcher.svelte'
   import LocalStorageWatch from '../../../components-db/LocalStorageWatch.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   
   //-----------------------------------------  USER FETCHER

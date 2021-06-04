@@ -1,7 +1,7 @@
 <script lang='ts'>
   import {getContext} from 'svelte'
   import LibraryBlock from '../../ComponentLibrary/components/LibraryBlock.svelte'
-  import CodeBlock from '../../../components/CodeBlock/CodeBlock.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
 
   import Login from '../../../components-db/Login.svelte'
   import LocalStorageWatch from '../../../components-db/LocalStorageWatch.svelte'

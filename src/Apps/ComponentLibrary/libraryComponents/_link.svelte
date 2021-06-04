@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Link from '@components/Link/Link.svelte'
+  import Link from '@base/Link.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -19,18 +19,20 @@
 
   const snippet = {
     name: 'Link',
-    importName: '@components/Link/Link.svelte',
+    importName: '@base/Link.svelte',
     props: {
       underline: false,
       inherit: false,
       active: true,
       outline: false,
       exactfit: false,
+      applyHover: false,
+      applyActive: false
     }, 
     dropdowns: [
       {
         label: 'type',
-        options: [null, 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
+        options: ['auto', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger', 'black', 'white'], 
         value: 0        
       },
       {

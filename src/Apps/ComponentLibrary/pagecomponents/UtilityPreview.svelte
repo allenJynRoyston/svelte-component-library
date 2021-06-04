@@ -1,9 +1,9 @@
 <script lang='ts'>
   import {DeviceStore} from '@store/store'
-  import Footer from '@components/Footer/Footer.svelte'
-  import Section from '@components/Section/Section.svelte'
-  import CodeBlock from '@components/CodeBlock/CodeBlock.svelte'
-  import Accordian from '@components/Accordion/Accordion.svelte'
+  import Footer from '@layout/Footer.svelte'
+  import Section from '@layout/Section.svelte'
+  import CodeBlock from '@base/CodeBlock.svelte'
+  import Accordian from '@base/Accordion.svelte'
 
   const {appWidth, isMobile, isTabletAndBelow, isTablet, isDesktop} = DeviceStore;
 

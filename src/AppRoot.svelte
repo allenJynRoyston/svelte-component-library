@@ -4,11 +4,11 @@
   import {createColorPallete, assignFonts} from '@js/utility'
   import {DeviceStore, ModalStore, SiteStore} from '@store/store';
 
-  import HashWatch from '@components/URLWatcher/HashWatch.svelte'
-  import Link from '@components/Link/Link.svelte'  
-  import SnackBar from '@components/Snackbar/Snackbar.svelte'
-  import Loader from '@components/Loader/Loader.svelte'
-  import Modal from '@components/Modal/Modal.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
+  import Link from '@base/Link.svelte'  
+  import SnackBar from '@core/Snackbar.svelte'
+  import Loader from '@base/Loader.svelte'
+  import Modal from '@core/Modal.svelte'
 
   import ComponentLibraryApp from './Apps/ComponentLibrary/ComponentLibrary.svelte'
   import ComponentDBLibrary from './Apps/ComponentDBLibrary/ComponentDBLibrary.svelte'

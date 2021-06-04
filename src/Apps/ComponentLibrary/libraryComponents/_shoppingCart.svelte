@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
   
-  import ShoppingCart from '@components/ShoppingCart/ShoppingCart.svelte'
+  import ShoppingCart from '@shopping/ShoppingCart.svelte'
 
   let propstr = '';
   let selectstr = '';

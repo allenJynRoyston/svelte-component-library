@@ -1,6 +1,6 @@
 <script lang='ts'>
-  import ProductCard from '../../../components/ProductCard/ProductCard.svelte'
-  import HashWatch from '../../../components/URLWatcher/HashWatch.svelte'
+  import ProductCard from '@cards/ProductCard.svelte'
+  import HashWatch from '@core/HashWatch.svelte'
   import {getContext} from 'svelte';
 
   const indexdb:any = getContext('indexdb')

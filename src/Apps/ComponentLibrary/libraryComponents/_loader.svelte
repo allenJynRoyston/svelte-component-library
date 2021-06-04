@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Loader from '@components/Loader/Loader.svelte'
+  import Loader from '@base/Loader.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -12,7 +12,7 @@
 
   const snippet = {
     name: 'Loader',
-    importName: '@components/Loader/Loader.svelte',
+    importName: '@base/Loader.svelte',
     properties: `
     export let show = false
     export let rounded = false;

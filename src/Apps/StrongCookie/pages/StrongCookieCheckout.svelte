@@ -1,11 +1,11 @@
 <script>
-  import Channels from '@components/Channels/Channels'
-  import HashWatch from '@components/URLWatcher/HashWatch'
+  import Channels from '@base/Channels'
+  import HashWatch from '@core/HashWatch'
   import { createChannel } from '@js/utility'
 
   import Checkout from '../components/Checkout'
   import ProductDetails from '../components/ProductDetails'
-  import TwoSlot from '../../../components/TwoSlot/TwoSlot'
+  import TwoSlot from '@base/TwoSlot.svelte'
    
   //--------------------------- CHANNEL
   const channel = createChannel({

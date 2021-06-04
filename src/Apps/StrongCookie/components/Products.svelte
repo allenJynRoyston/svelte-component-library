@@ -1,7 +1,7 @@
 <script lang='ts'>
   import {onMount, getContext} from 'svelte';
-  import GridLayout from '../../../components/Layout/GridLayout.svelte'
-  import ProductCard from '../../../components/ProductCard/ProductCard.svelte'
+  import GridLayout from '@layout/GridLayout.svelte'
+  import ProductCard from '@cards/ProductCard.svelte'
   
   const addSnack:any =getContext('addSnack')
   const indexdb:any = getContext('indexdb')

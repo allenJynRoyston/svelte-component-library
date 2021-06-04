@@ -1,5 +1,5 @@
 <script>
-  import LoremBlock from '../../../components/LoremBlock/LoremBlock'
+  import LoremBlock from '@base/LoremBlock'
 </script>
 
 

@@ -2,8 +2,8 @@
   import {getContext} from 'svelte';  
   import CopyToClipboard from "svelte-copy-to-clipboard";
 
-  import SVG from '@components/SVG/SVG.svelte'
-  import Button from '@components/Button/Button.svelte'
+  import SVG from '@base/SVG.svelte'
+  import Button from '@base/Button.svelte'
 
   export let icon = null;
   export let title = null;

@@ -1,7 +1,7 @@
 <script lant='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
 
-  import Form from '@components/Form/Form.svelte'
+  import Form from '@form/FormBuilder.svelte'
 
   let propstr = '';
   let selectstr = '';
@@ -11,8 +11,8 @@
   let inputprops;  
 
   const snippet = {
-    name: 'Form',
-    importName: '@components/Form/Form.svelte',
+    name: 'FormBuilder',
+    importName: '@form/FormBuilder.svelte',
     props: {
       clearLocalStorage: true,
       isBusy: false,
