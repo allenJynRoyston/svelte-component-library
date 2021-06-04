@@ -1,7 +1,9 @@
 <script lang='ts'>
 	import LibrarySnippet from './../components/LibrarySnippet.svelte';
-
   import ProductCard from '@cards/ProductCard.svelte'
+  import {DeviceStore} from '@store/store';
+
+  const {isMobile} = DeviceStore;
 
   let propstr = '';
   let selectstr = '';
@@ -73,8 +75,14 @@
 </script>
 
 <LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
-  <div slot='liveexample'>    
+    <div slot='liveexample'>    
       <ProductCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>
+      {#if !$isMobile}
+      <div style='display: flex; gap: 10px; margin-top: 20px;'>
+        <ProductCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+        <ProductCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>    
+      </div>    
+    {/if}      
    </div>    
 </LibrarySnippet>
 

@@ -98,7 +98,7 @@
         role='button'        
         data-testid={`rating-btn-${i}`}
         on:click|preventDefault={() => {toggle(index)}} >
-          <SVG fill={selected ? fill() : null} icon={selected ? inSlots.selected : inSlots.notSelected}/>          
+          <SVG fill={selected ? fill() : colors.black[2].color} icon={selected ? inSlots.selected : inSlots.notSelected}/>          
       </button>
     {/each}
   </div>

@@ -77,7 +77,7 @@
       <label slot='left' for={key} style='transform: translateY(4px);' >{label}</label>
 
       <div slot='right'>
-        <Button style='opacity: 0' exactfit size='tiny'></Button>  
+        <Button style='max-width: 1px; padding: 0; margin: 0; opacity: 0; pointer-events: none;' exactfit size='tiny'>|</Button>  
       </div>
 
     </TwoSlot>

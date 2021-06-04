@@ -12,6 +12,7 @@
   export let applyTheme = 'primary';
   export let size = 'normal'
 
+  export let useGradiant = false;
   export let disabled = false
   export let rounded = false;
   export let hollow = false;
@@ -47,7 +48,7 @@
 
 {#if !!href}
   <Link inherit {href} {target} style={full ? 'width: 100%' : null}>
-    <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>      
+    <button class={`button ${applyTheme}${useGradiant ? '-gradiant' : ''} ${size} ${theme}-theme`} class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>      
       <span class='inner'>          
           <slot>{text || 'Button'}</slot>
           {#if useToggle}
@@ -57,7 +58,7 @@
     </button>    
   </Link>
 {:else}
-  <button class={`button ${applyTheme} ${size} ${theme}-theme`} class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
+  <button class={`button ${applyTheme}${useGradiant ? '-gradiant' : ''} ${size} ${theme}-theme`}  class:nobg={nobg} class:fullOnMobile={fullOnMobile} class:nomargin={nomargin} class:exactfit={exactfit} class:disabled={disabled} class:hollow={hollow} class:rounded={rounded} applyTheme='button' data-testid={dataTestid} {role} {disabled} {style} on:click={onClick && !disabled && onClick()}>
     <span class='inner'>
       <slot>{text || 'Button'}</slot>
       {#if useToggle}
@@ -152,6 +153,11 @@
       background: var(--white-1);
       color: var(--white-1-text);
 
+      &-gradiant{
+        color: var(--white-3-text);
+        background:  linear-gradient(var(--white-1), var(--white-6));
+      }      
+
       &.hollow{
         background: none!important;
         color: var(--black-1);
@@ -186,6 +192,11 @@
       background: var(--black-1);
       color: var(--black-1-text);
 
+      &-gradiant{
+        color: var(--black-3-text);
+        background:  linear-gradient(var(--black-1), var(--black-0));
+      }
+
       &.hollow{
         border: 3px solid var(--black-0);   
         background: none!important;
@@ -212,128 +223,37 @@
       }
     }    
 
-    &.primary{      
-      border: 3px solid var(--primary-1);      
-      background: var(--primary-1);
-      color: var(--primary-1-text);
+    $themes: 'primary', 'secondary', 'magic', 'success', 'warning', 'danger';
+    @each $theme in $themes {
+      &.#{$theme}{
+        border: 3px solid var(--#{$theme}-1);      
+        background: var(--#{$theme}-1);
+        color: var(--#{$theme}-1-text);
 
-      &.hollow{
-        background: none!important;
-        color: var(--primary-1);
+        &-gradiant{
+          background:  linear-gradient(var(--#{$theme}-1), var(--#{$theme}-3));
+          color: var(--#{$theme}-3-text);          
+        }
+
+        &.hollow{
+          background: none!important;
+          color: var(--#{$theme}-1)!important;
+          border: 3px solid var(--#{$theme}-1)!important;      
+          &:active{
+            color: var(--#{$theme}-4);
+            border: 3px solid var(--#{$theme}-4);     
+          }           
+        }
+
         &:active{
-          color: var(--primary-4);
-          border: 3px solid var(--primary-4);     
-        }           
+          color: var(--#{$theme}-4);
+          border: 3px solid var(--#{$theme}-4);     
+        }  
       }
+    }   
 
-      &:active{
-        color: var(--primary-4);
-        border: 3px solid var(--primary-4);     
-      }           
-    }
+ 
 
-    &.secondary{
-      border: 3px solid var(--secondary-1);      
-      background: var(--secondary-1);
-      color: var(--secondary-1-text);
-
-      &.hollow{
-        background: none!important;
-        color: var(--secondary-1);
-        &:active{
-          color: var(--secondary-4);
-          border: 3px solid var(--secondary-4);     
-        }              
-      }
-
-      &:active{
-        color: var(--secondary-4);
-        border: 3px solid var(--secondary-4);     
-      }            
-    }
-
-    &.magic{
-      border: 3px solid var(--magic-1);      
-      background: var(--magic-1);
-      color: var(--magic-1-text);
-
-      &.hollow{
-        background: none!important;
-        color: var(--magic-1);
-        &:active{
-          color: var(--magic-4);
-          border: 3px solid var(--magic-4);     
-        }              
-      }
-
-      &:active{
-        color: var(--magic-4);
-        border: 3px solid var(--magic-4);     
-      }       
-
-    }
-
-
-    &.success{
-      border: 3px solid var(--success-1);      
-      background: var(--success-1);
-      color: var(--success-1-text);
-
-      &.hollow{
-        background: none!important;
-        color: var(--success-1);
-        &:active{
-          color: var(--success-4);
-          border: 3px solid var(--success-4);     
-        }          
-      }
-
-      &:active{
-        color: var(--success-4);
-        border: 3px solid var(--success-4);     
-      }    
-
-    }
-
-    &.warning{
-      border: 3px solid var(--warning-1);      
-      background: var(--warning-1);
-      color: var(--warning-1-text);
-
-      &.hollow{
-        background: none!important;
-        color: var(--warning-1);
-        &:active{
-          color: var(--warning-4);
-          border: 3px solid var(--warning-4);     
-        }              
-      }
-
-      &:active{
-        color: var(--warning-4);
-        border: 3px solid var(--warning-4);     
-      }           
-    }  
-
-    &.danger{
-      border: 3px solid var(--danger-1);      
-      background: var(--danger-1);
-      color: var(--danger-1-text);
-
-      &.hollow{
-        background: none!important;
-        color: var(--danger-1);
-        &:active{
-          color: var(--danger-4);
-          border: 3px solid var(--danger-4);     
-        }         
-      }
-
-      &:active{
-        background: var(--danger-6);
-      }           
-
-    }    
 
   }
 </style>

@@ -21,6 +21,7 @@
     name: 'Button',
     importName: '@base/Button.svelte',
     props: {
+      useGradiant: false,
       rounded: false,
       hollow: false,
       disabled: false,
