@@ -27,6 +27,8 @@
     importName: '@form/Rating.svelte',
     props: {
       required: false,
+      locked: false,
+      exactfit: false
     },    
     dropdowns: [
       {

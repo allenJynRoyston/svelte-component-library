@@ -16,6 +16,8 @@
   export let maxLength = 5;  
   export let emptyIcon = null 
   export let fullIcon = null;
+  export let locked = false;
+  export let exactfit = false;
 
   const colors:any = getContext('colors')
   const theme:string = getContext('theme');
@@ -61,7 +63,7 @@
     let unSelect = lastEle && lastEle.i - 1 === index
   
     ratings = ratings.map((x, i) => {
-      x.selected = unSelect ? false : i <= index
+      x.selected = unSelect ? false : i < index
       return x
     })    
 
@@ -86,7 +88,7 @@
 
 </script>
 
-<div class={`rating-container ${theme}-theme`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0}>
+<div class={`rating-container ${theme}-theme`} data-testid='rating-container' class:invalid={errors.length > 0} class:valid={errors.length === 0} class:exactfit={exactfit} >
   {#if label}
     <label>{label}</label>
   {/if}
@@ -97,7 +99,8 @@
         id={`rating-btn-${i}`}
         role='button'        
         data-testid={`rating-btn-${i}`}
-        on:click|preventDefault={() => {toggle(index)}} >
+        class:locked={locked}
+        on:click|preventDefault={() => {!locked && toggle(index + 1)}} >
           <SVG fill={selected ? fill() : colors.black[2].color} icon={selected ? inSlots.selected : inSlots.notSelected}/>          
       </button>
     {/each}
@@ -107,6 +110,10 @@
 <style lang="scss">
   .rating-container {    
     width: 100%;    
+
+    &.exactfit{
+      width: auto;
+    }
 
     .rating-icons{
       display: flex;
@@ -125,6 +132,10 @@
       cursor: pointer;
       background: none;
       outline: none;
+
+      &.locked{
+        cursor: default
+      }
     }
 
     &.valid{
