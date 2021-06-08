@@ -4,7 +4,6 @@
 
   import HashWatch from '@core/HashWatch.svelte'
 
-
   import Header from '@layout/Header.svelte'
   import ColumnLayout from '@layout/ColumnLayout.svelte' 
   import Channels from '@base/Channels.svelte'
@@ -53,7 +52,11 @@
   import InputTimeAlias from '@lib/_inputTime.svelte'  
   import RatingAlias from '@lib/_rating.svelte'  
   import SelectAlias from '@lib/_select.svelte'  
-  import SelectMultiAlias from '@lib/_selectMulti.svelte'    
+  import SelectMultiAlias from '@lib/_selectMulti.svelte'  
+  
+  import FullImageAlias from '@lib/_fullImage.svelte'
+  import RImageAlias from '@lib/_rimage.svelte'
+
 
   export let headerprops;
   const headercopy:any = {...headerprops}
@@ -123,6 +126,10 @@
     {content: ColorTextAlias, id: 'colortext', section: "@Base"},
     {content: TabsAlias, id: 'tabs', section: "@Base"},
     {content: LoremBlockAlias, id: 'loremblock', section: "@Base"},
+
+    // IMAGES 
+    {content: FullImageAlias, id: 'fullimage', section: "@Images"},
+    {content: RImageAlias, id: 'rimage', section: "@Images"},    
   ]})   
 
 

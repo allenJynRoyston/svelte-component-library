@@ -14,9 +14,15 @@
 
   let eventLog = []
   const events = {
-    onClick: (val) => {      
-      eventLog = [...eventLog, {action: 'onClick', val}]
-    } 
+    onNameClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onNameClick', val}]
+    },
+    onShoppingCartClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onShoppingCartClick', val}]
+    },
+    onMoreInfoClick: (val) => {      
+      eventLog = [...eventLog, {action: 'onMoreInfoClick', val}]
+    }          
   }
 
   const snippet = {
@@ -91,7 +97,7 @@
 
 </script>
 
-<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} >
+<LibrarySnippet {...snippet} {livecode} bind:propstr={propstr} bind:selectstr={selectstr} bind:inputstr={inputstr} bind:props={props} bind:selectprops={selectprops} bind:inputprops={inputprops} {events} {eventLog}>
     <div slot='liveexample'>    
       <ProductCard {...staticprops} {...props} {...selectprops} {...inputprops} {...events}/>
       {#if !$isMobile}

@@ -32,6 +32,10 @@
   export let bgSrc = null;
   export let links = []
   
+  export let onNameClick = null;
+  export let onShoppingCartClick = null;
+  export let onMoreInfoClick = null;
+
 
   const theme:string = getContext('theme')
 
@@ -100,7 +104,7 @@
     </section>
 
     <section style='flex: 1 1 auto; text-align: center' class:compact={isCompact}>
-      <h2 class='product-name'>
+      <h2 class='product-name' class:clickable={!!onNameClick} on:click={() => {onNameClick && onNameClick(name)}}>
         {name}
       </h2>  
 
@@ -119,10 +123,10 @@
       {#if showAddToCart || showMoreInfo}
         <div class='button-container'>
           {#if showAddToCart}
-            <Button {applyTheme} rounded exactfit fullOnMobile>Add to cart</Button>
+            <Button {applyTheme} rounded exactfit fullOnMobile onClick={() => {onShoppingCartClick && onShoppingCartClick()}}>Add to cart</Button>
           {/if}
           {#if showMoreInfo}
-            <Button hollow rounded exactfit fullOnMobile>More info</Button>        
+            <Button {applyTheme} hollow rounded exactfit fullOnMobile onClick={() => {onMoreInfoClick && onMoreInfoClick()}}>More info</Button>        
           {/if}
         </div>
       {/if}
@@ -152,6 +156,9 @@
     border: none;
     outline: none;
     
+    .clickable{
+      cursor: pointer
+    }
 
     .header, .footer{
       width: 100%;

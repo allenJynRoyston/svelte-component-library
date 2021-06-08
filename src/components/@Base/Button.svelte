@@ -240,8 +240,8 @@
           color: var(--#{$theme}-1)!important;
           border: 3px solid var(--#{$theme}-1)!important;      
           &:active{
-            color: var(--#{$theme}-4);
-            border: 3px solid var(--#{$theme}-4);     
+            color: var(--#{$theme}-4)!important;
+            border: 3px solid var(--#{$theme}-4)!important;     
           }           
         }
 
