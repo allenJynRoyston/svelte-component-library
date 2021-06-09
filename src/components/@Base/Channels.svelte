@@ -10,8 +10,6 @@
 
   export let data = []
   export let current;
-  export let afterUpdate = null;
-  export let channelReady = null;
   export let duration = 400;
   export let easing = 'cubicOut'
   export let embedded = false;
@@ -22,9 +20,15 @@
   export let outline = false;  
   export let disableAnimationOnMobile = false;
   export let showChannelNumber = false;
+  export let showInactive = false;
+  export let lazyLoad = false;
   
   export let startChannelTransistion = null;
   export let endChannelTransisition = null;
+
+  export let afterUpdate = null;
+  export let channelReady = null;
+  export let onChannelClick = null;  
 
   let ready = false
   let xpos;
@@ -159,10 +163,10 @@
 
   {#if ready}
     <div class='channels-container' class:animate={animate} class:disableAnimationOnMobile={disableAnimationOnMobile} bind:this={rootEle} style={`${channelsStyle()};${xPostiion()}`}>
-      {#each data as {content, render, active, props}}
+      {#each data as {content, render, active, props}, index}
         <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
-          <div class='channel__inner' class:outline={outline} class:nopadding={nopadding} class:selfContained={selfContained} bind:this={ele} style={innerStyle} >
-            {#if render}
+          <div class='channel__inner' on:click={() => {onChannelClick && onChannelClick(index)}} class:clickable={!!onChannelClick} class:outline={outline} class:nopadding={nopadding} class:selfContained={selfContained} bind:this={ele} style={innerStyle} >
+            {#if render || !lazyLoad}
               <svelte:component this={content} {...props}/>
             {:else}
               <Loader show />    
@@ -192,6 +196,10 @@
   .channels{
     position: relative;
     overflow: hidden;
+  }
+
+  .clickable{
+    cursor: pointer
   }
 
   .channel-number{
@@ -261,7 +269,6 @@
       }
     }
   }
-
 
   @keyframes ChannelFadeIn {
     0%{

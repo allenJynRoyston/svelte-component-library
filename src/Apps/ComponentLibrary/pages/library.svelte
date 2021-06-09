@@ -56,6 +56,7 @@
   
   import FullImageAlias from '@lib/_fullImage.svelte'
   import RImageAlias from '@lib/_rimage.svelte'
+  import ImageGalleryAlias from '@lib/_imageGallery.svelte'
 
 
   export let headerprops;
@@ -130,6 +131,7 @@
     // IMAGES 
     {content: FullImageAlias, id: 'fullimage', section: "@Images"},
     {content: RImageAlias, id: 'rimage', section: "@Images"},    
+    {content: ImageGalleryAlias, id: 'imagegallery', section: "@Images"},    
   ]})   
 
 

@@ -7,6 +7,7 @@
     
   export let show = false;
   export let closeOnBackdrop = false;
+  export let naked = false;
 
   export let onStartModal = null;
   export let onEndModal = null;
@@ -90,43 +91,50 @@
     <div class={`backdrop ${defaultBackdrop}`} on:click={() => {!$modalIsBusy && closeBtn()}} class:animateIn={show} />
 
     <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} {style} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
-
-      <div class='header'  class:busy={$modalIsBusy}>
-        <TwoSlot >
-          <h2 slot='left'>{$modalProps?.title || 'Unavailable'}</h2>        
-          <div slot='right'>
-            <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
-          </div>
-        </TwoSlot>
-      </div>    
       
-      <div class={`container-inner  ${defaultType}`} class:nopadding={$modalProps?.nopadding} class:full={full} class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalIsBusy}>
-        {#if !!$modalProps?.content.component}
-          <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
-        {:else}
-          <div style='text-align: center; padding: 20px 0;'>
-            ¯\_(ツ)_/¯
+      {#if !$modalProps?.naked}
+          <div class='header'  class:busy={$modalIsBusy}>
+            <TwoSlot >
+              <h2 slot='left'>{$modalProps?.title || 'Unavailable'}</h2>        
+              <div slot='right'>
+                <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
+              </div>
+            </TwoSlot>
+          </div>    
+        
+        
+        <div class={`container-inner  ${defaultType}`} class:nopadding={$modalProps?.nopadding} class:full={full} class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalIsBusy}>
+          {#if !!$modalProps?.content.component}
+            <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
+          {:else}
+            <div style='text-align: center; padding: 20px 0;'>
+              ¯\_(ツ)_/¯
+            </div>
+          {/if}
+        </div>
+
+        {#if $modalProps?.onConfirm || $modalProps?.onCancel}
+          <div class='footer'>
+            <slot name='footer'>
+              <div class='default-footer' class:full={fullcorner || full}>
+                {#if $modalProps?.onCancel}
+                  <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.cancelBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
+                    {$modalProps?.cancelBtn?.text || 'Cancel'}
+                  </Button>
+                {/if}
+
+                {#if $modalProps?.onConfirm}
+                  <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.confirmBtn?.type || (defaultType)} hollow onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
+                    {$modalProps?.confirmBtn?.text || 'Confirm'}
+                  </Button>
+                {/if}              
+              </div>
+            </slot>
           </div>
         {/if}
-      </div>
-
-      {#if $modalProps?.onConfirm || $modalProps?.onCancel}
-        <div class='footer'>
-          <slot name='footer'>
-            <div class='default-footer' class:full={fullcorner || full}>
-              {#if $modalProps?.onCancel}
-                <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.cancelBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
-                  {$modalProps?.cancelBtn?.text || 'Cancel'}
-                </Button>
-              {/if}
-
-              {#if $modalProps?.onConfirm}
-                <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.confirmBtn?.type || (defaultType)} hollow onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
-                  {$modalProps?.confirmBtn?.text || 'Confirm'}
-                </Button>
-              {/if}              
-            </div>
-          </slot>
+      {:else}
+        <div class={`container-inner nopadding ${defaultType}`} class:full={full} class:busy={$modalIsBusy}>
+          <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
         </div>
       {/if}
       

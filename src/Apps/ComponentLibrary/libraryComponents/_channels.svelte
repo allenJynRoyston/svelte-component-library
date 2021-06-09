@@ -16,6 +16,9 @@
 
   let eventLog = []
   const events = {
+    onChannelClick: (val) => {
+      eventLog = [...eventLog, {action: 'onChannelClick', val}]
+    },   
     startChannelTransistion: (val) => {     
       eventLog = [...eventLog, {action: 'startChannelTransistion', val}]
     },
@@ -39,6 +42,8 @@
       outline: false,
       showChannelNumber: true,
       embedded: true,
+      showInactive: false,
+      lazyLoad: true
     }, 
     dropdowns: [
       {

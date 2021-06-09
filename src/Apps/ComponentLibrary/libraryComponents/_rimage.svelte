@@ -19,7 +19,7 @@
   }  
 
   const snippet = {
-    name: 'RImage (Responsive Image)',
+    name: 'RImag',
     importName: '@images/RImage.svelte',
     props: {
       shadow: false,

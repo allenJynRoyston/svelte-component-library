@@ -4,6 +4,7 @@
   import ColorText from '@base/ColorText.svelte';
   import Button from '@base/Button.svelte'
   import Rating from '@form/Rating.svelte'
+  import ImageGallery from '@images/ImageGallery.svelte'
     
   export let shadow = false;
   export let innerShadow = false;
@@ -99,6 +100,7 @@
   <div class='body' class:compact={isCompact}>
     <section style='width: 200px; height: auto'>
       <div class='image'>
+        <!-- <ImageGallery showArrows /> -->
         <FullImage src='https://picsum.photos/200/300' />
       </div>
     </section>
@@ -229,6 +231,7 @@
       display: flex;
       justify-content: center;
       margin-bottom: 10px;
+      overflow: hidden;
     }
 
     .button-container{
@@ -254,6 +257,9 @@
       color: var(--black-1-text);
     }       
     
+    .ribbon{
+      z-index: 2;
+    }
 
     .ribbon::before,
     .ribbon::after {

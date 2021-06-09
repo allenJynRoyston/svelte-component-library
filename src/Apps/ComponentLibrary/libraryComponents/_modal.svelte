@@ -23,7 +23,8 @@
       props: {
         rounded: false,
         nopadding: false,
-        shadow: false
+        shadow: false,
+        naked: false
       }, 
       dropdowns: [
         {
@@ -71,6 +72,7 @@
 
     const openExampleBasic = () => {
       setModalState(true)
+      
       $modalProps = {
         title: 'Basic Example',                
         ...props,
