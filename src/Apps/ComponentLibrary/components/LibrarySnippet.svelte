@@ -167,25 +167,6 @@
     import ${name} from '${importName}'
     `} />
 
-  {#if !!events && $showActions}    
-    <LibraryBlock hideFull title='Actions:'>
-
-      <div class='actions'>
-        {#each eventList as {title, toggled}, index}        
-          <Button size='small' exactfit applyTheme='white' {toggled} useToggle onClick={() => {toggleEvent(index)}}>
-            {title}
-          </Button>
-        {/each}
-      </div>
-
-      {#each eventLog as log}     
-        {#if eventList.find(x => x.title === log.action).toggled}
-          {JSON.stringify(log, null, 4)}
-          <br>
-        {/if}          
-      {/each}
-    </LibraryBlock>    
-  {/if}
 
   {#if $showProperties}
     <LibraryBlock flex title="Properties: ">
@@ -256,7 +237,6 @@
     </LibraryBlock>
   {/if}
 
-
   {#if !!livecode}
     {#if $showExample}
       <LibraryBlock title='Example:'>
@@ -269,6 +249,25 @@
       ${livecode}
       `} />
   {/if}
+
+  {#if !!events && $showActions}    
+    <LibraryBlock hideFull title='Actions:'>
+      <div class='actions'>
+        {#each eventList as {title, toggled}, index}        
+          <Button size='small' exactfit applyTheme='white' {toggled} useToggle onClick={() => {toggleEvent(index)}}>
+            {title}
+          </Button>
+        {/each}
+      </div>
+
+      {#each eventLog as log}     
+        {#if eventList.find(x => x.title === log.action).toggled}
+          {JSON.stringify(log, null, 4)}
+          <br>
+        {/if}          
+      {/each}
+    </LibraryBlock>    
+  {/if}    
 
 </div>
 

@@ -14,9 +14,7 @@
   const snippet = {
     name: 'Form (with example)',
     importName: '@components/FormPremade/FormExample'
-  }
-
-  console.log(exampleFormData)
+  }  
 
   $: livecode = `    
   let formData = ${JSON.stringify(exampleFormData, null, 4)}

@@ -24,7 +24,9 @@
       lazyLoad: false,
       useModalOnClick: false,
       showArrows: true,
-      showButtons: true
+      showButtons: true,
+      touchEnabled: false,
+      dragEnabled: false,
     },     
     dropdowns: [
       {

@@ -22,13 +22,21 @@
   export let showChannelNumber = false;
   export let showInactive = false;
   export let lazyLoad = false;
+  export let dragEnabled = false;
+  export let touchEnabled = false;
+  export let touchThreshold = 0.2;
   
   export let startChannelTransistion = null;
   export let endChannelTransisition = null;
 
   export let afterUpdate = null;
   export let channelReady = null;
-  export let onChannelClick = null;  
+  export let onChannelClick = null;    
+  export let onRightThreshold = null;
+  export let onLeftThreshold = null;
+  export let onMoveStart = null;
+  export let onMoveEnd = null;
+  export let onRedraw = null;
 
   let ready = false
   let xpos;
@@ -39,10 +47,18 @@
   let h = 0;
   let topDifference = 0
   let topOffset = 0;
+  
+  let animating = false;
+  let tracking = false;
+  let startX = 0;
+  let xCord = 0;
+  let touchWidth = 0;
+  let xTween = tweened(0, {
+		duration: 100,
+		easing: easings['linear']
+	});
 
-  const {isNativeMobile} = DeviceStore;
-
-  const {openSidebar} = SiteStore;
+  const {isNativeMobile} = DeviceStore;  
 
   // watches for changes in offsetHeight
 	SiteStore.openNotch.subscribe(async(value) => {
@@ -78,13 +94,14 @@
   }
   
 
-  const goto = async (channel) => {    
+  const goto = async(channel) => {    
     startChannelTransistion && startChannelTransistion()
     currentChannel = channel      
     draw()       
   }
 
   const draw = async() => {
+    onRedraw && onRedraw(true)    
     const table = createSizeTables()
     const val = table[currentChannel]    
     channelReady && channelReady(currentChannel)  
@@ -92,7 +109,7 @@
     await xpos.set(val)
     afterUpdate && afterUpdate()     
     endChannelTransisition && endChannelTransisition()      
-  }
+    onRedraw && onRedraw(false)      }
 
   const resetScrollTop = () => {
     if(rootEle){
@@ -105,7 +122,7 @@
 
   const resizeEvent = debounce(() => {
     topPos = ele?.getBoundingClientRect().top || 0
-  }, 100)  
+  }, 400)  
 
 
   onMount(() => {
@@ -119,9 +136,100 @@
   onDestroy(() => {
     window.removeEventListener('resize', resizeEvent)
   })  
+
+  const onMouseDown = (e) => {
+    e.preventDefault();
+    tracking = true;
+    startX = e.clientX
+    onMoveStart && onMoveStart()
+  }
   
+  const onMouseUp = async(e) => {
+    e.preventDefault();        
+    onRelease();
+  };
+
+  const onMouseMove = (e) => {
+    e.preventDefault();     
+    if (tracking) {
+      xCord = e.clientX - startX
+    }
+  };  
+
+  const calculateReleaseTween = (dir) => {
+    animating = true;
+    return new Promise(async(resolve) => {
+      if(dir === 1){
+        await xTween.set(touchWidth - xCord)        
+      }
+      if(dir === -1){
+        await xTween.set(-touchWidth  - xCord)
+      }
+      if(dir === 0){
+        await xTween.set(-xCord)
+      }
+      animating = false;      
+      resolve(true)
+    })    
+  }
+
+  const onRelease = async() => {
+    const dir = closeThresholdDir();    
+    if(dir === 'left'){
+      await calculateReleaseTween(1)
+      onLeftThreshold && onLeftThreshold()      
+    }
+    if(dir === 'right'){
+      await calculateReleaseTween(-1)
+      onRightThreshold && onRightThreshold()      
+    }
+    if(dir === null){
+      await calculateReleaseTween(0)
+    }
+
+    // reset variables    
+    await tick();    
+    tracking = false;
+    xCord = 0;
+    startX = 0;  
+    onMoveEnd && onMoveEnd()    
+    xTween.set(0)    
+  };  
+
+  const onTouchStart = (e) => {
+    e.preventDefault();
+    tracking = true;
+    startX = e.touches[0].clientX
+    onMoveStart && onMoveStart()
+  };
+
+  const onTouchMove = (e) => {
+    e.preventDefault();     
+    if (tracking) {
+      xCord =  e.touches[0].clientX - startX
+    }
+  };
+
+  const onTouchEnd = () => {
+    onRelease();
+  };  
+
+  $: closeThreshold = xCord/touchWidth
+
+  $: closeThresholdDir = () => {
+    if(closeThreshold > touchThreshold  && currentChannel > 0){
+      return 'left'
+    }
+    else if(closeThreshold < -touchThreshold  && currentChannel < data.length - 1){
+      return 'right'
+    }
+    else {
+      return null;
+    }
+  }
+
   $: xPostiion = () => {    
-    return `transform: translateX(${$xpos}%); `
+    return `transform: translateX( calc(${$xpos}% + ${xCord}px + ${tracking ? $xTween : 0}px) ); `
   }
 
   $: channelsStyle = () => {
@@ -150,6 +258,7 @@
   }
 
 
+
 </script>
 
 
@@ -158,7 +267,7 @@
   {#if showChannelNumber}
     <div class='channel-number'>
       <span>{current + 1}/{data.length}</span>
-    </div>
+    </div> 
   {/if}
 
   {#if ready}
@@ -167,7 +276,23 @@
         <div class='channel' class:active={active} class:inactive={!active} style={channelStyle()}>
           <div class='channel__inner' on:click={() => {onChannelClick && onChannelClick(index)}} class:clickable={!!onChannelClick} class:outline={outline} class:nopadding={nopadding} class:selfContained={selfContained} bind:this={ele} style={innerStyle} >
             {#if render || !lazyLoad}
-              <svelte:component this={content} {...props}/>
+              {#if touchEnabled|| dragEnabled}
+                <div class={`channel-touchable`} 
+                     class:will-transition-left={closeThresholdDir() === 'left'} 
+                     class:will-transition-right={closeThresholdDir() === 'right'} 
+                     class:tracking={tracking} 
+                     on:touchstart={touchEnabled && !animating && onTouchStart}
+                     on:touchend={touchEnabled && !animating && onTouchEnd}
+                     on:touchmove={touchEnabled && !animating && onTouchMove}
+                     on:mousedown={dragEnabled && !animating && onMouseDown} 
+                     on:mouseup={dragEnabled && !animating && onMouseUp} 
+                     on:mousemove={dragEnabled && !animating && onMouseMove} 
+                     bind:clientWidth={touchWidth}>
+                  <svelte:component this={content} {...props}/>
+                </div>
+              {:else}
+                <svelte:component this={content} {...props}/>
+              {/if}
             {:else}
               <Loader show />    
             {/if}
@@ -251,7 +376,26 @@
       width: calc(100% - double(----channels-padding));      
       padding: var(--channels-padding);
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: auto;      
+
+      .channel-touchable{
+        transition: 0.1s;
+
+        &.will-transition-left{
+          opacity: 0.2;
+          transform: scale(0.7)
+        }
+        &.will-transition-right{
+          opacity: 0.2;
+          transform: scale(0.7)          
+        }
+
+
+        &.tracking{
+          transition: 0;
+          transform: scale(0.95)
+        }
+      }
 
       &.outline{
         border: 1px dotted var(--white-0);

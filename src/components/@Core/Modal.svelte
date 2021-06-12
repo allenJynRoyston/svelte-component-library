@@ -25,12 +25,13 @@
 
   let animateIn = false;
   let animateInTimer = null;
+  let currentShow = show;
 
   const closeBtn = () => {
     setModalState(false)
   }
 
-  $: getLocation = (reset) => {
+  $: style = (reset = null) => {
     switch(reset ? 'center' : $modalProps?.location || 'center') {
       case 'left':
         return `top: calc(50% - ${h/2}px); left: 0`
@@ -49,8 +50,6 @@
     }
   }
 
-  $: style = getLocation()
-
   $: full = $modalProps?.location === 'left' || $modalProps?.location === 'right'
 
   $: fullcorner = $modalProps?.location === 'corner-left' || $modalProps?.location === 'corner-right'
@@ -61,26 +60,29 @@
 
   $: {
     freezeAnimation = true;
-        
-    if(show){    
-      onStartModal && onStartModal() 
-      animateIn = true;
-      setTimeout(() => {
-        freezeAnimation = false
-        clearTimeout(freezeTimer);
-        freezeTimer = setTimeout(() => {
-          freezeAnimation = true;
-        }, 300)              
-      })
+    
+    if(show !== currentShow){
+      currentShow = show;
+      if(show){    
+        onStartModal && onStartModal() 
+        animateIn = true;
+        setTimeout(() => {
+          freezeAnimation = false
+          clearTimeout(freezeTimer);
+          freezeTimer = setTimeout(() => {
+            freezeAnimation = true;
+          }, 300)              
+        })
 
-    }
-    else{      
-      freezeAnimation = false;
-      clearInterval(animateInTimer);
-      animateInTimer = setTimeout(() => {
-        onEndModal && onEndModal()
-        animateIn = false;
-      }, 300)      
+      }
+      else{      
+        freezeAnimation = false;
+        clearInterval(animateInTimer);
+        animateInTimer = setTimeout(() => {
+          onEndModal && onEndModal()
+          animateIn = false;
+        }, 300)      
+      }
     }
   }
 </script>
@@ -88,9 +90,15 @@
 <div class={`modal`}  class:show={animateIn}>
   <div class='inner'>
 
+    {#if $modalProps?.naked}
+      <div class='close-btn'>
+        <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
+      </div>
+    {/if}
+
     <div class={`backdrop ${defaultBackdrop}`} on:click={() => {!$modalIsBusy && closeBtn()}} class:animateIn={show} />
 
-    <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} {style} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
+    <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} style={style()} class:naked={$modalProps?.naked} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
       
       {#if !$modalProps?.naked}
           <div class='header'  class:busy={$modalIsBusy}>
@@ -133,7 +141,7 @@
           </div>
         {/if}
       {:else}
-        <div class={`container-inner nopadding ${defaultType}`} class:full={full} class:busy={$modalIsBusy}>
+        <div class={`container-inner naked`} class:full={full} class:busy={$modalIsBusy}>
           <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
         </div>
       {/if}
@@ -149,6 +157,7 @@
   $modalZindex: 50;
   $modalBGZIndex: 1;
   $modalContentZIndex: 2;
+  $modalCloseBtn: 3;
 
   .modal{
     position: fixed; 
@@ -180,6 +189,8 @@
       cursor: pointer;
       opacity: 0;
       transition: 0.3s;
+      backdrop-filter: blur(3px) saturate(25%);
+
 
       &.light{
         background: var(--white-5);
@@ -195,7 +206,15 @@
         opacity: 0.7;
       }
 
-    }        
+    }    
+
+    .close-btn{
+      position: absolute;
+      z-index: $modalCloseBtn;      
+      top: 15px;
+      right: 15px;
+      color: var(--white-0);      
+    } 
 
     .container{ 
       position: absolute;
@@ -208,11 +227,16 @@
       display: flex;
       flex-direction: column;
       background: var(--primary-6);
-      color: var(--primary-6-text);       
+      color: var(--primary-6-text);
 
       &.full{
         height: 100vh;        
       }
+
+      &.naked{
+        background: rgba(0, 0, 0, .5)!important;
+        backdrop-filter: blur(3px) saturate(25%);
+      }          
 
       &.black{
         background: var(--black-4);
@@ -388,6 +412,13 @@
         height: 100vh;
         overflow-y: auto;   
         
+        &.naked{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: none!important;
+          padding: 0;          
+        }    
 
         &.black{
           background: var(--black-6);
