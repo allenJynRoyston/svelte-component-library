@@ -1,7 +1,7 @@
 <script lang='ts'>
-  import {getContext} from 'svelte'
+  import {getContext, tick} from 'svelte'
   import {ModalStore} from '@store/store'
-  import RImage from '@images/RImage.svelte'      
+  import SmartImage from '@images/SmartImage.svelte'      
   import Channels from '@base/Channels.svelte'      
   import {createChannel} from '@js/utility'  
   import SVG from '@base/SVG.svelte'  
@@ -16,11 +16,15 @@
   export let dragEnabled = false;
   export let lazyLoad = true;
   export let useModalOnClick = false;
+  export let autoResize = true;
 
   export let onClick = null;
 
+  let render = true;
   let touchActive = false;
   let animating = false;
+  let useLazyLoad = lazyLoad;
+
   
   const theme:string = getContext('theme')
         
@@ -29,10 +33,10 @@
   const channels = createChannel({
     current: 0,
     data: [
-        {content: RImage, props: {src: 'https://picsum.photos/id/22/600/400'}},
-        {content: RImage, props: {src: 'https://picsum.photos/id/23/600/400'}},
-        {content: RImage, props: {src: 'https://picsum.photos/id/24/600/400'}},
-        {content: RImage, props: {src: 'https://picsum.photos/id/25/600/400'}},
+        {content: SmartImage, props: {src: 'https://picsum.photos/id/22/1200/800'}},
+        {content: SmartImage, props: {src: 'https://picsum.photos/id/23/600/600'}},
+        {content: SmartImage, props: {src: 'https://picsum.photos/id/24/600/200'}},
+        {content: SmartImage, props: {src: 'https://picsum.photos/id/25/600/400'}},
     ]
   }) 
 
@@ -53,7 +57,7 @@
       $modalProps = {
         naked: true,      
         content: {
-          component: RImage, props: {src: channels.data[index].props.src}
+          component: SmartImage, props: {src: channels.data[index].props.src}
         },                
       }
     }
@@ -80,27 +84,39 @@
     touchActive = false;
   }  
 
+  const reload = async() => {
+    render = false;
+    useLazyLoad = lazyLoad
+    await tick();
+    render = true;
+  }
+
   $: busy = touchActive || animating
+
+  $: {
+    useLazyLoad !== lazyLoad && reload()
+  }
 
 </script>
 
 
 <div class='image-gallery'>
   <div class='gallery'>
-    <Channels showInactive animate={!touchActive} showChannelNumber nopadding embedded {dragEnabled} {touchEnabled} {onChannelClick} {onRightThreshold} {onLeftThreshold} {onMoveStart} {onMoveEnd} {onRedraw} {...channels} {lazyLoad} {easing} {duration} />
-      
-      {#if showArrows && channels.current > 0}
-        <div class='left-arrow' class:busy={busy} on:click={onPrev} >
-          <SVG icon='arrow-left' size={30} />
-        </div>    
-      {/if}
+    {#if render}
+      <Channels showInactive animate={!touchActive} showChannelNumber nopadding embedded {autoResize} {dragEnabled} {touchEnabled} {onChannelClick} {onRightThreshold} {onLeftThreshold} {onMoveStart} {onMoveEnd} {onRedraw} {...channels} {lazyLoad} {easing} {duration} />
+    {/if}
 
-      {#if showArrows && channels.current < channels.data.length - 1}
-        <div class='right-arrow' class:busy={busy} on:click={onNext}>
-          <SVG icon='arrow-right'  size={30} />
-        </div>        
-      {/if}
-  
+    {#if showArrows && channels.current > 0}
+      <div class='left-arrow' class:busy={busy} on:click={onPrev} >
+        <SVG icon='arrow-left' size={30} />
+      </div>    
+    {/if}
+
+    {#if showArrows && channels.current < channels.data.length - 1}
+      <div class='right-arrow' class:busy={busy} on:click={onNext}>
+        <SVG icon='arrow-right'  size={30} />
+      </div>        
+    {/if}
   </div>
 
   {#if showButtons}

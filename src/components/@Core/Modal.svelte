@@ -4,6 +4,7 @@
   import TwoSlot from '@base/TwoSlot.svelte'
   import SVG from '@base/SVG.svelte';
   import Button from '@base/Button.svelte';
+  import InnerContainer from '@base/InnerContainer.svelte'
     
   export let show = false;
   export let closeOnBackdrop = false;
@@ -89,65 +90,64 @@
 
 <div class={`modal`}  class:show={animateIn}>
   <div class='inner'>
-
-    {#if $modalProps?.naked}
-      <div class='close-btn'>
-        <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
-      </div>
-    {/if}
-
-    <div class={`backdrop ${defaultBackdrop}`} on:click={() => {!$modalIsBusy && closeBtn()}} class:animateIn={show} />
-
-    <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} style={style()} class:naked={$modalProps?.naked} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
-      
-      {#if !$modalProps?.naked}
-          <div class='header'  class:busy={$modalIsBusy}>
-            <TwoSlot >
-              <h2 slot='left'>{$modalProps?.title || 'Unavailable'}</h2>        
-              <div slot='right'>
-                <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
+    
+    {#if !$modalProps?.naked}
+      <div class={`backdrop ${defaultBackdrop}`} on:click={() => {!$modalIsBusy && closeBtn()}} class:animateIn={show} />    
+        
+      <div class={`container ${$modalProps?.location || 'center'}  ${defaultType}`} style={style()} class:naked={$modalProps?.naked} class:freezeAnimation={freezeAnimation} class:shadow={$modalProps?.shadow} class:rounded={$modalProps?.rounded} class:animateIn={show} class:animateOut={!show} class:full={full} bind:clientWidth={w} bind:clientHeight={h} >
+  
+            <div class='header'  class:busy={$modalIsBusy}>
+              <TwoSlot >
+                <h2 slot='left'>{$modalProps?.title || 'Unavailable'}</h2>        
+                <div slot='right'>
+                  <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={colors[defaultType][4].textFriendlyColor}/>
+                </div>
+              </TwoSlot>
+            </div>    
+          
+          
+          <div class={`container-inner  ${defaultType}`} class:nopadding={$modalProps?.nopadding} class:full={full} class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalIsBusy}>
+            {#if !!$modalProps?.content.component}
+              <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
+            {:else}
+              <div style='text-align: center; padding: 20px 0;'>
+                ¯\_(ツ)_/¯
               </div>
-            </TwoSlot>
-          </div>    
-        
-        
-        <div class={`container-inner  ${defaultType}`} class:nopadding={$modalProps?.nopadding} class:full={full} class:hasFooter={$modalProps?.onConfirm || $modalProps?.onCancel} class:busy={$modalIsBusy}>
-          {#if !!$modalProps?.content.component}
-            <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
-          {:else}
-            <div style='text-align: center; padding: 20px 0;'>
-              ¯\_(ツ)_/¯
+            {/if}
+          </div>
+
+          {#if $modalProps?.onConfirm || $modalProps?.onCancel}
+            <div class='footer'>
+              <slot name='footer'>
+                <div class='default-footer' class:full={fullcorner || full}>
+                  {#if $modalProps?.onCancel}
+                    <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.cancelBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
+                      {$modalProps?.cancelBtn?.text || 'Cancel'}
+                    </Button>
+                  {/if}
+
+                  {#if $modalProps?.onConfirm}
+                    <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.confirmBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
+                      {$modalProps?.confirmBtn?.text || 'Confirm'}
+                    </Button>
+                  {/if}              
+                </div>
+              </slot>
             </div>
           {/if}
-        </div>
-
-        {#if $modalProps?.onConfirm || $modalProps?.onCancel}
-          <div class='footer'>
-            <slot name='footer'>
-              <div class='default-footer' class:full={fullcorner || full}>
-                {#if $modalProps?.onCancel}
-                  <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.cancelBtn?.type || (defaultType)} onClick={() => {!$modalIsBusy && $modalProps?.onCancel()}}>
-                    {$modalProps?.cancelBtn?.text || 'Cancel'}
-                  </Button>
-                {/if}
-
-                {#if $modalProps?.onConfirm}
-                  <Button disabled={$modalIsBusy} size='large' applyTheme={$modalProps?.confirmBtn?.type || (defaultType)} hollow onClick={() => {!$modalIsBusy && $modalProps?.onConfirm()}}>
-                    {$modalProps?.confirmBtn?.text || 'Confirm'}
-                  </Button>
-                {/if}              
-              </div>
-            </slot>
-          </div>
-        {/if}
-      {:else}
-        <div class={`container-inner naked`} class:full={full} class:busy={$modalIsBusy}>
+        
+      </div>
+    {:else}
+      <div class='close-btn'>
+        <SVG onClick={() => {!$modalIsBusy && closeBtn()}} icon={$modalIsBusy ? 'save' : 'cross'} fill={defaultBackdrop === 'dark' ? colors.white[2].color : colors.black[2].color}/>
+      </div>
+          
+      <div class={`naked-container ${defaultBackdrop}`}>
+        <InnerContainer centered skinnybar>
           <svelte:component this={$modalProps?.content.component} {...$modalProps?.content.props} />
-        </div>
-      {/if}
-      
-    </div>
-
+        </InnerContainer>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -158,6 +158,7 @@
   $modalBGZIndex: 1;
   $modalContentZIndex: 2;
   $modalCloseBtn: 3;
+  $themes: 'black', 'white', 'primary', 'secondary', 'magic', 'success', 'warning', 'danger';
 
   .modal{
     position: fixed; 
@@ -216,6 +217,33 @@
       color: var(--white-0);      
     } 
 
+    .naked-container{
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: $modalContentZIndex;
+      transition: 0.3s;
+      cursor: pointer;
+
+      @include desktop-and-up {    
+        width: calc(100% - 20px);
+        height: calc(100% - 20px);
+        padding: 10px;
+      }
+
+      &.light{
+        background: rgba(255, 255, 255, 0.75);        
+        color: var(--white-5-text);          
+      }
+
+      &.dark{
+        background: rgba(0, 0, 0, 0.75);        
+        color: var(--black-1-text);          
+      }           
+    }
+
     .container{ 
       position: absolute;
       z-index: $modalContentZIndex;   
@@ -228,55 +256,19 @@
       flex-direction: column;
       background: var(--primary-6);
       color: var(--primary-6-text);
-
+      backdrop-filter: blur(3px) saturate(25%);   
+       
       &.full{
         height: 100vh;        
       }
+    
 
-      &.naked{
-        background: rgba(0, 0, 0, .5)!important;
-        backdrop-filter: blur(3px) saturate(25%);
-      }          
-
-      &.black{
-        background: var(--black-4);
-        color: var(--black-4-text);       
+      @each $theme in $themes {
+        &.#{$theme}{
+          background: var(--#{$theme}-4);
+          color: var(--#{$theme}-4-text);                
+        }
       }
-
-      &.white{
-        background: var(--white-6);
-        color: var(--white-6-text);       
-      }      
-
-      &.primary{
-        background: var(--primary-4);
-        color: var(--primary-4-text);       
-      }      
-
-      &.secondary{
-        background: var(--secondary-4);
-        color: var(--secondary-4-text);       
-      }         
-
-      &.magic{
-        background: var(--magic-4);
-        color: var(--magic-4-text);       
-      }      
-
-      &.success{
-        background: var(--success-4);
-        color: var(--success-4-text);       
-      }         
-
-      &.warning{
-        background: var(--warning-4);
-        color: var(--warning-4-text);       
-      }         
-
-      &.danger{
-        background: var(--danger-4);
-        color: var(--danger-4-text);       
-      }         
 
 
       &.shadow{
@@ -419,47 +411,14 @@
           background: none!important;
           padding: 0;          
         }    
-
-        &.black{
-          background: var(--black-6);
-          color: var(--black-6-text);       
-        }
-
-        &.white{
-          background: var(--white-7);
-          color: var(--white-7-text);       
-        }      
-
-        &.primary{
-          background: var(--primary-6);
-          color: var(--primary-6-text);       
-        }      
-
-        &.secondary{
-          background: var(--secondary-6);
-          color: var(--secondary-6-text);       
-        }         
-
-        &.magic{
-          background: var(--magic-6);
-          color: var(--magic-6-text);       
-        }      
-
-        &.success{
-          background: var(--success-6);
-          color: var(--success-6-text);       
-        }         
-
-        &.warning{
-          background: var(--warning-6);
-          color: var(--warning-6-text);       
-        }         
-
-        &.danger{
-          background: var(--danger-6);
-          color: var(--danger-6-text);       
-        }           
-        
+   
+        @each $theme in $themes {
+          &.#{$theme}{
+            background: var(--#{$theme}-6);
+            color: var(--#{$theme}-6-text);   
+          }             
+        }        
+              
         &.nopadding{
           padding: 0px;
         }
@@ -475,9 +434,6 @@
             max-height: calc(100vh - 100px);    
           }               
         }
-
-   
-        
 
         &.busy{
           opacity: 0.5;
@@ -500,10 +456,7 @@
       }
 
 
-
-
     }
 
   }
-
 </style>

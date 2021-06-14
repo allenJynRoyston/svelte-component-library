@@ -7,6 +7,7 @@
   export let adjustPx = 0
   export let accountForTopPos = false;
   export let skinnybar = false;
+  export let centered = false;
 
   let ele;
   let topPos = 0
@@ -41,7 +42,7 @@
   `height: calc(${height} - ${!!adjustPx ? `${adjustPx}px` : `0px`})`
 </script>
 
-<div class={`inner-container ${theme}-theme`} class:skinnybar={skinnybar} {style} bind:this={ele}>
+<div class={`inner-container ${theme}-theme`} class:centered={centered} class:skinnybar={skinnybar} {style} bind:this={ele}>
   <slot />
 </div>
 
@@ -49,6 +50,12 @@
 <style lang='scss'>
   .inner-container{    
     overflow-y: auto;
+
+    &.centered{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     
     &.skinnybar{
       &::-webkit-scrollbar {

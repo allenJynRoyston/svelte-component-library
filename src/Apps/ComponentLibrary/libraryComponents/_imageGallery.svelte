@@ -21,12 +21,13 @@
     name: 'ImageGallery',
     importName: '@images/ImageGallery.svelte',
     props: {
-      lazyLoad: false,
-      useModalOnClick: false,
+      autoResize: true,
       showArrows: true,
-      showButtons: true,
-      touchEnabled: false,
-      dragEnabled: false,
+      showButtons: true,      
+      lazyLoad: true,
+      useModalOnClick: true,      
+      touchEnabled: true,
+      dragEnabled: true,
     },     
     dropdowns: [
       {

@@ -3,6 +3,7 @@
     import Button from '@base/Button.svelte'
 
     import ExampleBlock from '../components/ExampleBlock.svelte'
+    import LoremBlock from '../../../components/@Base/LoremBlock.svelte'
 
     import LibrarySnippet from './../components/LibrarySnippet.svelte';
     const {setModalState, modalIsBusy, modalProps} = ModalStore
@@ -78,7 +79,7 @@
         ...props,
         ...selectprops,
         content: {
-          component: ExampleBlock,
+          component: props.naked ? LoremBlock : ExampleBlock,
         },
         onConfirm: () => {
           setModalState(false)

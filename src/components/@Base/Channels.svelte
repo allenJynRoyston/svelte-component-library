@@ -22,6 +22,7 @@
   export let showChannelNumber = false;
   export let showInactive = false;
   export let lazyLoad = false;
+  export let autoResize = false;
   export let dragEnabled = false;
   export let touchEnabled = false;
   export let touchThreshold = 0.2;
@@ -57,6 +58,8 @@
 		duration: 100,
 		easing: easings['linear']
 	});
+
+  let channelHeights = {}
 
   const {isNativeMobile} = DeviceStore;  
 
@@ -109,7 +112,8 @@
     await xpos.set(val)
     afterUpdate && afterUpdate()     
     endChannelTransisition && endChannelTransisition()      
-    onRedraw && onRedraw(false)      }
+    onRedraw && onRedraw(false)      
+  }
 
   const resetScrollTop = () => {
     if(rootEle){
@@ -233,7 +237,7 @@
   }
 
   $: channelsStyle = () => {
-    return `width: ${data.length * 100}%;`
+    return autoResize ? `width: ${data.length * 100}%; height: ${channelHeights[currentChannel]}px` : `width: ${data.length * 100}%;`
   }
 
   $: channelStyle = () => {
@@ -242,26 +246,21 @@
 
   $: innerStyle = embedded ? `height: calc(100%)` : `height: calc(100vh - ${topPos}px + ${topOffset}px - ${selfContained || nopadding ? 0 : 20}px);`
 
-  $: {      
-    backtotop && resetScrollTop()
-    current != currentChannel && goto(current)  
-    setTimeout(() =>{  
-      topPos = ele?.getBoundingClientRect().top || 0      
-    }) 
-  }  
-
   $: {
+    backtotop && resetScrollTop()
+    current != currentChannel && goto(current)    
     !!easing && init();
     !!duration && init();
     (animate || !animate) && init();
     (disableAnimationOnMobile || !disableAnimationOnMobile) && init()
+    setTimeout(() =>{  
+      topPos = ele?.getBoundingClientRect().top || 0      
+    })       
   }
 
 
 
 </script>
-
-
 
 <div class='channels' class:embedded={embedded} >
   {#if showChannelNumber}
@@ -287,11 +286,14 @@
                      on:mousedown={dragEnabled && !animating && onMouseDown} 
                      on:mouseup={dragEnabled && !animating && onMouseUp} 
                      on:mousemove={dragEnabled && !animating && onMouseMove} 
-                     bind:clientWidth={touchWidth}>
+                     bind:clientWidth={touchWidth}
+                     bind:clientHeight={channelHeights[index]}>
                   <svelte:component this={content} {...props}/>
                 </div>
               {:else}
-                <svelte:component this={content} {...props}/>
+                <div bind:clientHeight={channelHeights[index]}>
+                  <svelte:component this={content} {...props}/>
+                </div>
               {/if}
             {:else}
               <Loader show />    
